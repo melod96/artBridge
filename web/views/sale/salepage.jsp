@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"
+	import="java.util.*, com.comvision.artBridge.board.model.vo.*"%>
+<%ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list"); 
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -174,14 +182,53 @@
 								<!-- id:listTable 에 리스트가 나옵니다. -->
 							</table>
 						</div>
+
+						<%for(Board b :list){ %>
 						
-						<div id = "list_img" style ="display:block;">
-							<div class = "list_img_box">
-								
-								
+							<div id="list_img" style="display: block;">
+							<div class="list_img_box both left">
+								<ul>
+									<ol style="height: 145px;">
+										<a
+											onclick="">
+											<dl class="thumb3" style="margin-left: 0;">
+												<li
+													style="background: url(<%= %>) no-repeat center 15%"></li>
+											</dl>
+											<dl class="thumb3">
+												<li
+													style="background: url() no-repeat center 15%"></li>
+											</dl>
+											<dl class="thumb3">
+												<li
+													style="background: url() no-repeat center 15%"></li>
+											</dl>
+										</a>
+									</ol>
+									<ol style="height: 28px;">
+										<dl class="left ellip"
+											style="padding-left: 6px; width: 360px;">
+											<a
+												href=""
+												title="이작가의 다른 작품보기">aaa 작가</a>&nbsp;&nbsp;/&nbsp;&nbsp;반실사/풀채색
+											일러스트/배경 일러스트/팬아트
+										</dl>
+									</ol>
+									<ol>
+										<dl class="starBg_list">
+											<div style="width: 101%; overflow: hidden">
+												<img src="">
+											</div>
+										</dl>
+										<dl class="price">200,000~
+										</dl>
+									</ol>
+								</ul>
+								<div class="clear" style="height: 10px;">&nbsp;</div>
 							</div>
-						</div>
-						
+
+						<%} %>
+
 						<!-- <div id="list_img" style="display: block;">
 							<div class="list_img_box both left">
 								<ul>

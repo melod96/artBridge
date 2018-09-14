@@ -31,7 +31,9 @@
 				<!-- 메뉴영역 -->
 				<div class="navbar-collapse collapse" id="navigation">
 					<ul class="nav navbar-nav navbar-right">
-						<li class=""><a href="../sale/salepage.jsp" class="">일러스트 </a></li>
+
+						<li class=""><a onclick = "location.href='/artBridge/selectList.bo'">일러스트 </a></li>
+
 						<li class="dropdown"><a href="#" class="dropdown-toggle">이용안내</a>
 							<ul class="dropdown-menu">
 								<li><a href="../info/infoUseRequester.jsp"> 의뢰자 이용안내</a></li>

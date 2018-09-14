@@ -1,23 +1,26 @@
 package com.comvision.artBridge.board.model.dao;
 
+import static com.comvision.artBridge.common.JDBCTemplate.*;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
-import static com.comvision.artBridge.common.JDBCTemplate.*;
+
 import com.comvision.artBridge.board.model.vo.Board;
 
-public class BoardDao {
 
+public class BoardDao {
+	
 	private Properties prop = new Properties();
 	
 	public BoardDao(){
-		String fileName 
-		= BoardDao.class.getResource("/sql/notice/notice-query.properties").getPath();
+		String fileName= BoardDao.class.getResource("/sql/board/board-query.properties").getPath();
 		
 		try {
 			prop.load(new FileReader(fileName));
@@ -26,47 +29,77 @@ public class BoardDao {
 		}
 	}
 	
-	public ArrayList<Board> selectNoticeList(Connection con) {
-		
-		ArrayList<Board> list = null;
-		Statement stmt = null;
+	public int getListCount(Connection con) {
+		Statement stmt= null;
 		ResultSet rset = null;
 		
+		String query = prop.getProperty("listCount");
 		
-		String query = prop.getProperty("selectNoticeList");
+		int listCount = 0;
 		
 		try {
 			stmt = con.createStatement();
 			rset = stmt.executeQuery(query);
 			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(stmt);
+			close(rset);
+		}
+		
+		return listCount;
+	}
+
+	public ArrayList<Board> selectList(Connection con, int currentPage, int limit) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = null;
+		
+		String query = prop.getProperty("selectList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
 			list = new ArrayList<Board>();
 			
 			while(rset.next()){
-				Board b = new Board();
+				Board b= new Board();
 				
-				b.setBd_no(rset.getInt("BOARD_NO"));
-				b.setBd_title(rset.getString("BOARD_TITLE"));
-				b.setBd_date(rset.getDate("BOARD_DATE"));
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setBoard_type(rset.getInt("board_type"));
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				b.setBoard_date(rset.getDate("board_date"));
+				b.setMember_no(rset.getInt("member_no"));
+				b.setBoard_status(rset.getInt("board_status"));
 				
 				list.add(b);
-				
 			}
-			
-			
-			
-			
+			System.out.println("dao: " + list);
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally{
+		}finally{
+			close(pstmt);
 			close(rset);
-			close(stmt);
 		}
-		
-		
-		System.out.println(list + "dao");
-		
 		
 		return list;
 	}
-
+	
+	
+	
 }
