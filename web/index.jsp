@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<% response.sendRedirect("/artBridge/selectList.no"); %>
+	<% response.sendRedirect("views/main/main.jsp"); %>
 </body>
 </html>

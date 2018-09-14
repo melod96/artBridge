@@ -39,4 +39,26 @@ public class MemberService {
 		return result;
 	}
 
+	public int idCheck(String userId) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		result = new MemberDao().idCheck(con, userId);
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int nickNameCheck(String nickName) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		result = new MemberDao().nickNameCheck(con, nickName);
+		
+		close(con);
+		
+		return result;
+	}
+
 }
