@@ -16,9 +16,6 @@ import com.comvision.artBridge.board.model.vo.PageInfo;
 
 
 
-/**
- * Servlet implementation class SelectBoardList
- */
 @WebServlet("/selectList.bo")
 public class SelectBoardList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
