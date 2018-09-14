@@ -6,18 +6,7 @@
 		loginUser = (Member)session.getAttribute("loginUser");
 	}
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!--  -->
-
-<title>Insert title here</title>
-</head>
-<body>
-
-	<!-- Header -->
 	<header>
 	<div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
 		<div class="navbar navbar-default yamm" role="navigation" id="navbar">
@@ -42,7 +31,9 @@
 				<!-- 메뉴영역 -->
 				<div class="navbar-collapse collapse" id="navigation">
 					<ul class="nav navbar-nav navbar-right">
+
 						<li class=""><a onclick = "location.href='/artBridge/selectList.bo'">일러스트 </a></li>
+
 						<li class="dropdown"><a href="#" class="dropdown-toggle">이용안내</a>
 							<ul class="dropdown-menu">
 								<li><a href="../info/infoUseRequester.jsp"> 의뢰자 이용안내</a></li>
@@ -100,14 +91,10 @@
 			</div>
 		</div>
 	</div>
-	</header>
-	<!-- // Header -->
-
+	
 	<!-- Modal -->
 
 	<%@ include file="loginModal.jsp" %>
 	
 	<!-- // Modal -->
-
-</body>
-</html>
+	</header>
