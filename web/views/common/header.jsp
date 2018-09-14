@@ -42,17 +42,17 @@
 				<!-- 메뉴영역 -->
 				<div class="navbar-collapse collapse" id="navigation">
 					<ul class="nav navbar-nav navbar-right">
-						<li class=""><a href="#" class="">일러스트 </a></li>
+						<li class=""><a onclick = "location.href='/artBridge/selectList.bo'">일러스트 </a></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle">이용안내</a>
 							<ul class="dropdown-menu">
-								<li><a href="#"> 의뢰자 이용안내</a></li>
-								<li><a href="#">작가 이용안내</a></li>
-								<li><a href="#">환불규정 및 유의사항</a></li>
+								<li><a href="../info/infoUseRequester.jsp"> 의뢰자 이용안내</a></li>
+								<li><a href="../info/infoUseArtist.jsp">작가 이용안내</a></li>
+								<li><a href="../info/infoUseOther.jsp">환불규정 및 유의사항</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle">고객센터</a>
 							<ul class="dropdown-menu">
-								<li><a href="#">자주하는 질문</a></li>
-								<li><a href="#">고객문의</a></li>
+								<li><a href="../faq/faq_requester.jsp">자주하는 질문</a></li>
+								<li><a href="../notice/noticeBoard.jsp">공지사항</a></li>
 								<li><a href="#">광고상품 안내</a></li>
 							</ul></li>
 

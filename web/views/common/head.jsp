@@ -18,3 +18,5 @@
 <script src="/artBridge/js/owl.carousel.min.js"></script>
 <script src="/artBridge/js/froala_editor.pkgd.min.js"></script>
 <script src="/artBridge/js/custom.js"></script>
+<!-- #### AJAX FILES ### -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

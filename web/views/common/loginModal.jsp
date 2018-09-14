@@ -7,34 +7,6 @@
 <title>Insert title here</title>
 <!-- jQuery -->
 <script src="http://code.jquery.com/jquery-1.12.0.js"></script>
-<script>
-    $(document).ready(function() {
-      $('#btnLogin').click(function() {
-    	var action = $('#frmLogin').attr("action");
-        var form_data = {
-                          userId:$('#userId').val(),
-                          userPwd:$('#userPwd').val()
-        				};
-        $.ajax({
-                  type: "POST",
-                  url: action,
-                  data: form_data,
-                  success: function(response) {
-                    
-                	//if(response.trim() == "success") {
-                    //  sessionStorage.setItem("user_id", form_data.user_id);
-                    //  $('#msg').html("<p style='color:green; font-weight:bold'>로그인 성공!</p>");
-                    //} else {
-                    //  $('#msg').html("<p style='color:red'>아이디 또는 비밀번호가 잘못되었습니다.</p>");
-                    //}
-                  },
-                  error: function() {
-                    //$('#msg').html("<h2>Error</h2>");
-                  }
-        });
-      });
-    });
-</script>
 </head>
 <body>
 
@@ -58,7 +30,7 @@
 								placeholder="비밀번호">
 						</div>
 						<p class="text-center">
-							<button class="btn btn-template-main" id="btnLogin">
+							<button class="btn btn-template-main" id="btnLogin" onclick="submit">
 								로그인
 							</button>
 						</p>
