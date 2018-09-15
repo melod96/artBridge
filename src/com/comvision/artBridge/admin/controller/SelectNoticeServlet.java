@@ -1,8 +1,6 @@
 package com.comvision.artBridge.admin.controller;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,37 +12,32 @@ import javax.servlet.http.HttpServletResponse;
 import com.comvision.artBridge.admin.model.service.NoticeService;
 import com.comvision.artBridge.admin.model.vo.Notice;
 
-@WebServlet("/noticeInsert.no")
-public class InsertNoticeServlet extends HttpServlet {
+@WebServlet("/noticeDetail.no")
+public class SelectNoticeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public InsertNoticeServlet() {
+    public SelectNoticeServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
+		String num = request.getParameter("num");
 		
+		System.out.println(num);
 		
-		System.out.println(content);
-		
-		Notice n = new Notice();
-		n.setnTitle(title);
-		n.setnContent(content);
-		
-		int result = new NoticeService().insertNotice(n);
+		Notice n = new NoticeService().selectOne(num);
 		
 		String page = "";
-		if(result > 0){
-			page = "/views/admin/noticeList.jsp";
-			request.setAttribute("list", new NoticeService().selectList());
+		if(n != null){
+			page = "views/admin/noticeDetail.jsp";
+			request.setAttribute("n", n);
 		}else{
-			page = "/views/common/errorPage.jsp";
-			request.setAttribute("msg", "공지사항 등록 실패!");
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "게시글 상세보기 실패!");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

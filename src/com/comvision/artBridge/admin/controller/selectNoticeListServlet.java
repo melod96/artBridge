@@ -1,7 +1,6 @@
 package com.comvision.artBridge.admin.controller;
 
 import java.io.IOException;
-import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -14,29 +13,30 @@ import javax.servlet.http.HttpServletResponse;
 import com.comvision.artBridge.admin.model.service.NoticeService;
 import com.comvision.artBridge.admin.model.vo.Notice;
 
-@WebServlet("/noticeInsert.no")
-public class InsertNoticeServlet extends HttpServlet {
+/**
+ * Servlet implementation class selectNoticeListServlet
+ */
+@WebServlet("/selectNoticeList.no")
+public class selectNoticeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public InsertNoticeServlet() {
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public selectNoticeListServlet() {
         super();
+        // TODO Auto-generated constructor stub
     }
 
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		
-		
-		System.out.println(content);
-		
-		Notice n = new Notice();
-		n.setnTitle(title);
-		n.setnContent(content);
-		
-		int result = new NoticeService().insertNotice(n);
-		
+	
+		ArrayList<Notice> list = new NoticeService().selectList();
+	
 		String page = "";
-		if(result > 0){
+		if(list != null){
 			page = "/views/admin/noticeList.jsp";
 			request.setAttribute("list", new NoticeService().selectList());
 		}else{
@@ -45,9 +45,14 @@ public class InsertNoticeServlet extends HttpServlet {
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+		
 	}
 
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

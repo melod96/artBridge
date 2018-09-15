@@ -1,6 +1,7 @@
 package com.comvision.artBridge.admin.model.service;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import com.comvision.artBridge.admin.model.dao.NoticeDao;
 import com.comvision.artBridge.admin.model.vo.Notice;
@@ -19,7 +20,41 @@ public class NoticeService {
 		}else{
 			rollback(con);
 		}
+		
+		close(con);
+		
 		return result;
+	}
+
+	//공지사항 리스트 출력용 메소드
+	public ArrayList<Notice> selectList() {
+		Connection con = getConnection();
+		
+		ArrayList<Notice> list = new NoticeDao().selectList(con);
+		
+		close(con);
+		
+		return list;
+	}
+	
+	//공지사항 상세보기용 메소드
+	public Notice selectOne(String num) {
+		Connection con = getConnection();
+		
+		Notice n = new NoticeDao().selectOne(con, num);
+		
+		if(n != null){
+			int result = new NoticeDao().updateCount(con, n.getnNo());
+			
+			if(result > 0){
+				commit(con);
+			}else{
+				rollback(con);
+			}
+			close(con);
+		}
+		
+		return n;
 	}
 
 }

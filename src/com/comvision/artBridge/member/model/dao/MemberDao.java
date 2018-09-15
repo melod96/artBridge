@@ -48,7 +48,7 @@ private Properties prop = new Properties();
 				loginUser.setId(rset.getString("id"));
 				loginUser.setPassword(rset.getString("password"));
 				loginUser.setName(rset.getString("name"));
-				loginUser.setAdmin_right(rset.getString("admin_right"));
+				loginUser.setAdmin_right(rset.getInt("admin_right"));
 				loginUser.setToken(rset.getString("token"));
 				loginUser.setPhone(rset.getString("phone"));
 				loginUser.setEmail(rset.getString("email"));

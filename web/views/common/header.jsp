@@ -66,6 +66,9 @@
 							</ul></li>
 						<li class="dropdown"><a href="#" class="join dropdown-toggle"><%= loginUser.getNick_name() %>님</a>
 							<ul class="dropdown-menu">
+								<% if(loginUser.getAdmin_right() == 1){ %>
+								<li><a href="/artBridge/views/admin/noticeList.jsp">관리자</a></li>
+								<% } %>
 								<li><a href="<%= request.getContextPath() %>/logout.me">로그아웃</a></li>
 							</ul></li>
 						<li><a href="#" class="msg"> <span
