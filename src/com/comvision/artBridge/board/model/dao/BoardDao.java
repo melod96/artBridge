@@ -83,8 +83,8 @@ public class BoardDao {
 				b.setBoard_type(rset.getInt("board_type"));
 				b.setBoard_title(rset.getString("board_title"));
 				b.setBoard_content(rset.getString("board_content"));
+				b.setNick_name(rset.getString("nick_name"));
 				b.setBoard_date(rset.getDate("board_date"));
-				b.setMember_no(rset.getInt("member_no"));
 				b.setBoard_status(rset.getInt("board_status"));
 				
 				list.add(b);
