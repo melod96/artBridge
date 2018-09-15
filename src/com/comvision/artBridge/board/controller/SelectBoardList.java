@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.comvision.artBridge.board.model.BoardService;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
+import com.comvision.artBridge.files.vo.Files;
 
 
 
@@ -74,12 +75,16 @@ public class SelectBoardList extends HttpServlet {
 
 		ArrayList<Board> list = new BoardService().selectList(currentPage, limit);
 		System.out.println("페이징 처리 : " + list);
+		
+		//한 게시글 마다 해당하는 이미지 파일 불러오기
+		ArrayList<Files> filelist = new BoardService().selectFileList(list);
 
 		String page = "";
 
 		if(list != null){
 			page = "views/sale/salepage.jsp";
 			request.setAttribute("list", list);
+			request.setAttribute("filelist", filelist);
 			request.setAttribute("pi", pi);
 		}else{
 			page = "views/common/errorPage.jsp";

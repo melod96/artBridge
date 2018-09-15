@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.files.vo.Files;
 
 public class BoardService {
 
@@ -30,6 +31,16 @@ public class BoardService {
 		close(con);
 		
 		return list;
+	}
+
+	public ArrayList<Files> selectFileList(ArrayList<Board> list) {
+		Connection con = getConnection();
+		
+		ArrayList<Files> filelist = new BoardDao().selectFileList(con,list);
+		
+		close(con);
+		
+		return filelist;
 	}
 
 }

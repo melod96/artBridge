@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.files.vo.Files;
 
 
 public class BoardDao {
@@ -98,6 +99,17 @@ public class BoardDao {
 		}
 		
 		return list;
+	}
+
+	public ArrayList<Files> selectFileList(Connection con, ArrayList<Board> list) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Files> filelist = null;
+		
+		String query = prop.getProperty("selectFileList");
+		
+		
+		return null;
 	}
 	
 	
