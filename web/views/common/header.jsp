@@ -32,7 +32,7 @@
 				<div class="navbar-collapse collapse" id="navigation">
 					<ul class="nav navbar-nav navbar-right">
 
-						<li class=""><a onclick = "location.href='/artBridge/selectList.bo'">일러스트 </a></li>
+						<li class=""><a onclick = "location.href='<%= request.getContextPath() %>/selectList.bo'">일러스트 </a></li>
 
 						<li class="dropdown"><a href="#" class="dropdown-toggle">이용안내</a>
 							<ul class="dropdown-menu">

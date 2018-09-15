@@ -1,4 +1,4 @@
-package com.kh.jsp.board.model.vo;
+package com.comvision.artBridge.board.model.vo;
 
 import java.io.Serializable;
 
