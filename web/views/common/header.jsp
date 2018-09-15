@@ -59,10 +59,12 @@
 						<li class="dropdown"><a href="#"
 							class="login dropdown-toggle">마이페이지</a>
 							<ul class="dropdown-menu">
-								<li><a href="#">마이페이지</a></li>
-								<li><a href="#">쪽지함</a></li>
-								<li><a href="#">주문 관리</a></li>
-								<li><a href="#">회원 정보 수정</a></li>
+								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu">주문관리</a></li>
+								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=msg-menu">쪽지함</a></li>
+								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=bookmark-menu">관심작가</a></li>
+								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=myinfo-menu">회원정보 수정</a></li>
+<!-- 							<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=mywork-menu">내 작품관리</a></li> -->
+								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=qna-menu">이용문의</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="#" class="join dropdown-toggle"><%= loginUser.getNick_name() %>님</a>
 							<ul class="dropdown-menu">
