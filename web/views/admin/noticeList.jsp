@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*"%>
+<% ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list"); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,7 +15,7 @@
       .tbl-type01 button{width:80px;}
       .btn-right{text-align:right; margin:30px 0 10px;}
       .btn-right button{position:relative; top:0;}
-      .tbl-type02 .tit{text-align:left; padding:12px;}
+      .tbl-type02 .tit{text-align:left; padding:12px; cursor:pointer;}
     </style>
 </head>
 <body>
@@ -56,7 +57,7 @@
 	                <!-- // 검색 테이블 영역 -->
 	                <div class="btn-right">
 	                   <button type="button" class="btn btn-danger" style="float:left;">삭제</button>
-	                   <button type="button" class="btn btn-primary" onclick="location.href='noticeInsertForm.jsp'">공지사항 등록</button>
+	                   <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/admin/noticeInsertForm.jsp'">공지사항 등록</button>
 	                </div>
 	                <!-- 공지사항 리스트  -->
 	                <table class="tbl-type02 table-hover">
@@ -75,30 +76,16 @@
 	                        </tr>
 	                    </thead>
 	                    <tbody>
+	                    	<% if(list != null){
+	                    		for(Notice n : list){ %>
 	                        <tr>
 	                            <td><input type="checkbox" name=""></td>
-	                            <td>10</td>
-	                            <td class="tit">제목이 보여집니다 테스트 입니다.</td>
-	                            <td>2018-08-25</td>
+	                            <td><%= n.getRownum() %></td>
+	                            <td id="noticeTit" class="tit" onclick="location.href='<%=request.getContextPath()%>/noticeDetail.no?num=<%= n.getnNo() %>'"><%= n.getnTitle() %></td>
+	                            <td><%= n.getnDate() %></td>
 	                        </tr>
-	                       <tr>
-	                            <td><input type="checkbox" name=""></td>
-	                            <td>10</td>
-	                            <td class="tit">제목이 보여집니다 테스트 입니다.</td>
-	                            <td>2018-08-25</td>
-	                        </tr>
-	                        <tr>
-	                            <td><input type="checkbox" name=""></td>
-	                            <td>10</td>
-	                            <td class="tit">제목이 보여집니다 테스트 입니다.</td>
-	                            <td>2018-08-25</td>
-	                        </tr>
-	                        <tr>
-	                            <td><input type="checkbox" name=""></td>
-	                            <td>10</td>
-	                            <td class="tit">제목이 보여집니다 테스트 입니다.</td>
-	                            <td>2018-08-25</td>
-	                        </tr>
+	                        <% 		}
+	                    		}%>
 	                    </tbody>
 	                </table>
 	                <!-- // 공지사항 리스트  -->
@@ -128,5 +115,13 @@
        <!-- // Footer -->
 
     </div>
+    
+    <script>
+    	<%-- $(function(){
+    		$("#noticeTit").click(function(){
+    			location.href = "<%=request.getContextPath()%>/adminDetail.no?num=" + num;
+    		});
+    	}); --%>
+    </script>
 </body>
 </html>

@@ -13,7 +13,7 @@ public class Member implements java.io.Serializable{
 	private String id;
 	private String password;
 	private String name;
-	private String admin_right;
+	private int admin_right;
 	private String token;
 	private String phone;
 	private String email;
@@ -32,7 +32,7 @@ public class Member implements java.io.Serializable{
 
 	//constructor
 	public Member(){}
-	public Member(int member_no, String id, String password, String name, String admin_right, String token,
+	public Member(int member_no, String id, String password, String name, int admin_right, String token,
 			String phone, String email, String nick_name, Date enroll_date, Date rogin_date, int writer_right,
 			String introduction, String bank, String account, Date writer_date, int reception_status, int writer_slot,
 			int rating_no, int member_secession) {
@@ -84,10 +84,10 @@ public class Member implements java.io.Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getAdmin_right() {
+	public int getAdmin_right() {
 		return admin_right;
 	}
-	public void setAdmin_right(String admin_right) {
+	public void setAdmin_right(int admin_right) {
 		this.admin_right = admin_right;
 	}
 	public String getToken() {

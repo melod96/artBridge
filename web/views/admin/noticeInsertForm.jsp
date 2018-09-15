@@ -35,7 +35,7 @@
                     <div class="heading">
                       <h2 class="tit1">공지사항 등록</h2>
                     </div>
-                    <form action="<%=request.getContextPath()%>/adminInsert.no" method="post">
+                    <form action="<%=request.getContextPath()%>/noticeInsert.no" method="post">
                         <table class="tbl-type01">
                             <colgroup>
                                 <col style="width: 200px;">
@@ -55,7 +55,9 @@
                           <textarea id="editor" name="content"></textarea>
                           <script type="text/javascript">
 						    //에티터 API
-						    $(function() { $('#editor').froalaEditor() });
+						    $(function() { 
+						    	$('#editor').froalaEditor()
+						    	});
 						  </script>
                           <!-- // 에디터 영역 -->
                         <div class="btn-center">

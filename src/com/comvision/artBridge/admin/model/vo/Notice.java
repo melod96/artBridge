@@ -2,8 +2,13 @@ package com.comvision.artBridge.admin.model.vo;
 
 import java.sql.Date;
 
-public class Notice {
+public class Notice implements java.io.Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1185112410759624719L;
 	//Board - 공지사항 게시판 글 객체
+	private int rownum;			//rownum
 	private int nNo;			//게시글번호
 	private int nType;			//게시글유형
 	private String nTitle;		//게시글제목
@@ -12,12 +17,14 @@ public class Notice {
 	private int memberNo;		//작가번호
 	private Date modifyDate;	//수정일
 	private int nStatus;		//게시글상태
+	private int nCount;  		//게시글 카운트
 	
 	public Notice(){}
 
-	public Notice(int nNo, int nType, String nTitle, String nContent, Date nDate, int memberNo, Date modifyDate,
-			int nStatus) {
+	public Notice(int rownum, int nNo, int nType, String nTitle, String nContent, Date nDate, int memberNo, Date modifyDate,
+			int nStatus, int nCount) {
 		super();
+		this.rownum = rownum;
 		this.nNo = nNo;
 		this.nType = nType;
 		this.nTitle = nTitle;
@@ -26,6 +33,24 @@ public class Notice {
 		this.memberNo = memberNo;
 		this.modifyDate = modifyDate;
 		this.nStatus = nStatus;
+		this.nCount = nCount;
+	}
+
+	
+	public int getnCount() {
+		return nCount;
+	}
+
+	public void setnCount(int nCount) {
+		this.nCount = nCount;
+	}
+
+	public int getRownum() {
+		return rownum;
+	}
+
+	public void setRownum(int rownum) {
+		this.rownum = rownum;
 	}
 
 	public int getnNo() {
