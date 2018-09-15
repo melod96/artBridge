@@ -1,13 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 	import="java.util.*, com.comvision.artBridge.board.model.vo.*"%>
-<%ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list"); 
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	int listCount = pi.getListCount();
-	int currentPage = pi.getCurrentPage();
-	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();%>
+<%
+	ArrayList<Board> list = null;
+	if((ArrayList<Board>)request.getAttribute("list") != null ){
+		list = (ArrayList<Board>)request.getAttribute("list"); 
+	}
+	PageInfo pi = null;
+	if((PageInfo)request.getAttribute("pi") != null){
+		pi = (PageInfo)request.getAttribute("pi");
+		int listCount = pi.getListCount();
+		int currentPage = pi.getCurrentPage();
+		int maxPage = pi.getMaxPage();
+		int startPage = pi.getStartPage();
+		int endPage = pi.getEndPage();
+	}
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -193,7 +201,7 @@
 											onclick="">
 											<dl class="thumb3" style="margin-left: 0;">
 												<li
-													style="background: url(<%= %>) no-repeat center 15%"></li>
+													style="background: url() no-repeat center 15%"></li>
 											</dl>
 											<dl class="thumb3">
 												<li

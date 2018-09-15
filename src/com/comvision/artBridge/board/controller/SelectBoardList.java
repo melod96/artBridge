@@ -42,9 +42,7 @@ public class SelectBoardList extends HttpServlet {
 		int startPage;	
 		int endPage; 	
 
-
 		currentPage = 1;
-
 
 		limit = 10;
 
