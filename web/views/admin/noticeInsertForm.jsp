@@ -32,10 +32,10 @@
             <div class="container">
                 <div class="col-md-12">
                     
-                    <form action="" method="">
-                        <div class="heading">
-                          <h2 class="tit1">공지사항 등록</h2>
-                        </div>
+                    <div class="heading">
+                      <h2 class="tit1">공지사항 등록</h2>
+                    </div>
+                    <form action="<%=request.getContextPath()%>/adminInsert.no" method="post">
                         <table class="tbl-type01">
                             <colgroup>
                                 <col style="width: 200px;">
@@ -45,21 +45,21 @@
                                 <tr>
                                     <th>제목</th>
                                     <td>
-                                      <input id="" name="" class="form-control" type="text" placeholder="제목을 입력하세요">
+                                      <input type="text" name="title" class="form-control" placeholder="제목을 입력하세요">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                         <br>
                          <!-- 에디터 영역 -->
-                          <textarea id="editor"></textarea>
+                          <textarea id="editor" name="content"></textarea>
                           <script type="text/javascript">
-	      //에티터 API
-	    $(function() { $('#editor').froalaEditor() });
-	</script>
+						    //에티터 API
+						    $(function() { $('#editor').froalaEditor() });
+						  </script>
                           <!-- // 에디터 영역 -->
                         <div class="btn-center">
-                          <button type="button" class="btn btn-default btn-lg">목록</button>
+                          <button type="reset" class="btn btn-default btn-lg" onclick="location.href='noticeList.jsp'">목록</button>
                           <button type="submit" class="btn btn-primary btn-lg">저장</button>
                         </div>
                     </form>
