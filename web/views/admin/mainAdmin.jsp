@@ -26,7 +26,7 @@ ul.tab-menu li>a:hover {
                     <li><a href="#" style="background:orangered; color:white;">메인 관리</a></li>
                     <li><a href="commissionAdmin.jsp">커미션 관리</a></li>
                     <li><a href="customerQna.jsp" >고객문의 관리</a></li>
-                    <li><a href="memberAdmin.jsp">회원 관리</a></li>
+                    <li><a href="<%= request.getContextPath() %>/selectMemberList.ad">회원 관리</a></li>
                     <li><a href="transactionAdmin.jsp">거래내역 관리</a></li>
                     <li><a href="noticeInsertForm.jsp">공지사항</a></li>
                 </ul>
