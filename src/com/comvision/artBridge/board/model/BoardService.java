@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
-import com.comvision.artBridge.files.vo.Files;
+import com.comvision.artBridge.files.model.vo.Files;
 
 public class BoardService {
 

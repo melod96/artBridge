@@ -1,10 +1,10 @@
 package com.comvision.artBridge.board.model.dao;
 
-import static com.comvision.artBridge.common.JDBCTemplate.*;
+import static com.comvision.artBridge.common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.comvision.artBridge.board.model.vo.Board;
-import com.comvision.artBridge.files.vo.Files;
+import com.comvision.artBridge.files.model.vo.Files;
 
 
 public class BoardDao {
@@ -108,8 +108,32 @@ public class BoardDao {
 		
 		String query = prop.getProperty("selectFileList");
 		
-		
-		return null;
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			for(int i = 0; i<list.size(); i++){
+				pstmt.setInt(1, list.get(i).getBoard_no());
+				
+				rset = pstmt.executeQuery();
+				
+				filelist= new ArrayList<Files>();
+				
+				while(rset.next()){
+					Files f = new Files();
+					
+					f.setChange_title(rset.getString("change_title"));
+					
+					filelist.add(f);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return filelist;
 	}
 	
 	

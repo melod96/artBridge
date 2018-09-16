@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.comvision.artBridge.board.model.BoardService;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
-import com.comvision.artBridge.files.vo.Files;
+import com.comvision.artBridge.files.model.vo.Files;
 
 
 
