@@ -36,6 +36,49 @@ public class BoardService {
 		
 		return list;
 	}
+	//최저가 정렬
+	public ArrayList<Board> selectCheapList(int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectCheapList(con,currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
+	
+	//최고가 정렬
+	public ArrayList<Board> selectExpensiveList(int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectExpensiveList(con,currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
+	
+	//거래완료율 정렬
+	public ArrayList<Board> selectCredibilityList(int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectCredibilityList(con,currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
+
+	//별점 정렬
+	public ArrayList<Board> selectStarList(int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectStarList(con,currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
 
 	//판매글에 해당하는 이미지 출력
 	public HashMap<String, Object> selectFileList(ArrayList<Board> list) {
@@ -61,13 +104,28 @@ public class BoardService {
 	}
 
 	//키워드에 해당하는 판매글 검색
-	public ArrayList<Board> searchKeywordList(String search) {
+	public ArrayList<Board> searchKeywordList(int currentPage, int limit, String search) {
 		Connection con = getConnection();
 		
-		ArrayList<Board> list = new BoardDao().searchKeywordList(con,search);
+		ArrayList<Board> list = new BoardDao().searchKeywordList(con,currentPage, limit,search);
 		
 		close(con);
 		return list;
 	}
+	//키워드에 해당하는 판매글의 갯수
+	public int getKeywordListCount(String search) {
+		Connection con = getConnection();
+		
+		int listCount = new BoardDao().getKeywordListCount(con,search);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	
+
+	
+
 
 }

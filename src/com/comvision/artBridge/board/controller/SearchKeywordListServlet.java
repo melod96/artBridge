@@ -21,13 +21,13 @@ import com.comvision.artBridge.relate.model.vo.Relate;
  * Servlet implementation class SelectKeywordList
  */
 @WebServlet("/searchkeyword.bo")
-public class SearchKeywordList extends HttpServlet {
+public class SearchKeywordListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SearchKeywordList() {
+    public SearchKeywordListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -42,9 +42,46 @@ public class SearchKeywordList extends HttpServlet {
 		String search = request.getParameter("search");
 		
 
-				ArrayList<Board> list = new BoardService().searchKeywordList(search);
-				
-				System.out.println("검색결과 : " + list);
+		//페이징 처리
+				int currentPage;
+				int limit;		
+				int maxPage; 	
+				int startPage;	
+				int endPage; 	
+
+
+				currentPage = 1;
+
+
+				limit = 10;
+
+				if(request.getParameter("currentPage")!= null){
+					currentPage = Integer.parseInt(request.getParameter("currentPage"));
+				}
+
+
+				int listCount = new BoardService().getKeywordListCount(search);
+
+
+				maxPage = (int)((double)listCount/limit + 0.9);
+
+
+				startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
+
+
+				endPage = startPage + limit -1;
+
+				if(maxPage<endPage){
+					endPage = maxPage;
+				}
+
+				PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
+
+
+				//판매글 출력
+//				ArrayList<Board> list = new BoardService().selectList(currentPage, limit);
+				ArrayList<Board> list = new BoardService().searchKeywordList(currentPage, limit,search);
+				System.out.println("페이징 처리 : " + list);
 				
 				//한 게시글 마다 해당하는 이미지 파일 불러오기
 				HashMap<String, Object> hmap = new BoardService().selectFileList(list);
@@ -55,11 +92,12 @@ public class SearchKeywordList extends HttpServlet {
 				//연관 검색어 출력
 				ArrayList<Relate> rlist = new BoardService().selectRelateList();
 				String page = "";
-
+			
 				if(list != null){
 					page = "views/sale/salepage.jsp";
 					request.setAttribute("list", list);
 					request.setAttribute("filelist", filelist);
+					request.setAttribute("pi", pi);
 					request.setAttribute("rlist", rlist);
 				}else{
 					page = "views/common/errorPage.jsp";
