@@ -14,17 +14,17 @@ import com.comvision.artBridge.board.model.service.BoardService;
 import com.comvision.artBridge.board.model.vo.Board;
 
 @WebServlet("/selectList.no")
-public class SelectNoticeListServlet extends HttpServlet {
+public class SelectNoticeList_main_Servlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectNoticeListServlet() {
+    public SelectNoticeList_main_Servlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		System.out.println("서블릿 진입");
 		
-		ArrayList<Board> list = new BoardService().selecNoticetList();
+		ArrayList<Board> list = new BoardService().selecNoticetList_main();
 		System.out.println("servlet");
 		
 		String page = "";
@@ -47,7 +47,6 @@ public class SelectNoticeListServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

@@ -99,6 +99,47 @@ public class BoardDao {
 		
 		return list;
 	}
+
+	public ArrayList<Board> selectNoticeList_main(Connection con) {
+		
+		
+		ArrayList<Board> list = null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectNoticeList");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			list = new ArrayList<Board>();
+			
+			while(rset.next()){
+				Board b = new Board();
+				
+				b.setBoard_no(rset.getInt("BOARD_NO"));
+				b.setBoard_title(rset.getString("BOARD_TITLE"));
+				b.setBoard_date(rset.getDate("BOARD_DATE"));
+				
+				list.add(b);
+				
+			}
+			
+			
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
+	}
+
+
 	
 	
 	
