@@ -15,6 +15,7 @@ import com.comvision.artBridge.board.model.service.BoardService;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.relate.model.vo.Relate;
 
 
 
@@ -37,7 +38,8 @@ public class SelectBoardList extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
+		//페이징 처리
 		int currentPage;
 		int limit;		
 		int maxPage; 	
@@ -73,17 +75,18 @@ public class SelectBoardList extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 
 
-
+		//판매글 출력
 		ArrayList<Board> list = new BoardService().selectList(currentPage, limit);
 		System.out.println("페이징 처리 : " + list);
 		
 		//한 게시글 마다 해당하는 이미지 파일 불러오기
-//		ArrayList<Files> filelist = new BoardService().selectFileList(list);
 		HashMap<String, Object> hmap = new BoardService().selectFileList(list);
 		
 		Board b = (Board)hmap.get("board");
 		ArrayList<Files> filelist = (ArrayList<Files>)hmap.get("files");
 
+		//연관 검색어 출력
+		ArrayList<Relate> rlist = new BoardService().selectRelateList();
 		String page = "";
 
 		if(list != null){
@@ -91,6 +94,7 @@ public class SelectBoardList extends HttpServlet {
 			request.setAttribute("list", list);
 			request.setAttribute("filelist", filelist);
 			request.setAttribute("pi", pi);
+			request.setAttribute("rlist", rlist);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 조회 실패");
