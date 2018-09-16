@@ -1,19 +1,20 @@
 package com.comvision.artBridge.board.model.dao;
 
-import static com.comvision.artBridge.common.JDBCTemplate.*;
+import static com.comvision.artBridge.common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.comvision.artBridge.board.model.vo.Board;
-import com.comvision.artBridge.files.vo.Files;
+import com.comvision.artBridge.files.model.vo.Files;
 
 
 public class BoardDao {
@@ -101,15 +102,51 @@ public class BoardDao {
 		return list;
 	}
 
-	public ArrayList<Files> selectFileList(Connection con, ArrayList<Board> list) {
+	public HashMap<String, Object> selectFileList(Connection con, ArrayList<Board> list) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<Files> filelist = null;
+		ArrayList<Files> flist = null;
+		HashMap<String, Object> filelist = null;
+		Board b= null;
+		Files f= null;
 		
 		String query = prop.getProperty("selectFileList");
 		
-		
-		return null;
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			for(int i = 0; i<list.size(); i++){
+				pstmt.setInt(1, list.get(i).getBoard_no());
+				
+				rset = pstmt.executeQuery();
+				
+				flist= new ArrayList<Files>();
+				
+				while(rset.next()){
+					b = new Board();
+					b.setBoard_no(rset.getInt("board_no"));
+					b.setBoard_title(rset.getString("board_title"));
+					b.setBoard_content(rset.getString("board_content"));
+					b.setNick_name(rset.getString("nick_name"));
+					
+					f = new Files();
+					
+					f.setFiles_root(rset.getString("files_root"));
+					
+					flist.add(f);
+				}
+				
+				filelist = new HashMap<String,Object>();
+				filelist.put("board", b);
+				filelist.put("files", flist);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return filelist;
 	}
 	
 	

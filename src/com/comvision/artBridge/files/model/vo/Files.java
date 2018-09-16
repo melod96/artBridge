@@ -1,4 +1,4 @@
-package com.comvision.artBridge.files.vo;
+package com.comvision.artBridge.files.model.vo;
 
 import java.io.Serializable;
 import java.sql.Date;
@@ -7,6 +7,7 @@ public class Files implements Serializable{
 	private int files_no;
 	private int f_reference_no;
 	private String files_title;
+	private String change_title;
 	private String files_type;
 	private String files_root;
 	private Date files_date;
@@ -16,12 +17,13 @@ public class Files implements Serializable{
 		
 	}
 
-	public Files(int files_no, int f_reference_no, String files_title, String files_type, String files_root,
-			Date files_date, int files_secession) {
+	public Files(int files_no, int f_reference_no, String files_title, String change_title, String files_type,
+			String files_root, Date files_date, int files_secession) {
 		super();
 		this.files_no = files_no;
 		this.f_reference_no = f_reference_no;
 		this.files_title = files_title;
+		this.change_title = change_title;
 		this.files_type = files_type;
 		this.files_root = files_root;
 		this.files_date = files_date;
@@ -38,6 +40,10 @@ public class Files implements Serializable{
 
 	public String getFiles_title() {
 		return files_title;
+	}
+
+	public String getChange_title() {
+		return change_title;
 	}
 
 	public String getFiles_type() {
@@ -68,6 +74,10 @@ public class Files implements Serializable{
 		this.files_title = files_title;
 	}
 
+	public void setChange_title(String change_title) {
+		this.change_title = change_title;
+	}
+
 	public void setFiles_type(String files_type) {
 		this.files_type = files_type;
 	}
@@ -86,8 +96,10 @@ public class Files implements Serializable{
 
 	@Override
 	public String toString() {
-		return "FilesDao [files_no=" + files_no + ", f_reference_no=" + f_reference_no + ", files_title=" + files_title
-				+ ", files_type=" + files_type + ", files_root=" + files_root + ", files_date=" + files_date
-				+ ", files_secession=" + files_secession + "]";
+		return "Files [files_no=" + files_no + ", f_reference_no=" + f_reference_no + ", files_title=" + files_title
+				+ ", change_title=" + change_title + ", files_type=" + files_type + ", files_root=" + files_root
+				+ ", files_date=" + files_date + ", files_secession=" + files_secession + "]";
 	}
+
+	
 }

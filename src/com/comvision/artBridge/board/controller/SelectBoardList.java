@@ -2,6 +2,7 @@ package com.comvision.artBridge.board.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,10 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.comvision.artBridge.board.model.BoardService;
+import com.comvision.artBridge.board.model.service.BoardService;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
-import com.comvision.artBridge.files.vo.Files;
+import com.comvision.artBridge.files.model.vo.Files;
 
 
 
@@ -77,7 +78,11 @@ public class SelectBoardList extends HttpServlet {
 		System.out.println("페이징 처리 : " + list);
 		
 		//한 게시글 마다 해당하는 이미지 파일 불러오기
-		ArrayList<Files> filelist = new BoardService().selectFileList(list);
+//		ArrayList<Files> filelist = new BoardService().selectFileList(list);
+		HashMap<String, Object> hmap = new BoardService().selectFileList(list);
+		
+		Board b = (Board)hmap.get("board");
+		ArrayList<Files> filelist = (ArrayList<Files>)hmap.get("files");
 
 		String page = "";
 

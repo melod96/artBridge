@@ -1,4 +1,4 @@
-package com.comvision.artBridge.files.dao;
+package com.comvision.artBridge.files.model.dao;
 
 import java.sql.Date;
 
