@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.comvision.artBridge.board.model.vo.Board;
@@ -101,10 +102,13 @@ public class BoardDao {
 		return list;
 	}
 
-	public ArrayList<Files> selectFileList(Connection con, ArrayList<Board> list) {
+	public HashMap<String, Object> selectFileList(Connection con, ArrayList<Board> list) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<Files> filelist = null;
+		ArrayList<Files> flist = null;
+		HashMap<String, Object> filelist = null;
+		Board b= null;
+		Files f= null;
 		
 		String query = prop.getProperty("selectFileList");
 		
@@ -116,18 +120,27 @@ public class BoardDao {
 				
 				rset = pstmt.executeQuery();
 				
-				filelist= new ArrayList<Files>();
+				flist= new ArrayList<Files>();
 				
 				while(rset.next()){
-					Files f = new Files();
+					b = new Board();
+					b.setBoard_no(rset.getInt("board_no"));
+					b.setBoard_title(rset.getString("board_title"));
+					b.setBoard_content(rset.getString("board_content"));
+					b.setNick_name(rset.getString("nick_name"));
 					
-					f.setChange_title(rset.getString("change_title"));
+					f = new Files();
 					
-					filelist.add(f);
+					f.setFiles_root(rset.getString("files_root"));
+					
+					flist.add(f);
 				}
+				
+				filelist = new HashMap<String,Object>();
+				filelist.put("board", b);
+				filelist.put("files", flist);
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			close(pstmt);

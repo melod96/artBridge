@@ -1,4 +1,4 @@
-package com.comvision.artBridge.board.model;
+package com.comvision.artBridge.board.model.service;
 
 
 import static com.comvision.artBridge.common.JDBCTemplate.close;
@@ -6,6 +6,7 @@ import static com.comvision.artBridge.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
@@ -33,10 +34,10 @@ public class BoardService {
 		return list;
 	}
 
-	public ArrayList<Files> selectFileList(ArrayList<Board> list) {
+	public HashMap<String, Object> selectFileList(ArrayList<Board> list) {
 		Connection con = getConnection();
 		
-		ArrayList<Files> filelist = new BoardDao().selectFileList(con,list);
+		HashMap<String, Object> filelist = new BoardDao().selectFileList(con,list);
 		
 		close(con);
 		

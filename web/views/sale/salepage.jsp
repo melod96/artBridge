@@ -93,7 +93,7 @@
 							</select></li>
 							<ul class="right">
 								<div class="sBtn1" style="height: 42px; line-height: 42px;"
-									onclick="writer_chk('3')">작품 등록 / 수정</div>
+									onclick="">작품 등록 / 수정</div>
 							</ul>
 
 						</div>
@@ -111,62 +111,62 @@
 
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 							<ol>
 								<a
-									href="index.php?channel=list&cate=100000000000&commers=&field=tag&search=19#listFocus"
+									href=""
 									class="tag21">#귀염뽀작</a>
 							</ol>
 
@@ -192,18 +192,12 @@
 									<ol style="height: 145px;">
 										<a
 											onclick="">
-											<dl class="thumb3" style="margin-left: 0;">
+											<%for(Files f : filelist){ %>
+												<dl class="thumb3" style="margin-left: 0;">
 												<li
-													style="background: url(<%= %>) no-repeat center 15%"></li>
-											</dl>
-											<dl class="thumb3">
-												<li
-													style="background: url() no-repeat center 15%"></li>
-											</dl>
-											<dl class="thumb3">
-												<li
-													style="background: url() no-repeat center 15%"></li>
-											</dl>
+													style="background: url(<%= f.getFiles_root()%>) no-repeat center 15%"></li>
+												</dl>
+											<%} %>
 										</a>
 									</ol>
 									<ol style="height: 28px;">
@@ -211,8 +205,7 @@
 											style="padding-left: 6px; width: 360px;">
 											<a
 												href=""
-												title="이작가의 다른 작품보기">aaa 작가</a>&nbsp;&nbsp;/&nbsp;&nbsp;반실사/풀채색
-											일러스트/배경 일러스트/팬아트
+												title="이작가의 다른 작품보기"><%= b.getNick_name() %></a>&nbsp;&nbsp;/&nbsp;&nbsp;<%= b.getBoard_title() %>
 										</dl>
 									</ol>
 									<ol>
