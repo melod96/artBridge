@@ -30,6 +30,7 @@ public class MainDao {
 	}
 
 	
+	
 	public Main selectMain(Connection con, Main mno) {
 		Statement stmt = null;
 		ResultSet rset = null;
