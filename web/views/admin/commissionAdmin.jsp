@@ -28,22 +28,19 @@ ul.tab-menu li>a:hover {
 		<%@ include file="/views/common/header.jsp"%>
 		<!-- // Header -->
 
-		<!-- subHeader -->
 		<section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
-		<div class="container">
-			<h2>관리자 페이지</h2>
-			<ul class="tab-menu">
-				<li><a href="mainAdmin.html">메인 관리</a></li>
-				<li><a href="#" style="background: orangered; color: white;"
-					id="commissionBtn">커미션 관리</a></li>
-				<li><a href="customerAdmin.html">고객문의 관리</a></li>
-				<li><a href="memberAdmin.html">회원 관리</a></li>
-				<li><a href="transactionAdmin.html">거래내역 관리</a></li>
-				<li><a href="#">공지사항</a></li>
-			</ul>
-		</div>
-		</section>
-		<!-- //subHeader -->
+            <div class="container">
+                <h2>관리자 페이지</h2>
+                <ul class="tab-menu">
+                    <li><a href="mainAdmin.jsp">메인 관리</a></li>
+                    <li><a href="#" style="background:orangered; color:white;" >커미션 관리</a></li>
+                    <li><a href="customerAdmin.jsp">고객문의 관리</a></li>
+                    <li><a href="memberAdmin.jsp">회원 관리</a></li>
+                    <li><a href="transactionAdmin.jsp">거래내역 관리</a></li>
+                    <li><a href="noticeList.jsp">공지사항</a></li>
+                </ul>
+            </div>
+        </section>
 
 
 		<!-- 주석 영역 -->
@@ -58,9 +55,9 @@ ul.tab-menu li>a:hover {
 					<hr>
 					<br>
 					<div id="searchWord">
-						<input type="text" name="scArea" style="width: 50%;" id="txtBtn">
+						<input type="text" name="scArea" style="width: 50%;" id="relate">
 						<button name="mainBtn" class="btn btn-primary btn-sm"
-							onclick="add();">검색어 추가</button>
+							onclick="add();" id="insertRelate">검색어 추가</button>
 						<button name="mainBtn" class="btn btn-primary btn-sm"
 							onclick="del();">검색어 삭제</button>
 
@@ -125,6 +122,7 @@ ul.tab-menu li>a:hover {
 							});
 
 						}
+										
 					</script>
 
 					<button type="submit" id="addBtn" name="mainBtn"
