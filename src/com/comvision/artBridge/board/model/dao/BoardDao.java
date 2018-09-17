@@ -92,6 +92,8 @@ public class BoardDao {
 				b.setNick_name(rset.getString("nick_name"));
 				b.setBoard_date(rset.getDate("board_date"));
 				b.setBoard_status(rset.getInt("board_status"));
+				b.setBoard_count(rset.getInt("board_count"));
+				b.setMain_view(rset.getInt("main_view"));
 				
 				list.add(b);
 			}

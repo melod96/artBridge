@@ -20,19 +20,7 @@ ul.tab-menu li>a:hover {
 		<%@ include file="/views/common/header.jsp"%>
 		<!-- // Header -->
 		
-		<section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
-            <div class="container">
-                <h2>관리자 페이지</h2>
-                <ul class="tab-menu">
-                    <li><a href="mainAdmin.jsp" >메인 관리</a></li>
-                    <li><a href="commissionAdmin.jsp">커미션 관리</a></li>
-                    <li><a href="customerAdmin.jsp" >고객문의 관리</a></li>
-                    <li><a href="#" style="background:orangered; color:white;">회원 관리</a></li>
-                    <li><a href="transactionAdmin.jsp" >거래내역 관리</a></li>
-                    <li><a href="noticeInsertForm.jsp">공지사항</a></li>
-                </ul>
-            </div>
-        </section>
+		<%@ include file="/views/common/adminHeader.jsp"%>
 
 		<!-- 주석 영역 -->
 		<div class="contents">
@@ -107,8 +95,8 @@ ul.tab-menu li>a:hover {
        					var popUrl = "userPop.jsp"; //팝업창에 출력될 페이지 URL
 
                      
-				        var popupX = (window.screen.width / 2 ) - (580/2);
 					    // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+				        var popupX = (window.screen.width / 2 ) - (580/2);
 					
 					    var popupY= (window.screen.height /2)-(300/2);
 					    // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음

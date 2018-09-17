@@ -47,12 +47,12 @@ ul.tab-menu li>a:hover {
             <div class="container">
                 <h2>관리자 페이지</h2>
                 <ul class="tab-menu">
-                    <li><a href="mainAdmin.jsp" >메인 관리</a></li>
-                    <li><a href="commissionAdmin.jsp">커미션 관리</a></li>
-                    <li><a href="customerAdmin.jsp" >고객문의 관리</a></li>
+                    <li><a href="/artBridge/views/admin/mainAdmin.jsp" >메인 관리</a></li>
+                    <li><a href="/artBridge/views/admin/commissionAdmin.jsp">커미션 관리</a></li>
+                    <li><a href="/artBridge/views/admin/customerAdmin.jsp" >고객문의 관리</a></li>
                     <li><a href="#" style="background:orangered; color:white;">회원 관리</a></li>
-                    <li><a href="transactionAdmin.jsp" >거래내역 관리</a></li>
-                    <li><a href="noticeInsertForm.jsp">공지사항</a></li>
+                    <li><a href="/artBridge/views/admin/transactionAdmin.jsp" >거래내역 관리</a></li>
+                    <li><a href="/artBridge/views/admin/noticeInsertForm.jsp">공지사항</a></li>
                 </ul>
             </div>
         </section>

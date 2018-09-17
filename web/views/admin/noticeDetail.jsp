@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.comvision.artBridge.admin.model.vo.Notice"%>
-<% Notice n = (Notice)request.getAttribute("n"); %>
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,7 +10,7 @@
 	<style type="text/css">
       .heading{margin-bottom:20px !important;}
       .btn-center{margin-bottom:50px;}
-      .cont-area{min-height:200px; padding:30px;}
+      .cont-area{min-height:200px;}
     </style>
 </head>
 <body>
@@ -39,13 +38,16 @@
                     <table class="tbl-type01">
                         <colgroup>
                             <col style="width: 200px;">
+
                             <col style="width: 500px;">
                             <col style="width: 200px;">
-                            <col style="width: *">
+
+                         <col style="width: *">
                         </colgroup>
                         <tbody>
                             <tr>
                                 <th>제목</th>
+
                                 <td colspan="3">
                                 	<div><%= n.getnTitle() %></div>
                                 </td>
@@ -59,13 +61,16 @@
                             <tr>
                             	<td colspan="4">
                             		<div class="cont-area"><%= n.getnContent() %></div>
+
                             	</td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="btn-center">
+
                     	<button type="submit" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/updateViewNotice.no?num=<%= n.getnNo() %>'">수정</button>
                    		<button type="reset" class="btn btn-primary btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no'">목록</button>
+
                     </div>
 
                 </div>
