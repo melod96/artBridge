@@ -56,7 +56,7 @@
 	                </table>
 	                <!-- // 검색 테이블 영역 -->
 	                <div class="btn-right">
-	                   <button type="button" class="btn btn-danger" style="float:left;">삭제</button>
+	                   <button type="button" class="btn btn-danger" onclick="location.href='<%=request.getContextPath()%>/delNotice.no'" style="float:left;">삭제</button>
 	                   <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/admin/noticeInsertForm.jsp'">공지사항 등록</button>
 	                </div>
 	                <!-- 공지사항 리스트  -->
@@ -65,6 +65,7 @@
 	                        <col style="width: 80px;">
 	                        <col style="width: 100px;">
 	                        <col style="width: *">
+	                        <col style="width: 120px;">
 	                        <col style="width: 180px;">
 	                    </colgroup>
 	                    <thead>
@@ -72,6 +73,7 @@
 	                            <th scope="col">선택</th>
 	                            <th scope="col">NO</th>
 	                            <th scope="col">제목</th>
+	                            <th scope="col">조회수</th>
 	                            <th scope="col">등록일</th>
 	                        </tr>
 	                    </thead>
@@ -82,10 +84,15 @@
 	                            <td><input type="checkbox" name=""></td>
 	                            <td><%= n.getRownum() %></td>
 	                            <td id="noticeTit" class="tit" onclick="location.href='<%=request.getContextPath()%>/noticeDetail.no?num=<%= n.getnNo() %>'"><%= n.getnTitle() %></td>
+	                            <td><%= n.getnCount() %></td>
 	                            <td><%= n.getnDate() %></td>
 	                        </tr>
-	                        <% 		}
-	                    		}%>
+	                        <% 	}
+	                    	}else{ %>
+	                    	<tr>
+	                    		<td colspan="5">등록된 게시물이 없습니다.</td>
+	                    	</tr>		
+	                    	<% } %>
 	                    </tbody>
 	                </table>
 	                <!-- // 공지사항 리스트  -->
@@ -115,13 +122,5 @@
        <!-- // Footer -->
 
     </div>
-    
-    <script>
-    	<%-- $(function(){
-    		$("#noticeTit").click(function(){
-    			location.href = "<%=request.getContextPath()%>/adminDetail.no?num=" + num;
-    		});
-    	}); --%>
-    </script>
 </body>
 </html>

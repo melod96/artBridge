@@ -78,6 +78,7 @@ public class NoticeDao {
 				n.setModifyDate(rset.getDate("modify_date"));
 				n.setnStatus(rset.getInt("board_status"));
 				n.setnCount(rset.getInt("board_count"));
+				n.setMain_view(rset.getInt("main_view"));
 				
 				list.add(n);
 			}
@@ -118,6 +119,7 @@ public class NoticeDao {
 				n.setModifyDate(rset.getDate("modify_date"));
 				n.setnStatus(rset.getInt("board_status"));
 				n.setnCount(rset.getInt("board_count"));
+				n.setMain_view(rset.getInt("main_view"));
 				
 			}
 		} catch (SQLException e) {
@@ -152,6 +154,56 @@ public class NoticeDao {
 		
 		return result;
 	}
+
+	//페이징 처리용 메소드
+	public int getListCount(Connection con) {
+		Statement stmt= null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("listCount");
+		
+		int listCount = 0;
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(stmt);
+			close(rset);
+		}
+		
+		return listCount;
+	}
+
+	//공지사항 수정용 메소드
+	/*public int updateNotice(Connection con, String num) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		Notice n = null;
+		
+		String query = prop.getProperty("updateNotice");
+
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, n.getnTitle());
+			pstmt.setString(2, n.getnContent());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}*/
 
 	
 }
