@@ -57,4 +57,36 @@ public class NoticeService {
 		return n;
 	}
 
+	//페이징 처리용 메소드
+	public int getListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new NoticeDao().getListCount(con);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	//공지사항 수정용 메소드
+	/*public Notice updateOne(String num) {
+		Connection con = getConnection();
+		
+		Notice n = new NoticeDao().updateOne(con, num);
+		
+		if(n != null){
+			int result = new NoticeDao().updateNotice(con, num);
+			
+			if(result > 0){
+				commit(con);
+			}else{
+				rollback(con);
+			}
+			close(con);
+		}
+		
+		return n;
+	}*/
+	
+
 }

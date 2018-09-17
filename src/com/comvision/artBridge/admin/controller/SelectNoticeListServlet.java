@@ -12,27 +12,43 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.admin.model.service.NoticeService;
 import com.comvision.artBridge.admin.model.vo.Notice;
+import com.comvision.artBridge.admin.model.vo.PageInfo;
 
-/**
- * Servlet implementation class selectNoticeListServlet
- */
 @WebServlet("/selectNoticeList.no")
-public class selectNoticeListServlet extends HttpServlet {
+public class SelectNoticeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public selectNoticeListServlet() {
+    public SelectNoticeListServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		//페이징 처리
+		int currentPage;
+		int limit;		
+		int maxPage; 	
+		int startPage;	
+		int endPage; 	
+
+		currentPage = 1;
+		limit = 10;
+
+		if(request.getParameter("currentPage")!= null){
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+		int listCount = new NoticeService().getListCount();
+
+		maxPage = (int)((double)listCount/limit + 0.9);
+		startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
+		endPage = startPage + limit -1;
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+
+		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
+		
+		//공지사항 리스트 출력
 		ArrayList<Notice> list = new NoticeService().selectList();
 	
 		String page = "";
@@ -48,11 +64,7 @@ public class selectNoticeListServlet extends HttpServlet {
 		
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

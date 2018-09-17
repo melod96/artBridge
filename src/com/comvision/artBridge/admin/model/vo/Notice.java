@@ -18,11 +18,12 @@ public class Notice implements java.io.Serializable{
 	private Date modifyDate;	//수정일
 	private int nStatus;		//게시글상태
 	private int nCount;  		//게시글 카운트
+	private int main_view;  	//메인노출여부
 	
 	public Notice(){}
 
 	public Notice(int rownum, int nNo, int nType, String nTitle, String nContent, Date nDate, int memberNo, Date modifyDate,
-			int nStatus, int nCount) {
+			int nStatus, int nCount, int main_view) {
 		super();
 		this.rownum = rownum;
 		this.nNo = nNo;
@@ -34,9 +35,17 @@ public class Notice implements java.io.Serializable{
 		this.modifyDate = modifyDate;
 		this.nStatus = nStatus;
 		this.nCount = nCount;
+		this.main_view = main_view;
 	}
 
-	
+	public int getMain_view() {
+		return main_view;
+	}
+
+	public void setMain_view(int main_view) {
+		this.main_view = main_view;
+	}
+
 	public int getnCount() {
 		return nCount;
 	}
