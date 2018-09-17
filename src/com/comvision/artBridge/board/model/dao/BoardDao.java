@@ -88,6 +88,7 @@ public class BoardDao {
 				b.setBoard_type(rset.getInt("board_type"));
 				b.setBoard_title(rset.getString("board_title"));
 				b.setBoard_content(rset.getString("board_content"));
+				b.setMember_no(rset.getInt("member_no"));
 				b.setNick_name(rset.getString("nick_name"));
 				b.setBoard_date(rset.getDate("board_date"));
 				b.setBoard_status(rset.getInt("board_status"));
@@ -268,6 +269,7 @@ public class BoardDao {
 				b.setBoard_type(rset.getInt("board_type"));
 				b.setBoard_title(rset.getString("board_title"));
 				b.setBoard_content(rset.getString("board_content"));
+				b.setMember_no(rset.getInt("member_no"));
 				b.setNick_name(rset.getString("nick_name"));
 				b.setBoard_date(rset.getDate("board_date"));
 				b.setBoard_status(rset.getInt("board_status"));
@@ -322,6 +324,9 @@ public class BoardDao {
 				filelist = new HashMap<String,Object>();
 				filelist.put("board", b);
 				filelist.put("files", flist);
+				System.out.println(flist);
+				System.out.println(b);
+				System.out.println(filelist);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -441,6 +446,70 @@ public class BoardDao {
 		}
 		
 		return listCount;
+	}
+
+	public int updateCount(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			pstmt.setInt(2, num);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Board selectOneSalepage(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		
+		String query = prop.getProperty("selectOne");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				b= new Board();
+				
+				/*b.setBid(rset.getInt("bid"));
+				b.setbType(rset.getInt("btype"));
+				b.setBno(rset.getInt("bno"));
+				b.setCategory(rset.getString("cname"));
+				b.setbTitle(rset.getString("btitle"));
+				b.setbContent(rset.getString("bcontent"));
+				b.setbWriter(rset.getString("nick_name"));
+				b.setbCount(rset.getInt("bcount"));
+				b.setRefBid(rset.getInt("ref_bid"));
+				b.setReplyLevel(rset.getInt("reply_level"));
+				b.setbDate(rset.getDate("bdate"));
+//				b.setModifyDate(rset.getDate("modify_date"));
+				b.setStatus(rset.getString("status"));*/
+				
+			}
+			System.out.println(b);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return b;
 	}
 
 
