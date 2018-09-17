@@ -182,10 +182,9 @@ public class NoticeDao {
 	}
 
 	//공지사항 수정용 메소드
-	/*public int updateNotice(Connection con, String num) {
+	public int updateNotice(Connection con, Notice n) {
 		PreparedStatement pstmt = null;
 		int result = 0;
-		Notice n = null;
 		
 		String query = prop.getProperty("updateNotice");
 
@@ -193,6 +192,8 @@ public class NoticeDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, n.getnTitle());
 			pstmt.setString(2, n.getnContent());
+			pstmt.setDate(3, n.getnDate());
+			pstmt.setInt(4, n.getnNo());
 			
 			result = pstmt.executeUpdate();
 			
@@ -203,7 +204,23 @@ public class NoticeDao {
 		}
 		
 		return result;
-	}*/
+	}
 
+	//공지사항 검색용 메소드
+	public Notice searchNotice(Connection con, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("searchNotice");
+		
+		/*try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, );
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}*/
+		
+		return null;
+	}
 	
 }

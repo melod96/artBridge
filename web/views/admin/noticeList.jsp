@@ -38,23 +38,25 @@
 	                <div class="heading">
 	                  <h2 class="tit1">공지사항</h2>
 	                </div>
-	                <!-- 검색 테이블 영역 -->
-	                <table class="tbl-type01">
-	                    <colgroup>
-	                        <col style="width: 200px;">
-	                        <col style="width: *">
-	                    </colgroup>
-	                    <tbody>
-	                        <tr>
-	                            <th>제목검색</th>
-	                            <td>
-	                              <input id="" name="" class="form-control input-mid" type="text" placeholder="검색할 제목을 입력하세요">
-	                              <button type="button" class="btn btn-primary">검색</button>
-	                            </td>
-	                        </tr>
-	                    </tbody>
-	                </table>
-	                <!-- // 검색 테이블 영역 -->
+		             <form action="<%=request.getContextPath()%>/searchNotice.no" method="post">
+		                <!-- 검색 테이블 영역 -->
+		                <table class="tbl-type01">
+		                    <colgroup>
+		                        <col style="width: 200px;">
+		                        <col style="width: *">
+		                    </colgroup>
+		                    <tbody>
+		                        <tr>
+		                            <th>제목검색</th>
+		                            <td>
+		                              <input name="search" class="form-control input-mid" type="text" placeholder="검색할 제목을 입력하세요">
+		                              <button type="submit" class="btn btn-primary">검색</button>
+		                            </td>
+		                        </tr>
+		                    </tbody>
+		                </table>
+	                	<!-- // 검색 테이블 영역 -->
+	                </form>
 	                <div class="btn-right">
 	                   <button type="button" class="btn btn-danger" style="float:left;">삭제</button>
 	                   <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/admin/noticeInsertForm.jsp'">공지사항 등록</button>

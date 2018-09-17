@@ -38,24 +38,39 @@
                     <table class="tbl-type01">
                         <colgroup>
                             <col style="width: 200px;">
-                            <col style="width: *">
+
+                            <col style="width: 500px;">
+                            <col style="width: 200px;">
+
+                         <col style="width: *">
                         </colgroup>
                         <tbody>
                             <tr>
                                 <th>제목</th>
-                                <td>
-                                	<div>제목영역테스트</div>
+
+                                <td colspan="3">
+                                	<div><%= n.getnTitle() %></div>
                                 </td>
                             </tr>
                             <tr>
-                            	<td colspan="2">
-                            		<div class="cont-area">제목영역테스트제목영역테스트제목영역테스트</div>
+                            	<th>등록일</th>
+                            	<td><%= n.getnDate() %></td>
+                            	<th>조회수</th>
+                            	<td><%= n.getnCount() %></td>
+                            </tr>
+                            <tr>
+                            	<td colspan="4">
+                            		<div class="cont-area"><%= n.getnContent() %></div>
+
                             	</td>
                             </tr>
                         </tbody>
                     </table>
                     <div class="btn-center">
-                      <button type="reset" class="btn btn-primary btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no'">목록</button>
+
+                    	<button type="submit" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/updateViewNotice.no?num=<%= n.getnNo() %>'">수정</button>
+                   		<button type="reset" class="btn btn-primary btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no'">목록</button>
+
                     </div>
 
                 </div>

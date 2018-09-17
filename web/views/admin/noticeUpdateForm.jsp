@@ -1,9 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.comvision.artBridge.admin.model.vo.Notice"%>
-<% 
-	String title = (String)request.getAttribute("title");
-	String content = request.getParameter("content");
-%>
+<% Notice n = (Notice)request.getAttribute("n"); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -39,7 +36,7 @@
                     <div class="heading">
                       <h2 class="tit1">공지사항 등록</h2>
                     </div>
-                    <form action="<%=request.getContextPath()%>/noticeInsert.no" method="post">
+                    <form action="<%=request.getContextPath()%>/updateNotice.no" method="post">
                         <table class="tbl-type01">
                             <colgroup>
                                 <col style="width: 200px;">
@@ -49,14 +46,15 @@
                                 <tr>
                                     <th>제목</th>
                                     <td>
-                                      <input type="text" name="title" class="form-control" value="<%= title %>">
+                                      <input type="text" name="title" class="form-control" value="<%=n.getnTitle()%>">
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+                        <input type="hidden" name="num" value="<%= n.getnNo()%>">
                         <br>
                          <!-- 에디터 영역 -->
-                          <textarea id="editor" name="content"><%= content %></textarea>
+                          <textarea id="editor" name="content"><%= n.getnContent() %></textarea>
                           <script type="text/javascript">
 						    //에티터 API
 						    $(function() { 
@@ -65,7 +63,7 @@
 						  </script>
                           <!-- // 에디터 영역 -->
                         <div class="btn-center">
-                          <button type="reset" class="btn btn-default btn-lg" onclick="location.href='noticeList.jsp'">목록</button>
+                          <button type="reset" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/noticeDetail.no?num=<%= n.getnNo()%>'">취소</button>
                           <button type="submit" class="btn btn-primary btn-lg">저장</button>
                         </div>
                     </form>
