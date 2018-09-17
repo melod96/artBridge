@@ -69,13 +69,30 @@ public class NoticeService {
 	}
 
 	//공지사항 수정용 메소드
-	/*public Notice updateOne(String num) {
+	public int updateNotice(Notice n) {
 		Connection con = getConnection();
 		
-		Notice n = new NoticeDao().updateOne(con, num);
+		int result = new NoticeDao().updateNotice(con, n);
 		
-		if(n != null){
-			int result = new NoticeDao().updateNotice(con, num);
+		if(result > 0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	//공지사항 검색용 메소드
+	public Notice searchNotice(String search) {
+		Connection con = getConnection();
+		
+		Notice n = new NoticeDao().searchNotice(con, search);
+		
+		/*if(n != null){
+			//int result = new NoticeDao().searchNotice(con, n.getnNo());
 			
 			if(result > 0){
 				commit(con);
@@ -83,10 +100,12 @@ public class NoticeService {
 				rollback(con);
 			}
 			close(con);
-		}
+		}*/
 		
 		return n;
-	}*/
+	}
+
+	
 	
 
 }

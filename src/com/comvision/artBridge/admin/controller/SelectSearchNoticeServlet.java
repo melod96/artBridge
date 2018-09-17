@@ -1,8 +1,6 @@
 package com.comvision.artBridge.admin.controller;
 
 import java.io.IOException;
-
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,31 +10,22 @@ import javax.servlet.http.HttpServletResponse;
 import com.comvision.artBridge.admin.model.service.NoticeService;
 import com.comvision.artBridge.admin.model.vo.Notice;
 
-@WebServlet("/noticeDetail.no")
-public class SelectNoticeServlet extends HttpServlet {
+@WebServlet("/searchNotice.no")
+public class SelectSearchNoticeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectNoticeServlet() {
+    public SelectSearchNoticeServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String num = request.getParameter("num");
+		String search = request.getParameter("search");
 		
-		//System.out.println(num);
+		System.out.println(search);
 		
-		Notice n = new NoticeService().selectOne(num);
-		
-		String page = "";
-		if(n != null){
-			page = "views/admin/noticeDetail.jsp";
-			request.setAttribute("n", n);
-		}else{
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "게시글 상세보기 실패!");
-		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
+		//Notice n = new NoticeService().searchNotice(search);
+		 
+		//request.setAttribute("n", n);
 		
 	}
 

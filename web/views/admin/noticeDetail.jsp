@@ -36,41 +36,37 @@
                     <div class="heading">
                       <h2 class="tit1">공지사항</h2>
                     </div>
-                    <form action="goNoticeUpdateForm();" method="post">
-	                    <table class="tbl-type01">
-	                        <colgroup>
-	                            <col style="width: 200px;">
-	                            <col style="width: 500px;">
-	                            <col style="width: 200px;">
-	                            <col style="width: *">
-	                        </colgroup>
-	                        
-	                        <tbody>
-	                            <tr>
-	                                <th>제목</th>
-	                                <td colspan="3">
-	                                	<div name="title" id="title"><%= n.getnTitle() %></div>
-	                                </td>
-	                            </tr>
-	                            <tr>
-	                            	<th>등록일</th>
-	                            	<td><%= n.getnDate() %></td>
-	                            	<th>조회수</th>
-	                            	<td><%= n.getnCount() %></td>
-	                            </tr>
-	                            <tr>
-	                            	<td colspan="4">
-	                            		<div class="cont-area" name="content"><%= n.getnContent() %></div>
-	                            	</td>
-	                            </tr>
-	                        </tbody>
-	                    </table>
-	                    <div class="btn-center">
-	                    	<%-- <button class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/updateNotice.no?cont=<%=n.getnContent()%>'">수정</button> --%>
-	                    	<button type="submit" class="btn btn-default btn-lg">수정</button>
-	                   		<button type="reset" class="btn btn-primary btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no'">목록</button>
-	                    </div>
-	                </form>
+                    <table class="tbl-type01">
+                        <colgroup>
+                            <col style="width: 200px;">
+                            <col style="width: 500px;">
+                            <col style="width: 200px;">
+                            <col style="width: *">
+                        </colgroup>
+                        <tbody>
+                            <tr>
+                                <th>제목</th>
+                                <td colspan="3">
+                                	<div><%= n.getnTitle() %></div>
+                                </td>
+                            </tr>
+                            <tr>
+                            	<th>등록일</th>
+                            	<td><%= n.getnDate() %></td>
+                            	<th>조회수</th>
+                            	<td><%= n.getnCount() %></td>
+                            </tr>
+                            <tr>
+                            	<td colspan="4">
+                            		<div class="cont-area"><%= n.getnContent() %></div>
+                            	</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="btn-center">
+                    	<button type="submit" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/updateViewNotice.no?num=<%= n.getnNo() %>'">수정</button>
+                   		<button type="reset" class="btn btn-primary btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no'">목록</button>
+                    </div>
 
                 </div>
             </div>
