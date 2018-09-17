@@ -126,14 +126,16 @@
 	String tel2 = "";
 	String tel3 = "";
 	
-	if(phone.length() > 10){
-		tel1 = phone.substring(0, 3);
-		tel2 = phone.substring(3, 7);
-		tel3 = phone.substring(7, 11);
-	}else{
-		tel1 = phone.substring(0, 3);
-		tel2 = phone.substring(3, 6);
-		tel3 = phone.substring(6, 10);
+	if(phone != null){
+		if(phone.length() > 10){
+			tel1 = phone.substring(0, 3);
+			tel2 = phone.substring(3, 7);
+			tel3 = phone.substring(7, 11);
+		}else{
+			tel1 = phone.substring(0, 3);
+			tel2 = phone.substring(3, 6);
+			tel3 = phone.substring(6, 10);
+		}
 	}
 	
 	String pwd = ((Member)(session.getAttribute("loginUser"))).getPassword();

@@ -68,6 +68,7 @@ public class SelectMainAdminServlet extends HttpServlet {
 			page = "views/admin/mainAdmin.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
+			request.setAttribute("pageName", request.getParameter("pageName"));
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 조회 실패");

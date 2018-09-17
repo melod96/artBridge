@@ -36,14 +36,14 @@
 
 						<li class="dropdown"><a href="#" class="dropdown-toggle">이용안내</a>
 							<ul class="dropdown-menu">
-								<li><a href="../info/infoUseRequester.jsp"> 의뢰자 이용안내</a></li>
-								<li><a href="../info/infoUseArtist.jsp">작가 이용안내</a></li>
-								<li><a href="../info/infoUseOther.jsp">환불규정 및 유의사항</a></li>
+								<li><a href="/artBridge/views/info/infoUseRequester.jsp"> 의뢰자 이용안내</a></li>
+								<li><a href="/artBridge/views/info/infoUseArtist.jsp">작가 이용안내</a></li>
+								<li><a href="/artBridge/views/info/infoUseOther.jsp">환불규정 및 유의사항</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="#" class="dropdown-toggle">고객센터</a>
 							<ul class="dropdown-menu">
-								<li><a href="../faq/faq_requester.jsp">자주하는 질문</a></li>
-								<li><a href="../notice/noticeBoard.jsp">공지사항</a></li>
+								<li><a href="/artBridge/views/faq/faq_requester.jsp">자주하는 질문</a></li>
+								<li><a href="/artBridge/views/notice/noticeBoard.jsp">공지사항</a></li>
 								<li><a href="#">광고상품 안내</a></li>
 							</ul></li>
 
