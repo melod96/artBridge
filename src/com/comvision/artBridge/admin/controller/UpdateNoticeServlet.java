@@ -27,6 +27,7 @@ public class UpdateNoticeServlet extends HttpServlet {
 		String title = request.getParameter("tit");
 		String content = request.getParameter("cont");
 		
+		
 		System.out.println("제목이냐 " + title);
 		System.out.println("컨텐츠 " + content);
 		
