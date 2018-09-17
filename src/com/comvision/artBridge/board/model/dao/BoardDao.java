@@ -105,6 +105,185 @@ public class BoardDao {
 		return list;
 	}
 
+	//최저가 정렬
+	public ArrayList<Board> selectCheapList(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = null;
+		
+		String query = prop.getProperty("selectCheapList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			while(rset.next()){
+				Board b= new Board();
+				
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setBoard_type(rset.getInt("board_type"));
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				b.setNick_name(rset.getString("nick_name"));
+				b.setBoard_date(rset.getDate("board_date"));
+				b.setBoard_status(rset.getInt("board_status"));
+				
+				list.add(b);
+			}
+//			System.out.println("dao: " + list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+	
+	//최고가 정렬
+	public ArrayList<Board> selectExpensiveList(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = null;
+		
+		String query = prop.getProperty("selectExpensiveList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			while(rset.next()){
+				Board b= new Board();
+				
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setBoard_type(rset.getInt("board_type"));
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				b.setNick_name(rset.getString("nick_name"));
+				b.setBoard_date(rset.getDate("board_date"));
+				b.setBoard_status(rset.getInt("board_status"));
+				
+				list.add(b);
+			}
+//			System.out.println("dao: " + list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+	
+	//거래완료율 정렬
+	public ArrayList<Board> selectCredibilityList(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = null;
+		
+		String query = prop.getProperty("selectCredibilityList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			while(rset.next()){
+				Board b= new Board();
+				
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setBoard_type(rset.getInt("board_type"));
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				b.setNick_name(rset.getString("nick_name"));
+				b.setBoard_date(rset.getDate("board_date"));
+				b.setBoard_status(rset.getInt("board_status"));
+				
+				list.add(b);
+			}
+//			System.out.println("dao: " + list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+
+	//별점 정렬
+	public ArrayList<Board> selectStarList(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = null;
+		
+		String query = prop.getProperty("selectStarList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			while(rset.next()){
+				Board b= new Board();
+				
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setBoard_type(rset.getInt("board_type"));
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				b.setNick_name(rset.getString("nick_name"));
+				b.setBoard_date(rset.getDate("board_date"));
+				b.setBoard_status(rset.getInt("board_status"));
+				
+				list.add(b);
+			}
+//			System.out.println("dao: " + list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
 	//판매글에 해당하는 이미지 출력
 	public HashMap<String, Object> selectFileList(Connection con, ArrayList<Board> list) {
 		PreparedStatement pstmt = null;
@@ -187,7 +366,7 @@ public class BoardDao {
 	}
 
 	//키워드에 해당하는 판매글 검색
-	public ArrayList<Board> searchKeywordList(Connection con, String search) {
+	public ArrayList<Board> searchKeywordList(Connection con, int currentPage, int limit, String search) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Board> list = null;
@@ -196,9 +375,15 @@ public class BoardDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			/*pstmt.setString(1, search);
-			pstmt.setString(2, search);
-			pstmt.setString(3, search);*/
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			System.out.println("s" + startRow + "e" + endRow);
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			System.out.println("???"+search);
+			pstmt.setString(3, "%"+search+"%" );
+			pstmt.setString(4, "%"+search+"%");
+			pstmt.setString(5, "%"+search+"%");
 			
 			rset= pstmt.executeQuery();
 			
@@ -226,6 +411,42 @@ public class BoardDao {
 		}
 		return list;
 	}
+
+	//키워드에 해당하는 판매글의 갯수
+	public int getKeywordListCount(Connection con, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("KeywordListCount");
+		
+		int listCount = 0;
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, "%"+search+"%");
+			pstmt.setString(2, "%"+search+"%");
+			pstmt.setString(3, "%"+search+"%");
+			
+			rset= pstmt.executeQuery();
+			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return listCount;
+	}
+
+
+
+
+
 	
 	
 	

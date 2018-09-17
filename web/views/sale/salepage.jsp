@@ -9,7 +9,8 @@
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();%>
+	int endPage = pi.getEndPage();
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -50,6 +51,20 @@
 .right {
 	float: right;
 }
+.sBtn1{
+	width:140px;
+	background:#343434;
+	color:white;
+	text-align:center;
+}
+.sBtn1:hover{
+	cursor:pointer;
+}
+#search{
+	width:192px;
+	height:32px;
+	line-height:140%;
+}
 </style>
 </head>
 <body>
@@ -85,12 +100,14 @@
 
 								<button type="submit" class="btn btn-default btn-sg form-inline">검색</button>
 							</form>
-							<li class="left" style="margin-left: 8px"><select
-								class="form-control input-xshort">
-									<option>최저가</option>
-									<option>최고가</option>
-									<option>거래완료율</option>
-									<option>별점</option>
+							<!-- option 태그 미완성 -->
+							<li class="left" style="margin-left: 8px">
+							<select	class="form-control input-xshort" onchange="changeSelect()" name = "sel">
+								<option value="0" name="0">전체</option>	
+								<option value="1"name="1">최저가</option>
+								<option value="2"name="2">최고가</option>
+								<option value="3"name="3">거래완료율</option>
+								<option value="4"name="4">별점</option>
 							</select></li>
 							<ul class="right">
 								<div class="sBtn1" style="height: 42px; line-height: 42px;"
@@ -98,9 +115,67 @@
 							</ul>
 
 						</div>
-
+						<script>
+							function changeSelect(){
+								var sel_val = document.all.sel.value;
+								
+								if(sel_val == "0"){
+									location.href="<%=request.getContextPath()%>/selectList.bo";
+								}else if(sel_val=="1"){
+									$.ajax({
+										url:"selectChangeList.bo",
+										data:{sel_val:sel_val},
+										type:"get",
+										success:function(data){
+											console.log("서버 전송 성공");
+										},
+										error:function(status, msg){
+											console.log("서버 전송 실패");
+										}
+									});
+								}else if(sel_val=="2"){
+									$.ajax({
+										url:"selectChangeList.bo",
+										data:{sel_val:sel_val},
+										type:"get",
+										success:function(data){
+											console.log("서버 전송 성공");
+										},
+										error:function(status, msg){
+											console.log("서버 전송 실패");
+										}
+									});
+								}else if(sel_val=="3"){
+									$.ajax({
+										url:"selectChangeList.bo",
+										data:{sel_val:sel_val},
+										type:"get",
+										success:function(data){
+											console.log("서버 전송 성공");
+										},
+										error:function(status, msg){
+											console.log("서버 전송 실패");
+										}
+									});
+								}else{
+									$.ajax({
+										url:"selectChangeList.bo",
+										data:{sel_val:sel_val},
+										type:"get",
+										success:function(data){
+											console.log("서버 전송 성공");
+										},
+										error:function(status, msg){
+											console.log("서버 전송 실패");
+										}
+									});
+								}
+									
+							}
+						</script>
 
 					</div>
+					
 					<br>
 
 					<div id="tagList">
@@ -135,9 +210,9 @@
 						</div>
 						<img src="/web/image/saletest/salepageimg.jpg" alt="" />
 
-						<%for(Board b :list){ %>
-						
+						<%for(Board b :list){%>
 							<div id="list_img" style="display: block;">
+						
 							<div class="list_img_box both left">
 								<ul>
 									<ol style="height: 145px;">
@@ -173,14 +248,15 @@
 								</ul>
 								<div class="clear" style="height: 10px;">&nbsp;</div>
 							</div>
-							<div class="list_img_box both left">
+						
+							<%-- <div class="list_img_box both left">
 								<ul>
 									<ol style="height: 145px;">
 										<a
 											onclick="">
 											<%for(Files f : filelist){ %>
 												<dl class="thumb3" style="margin-left: 0;">
-												<%-- <li style="background: url(<%= f.getFiles_root()%>) no-repeat center 15%"></li> --%>
+												<li style="background: url(<%= f.getFiles_root()%>) no-repeat center 15%"></li>
 												<li>
 													<img src="/image/saletest/salepageimg.jpg" alt="" />
 												</li>
@@ -207,7 +283,8 @@
 									</ol>
 								</ul>
 								<div class="clear" style="height: 10px;">&nbsp;</div>
-							</div>
+							</div> --%>
+						
 						</div>
 
 						<%} %>
