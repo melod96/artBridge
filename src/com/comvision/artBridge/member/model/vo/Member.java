@@ -29,13 +29,13 @@ public class Member implements java.io.Serializable{
 	private int writer_slot;
 	private int rating_no;
 	private int member_secession;
-
-	//constructor
-	public Member(){}
-	public Member(int member_no, String id, String password, String name, int admin_right, String token,
-			String phone, String email, String nick_name, Date enroll_date, Date rogin_date, int writer_right,
-			String introduction, String bank, String account, Date writer_date, int reception_status, int writer_slot,
-			int rating_no, int member_secession) {
+	private String rating_name;
+	
+	public Member(){};
+	public Member(int member_no, String id, String password, String name, int admin_right, String token, String phone,
+			String email, String nick_name, Date enroll_date, Date rogin_date, int writer_right, String introduction,
+			String bank, String account, Date writer_date, int reception_status, int writer_slot, int rating_no,
+			int member_secession, String rating_name) {
 		super();
 		this.member_no = member_no;
 		this.id = id;
@@ -57,9 +57,8 @@ public class Member implements java.io.Serializable{
 		this.writer_slot = writer_slot;
 		this.rating_no = rating_no;
 		this.member_secession = member_secession;
+		this.rating_name = rating_name;
 	}
-
-	//getter, setter
 	public int getMember_no() {
 		return member_no;
 	}
@@ -180,11 +179,15 @@ public class Member implements java.io.Serializable{
 	public void setMember_secession(int member_secession) {
 		this.member_secession = member_secession;
 	}
+	public String getRating_name() {
+		return rating_name;
+	}
+	public void setRating_name(String rating_name) {
+		this.rating_name = rating_name;
+	}
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	//tostring
 	@Override
 	public String toString() {
 		return "Member [member_no=" + member_no + ", id=" + id + ", password=" + password + ", name=" + name
@@ -192,7 +195,10 @@ public class Member implements java.io.Serializable{
 				+ ", nick_name=" + nick_name + ", enroll_date=" + enroll_date + ", rogin_date=" + rogin_date
 				+ ", writer_right=" + writer_right + ", introduction=" + introduction + ", Bank=" + Bank + ", account="
 				+ account + ", writer_date=" + writer_date + ", reception_status=" + reception_status + ", writer_slot="
-				+ writer_slot + ", rating_no=" + rating_no + ", member_secession=" + member_secession + "]";
+				+ writer_slot + ", rating_no=" + rating_no + ", member_secession=" + member_secession + ", rating_name="
+				+ rating_name + "]";
 	}
+	
+	
 	
 }

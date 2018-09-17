@@ -1,0 +1,287 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8" import="java.util.ArrayList, com.comvision.artBridge.member.model.vo.Member, com.comvision.artBridge.board.model.vo.PageInfo"%>
+<%
+	ArrayList<Member> list = null;
+	if(request.getAttribute("list") != null){
+		list = (ArrayList<Member>)request.getAttribute("list");
+	}
+	PageInfo pi = null;
+	int listCount = 0;
+	int currentPage = 0;
+	int maxPage = 0;
+	int startPage = 0;
+	int endPage = 0;
+	int limit = 0;
+	if(request.getAttribute("pi") != null){
+		pi = (PageInfo)request.getAttribute("pi");
+		listCount = pi.getListCount();
+		currentPage = pi.getCurrentPage();
+		maxPage = pi.getMaxPage();
+		startPage = pi.getStartPage();
+		endPage = pi.getEndPage();
+		limit = pi.getLimit();
+	}
+
+%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Art Bridge</title>
+<%@ include file="/views/common/head.jsp"%>
+<style>
+ul.tab-menu li>a:hover {
+	background: darkgray;
+}
+</style>
+</head>
+<body>
+	<div id="all">
+
+		<!-- Header -->
+		<%@ include file="/views/common/header.jsp"%>
+		<!-- // Header -->
+		
+		<section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
+            <div class="container">
+                <h2>관리자 페이지</h2>
+                <ul class="tab-menu">
+                    <li><a href="mainAdmin.jsp" >메인 관리</a></li>
+                    <li><a href="commissionAdmin.jsp">커미션 관리</a></li>
+                    <li><a href="customerAdmin.jsp" >고객문의 관리</a></li>
+                    <li><a href="#" style="background:orangered; color:white;">회원 관리</a></li>
+                    <li><a href="transactionAdmin.jsp" >거래내역 관리</a></li>
+                    <li><a href="noticeInsertForm.jsp">공지사항</a></li>
+                </ul>
+            </div>
+        </section>
+
+		<!-- 주석 영역 -->
+		<div class="contents">
+			<!-- contents 필수 사용 -->
+			<div class="container">
+				<!-- container 필수 사용 -->
+				<div class="col-md-12">
+					<div class="heading">
+						<h2>회원 관리</h2>
+					</div>
+					<hr>
+					<br>
+					<div>
+						<table class="tbl-type02">
+							<colgroup>
+								<col style="width: 20%;">
+								<col style="width: *;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td style="background: lightgray; width: 200px;">검색옵션</td>
+									<td><select class="form-control input-short">
+											<option>전체</option>
+											<option>이름</option>
+											<option>아이디</option>
+											<option>연락처</option>
+											<option>이메일</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td style="background: lightgray">검색어 입력</td>
+									<td><input type="text" style="width: 500px; float: left;">
+									</td>
+								</tr>
+								<tr>
+									<td style="background: lightgray">사용자 구분</td>
+									<td><select class="form-control input-short">
+											<option>전체</option>
+											<option>작가</option>
+											<option>일반사용자</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td style="background: lightgray;">작가 등급</td>
+									<td><select class="form-control input-short"
+										style="float: left;">
+											<option>전체</option>
+											<option>신뢰작가</option>
+											<option>일반작가</option>
+											<option>신규작가</option>
+											<option>블랙작가</option>
+									</select>
+										<button type="submit" name="mainBtn"
+											class="btn btn-primary btn-md" style="float: right;">검색</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<br> <br>
+
+					<button type="submit" class="btn btn-primary btn-md"
+						style="padding: 5px 22px; float: right;" onclick="del4();">계정삭제</button>
+					<button onclick=popupOpen(); type="submit" id="deleteBtn"
+						name="deleteBtn" class="btn btn-primary btn-sm"
+						style="padding: 5px 22px; float: right; margin-right: 5px;">정보수정</button>
+					<br>
+					<script>
+      					/* function popupOpen() {
+
+       					var popUrl = "userPop.jsp"; //팝업창에 출력될 페이지 URL
+
+                     
+				        var popupX = (window.screen.width / 2 ) - (580 / 2);
+					    // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+					
+					    var popupY= (window.screen.height / 2 ) - (300 / 2);
+					    // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
+					
+					    var popOption = "width=578, height=301, resizable=no, scrollbars=no, status=no, top="+popupY+", left=" + popupX 
+					    //팝업창 옵션(optoin)
+					    window.open(popUrl,"", popOption);
+					
+					    } */
+					    //=================del4 함수 부분======================
+					
+						function del4(){
+							$("input[name=chBox4]").each(function() {
+								if ($(this).prop("checked") == true) {
+									$(this).parent().parent().remove();					
+								}
+							});
+
+							var n = 1;
+							
+							$(".num4").each(function() {
+								$(this).text(n);
+								n++;
+							});
+						}  
+
+  				 	</script>
+					<br>
+
+					<table class="tbl-type02">
+						<colgroup>
+							<col style="width: 5%;">
+							<col style="width: 5%;">
+							<col style="width: 7%;">
+							<col style="width: 10%;">
+							<col style="width: 10%;">
+							<col style="width: 12%;">
+							<col style="width: 15%;">
+							<col style="width: *;">
+							<col style="width: 13%">
+						</colgroup>
+						<thead>
+							<tr>
+								<th scope="col">선택</th>
+								<th scope="col">NO</th>
+								<th scope="col">구분</th>
+								<th scope="col">등급</th>
+								<th scope="col">이름</th>
+								<th scope="col">ID</th>
+								<th scope="col">연락처</th>
+								<th scope="col">메일</th>
+								<th scope="col">가입일</th>
+
+							</tr>
+						</thead>
+						<!-- 
+						<tbody>
+							<% if(list != null){for(Member m : list){ %>
+								<tr>
+									<input type="hidden" value="<%= m.getMember_no() %>" />
+									<td><input type="checkbox" name="chBox4"></td>
+									<td><%= m.getMember_no() %></td>
+									<% 	String right = null;
+										if(m.getWriter_right() != 0){
+											right = "작가";
+										}else{
+											right = "일반";
+										}
+									%>
+									<td><%= right %></td>
+									<%
+										String rating_name = null;
+										if(m.getRating_name() != null){
+											rating_name = m.getRating_name();
+										}else{
+											rating_name = "-";
+										}
+									%>
+									<td><%= rating_name %></td>
+									<td><%= m.getName() %></td>
+									<td><%= m.getId() %></td>
+									<td><%= m.getPhone() %></td>
+									<td><%= m.getEmail() %></td>
+									<td><%= m.getEnroll_date() %></td>
+								</tr>
+							<% }} %>
+
+						</tbody>
+						 -->
+					</table>
+
+					<div class="paginate">
+						<a href="#" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a>
+						<a href="#" class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
+						<span class="paging-numbers">
+							<a href="#">1<span class="blind">페이지로 이동</span></a> 
+							<a href="#" class="on">2<span class="blind">페이지로 이동</span></a> 
+							<a href="#">3<span class="blind">페이지로 이동</span></a> 
+							<a href="#">4<span class="blind">페이지로 이동</span></a> 
+							<a href="#">5<span class="blind">페이지로 이동</span></a>
+						</span> <a href="#" class="btn-next" title="다음">
+						<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> 
+						<a href="#" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+					</div>
+					
+					<!-- 페이징 -->
+	
+					<div class="pagingArea" align="center">
+					<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=1'"><<</button>
+					<% if(currentPage <= 1){ %>
+						<button disabled><</button>
+					<% }else{ %>
+						<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?cuttentPage=<%= currentPage - 1 %>'"><</button>
+					<% } %>
+					
+					<% 
+						for(int p = startPage; p <= endPage; p++){ 
+							if(p == currentPage){
+					%>
+								<button disabled><%= p %></button>
+					<% 		}else{ %>
+								<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= p %>'"><%= p %></button>
+					<% 		
+							}
+						}		
+					%>
+					
+					<% if(currentPage >= maxPage){ %>
+						<button disabled>></button>
+					<% }else{ %>
+						<button onclick="location.href'<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= currentPage + 1 %>'">></button>
+					<% } %>
+					
+					<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= maxPage %>'">>></button>
+					</div>
+					
+					<!-- //페이징 -->
+					
+					<br> <br>
+				</div>
+			</div>
+		</div>
+
+		<!-- // 주석 영역 -->
+
+		<!-- Footer -->
+		<%@ include file="/views/common/footer.jsp"%>
+		<!-- // Footer -->
+
+	</div>
+</body>
+</html>
