@@ -20,19 +20,7 @@ ul.tab-menu li>a:hover {
 		<%@ include file="/views/common/header.jsp"%>
 		<!-- //Header -->
 		
-		<section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
-            <div class="container">
-                <h2>관리자 페이지</h2>
-                <ul class="tab-menu">
-                    <li><a href="mainAdmin.jsp">메인 관리</a></li>
-                    <li><a href="commissionAdmin.jsp">커미션 관리</a></li>
-                    <li><a href="customerAdmin.jsp" >고객문의 관리</a></li>
-                    <li><a href="memberAdmin.jsp">회원 관리</a></li>
-                    <li><a href="#" style="background:orangered; color:white;">거래내역 관리</a></li>
-                    <li><a href="noticeInsertForm.jsp">공지사항</a></li>
-                </ul>
-            </div>
-        </section>
+		<%@ include file="/views/common/adminHeader.jsp"%>
 
 		<!-- 주석 영역 -->
 		<div class="contents">
