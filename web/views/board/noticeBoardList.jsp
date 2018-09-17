@@ -163,12 +163,12 @@
 					 	 <% for(Board b : list){ %>
 						
 							<tr>
-								<input type="hidden" value="<%=b.getBd_no()%>">
-								<td><%= b.getBd_no() %></td>
-								<td><%= b.getBd_title()%></td>
+								<input type="hidden" value="<%=b.getBoard_no()%>">
+								<td><%= b.getBoard_no() %></td>
+								<td><%= b.getBoard_title()%></td>
 								<td>관리자</td>
 								<td>5조5억번 </td>
-								<td><%=b.getBd_date()%></td>
+								<td><%=b.getBoard_date()%></td>
 							</tr>
 						<% } %>
 

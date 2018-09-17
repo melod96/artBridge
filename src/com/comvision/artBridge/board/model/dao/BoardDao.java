@@ -40,7 +40,6 @@ public class BoardDao {
 		String query = prop.getProperty("listCount");
 		
 		int listCount = 0;
-		
 		try {
 			stmt = con.createStatement();
 			rset = stmt.executeQuery(query);
@@ -48,6 +47,8 @@ public class BoardDao {
 			if(rset.next()){
 				listCount = rset.getInt(1);
 			}
+			
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
