@@ -22,14 +22,14 @@ import com.comvision.artBridge.relate.model.vo.Relate;
 /**
  * Servlet implementation class SelectBoardList
  */
-@WebServlet("/selectList.bo")
-public class SelectBoardListServlet extends HttpServlet {
+@WebServlet("/selectSaleList.bo")
+public class SelectSaleListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public SelectBoardListServlet() {
+	public SelectSaleListServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}

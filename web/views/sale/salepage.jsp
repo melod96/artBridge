@@ -65,6 +65,16 @@
 	height:32px;
 	line-height:140%;
 }
+#list_img .list_img_box {
+    position: relative;
+    width: 534px;
+    height: 244px;
+    margin-bottom: 42px;
+    border: 1px solid #d3d3d3;
+    }
+.left{
+	float:left;
+}
 </style>
 </head>
 <body>
@@ -208,25 +218,22 @@
 								<!-- id:listTable 에 리스트가 나옵니다. -->
 							</table>
 						</div>
-						<img src="/web/image/saletest/salepageimg.jpg" alt="" />
+						<!-- <img src="/artBridge/image/saletest/salepageimg.jpg" alt="" /> -->
 
 						<%for(Board b :list){%>
 							<div id="list_img" style="display: block;">
-						
 							<div class="list_img_box both left">
 								<ul>
 									<ol style="height: 145px;">
-										<a
-											onclick="">
 											<%for(Files f : filelist){ %>
-												<dl class="thumb3" style="margin-left: 0;">
+												<dl class="thumb3" style="margin: 5px; display:inline-block;">
 												<%-- <li style="background: url(<%= f.getFiles_root()%>) no-repeat center 15%"></li> --%>
-												<li>
-													<img src="/image/saletest/salepageimg.jpg" alt="" />
+												<li style="display:inline-block;" id = "thumbnail">
+												<input type="hidden" value = "<%=b.getMember_no() %>" />
+													<img src="<%=f.getFiles_root() %>" alt=""/>
 												</li>
 												</dl>
 											<%} %>
-										</a>
 									</ol>
 									<ol style="height: 28px;">
 										<dl class="left ellip"
@@ -291,6 +298,20 @@
 
 						
 					</form>
+					
+					<script>
+					//체이닝 방식
+						$(function(){
+							$('#thumbnail img').mouseenter(function(){
+								$(this).parent().css({"opacity":"0.8","cursor":"pointer"});
+							}).mouseout(function(){
+								$(this).parent().css({"opacity":"1"});
+							}).click(function(){
+								var num = $(this).parent().children("input").val();
+								location.href="<%= request.getContextPath()%>/selectOneSalepage.bo?num=" + num;
+							});
+						});
+					</script>
 
 
 
