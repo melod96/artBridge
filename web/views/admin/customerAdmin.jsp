@@ -164,7 +164,7 @@ ul.tab-menu li>a:hover {
 								<td>양소나</td>
 								<td>작가</td>
 								<td><div style="float: left;">
-										&nbsp;&nbsp;<a href="customerQna.html"><u>문의 드립니다.</u></a>
+										&nbsp;&nbsp;<a href="customerQna.jsp"><u>문의 드립니다.</u></a>
 									</div></td>
 							</tr>
 

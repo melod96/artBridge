@@ -13,13 +13,16 @@ public class Board implements Serializable{
 	private Date modify_date;
 	private int board_status;
 	private String nick_name;
+	private int board_count;
+	private int main_view;
+	
 	
 	public Board(){
 		
 	}
 
 	public Board(int board_no, int board_type, String board_title, String board_content, Date board_date, int member_no,
-			Date modify_date, int board_status, String nick_name) {
+			Date modify_date, int board_status, String nick_name, int board_count, int main_view) {
 		super();
 		this.board_no = board_no;
 		this.board_type = board_type;
@@ -30,6 +33,8 @@ public class Board implements Serializable{
 		this.modify_date = modify_date;
 		this.board_status = board_status;
 		this.nick_name = nick_name;
+		this.board_count = board_count;
+		this.main_view = main_view;
 	}
 
 	public int getBoard_no() {
@@ -96,6 +101,22 @@ public class Board implements Serializable{
 		this.modify_date = modify_date;
 	}
 
+	public int getBoard_count() {
+		return board_count;
+	}
+
+	public void setBoard_count(int board_count) {
+		this.board_count = board_count;
+	}
+
+	public int getMain_view() {
+		return main_view;
+	}
+
+	public void setMain_view(int main_view) {
+		this.main_view = main_view;
+	}
+
 	public void setBoard_status(int board_status) {
 		this.board_status = board_status;
 	}
@@ -108,7 +129,8 @@ public class Board implements Serializable{
 	public String toString() {
 		return "Board [board_no=" + board_no + ", board_type=" + board_type + ", board_title=" + board_title
 				+ ", board_content=" + board_content + ", board_date=" + board_date + ", member_no=" + member_no
-				+ ", modify_date=" + modify_date + ", board_status=" + board_status + ", nick_name=" + nick_name + "]";
+				+ ", modify_date=" + modify_date + ", board_status=" + board_status + ", nick_name=" + nick_name
+				+ ", board_count=" + board_count + ", main_view=" + main_view + "]";
 	}
 
 	

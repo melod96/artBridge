@@ -7,14 +7,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Art Bridge</title>
 <%@ include file="/views/common/head.jsp"%>
+
 <style>
 ul.tab-menu li>a:hover {
 	background: darkgray;
 }
 
-body {
-	text-align: center;
-}
 
 div#editor {
 	width: 81%;
@@ -30,6 +28,9 @@ div#editor {
 	overflow-Y: scroll;
 	height: 86%;
 }
+
+
+
 </style>
 </head>
 <body>
@@ -39,19 +40,7 @@ div#editor {
 		<%@ include file="/views/common/header.jsp"%>
 		<!-- // Header -->
 		
-		<section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
-            <div class="container">
-                <h2>관리자 페이지</h2>
-                <ul class="tab-menu">
-                    <li><a href="mainAdmin.jsp">메인 관리</a></li>
-                    <li><a href="commissionAdmin.jsp">커미션 관리</a></li>
-                    <li><a href="#" style="background:orangered; color:white;" >고객문의 관리</a></li>
-                    <li><a href="memberAdmin.jsp">회원 관리</a></li>
-                    <li><a href="transactionAdmin.jsp">거래내역 관리</a></li>
-                    <li><a href="noticeInsertForm.jsp">공지사항</a></li>
-                </ul>
-            </div>
-        </section>
+		<%@ include file="/views/common/adminHeader.jsp"%>
 
 		<!-- 주석 영역 -->
 		<div class="contents">
@@ -60,7 +49,7 @@ div#editor {
 				<!-- container 필수 사용 -->
 				<div class="col-md-12">
 					<div class="heading">
-						<h2>고객문의 답변 작성</h2>
+						<h2 id="qnaTitle">고객문의 답변 작성</h2>
 					</div>
 
 					<hr>

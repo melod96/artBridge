@@ -1,5 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"
+	import="java.util.*, com.comvision.artBridge.board.model.vo.*"%>
+<%ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage();%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -14,24 +22,18 @@ ul.tab-menu li>a:hover {
 </style>
 </head>
 <body>
+
+
 	<div id="all">
 		<!-- Header -->
 		<%@ include file="/views/common/header.jsp"%>
 		<!-- // Header -->
 		
-		<section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
-            <div class="container">
-                <h2>관리자 페이지</h2>
-                <ul class="tab-menu">
-                    <li><a href="#" style="background:orangered; color:white;">메인 관리</a></li>
-                    <li><a href="commissionAdmin.jsp">커미션 관리</a></li>
-                    <li><a href="customerQna.jsp" >고객문의 관리</a></li>
-                    <li><a href="<%= request.getContextPath() %>/selectMemberList.ad">회원 관리</a></li>
-                    <li><a href="transactionAdmin.jsp">거래내역 관리</a></li>
-                    <li><a href="noticeInsertForm.jsp">공지사항</a></li>
-                </ul>
-            </div>
-        </section>
+		<!-- adminHeader -->
+		<%@ include file="/views/common/adminHeader.jsp"%>
+		<!-- //adminHeader -->
+		
+		
 
 		<!-- 주석 영역 -->
 		<div class="contents">
@@ -48,6 +50,55 @@ ul.tab-menu li>a:hover {
 						
 					</div>
 					<h3 style="margin-left:25%;">판매글 목록</h3>
+					<div class="boardSelect" style="margin-left:23%; margin-bottom:0.6%">
+					<select id="selectBox" name="selectBox">
+						<option value="no">작품번호</option>
+						<option value="name">작가명</option>
+						<option value="title">작품이름</option>
+					</select>
+					<input id="searchText" type="text">
+					<button type="submit" name="mainBtn"
+											class="btn btn-primary btn-sm" onclick="search();">검색</button>
+											
+											
+										<!-- 	function del() {
+							$("input:checkbox").each(function() {
+								if ($(this).prop("checked") == true) {
+									$(this).parent().parent().remove();
+									i--;
+								}
+
+							});
+
+						} -->
+										
+					<script>
+						/* var Objs = $("selectBox option");
+						for(i=1; i<Objs.length;i++){
+							if(Objs.eq(i).text() == "작가명"
+									)
+						} */
+						
+
+							function search(){
+							var value = "";
+							
+							if($("#selectBox").val() == "no"){
+								value = "BOARD_NO";
+							}else if($("#selectBox").val() == "name"){
+								value = "NICK_NAME";
+							}else if($("#selectBox").val() == "title"){
+								value = "BOARD_TITLE";
+							}
+							value += "," + $("#searchText").val();
+				
+							console.log(value);
+						location.href="<%= request.getContextPath() %>/search.ad?value=" + value;
+						
+						};
+					</script>
+					
+					</div>
 					<div class="selTable">
 						<table class="tbl-type02" style="width: 600px; margin: auto;">
 							<colgroup>
@@ -72,38 +123,53 @@ ul.tab-menu li>a:hover {
 								</tr>
 							</thead>
 							<tbody style="overflow-Y: scroll;">
+							
+							<%for(Board b : list){%>
+								
 								<tr>
-									<td><input type="checkbox" name=""></td>
-									<td><label>1</label></td>
-									<td><label>소나나</label></td>
-									<td colspan="5"><label>미소년/소녀 커미션</label> 
+									<td><input type="checkbox" id="check"></td>
+									<td><label><%= b.getBoard_no() %></label></td>
+									<td><label><%= b.getNick_name() %></label></td>
+									<td colspan="5"><label><%= b.getBoard_title()%></label> 
 								</tr>
-								<tr>
-									<td><input type="checkbox" name=""></td>
-									<td><label>1</label></td>
-									<td><label>소나나</label></td>
-									<td colspan="5"><label>미소년/소녀 커미션</label> 
-								</tr>
-								<tr>
-									<td><input type="checkbox" name=""></td>
-									<td><label>1</label></td>
-									<td><label>소나나</label></td>
-									<td colspan="5"><label>미소년/소녀 커미션</label> 
-								</tr>
-								<tr>
-									<td><input type="checkbox" name=""></td>
-									<td><label>1</label></td>
-									<td><label>소나나</label></td>
-									<td colspan="5"><label>미소년/소녀 커미션</label> 
-								</tr>
-								<tr>
-									<td><input type="checkbox" name=""></td>
-									<td><label>1</label></td>
-									<td><label>소나나</label></td>
-									<td colspan="5"><label>미소년/소녀 커미션</label> 
-								</tr>
+							<%} %>
+							
+							
 							</tbody>
 						</table>
+						
+						
+						<!-- 페이징 처리 부분 -->
+					<div class="paginate">
+						<a onclick="location.href='<%=request.getContextPath()%>/selectMain.ad?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<% if(currentPage <=1){ %>
+							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
+						<%}else{ %>
+							<a onclick = "location.href='<%= request.getContextPath()%>/selectMain.ad?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<em class="blind">목록에서 이전 페이지 이동</em></a>
+						<%} %>
+						
+						
+						<span class="paging-numbers">
+							<% for(int p = startPage; p <=endPage;p++){
+								if(p==currentPage){%>
+									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
+								<%}else{ %>
+									<a onclick= "location.href='<%= request.getContextPath()%>/selectMain.ad?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+								<%} %>
+							<%} %>
+						</span>
+						
+						<% if(currentPage >= maxPage){ %>
+					<!-- <a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> -->
+						<%}else{ %>
+							<a onclick = "location.href = '<%= request.getContextPath()%>/selectMain.ad?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%} %>
+						
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectMain.ad?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+					</div>
 					</div>
 	
 					<div class="btn-center">
@@ -158,7 +224,7 @@ ul.tab-menu li>a:hover {
 											"<tr><td><input type="+"checkbox"+">"
 											+ "</td>"
 											+"<td colspan="+"5"+">"
-													+ "<input type = "+"text"+"value="+"빈 텍스트"+"readonly>"
+													+ "<input type = "+"text"+"value="+"빈 텍스트"+" readonly>"
 													+ "</td></tr>").appendTo(
 											$(".trtr"));
 								});
