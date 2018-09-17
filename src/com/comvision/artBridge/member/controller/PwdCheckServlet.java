@@ -1,25 +1,28 @@
 package com.comvision.artBridge.member.controller;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.websocket.Session;
 
 import com.comvision.artBridge.member.model.service.MemberService;
+import com.comvision.artBridge.member.model.vo.Member;
 
 /**
- * Servlet implementation class NickNameCheckServlet
+ * Servlet implementation class PwdCheckServlet
  */
-@WebServlet("/nickNameCheck.me")
-public class NickNameCheckServlet extends HttpServlet {
+@WebServlet("/pwdCheck.me")
+public class PwdCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NickNameCheckServlet() {
+    public PwdCheckServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,13 +31,12 @@ public class NickNameCheckServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		String nickName = request.getParameter("nickName");
+		String userId = ((Member)(request.getSession().getAttribute("loginUser"))).getId();
+		String userPwd = request.getParameter("userPwd");
 		
-		int count = new MemberService().nickNameCheck(nickName);
+		int result = new MemberService().pwdCheck(userId, userPwd);
 		
-		response.getWriter().print(count);
-		System.out.println(count);
+		response.getWriter().print(result);
 	}
 
 	/**

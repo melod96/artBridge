@@ -121,10 +121,12 @@
         <!-- // Header -->
 
 <% /* 4. 회원정보 수정 변수 코드 */
-	String phone = ((Member)(session.getAttribute("loginUser"))).getPhone();
-	String tel1 = "";
-	String tel2 = "";
-	String tel3 = "";
+// 	String phone = ((Member)(session.getAttribute("loginUser"))).getPhone();    아래와 같음
+	String phone = ((Member)(request.getSession().getAttribute("loginUser"))).getPhone();
+						
+	String tel1;
+	String tel2;
+	String tel3;
 	
 	if(phone.length() > 10){
 		tel1 = phone.substring(0, 3);
@@ -136,7 +138,7 @@
 		tel3 = phone.substring(6, 10);
 	}
 	
-	String pwd = ((Member)(session.getAttribute("loginUser"))).getPassword();
+// 	String pwd = ((Member)(session.getAttribute("loginUser"))).getPassword();
 	
 %>
 
@@ -147,12 +149,12 @@
 		<div class="container">
 			<h2>마이 페이지</h2>
 			<ul class="tab-menu">
-				<li><a href="#" onclick="anotherHidden('order-menu')" id="order-menu">주문관리</a></li>
-				<li><a href="#" onclick="anotherHidden('msg-menu')" id="msg-menu">쪽지함</a></li>
-				<li><a href="#" onclick="anotherHidden('bookmark-menu')" id="bookmark-menu">관심작가</a></li>
-				<li><a href="#" onclick="anotherHidden('memberinfo-menu')" id="memberinfo-menu">회원정보수정</a></li>
-				<li><a href="#" onclick="anotherHidden('mywork-menu')" id="mywork-menu" style="background:#FF7373;">내작품관리</a></li>
-				<li><a href="#" onclick="anotherHidden('qna-menu')" id="qna-menu">이용문의</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id)" id="order-menu">주문관리</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id)" id="msg-menu">쪽지함</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id)" id="bookmark-menu">관심작가</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id)" id="memberinfo-menu">회원정보수정</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id)" id="mywork-menu" style="background:#FF7373;">내작품관리</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id)" id="qna-menu">이용문의</a></li>
 			</ul>
 		</div>
 		</section>
@@ -394,7 +396,7 @@
 							<% }else{ %>
 							<tr id="" class="rec-list  msg-list">
 							<% } %> --%>
-							<tr id="" class="send-list msg-list">	<!-- ***수정사항 : 발신회원번호/수신회원번호 서블릿에서 받기 -->
+							<tr class="send-list msg-list">	<!-- ***수정사항 : 발신회원번호/수신회원번호 서블릿에서 받기 -->
 								<td><input type="checkbox" name="checkMsg"></td>
 								<td>1</td>
 								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
@@ -407,7 +409,7 @@
 								<td><span class="messenger">나요</span><br>/  2018-00-00</td>
 								<td><span class="messenger">뽀시</span><br>/  2018-00-00</td>
 							</tr>
-							<tr id="" class="rec-list  msg-list">
+							<tr class="rec-list  msg-list">
 								<td><input type="checkbox" name="checkMsg"></td>
 								<td>2</td>
 								<td><img src='/artBridge/image/common/mypage/openMsg.png'></td>
@@ -420,7 +422,7 @@
 								<td><span class="messenger">라기</span><br>/  2018-00-00</td>
 								<td><span class="messenger">나요</span><br>/  2018-00-00</td>
 							</tr>
-							<tr id="" class="rec-list  msg-list">
+							<tr class="rec-list  msg-list">
 								<td><input type="checkbox" name="checkMsg"></td>
 								<td>3</td>
 								<td><img src='/artBridge/image/common/mypage/openMsg.png'></td>
@@ -433,7 +435,7 @@
 								<td><span class="messenger">뽀시</span><br>/  2018-00-00</td>
 								<td><span class="messenger">나요</span><br>/  2018-00-00</td>
 							</tr>
-							<tr id="" class="rec-list  msg-list">
+							<tr class="rec-list  msg-list">
 								<td><input type="checkbox" name="checkMsg"></td>
 								<td>4</td>
 								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
@@ -777,55 +779,71 @@
 <!-- 		//3. 마이페이지 탭 메뉴 - 관심작가 탭 -->
 
 <!-- 		* 4. 마이페이지 탭 메뉴 - 회원정보수정 탭 -->
+
 			<form id="memberInfoForm" action="<%=request.getContextPath() %>/updateInfo.me" method="post" class="memberinfo-menu tab-menu-content-form">
-				<div class="memberinfo-menu"> <br>
-					<table id="memberInfo">
-						<tr>
-							<td width="150px">아이디 </td>
-							<td><input type="text" value="<%= loginUser.getId() %>" maxlength="13" name="userId" id="updateUserId" class="form-control input-short textBox" readonly/></td>
-						</tr>
+				<div id="memberInfo" class="memberinfo-menu"> <br>
+					<table id="pwdCheckArea" style="margin-left:30px;">
 						<tr>
 							<td>비밀번호</td>
-							<td><input type="password" maxlength="13" name="updateUserPwd" class="form-control input-short textBox"/></td>
-							<td></td>
-						</tr>
-						<tr>
-							<td>비밀번호 확인</td>
-							<td><input type="password" maxlength="13" name="userPwd2" class="form-control input-short textBox"/></td>
-							<td><label id="pwdResult"></label></td>
-						</tr>
-						<tr>
-							<td>이름</td>
-							<td><input type="text" value="<%= loginUser.getName() %>" maxlength="5" name="userName" class="form-control input-short textBox" readonly></td>
-						</tr>
-						<tr>
-							<td>닉네임</td>
-							<td><input type="text" value="<%= loginUser.getId() %>" maxlength="30" name="nickName" class="form-control input-short textBox"></td>
-							<td><button id="idCheck" type="button" class="btn btn-primary btn-lg btn-plus-design" style="height:30px; line-height:0;">중복확인</button></td>
-							<td><label id="nnResult">사용 가능한 닉네임입니다.</label></td>
-						</tr>
-						<tr>
-							<td>연락처</td>
-							<td width="200px">
-								<input type="number" maxlength="3" value="<%= tel1 %>" name="tel1" style="width:28%; display: inline-block;" class="form-control textBox"/> -
-								<input type="number" maxlength="4" value="<%= tel2 %>" name="tel2" style="width:30%; display: inline-block;" class="form-control textBox"/> -
-								<input type="number" maxlength="4" value="<%= tel3 %>" name="tel3" style="width:30%; display: inline-block;" class="form-control textBox"/>
+							<td><input type="password" maxlength="13" id="checkUserPwd" class="checkUserPwd form-control input-short textBox"/></td>
+							<td>
+								<div style="margin-left:40px;">
+				                    <button type="button" onclick="pwdCheck();" class="btn btn-primary btn-lg btn-del btn-plus-design">확인</button>
+		               			</div>
 							</td>
-							<td></td>
+							<td width="255px"><div id="pwdStatus">비밀번호를 잘못 입력하였습니다.</div></td>
 						</tr>
-						<tr>
-							<td>이메일</td>
-							<td><input type="email" value="<%= loginUser.getEmail() %>"name="email" class="form-control input-short textBox"/></td>
-							<td></td>
-						</tr>
-					</table>					
-					<br /><br /><br />
-					
-					<div class="btn-center btn-outer-style" style="padding-right:80px;">
-						  <button type="button" class="btn btn-primary btn-lg btn-plus-design">작가 신청</button>
-						  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-	                      <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
-	                      <button type="button" onclick="pwdCheck();" class="btn btn-primary btn-lg btn-del btn-plus-design">수정</button>
+					</table>
+
+					<div class="memberInfoArea" style="display:none;">
+						<table >
+							<tr>
+								<td width="150px">아이디 </td>
+								<td><input type="text" value="<%= loginUser.getId() %>" maxlength="13" name="userId" id="updateUserId" class="form-control input-short textBox" readonly/></td>
+							</tr>
+							<tr>
+								<td>비밀번호</td>
+								<td><input type="password" maxlength="13" name="userPwd1" class="form-control input-short textBox"/></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>비밀번호 확인</td>
+								<td><input type="password" maxlength="13" name="userPwd2" class="form-control input-short textBox"/></td>
+								<td><label id="pwdResult"></label></td>
+							</tr>
+							<tr>
+								<td>이름</td>
+								<td><input type="text" value="<%= loginUser.getName() %>" maxlength="5" name="userName" class="form-control input-short textBox" readonly></td>
+							</tr>
+							<tr>
+								<td>닉네임</td>
+								<td><input type="text" value="<%= loginUser.getNick_name() %>" id="checkUserNickName" maxlength="30" name="nickName" class="form-control input-short textBox"></td>
+								<td><button type="button" onclick="nickNameCheck()" class="btn btn-primary btn-lg btn-plus-design" style="height:30px; line-height:0;">중복확인</button></td>
+								<td><label id="nnResult">이미 사용중인 닉네임입니다.</label></td>
+							</tr>
+							<tr>
+								<td>연락처</td>
+								<td width="200px">
+									<input type="text" maxlength="3" value="<%= tel1 %>" name="tel1" style="width:28%; display: inline-block;" class="form-control textBox"/> -
+									<input type="text" maxlength="4" value="<%= tel2 %>" name="tel2" style="width:30%; display: inline-block;" class="form-control textBox"/> -
+									<input type="text" maxlength="4" value="<%= tel3 %>" name="tel3" style="width:30%; display: inline-block;" class="form-control textBox"/>
+								</td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>이메일</td>
+								<td><input type="email" value="<%= loginUser.getEmail() %>" name="email" class="form-control input-short textBox"/></td>
+								<td></td>
+							</tr>
+						</table>					
+						<br /><br /><br />
+						
+						<div class="btn-center btn-outer-style" style="padding-right:80px;">
+							  <button type="button" class="btn btn-primary btn-lg btn-plus-design">작가 신청</button>
+							  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                      <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
+		                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">수정</button>
+		                </div>
 	                </div>
 
 				<br><br><br><br>	
@@ -878,7 +896,7 @@
 							<% }else{ %>
 							<tr id="" class="rec-list  msg-list">
 							<% } %> --%>
-							<tr id="" class="send-list msg-list">	<!-- ***수정사항 : 발신회원번호/수신회원번호 서블릿에서 받기 -->
+							<tr class="send-list msg-list">	<!-- ***수정사항 : 발신회원번호/수신회원번호 서블릿에서 받기 -->
 								<td><input type="checkbox" name="checkMsg"></td>
 								<td>1</td>
 								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
@@ -891,7 +909,7 @@
 								<td>2018-00-00</td>
 								<td>2018-00-00</td>
 							</tr>
-							<tr id="" class="rec-list  msg-list">
+							<tr class="rec-list  msg-list">
 								<td><input type="checkbox" name="checkMsg"></td>
 								<td>2</td>
 								<td><img src='/artBridge/image/common/mypage/openMsg.png'></td>
@@ -904,7 +922,7 @@
 								<td>2018-00-00</td>
 								<td>2018-00-00</td>
 							</tr>
-							<tr id="" class="rec-list  msg-list">
+							<tr class="rec-list  msg-list">
 								<td><input type="checkbox" name="checkMsg"></td>
 								<td>3</td>
 								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
@@ -948,13 +966,11 @@
 <script>
 
 //	* 페이지 호출
-
 	$(function(){
-		var pageName = '<%= (String)request.getParameter("pageName") %>';
-		//alert(pageName);	
+		var pageName = '<%= (String)request.getParameter("pageName") %>';	
 
 		$('.order-menu, .bookmark-menu, .msg-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
-		//alert(pageName);
+		
 		if(pageName != null){
 			anotherHidden(pageName)
 		}/*  else{
@@ -962,38 +978,12 @@
 			$('.order-menu').css({"display":"block"});
 			$('#order-menu').css({"color":"black", "background":"white"});
 		} */
-		
-		
+	
 	});
             		  
 //	* 탭 선택 함수
-	function anotherHidden(thisMenu){		
+	function anotherHidden(thisMenu){	
 		//var thisMenu = event.srcElement.id;
-		
-<%-- 		<%
-		private static String getSha512(String pwd){
-			String encPwd = null;
-			
-			try {
-				MessageDigest md = MessageDigest.getInstance("SHA-512");
-				byte[] bytes = pwd.getBytes(Charset.forName("utf-8"));
-				md.update(bytes);
-				
-				encPwd = Base64.getEncoder().encodeToString(md.digest());
-				
-			} catch (NoSuchAlgorithmException e) {
-				e.printStackTrace();
-			}
-			
-			return encPwd;
-		}
-		
-		%> --%>
-		if(thisMenu == "memberinfo-menu"){			
-			var checkPwd = prompt('비밀번호를 입력하세요.', '');
-			var currPwd = '<%= pwd %>';
-					
-		}
  
 		$('.order-menu, .msg-menu, .bookmark-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
 		
@@ -1013,7 +1003,57 @@
 			$('.msg-Filter').val("전체 보기");
 			$('.msg-list').css({"display":""});	
 		}
+		if(thisMenu == "memberinfo-menu"){
+			$('#pwdStatus').css({"display":"none"});
+			$('#nnResult').css({"display":"none"});
+			$('.checkUserPwd').val("");
+// 			alert($('.memberInfoArea' + ' *').val());    해당 클래스의 하위 요소 초기화 시키기
+		}
 
+	};
+	
+// 	* 패스워드 체크
+	function pwdCheck(){
+		var userPwd = $('#checkUserPwd').val();
+		if(userPwd != null && userPwd != ""){
+			$.ajax({
+				url : "<%= request.getContextPath() %>/pwdCheck.me",
+				type : "post",
+				data : {userPwd : userPwd},
+				success : function(data){
+					if(data > 0){
+						$('#pwdCheckArea').css({"display":"none"});
+						$('.memberInfoArea').css({"display":"block"});
+					}else{
+						$('#pwdStatus').css({"display":""});
+						$('#pwdStatus').css({"color":"orangered"});
+					}
+				}
+			});
+		}
+	};
+	
+// 	* 닉네임 중복 체크	
+	function nickNameCheck(){
+		var userNickName = $('#checkUserNickName').val();
+		if(userNickName != null && userNickName != ""){
+			$.ajax({
+				url : "<%= request.getContextPath() %>/nickNameCheck.me",
+				type : "post",
+				data : {userNickName : userNickName},
+				success : function(data){
+					if(data > 0){
+						$('#nnResult').css({"display":""});
+						$('#nnResult').css({"color":"orangered"});
+					}else{
+						$('#nnResult').val("사용 가능한 닉네임입니다.");
+						$('#nnResult').css({"display":""});
+						$('#nnResult').css({"color":"orangered"});
+					}
+// 					alert(data);
+				}
+			});
+		} 
 	};
 	                   	
 // 	* 구매 목록 필터링 - 전체 보기 / 구매 내역 / 판매 내역					***수정사항 : select요소 change 함수 통합 하기
@@ -1022,15 +1062,15 @@
     	
     	if(value == "판매 내역"){
     		$('.buyer-list').css({"display":"none"});
-    		$('.seller-list').css({"display":"visible"});
+    		$('.seller-list').css({"display":""});
     		
     	}else if(value == "구매 내역"){
     		$('.seller-list').css({"display":"none"});
-    		$('.buyer-list').css({"display":"visible"});
+    		$('.buyer-list').css({"display":""});
     		
     	}else{
-    		$('.transInfo-list').css({"display":"visible"});
-    	};
+    		$('.transInfo-list').css({"display":""});
+    	}
     	
     });
     
@@ -1040,15 +1080,15 @@
     	
     	if(value == "보낸 쪽지"){
     		$('.rec-list').css({"display":"none"});
-    		$('.send-list').css({"display":"visible"});
+    		$('.send-list').css({"display":""});
     		
     	}else if(value == "받은 쪽지"){
     		$('.send-list').css({"display":"none"});
-    		$('.rec-list').css({"display":"visible"});
+    		$('.rec-list').css({"display":""});
     		
     	}else{
-    		$('.msg-list').css({"display":"visible"});
-    	};
+    		$('.msg-list').css({"display":""});
+    	}
     	
     }); 
     
@@ -1104,11 +1144,6 @@
 	     $(this).addClass("on").prevAll("a").addClass("on");
 	     return false;
 	});
-
-	
-	
-// 	* 비밀번호 체크하기
-
 	
 </script>
 

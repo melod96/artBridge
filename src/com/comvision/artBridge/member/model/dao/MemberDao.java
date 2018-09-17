@@ -202,4 +202,59 @@ private Properties prop = new Properties();
 		return result;
 	}
 
+	public int pwdCheck(Connection con, String userId, String userPwd) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("pwdCheck");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPwd);
+			
+			rset = pstmt.executeQuery();
+//			System.out.println(userPwd + ", " + userId);
+			
+			if(rset.next()){
+				result = result + 1;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return result;
+	}
+
+	public int updateMember(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateMember");
+		//update member set password=?, nick_name=?, phone=?, email=? where id=?
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, m.getPassword());
+			pstmt.setString(2, m.getNick_name());
+			pstmt.setString(3, m.getPhone());
+			pstmt.setString(4, m.getEmail());
+			pstmt.setString(5, m.getId());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 }
