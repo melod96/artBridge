@@ -16,6 +16,8 @@ import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.sale.model.service.SaleService;
+import com.comvision.artBridge.sale.model.vo.Options;
 
 
 
@@ -76,8 +78,16 @@ public class SelectSaleListServlet extends HttpServlet {
 
 
 		//판매글 출력
-		ArrayList<Board> list = new BoardService().selectList(currentPage, limit);
+		ArrayList<Board> list = new BoardService().selectSaleList(currentPage, limit);
 		System.out.println("페이징 처리 : " + list);
+		
+		//해당하는 판매글의 옵션
+		ArrayList<HashMap<String,Object>> opmap = null;
+		for(Board b : list){
+			ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(b.getBoard_no());
+			
+			opmap.addAll(oplist);
+		}
 		
 		//한 게시글 마다 해당하는 이미지 파일 불러오기
 		HashMap<String, Object> hmap = new BoardService().selectFileList(list);

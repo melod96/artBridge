@@ -12,6 +12,7 @@ import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.sale.model.vo.Options;
 
 public class BoardService {
 
@@ -27,10 +28,10 @@ public class BoardService {
 	}
 
 	//판매글 출력
-	public ArrayList<Board> selectList(int currentPage, int limit) {
+	public ArrayList<Board> selectSaleList(int currentPage, int limit) {
 		Connection con = getConnection();
 		
-		ArrayList<Board> list = new BoardDao().selectList(con,currentPage, limit);
+		ArrayList<Board> list = new BoardDao().selectSaleList(con,currentPage, limit);
 		
 		close(con);
 		
@@ -140,10 +141,5 @@ public class BoardService {
 		
 		return b;
 	}
-
-	
-
-	
-
 
 }
