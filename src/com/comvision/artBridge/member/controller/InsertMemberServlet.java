@@ -32,6 +32,7 @@ public class InsertMemberServlet extends HttpServlet {
 	
 		String userId = request.getParameter("joinUserId");
 		String userPwd = request.getParameter("joinUserPwd");
+		String userName = request.getParameter("joinUserName");
 		String nick_name = request.getParameter("nickName");
 		String phone = request.getParameter("tel1") + request.getParameter("tel2") + request.getParameter("tel3");
 		String email = request.getParameter("email");
@@ -39,6 +40,7 @@ public class InsertMemberServlet extends HttpServlet {
 		Member m = new Member();
 		m.setId(userId);
 		m.setPassword(userPwd);
+		m.setName(userName);
 		m.setNick_name(nick_name);
 		m.setPhone(phone);
 		m.setEmail(email);
