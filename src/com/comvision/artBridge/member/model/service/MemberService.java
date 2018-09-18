@@ -6,6 +6,7 @@ import com.comvision.artBridge.member.model.vo.Member;
 import static com.comvision.artBridge.common.JDBCTemplate.*;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 public class MemberService {
 
@@ -85,6 +86,26 @@ public class MemberService {
 		close(con);
 		
 		return result;
+	}
+
+	public ArrayList<String> findId(String name, String email) {
+		Connection con = getConnection();
+		
+		ArrayList<String> idList = new MemberDao().findId(con, name, email);
+		
+		close(con);
+		
+		return idList;
+	}
+
+	public int findPassword(String id, String name, String email) {
+		Connection con = getConnection();
+		
+		int member_no = new MemberDao().findPassword(con, id, name, email);
+		
+		close(con);
+		
+		return member_no;
 	}
 
 }

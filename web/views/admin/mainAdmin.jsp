@@ -1,13 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 	import="java.util.*, com.comvision.artBridge.board.model.vo.*"%>
-<%ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	int listCount = pi.getListCount();
-	int currentPage = pi.getCurrentPage();
-	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();%>
+<%
+	ArrayList<Board> list = null; 
+	if((ArrayList<Board>)request.getAttribute("list") != null){
+		list = (ArrayList<Board>)request.getAttribute("list");
+	}
+	
+	PageInfo pi = null;
+	int listCount = 0;
+	int currentPage = 0;
+	int maxPage = 0;
+	int startPage = 0;
+	int endPage = 0;
+	
+	if((PageInfo)request.getAttribute("pi") != null){
+		pi = (PageInfo)request.getAttribute("pi");
+		listCount = pi.getListCount();
+		currentPage = pi.getCurrentPage();
+		maxPage = pi.getMaxPage();
+		startPage = pi.getStartPage();
+		endPage = pi.getEndPage();
+	}
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -124,7 +139,7 @@ ul.tab-menu li>a:hover {
 							</thead>
 							<tbody style="overflow-Y: scroll;">
 							
-							<%for(Board b : list){%>
+							<%if(list != null){for(Board b : list){%>
 								
 								<tr>
 									<td><input type="checkbox" id="check"></td>
@@ -132,7 +147,7 @@ ul.tab-menu li>a:hover {
 									<td><label><%= b.getNick_name() %></label></td>
 									<td colspan="5"><label><%= b.getBoard_title()%></label> 
 								</tr>
-							<%} %>
+							<% }} %>
 							
 							
 							</tbody>

@@ -17,10 +17,10 @@ ul.tab-menu li>a:hover {
 	$(function(){
 		<% switch(pageName){
 			case "mainAdmin" : %>
-			$("#mainAdmin").css({"background":"orangered"});
+			$("#mainAdmin").css({"background":"white", "color":"black"});
 		<% break; 
 			default : %>
-			$("#mainAdmin").css({"background":"orangered"});
+			$("#mainAdmin").css({"background":"white", "color":"black"});
 		<% break;
 		} %>
 	});
