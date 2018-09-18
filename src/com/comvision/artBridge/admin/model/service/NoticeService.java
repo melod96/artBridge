@@ -57,17 +57,6 @@ public class NoticeService {
 		return n;
 	}
 
-	//페이징 처리용 메소드
-	public int getListCount() {
-		Connection con = getConnection();
-		
-		int listCount = new NoticeDao().getListCount(con);
-		
-		close(con);
-		
-		return listCount;
-	}
-
 	//공지사항 수정용 메소드
 	public int updateNotice(Notice n) {
 		Connection con = getConnection();
@@ -86,23 +75,14 @@ public class NoticeService {
 	}
 
 	//공지사항 검색용 메소드
-	public Notice searchNotice(String search) {
+	public ArrayList<Notice> searchNotice(String search) {
 		Connection con = getConnection();
 		
-		Notice n = new NoticeDao().searchNotice(con, search);
+		ArrayList<Notice> list = new NoticeDao().searchNotice(con, search);
 		
-		/*if(n != null){
-			//int result = new NoticeDao().searchNotice(con, n.getnNo());
-			
-			if(result > 0){
-				commit(con);
-			}else{
-				rollback(con);
-			}
-			close(con);
-		}*/
+		close(con);
 		
-		return n;
+		return list;
 	}
 
 	
