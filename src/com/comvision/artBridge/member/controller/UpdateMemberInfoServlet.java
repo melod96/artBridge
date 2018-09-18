@@ -30,7 +30,13 @@ public class UpdateMemberInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("userId");		
-		String userPwd = request.getParameter("userPwd1");		
+		String userPwd = request.getParameter("userPwd1");
+		/*if(request.getParameter("userPwd1") != null && request.getParameter("userPwd1").length() > 0){
+			userPwd = request.getParameter("userPwd1");
+		}*/
+		
+		
+		
 		String userName = request.getParameter("userName");		
 		String nickName = request.getParameter("nickName");
 		String phone = "";
