@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.comvision.artBridge.member.model.service.MemberService;
 import com.comvision.artBridge.member.model.vo.Member;
 
 /**
@@ -29,14 +30,14 @@ public class UpdateMemberInfoServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String userId = request.getParameter("userId");		
-		String userPwd = request.getParameter("userPwd");		
+		String userPwd = request.getParameter("userPwd1");		
 		String userName = request.getParameter("userName");		
 		String nickName = request.getParameter("nickName");
 		String phone = "";
 		for(int i = 1; i <= 3; i++){
 			phone += request.getParameter("tel" + i);
 		}		
-		String email = request.getParameter("userId");		
+		String email = request.getParameter("email");		
 		
 		Member m = new Member();
 		m.setId(userId);
@@ -44,7 +45,18 @@ public class UpdateMemberInfoServlet extends HttpServlet {
 		m.setName(userName);
 		m.setNick_name(nickName);
 		m.setPhone(phone);
+		m.setEmail(email);
 		
+		int result = new MemberService().updateMember(m);
+		
+		String Page = "";
+		if(result > 0){
+//			location.href="<%=request.getContextPath()%>/index.jsp";
+			response.sendRedirect("/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu");/*href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu"*/
+		}else{
+			request.setAttribute("msg", "회원 정보 수정 실패!");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 		
 	}
 
