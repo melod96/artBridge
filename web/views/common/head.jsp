@@ -7,6 +7,7 @@
 <link href="/artBridge/css/owl.theme.css" rel="stylesheet">
 <link href="/artBridge/css/froala_editor.pkgd.min.css" rel="stylesheet">
 <link href="/artBridge/css/custom.css" rel="stylesheet">
+<link href="/artBridge/css/rateit.css" rel="stylesheet">
 <!-- #### JAVASCRIPT FILES #### -->
 <script src="/artBridge/js/jquery-1.11.0.min.js"></script>
 <script src="/artBridge/js/bootstrap.min.js"></script>
@@ -18,6 +19,7 @@
 <script src="/artBridge/js/owl.carousel.min.js"></script>
 <script src="/artBridge/js/froala_editor.pkgd.min.js"></script>
 <script src="/artBridge/js/custom.js"></script>
+<script src="/artBridge/js/jquery.rateit.js"></script>
 
 <!-- #### AJAX FILES #### -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

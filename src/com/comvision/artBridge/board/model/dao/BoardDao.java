@@ -327,9 +327,6 @@ public class BoardDao {
 				filelist = new HashMap<String,Object>();
 				filelist.put("board", b);
 				filelist.put("files", flist);
-				System.out.println(flist);
-				System.out.println(b);
-				System.out.println(filelist);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

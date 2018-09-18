@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.service.SaleService;
 
 
@@ -38,15 +39,16 @@ public class SelectOneSalepageServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int num = Integer.parseInt(request.getParameter("num"));
 		
-		System.out.println(num);
-		
 		Board b =new SaleService().selectBoardOneSalepage(num);
+		
 		//해당하는 판매글의 옵션
 		ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(num);
 		
+		//해당하는 판매글의 연관검색어
+		ArrayList<Relate> rlist = new SaleService().selectRelateList(num);
+		
 		//한 게시글 마다 해당하는 이미지 파일 불러오기
 		ArrayList<Files> flist = new SaleService().selectFileList(num);
-		//Options,Files
 		
 		String page = null;
 		
@@ -54,6 +56,8 @@ public class SelectOneSalepageServlet extends HttpServlet {
 			page = "views/sale/saleDetail.jsp";
 			request.setAttribute("b", b);
 			request.setAttribute("oplist", oplist);
+			request.setAttribute("flist", flist);
+			request.setAttribute("rlist", rlist);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 상세 조회 실패");
