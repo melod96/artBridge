@@ -8,7 +8,7 @@ public class Files implements Serializable{
 	private int f_reference_no;
 	private String files_title;
 	private String change_title;
-	private String files_type;
+	private int files_type;
 	private String files_root;
 	private Date files_date;
 	private int files_secession;
@@ -17,7 +17,7 @@ public class Files implements Serializable{
 		
 	}
 
-	public Files(int files_no, int f_reference_no, String files_title, String change_title, String files_type,
+	public Files(int files_no, int f_reference_no, String files_title, String change_title, int files_type,
 			String files_root, Date files_date, int files_secession) {
 		super();
 		this.files_no = files_no;
@@ -46,7 +46,7 @@ public class Files implements Serializable{
 		return change_title;
 	}
 
-	public String getFiles_type() {
+	public int getFiles_type() {
 		return files_type;
 	}
 
@@ -78,7 +78,7 @@ public class Files implements Serializable{
 		this.change_title = change_title;
 	}
 
-	public void setFiles_type(String files_type) {
+	public void setFiles_type(int files_type) {
 		this.files_type = files_type;
 	}
 

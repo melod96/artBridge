@@ -5,6 +5,7 @@
 	ArrayList<Files> filelist = (ArrayList<Files>)request.getAttribute("filelist");
 	ArrayList<Relate> rlist = (ArrayList<Relate>)request.getAttribute("rlist");
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	ArrayList<HashMap<String,Object>> oplist = (ArrayList<HashMap<String,Object>>)request.getAttribute("oplist");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
@@ -202,9 +203,7 @@
 							
 							<%for(Relate r : rlist){ %>
 								<ol>
-									<a
-										href=""
-										class="tag21">#<%= r.getRelate_name() %></a>
+									<a href="" class="tag21">#<%= r.getRelate_name() %></a>
 								</ol>								
 							<%} %>
 							
@@ -223,8 +222,14 @@
 							</table>
 						</div>
 						<!-- <img src="/artBridge/image/saletest/salepageimg.jpg" alt="" /> -->
-
-						<%for(Board b :list){%>
+						<%
+							int i = 0;
+							for(Board b :list){
+							HashMap<String,Object> hmap = oplist.get(i);
+							i++;
+							System.out.println(i);
+							System.out.println(hmap);
+						%>
 							<div id="list_img" style="display: block;">
 							<div class="list_img_box both left">
 								<ul>
@@ -233,7 +238,7 @@
 												<dl class="thumb3" style="margin: 5px; display:inline-block;">
 												<%-- <li style="background: url(<%= f.getFiles_root()%>) no-repeat center 15%"></li> --%>
 												<li style="display:inline-block;" id = "thumbnail">
-												<input type="hidden" value = "<%=b.getMember_no() %>" />
+												<input type="hidden" value = "<%=b.getBoard_no() %>" />
 													<img src="<%=f.getFiles_root() %>" alt=""/>
 												</li>
 												</dl>
@@ -253,48 +258,13 @@
 												<img src="">
 											</div>
 										</dl>
-										<!-- <dl class="price">200,000~
-										</dl> -->
+										<dl class="price"><%=hmap.get("options_price") %>~</dl>
 									</ol>
 								</ul>
 								<div class="clear" style="height: 10px;">&nbsp;</div>
 							</div>
 						
-							<%-- <div class="list_img_box both left">
-								<ul>
-									<ol style="height: 145px;">
-										<a
-											onclick="">
-											<%for(Files f : filelist){ %>
-												<dl class="thumb3" style="margin-left: 0;">
-												<li style="background: url(<%= f.getFiles_root()%>) no-repeat center 15%"></li>
-												<li>
-													<img src="/image/saletest/salepageimg.jpg" alt="" />
-												</li>
-												</dl>
-											<%} %>
-										</a>
-									</ol>
-									<ol style="height: 28px;">
-										<dl class="left ellip"
-											style="padding-left: 6px; width: 360px;">
-											<a
-												href=""
-												title="이 작가의 다른 작품보기"><%= b.getNick_name() %></a>&nbsp;&nbsp;/&nbsp;&nbsp;<%= b.getBoard_title() %>
-										</dl>
-									</ol>
-									<ol>
-										<dl class="starBg_list">
-											<div style="width: 101%; overflow: hidden">
-												<img src="">
-											</div>
-										</dl>
-										<!-- <dl class="price">5,000~
-										</dl> -->
-									</ol>
-								</ul>
-								<div class="clear" style="height: 10px;">&nbsp;</div>
-							</div> --%>
+							
 						
 						</div>
 
@@ -320,7 +290,6 @@
 
 
 					<div id="paging" style='clear: both'></div>
-					<!-- <div id="paging_dupl"></div> -->
 
 
 					<div class="ad_banner5"></div>
