@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*"%>
-<% ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list"); %>
+<% 
+	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list"); 
+	/* PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage(); */
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -17,6 +25,24 @@
       .btn-right button{position:relative; top:0;}
       .tbl-type02 .tit{text-align:left; padding:12px; cursor:pointer;}
     </style>
+    <script>
+	    function boxChecked(){
+   			var input = $('input[type=checkbox]');
+   			
+			$("input").click(function(){
+	    		var ckbox = $(this).prop("checked");
+				if(ckbox != true){
+					$(this).attr('checked', false);
+  	    		}else{
+  	    			$(this).attr('checked', true);
+  	    		}
+			});
+	    }
+	    
+   		function contDel(){
+   			location.href='<%=request.getContextPath()%>/deleteNotice.no?boxChecked()=' + num;
+   		}
+    </script>
 </head>
 <body>
     <div id="all">
@@ -25,7 +51,15 @@
         <%@ include file="/views/common/header.jsp" %>
         <section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
             <div class="container">
-                <h2>서브페이지 타이틀</h2>
+                <h2>관리자 페이지</h2>
+                <ul class="tab-menu">
+                    <li><a href="/artBridge/views/admin/mainAdmin.jsp">메인 관리</a></li>
+                    <li><a href="/artBridge/views/admin/commissionAdmin.jsp">커미션 관리</a></li>
+                    <li><a href="/artBridge/views/admin/customerQna.jsp">고객문의 관리</a></li>
+                    <li><a href="/artBridge/views/admin/memberAdmin.jsp">회원 관리</a></li>
+                    <li><a href="/artBridge/views/admin/transactionAdmin.jsp">거래내역 관리</a></li>
+                    <li><a href="<%=request.getContextPath()%>/selectNoticeList.no" style="background:orangered; color:white;">공지사항</a></li>
+                </ul>
             </div>
         </section>
         <!-- // Header -->
@@ -38,7 +72,7 @@
 	                <div class="heading">
 	                  <h2 class="tit1">공지사항</h2>
 	                </div>
-		             <form action="<%=request.getContextPath()%>/searchNotice.no" method="post">
+		             <form action="<%=request.getContextPath()%>/searchNotice.no" method="get">
 		                <!-- 검색 테이블 영역 -->
 		                <table class="tbl-type01">
 		                    <colgroup>
@@ -58,7 +92,7 @@
 	                	<!-- // 검색 테이블 영역 -->
 	                </form>
 	                <div class="btn-right">
-	                   <button type="button" class="btn btn-danger" style="float:left;">삭제</button>
+	                   <button type="button" class="btn btn-danger" onclick="location.href='<%=request.getContextPath()%>/delNotice.no'" style="float:left;">삭제</button>
 	                   <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/admin/noticeInsertForm.jsp'">공지사항 등록</button>
 	                </div>
 	                <!-- 공지사항 리스트  -->
@@ -67,6 +101,7 @@
 	                        <col style="width: 80px;">
 	                        <col style="width: 100px;">
 	                        <col style="width: *">
+	                        <col style="width: 120px;">
 	                        <col style="width: 180px;">
 	                    </colgroup>
 	                    <thead>
@@ -74,6 +109,7 @@
 	                            <th scope="col">선택</th>
 	                            <th scope="col">NO</th>
 	                            <th scope="col">제목</th>
+	                            <th scope="col">조회수</th>
 	                            <th scope="col">등록일</th>
 	                        </tr>
 	                    </thead>
@@ -81,13 +117,18 @@
 	                    	<% if(list != null){
 	                    		for(Notice n : list){ %>
 	                        <tr>
-	                            <td><input type="checkbox" name=""></td>
+	                            <td><input type="checkbox" id="del-check" name=""></td>
 	                            <td><%= n.getRownum() %></td>
 	                            <td id="noticeTit" class="tit" onclick="location.href='<%=request.getContextPath()%>/noticeDetail.no?num=<%= n.getnNo() %>'"><%= n.getnTitle() %></td>
+	                            <td><%= n.getnCount() %></td>
 	                            <td><%= n.getnDate() %></td>
 	                        </tr>
-	                        <% 		}
-	                    		}%>
+	                        <% 	}
+	                    	}else{ %>
+	                    	<tr>
+	                    		<td colspan="5">등록된 게시물이 없습니다.</td>
+	                    	</tr>		
+	                    	<% } %>
 	                    </tbody>
 	                </table>
 	                <!-- // 공지사항 리스트  -->
@@ -106,6 +147,39 @@
 	                  <a href="#" class="btn-last" title="끝"><span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 	               </div>
 	                <!-- // 페이징 영역 -->
+	                
+	                
+	                <!-- 페이징 영역2222222222222 -->
+	                <%-- <div class="paginArea" align="center">
+			<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=1'"><<</button>
+			<% if(currentPage <= 1){ %>
+				<button disabled><</button>
+			<% }else{ %>
+				<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%=currentPage -1 %>'"><</button>
+			<% } %>
+			
+			
+			<% for(int p = startPage; p <= endPage; p++){
+					if(p == currentPage){	
+			%>
+					<button disabled><%= p %></button>
+			<%      }else{ %>
+						<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%=p%>'"><%= p %></button>
+			<% 		}  %>
+			<% }  %>
+			
+			
+			<% if(currentPage >= maxPage){ %>
+				<button disabled>></button>
+			<% }else{ %>
+				<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%=currentPage + 1%>'">></button>
+			<% } %>
+			
+			<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%=maxPage%>'">>></button>
+		</div> --%>
+		<!-- // 페이징 영역2222222222222 -->
+		
+		
 
                 </div>
             </div>
@@ -117,13 +191,5 @@
        <!-- // Footer -->
 
     </div>
-    
-    <script>
-    	<%-- $(function(){
-    		$("#noticeTit").click(function(){
-    			location.href = "<%=request.getContextPath()%>/adminDetail.no?num=" + num;
-    		});
-    	}); --%>
-    </script>
 </body>
 </html>

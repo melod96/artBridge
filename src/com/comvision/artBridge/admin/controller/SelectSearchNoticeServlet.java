@@ -1,6 +1,9 @@
 package com.comvision.artBridge.admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,10 +25,19 @@ public class SelectSearchNoticeServlet extends HttpServlet {
 		String search = request.getParameter("search");
 		
 		System.out.println(search);
-		
-		//Notice n = new NoticeService().searchNotice(search);
+				
+		ArrayList<Notice> list = new NoticeService().searchNotice(search);
 		 
-		//request.setAttribute("n", n);
+		String page = "";
+		if(list != null){
+			page = "/views/admin/noticeList.jsp";
+			request.setAttribute("list", new NoticeService().searchNotice(search));
+		}else{
+			page = "/views/common/errorPage.jsp";
+			request.setAttribute("msg", "공지사항 검색 실패!");
+		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 		
 	}
 
