@@ -50,7 +50,7 @@
 
 /*  회원정보 수정 탭 */
 	.textBox{ height:35px; } 		
-	#memberInfo td { text-align:left; height:45px; padding-left:20px; font-weight: bold; }
+	#memberInfo td , #pwdCheckArea td{ text-align:left; height:45px; padding-left:20px; font-weight: bold; }
 	#memberInfo{ margin-left:50px; }
 				
 </style>
@@ -124,18 +124,20 @@
 // 	String phone = ((Member)(session.getAttribute("loginUser"))).getPhone();    아래와 같음
 	String phone = ((Member)(request.getSession().getAttribute("loginUser"))).getPhone();
 						
-	String tel1;
-	String tel2;
-	String tel3;
+	String tel1 = "";
+	String tel2 = "";;
+	String tel3 = "";;
 	
-	if(phone.length() > 10){
-		tel1 = phone.substring(0, 3);
-		tel2 = phone.substring(3, 7);
-		tel3 = phone.substring(7, 11);
-	}else{
-		tel1 = phone.substring(0, 3);
-		tel2 = phone.substring(3, 6);
-		tel3 = phone.substring(6, 10);
+	if(phone != null){
+		if(phone.length() > 10){
+			tel1 = phone.substring(0, 3);
+			tel2 = phone.substring(3, 7);
+			tel3 = phone.substring(7, 11);
+		}else{
+			tel1 = phone.substring(0, 3);
+			tel2 = phone.substring(3, 6);
+			tel3 = phone.substring(6, 10);
+		}
 	}
 	
 // 	String pwd = ((Member)(session.getAttribute("loginUser"))).getPassword();
@@ -149,12 +151,12 @@
 		<div class="container">
 			<h2>마이 페이지</h2>
 			<ul class="tab-menu">
-				<li><a href="#" onclick="anotherHidden(this.id)" id="order-menu">주문관리</a></li>
-				<li><a href="#" onclick="anotherHidden(this.id)" id="msg-menu">쪽지함</a></li>
-				<li><a href="#" onclick="anotherHidden(this.id)" id="bookmark-menu">관심작가</a></li>
-				<li><a href="#" onclick="anotherHidden(this.id)" id="memberinfo-menu">회원정보수정</a></li>
-				<li><a href="#" onclick="anotherHidden(this.id)" id="mywork-menu" style="background:#FF7373;">내작품관리</a></li>
-				<li><a href="#" onclick="anotherHidden(this.id)" id="qna-menu">이용문의</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id);" id="msg-menu">쪽지함</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id);" id="bookmark-menu">관심작가</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id);" id="memberinfo-menu">회원정보수정</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id);" id="mywork-menu" style="background:#FF7373;">내작품관리</a></li>
+				<li><a href="#" onclick="anotherHidden(this.id);" id="qna-menu">이용문의</a></li>
 			</ul>
 		</div>
 		</section>
@@ -228,9 +230,9 @@
 							<tr>
 								<td colspan="5">
 									<div class="btn-center stmtBtn">
-										  <button type="button" class="btn btn-primary btn-lg btn-plus-design" style="width:67%;">거 래 수 락</button><br>
-					                      <button type="button" class="btn btn-primary btn-lg btn-plus-design" style="margin-left:0;">재 요청</button>
-					                      <button type="button" class="btn btn-default btn-lg btn-plus-design">거래 취소</button>
+										  <button class="btn btn-primary btn-lg btn-plus-design" style="width:67%;">거 래 수 락</button><br>
+					                      <button class="btn btn-primary btn-lg btn-plus-design" style="margin-left:0;">재 요청</button>
+					                      <button class="btn btn-default btn-lg btn-plus-design">거래 취소</button>
 					                </div>
 								</td>
 							</tr>
@@ -247,7 +249,7 @@
 				
 				
 <!-- 	   	* 마이페이지 탭 제목 -->
-			<div class="heading">
+			<div class="heading">			
 				<h2 class="order-menu tit1">주문 관리</h2>
 				<h2 class="msg-menu tit1">쪽지함</h2>
 				<h2 class="bookmark-menu tit1">관심 작가</h2>
@@ -311,7 +313,7 @@
 							 	 
 							<tr id="" class="seller-list transInfo-list">
 								<td>판매</td>
-								<td><a onclick="displayBlock()" class="stmtShowBtn">18083001</a></td>
+								<td><a onclick="displayBlock();" class="stmtShowBtn">18083001</a></td>
 								<td>소나나</td>
 								<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td>
 								<td>컨펌 1단계</td>
@@ -321,7 +323,7 @@
 							</tr>
 							<tr id="" class="buyer-list transInfo-list">
 								<td>구매</td>
-								<td><a onclick="displayBlock()" class="stmtShowBtn">18083001</a></td>
+								<td><a onclick="displayBlock();" class="stmtShowBtn">18083001</a></td>
 								<td>소나나</td>
 								<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td>
 								<td>컨펌 1단계</td>
@@ -452,7 +454,7 @@
 					</table>
 					
 					<div class="btn-center btn-outer-style">
-	                      <button type="button" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
+	                      <button class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
 	                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">삭제</button>
 	                </div>
 	                    
@@ -471,12 +473,12 @@
 				</form>			
 <!--      		//2-1. 마이페이지 탭 바디 - 쪽지함 탭 / 쪽지별 세부 화면 -->
 
-<!-- 		* 3. 마이페이지 탭 메뉴 - 관심작가 탭 -->    <!-- id를 bookmark-detail-view 로 만든 버튼에 연결       onclick="selfHidden()"  ,   "bookmarkDel()"  구현하기 -->
+<!-- 		* 3. 마이페이지 탭 메뉴 - 관심작가 탭 -->    <!-- id를 bookmark-detail-view 로 만든 버튼에 연결       onclick="selfHidden();"  ,   "bookmarkDel()"  구현하기 -->
 			<form action="" method="get"class="bookmark-menu tab-menu-content-form">
 				<div class="bookmark-menu">
 					<div id="bookmark-list-wrap" class="bookmark-menu bookmark-list-wrap">
 						<div class="frofile-box bookmark-list" style="width:300px; padding:5px 15px 15px 15px;">
-							<a onclick="bookmarkDel()" class="on bookmark-del-btn">★</a>
+							<a onclick="bookmarkDel();" class="on bookmark-del-btn">★</a>
 							<table style="margin-right:auto; margin-left:auto;">
 								<tr>
 									<td colspan="2" align="center" height="170px" style="padding-top:15px; padding-bottom:10px">
@@ -486,7 +488,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2" style="text-align:center;"><a onclick="selfHidden()" class="bookmark-detailView-btn">소나나</a></td>
+									<td colspan="2" style="text-align:center;"><a onclick="selfHidden();" class="bookmark-detailView-btn">소나나</a></td>
 								</tr>
 								<tr>
 									<td>
@@ -512,7 +514,7 @@
 				            </table>     
 		                </div>
 						<div class="frofile-box bookmark-list" style="width:300px; padding:5px 15px 15px 15px;">
-							<a onclick="bookmarkDel()" class="on bookmark-del-btn">★</a>
+							<a onclick="bookmarkDel();" class="on bookmark-del-btn">★</a>
 							<table style="margin-right:auto; margin-left:auto;">
 								<tr>
 									<td colspan="2" align="center" height="170px" style="padding-top:15px; padding-bottom:10px">
@@ -522,7 +524,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2" style="text-align:center;"><a onclick="selfHidden()" class="bookmark-detailView-btn">소나나</a></td>
+									<td colspan="2" style="text-align:center;"><a onclick="selfHidden();" class="bookmark-detailView-btn">소나나</a></td>
 								</tr>
 								<tr>
 									<td>
@@ -548,7 +550,7 @@
 				            </table>     
 		                </div>
 						<div class="frofile-box bookmark-list" style="width:300px; padding:5px 15px 15px 15px;">
-							<a onclick="bookmarkDel()" class="on bookmark-del-btn">★</a>
+							<a onclick="bookmarkDel();" class="on bookmark-del-btn">★</a>
 							<table style="margin-right:auto; margin-left:auto;">
 								<tr>
 									<td colspan="2" align="center" height="170px" style="padding-top:15px; padding-bottom:10px">
@@ -558,7 +560,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2" style="text-align:center;"><a onclick="selfHidden()" class="bookmark-detailView-btn">소나나</a></td>
+									<td colspan="2" style="text-align:center;"><a onclick="selfHidden();" class="bookmark-detailView-btn">소나나</a></td>
 								</tr>
 								<tr>
 									<td>
@@ -584,7 +586,7 @@
 				            </table>     
 		                </div>
 						<div class="frofile-box bookmark-list" style="width:300px; padding:5px 15px 15px 15px;">
-							<a onclick="bookmarkDel()" class="on bookmark-del-btn">★</a>
+							<a onclick="bookmarkDel();" class="on bookmark-del-btn">★</a>
 							<table style="margin-right:auto; margin-left:auto;">
 								<tr>
 									<td colspan="2" align="center" height="170px" style="padding-top:15px; padding-bottom:10px">
@@ -594,7 +596,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2" style="text-align:center;"><a onclick="selfHidden()" class="bookmark-detailView-btn">소나나</a></td>
+									<td colspan="2" style="text-align:center;"><a onclick="selfHidden();" class="bookmark-detailView-btn">소나나</a></td>
 								</tr>
 								<tr>
 									<td>
@@ -620,7 +622,7 @@
 				            </table>     
 		                </div>
 						<div class="frofile-box bookmark-list" style="width:300px; padding:5px 15px 15px 15px;">
-							<a onclick="bookmarkDel()" class="on bookmark-del-btn">★</a>
+							<a onclick="bookmarkDel();" class="on bookmark-del-btn">★</a>
 							<table style="margin-right:auto; margin-left:auto;">
 								<tr>
 									<td colspan="2" align="center" height="170px" style="padding-top:15px; padding-bottom:10px">
@@ -630,7 +632,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td colspan="2" style="text-align:center;"><a onclick="selfHidden()" class="bookmark-detailView-btn">소나나</a></td>
+									<td colspan="2" style="text-align:center;"><a onclick="selfHidden();" class="bookmark-detailView-btn">소나나</a></td>
 								</tr>
 								<tr>
 									<td>
@@ -779,36 +781,35 @@
 <!-- 		//3. 마이페이지 탭 메뉴 - 관심작가 탭 -->
 
 <!-- 		* 4. 마이페이지 탭 메뉴 - 회원정보수정 탭 -->
-
-			<form id="memberInfoForm" action="<%=request.getContextPath() %>/updateInfo.me" method="post" class="memberinfo-menu tab-menu-content-form">
-				<div id="memberInfo" class="memberinfo-menu"> <br>
-					<table id="pwdCheckArea" style="margin-left:30px;">
-						<tr>
-							<td>비밀번호</td>
-							<td><input type="password" maxlength="13" id="checkUserPwd" class="checkUserPwd form-control input-short textBox"/></td>
-							<td>
-								<div style="margin-left:40px;">
-				                    <button type="button" onclick="pwdCheck();" class="btn btn-primary btn-lg btn-del btn-plus-design">확인</button>
-		               			</div>
-							</td>
-							<td width="255px"><div id="pwdStatus">비밀번호를 잘못 입력하였습니다.</div></td>
-						</tr>
-					</table>
-
-					<div class="memberInfoArea" style="display:none;">
-						<table >
+			<!-- <form id="memberInfoForm" method="post" class="memberinfo-menu tab-menu-content-form"> -->
+			<div id="memberInfo" class="memberinfo-menu tab-menu-content-form"> <br>
+				<table id="pwdCheckArea" style="margin-left:30px;">
+					<tr>
+						<td>비밀번호</td>
+						<td><input type="password" maxlength="13" id="checkUserPwd" class="checkUserPwd form-control input-short textBox"/></td>
+						<td>
+							<div style="margin-left:40px;">
+			                    <button onclick="pwdCheck();" class="btn btn-primary btn-lg btn-del btn-plus-design">확인</button>
+	               			</div>
+						</td>
+						<td width="255px"><div id="pwdStatus">비밀번호를 잘못 입력하였습니다.</div></td>
+					</tr>
+				</table>
+				<form action="<%=request.getContextPath() %>/updateInfo.me" onsubmit="return updateMember(this)" method="post" class="memberInfoArea" style="display:none;">
+					<div class="memberInfoArea">
+						<table>
 							<tr>
 								<td width="150px">아이디 </td>
 								<td><input type="text" value="<%= loginUser.getId() %>" maxlength="13" name="userId" id="updateUserId" class="form-control input-short textBox" readonly/></td>
 							</tr>
 							<tr>
 								<td>비밀번호</td>
-								<td><input type="password" maxlength="13" name="userPwd1" class="form-control input-short textBox"/></td>
+								<td><input type="password" maxlength="13" id="userPwd1" name="userPwd1" onchange="comparePwd()" class="form-control input-short textBox"/></td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>비밀번호 확인</td>
-								<td><input type="password" maxlength="13" name="userPwd2" class="form-control input-short textBox"/></td>
+								<td><input type="password" maxlength="13" id="userPwd2" name="userPwd2" onchange="comparePwd()" class="form-control input-short textBox"/></td>
 								<td><label id="pwdResult"></label></td>
 							</tr>
 							<tr>
@@ -817,9 +818,9 @@
 							</tr>
 							<tr>
 								<td>닉네임</td>
-								<td><input type="text" value="<%= loginUser.getNick_name() %>" id="checkUserNickName" maxlength="30" name="nickName" class="form-control input-short textBox"></td>
-								<td><button type="button" onclick="nickNameCheck()" class="btn btn-primary btn-lg btn-plus-design" style="height:30px; line-height:0;">중복확인</button></td>
-								<td><label id="nnResult">이미 사용중인 닉네임입니다.</label></td>
+								<td><input type="text" value="<%= loginUser.getNick_name() %>" id="checkUserNickName" onchange="nickNameChangeCheck();" maxlength="30" name="nickName" class="form-control input-short textBox"></td>
+								<td><button class="btn btn-primary btn-lg btn-plus-design" id="nickNameBtn" onclick="nickNameUniqueCheck();" style="height:30px; line-height:0;" value="resultTrue">중복확인</button></td>
+								<td><label id="nnResult"></label></td>
 							</tr>
 							<tr>
 								<td>연락처</td>
@@ -839,16 +840,17 @@
 						<br /><br /><br />
 						
 						<div class="btn-center btn-outer-style" style="padding-right:80px;">
-							  <button type="button" class="btn btn-primary btn-lg btn-plus-design">작가 신청</button>
+							  <button id=""class="btn btn-primary btn-lg btn-plus-design">작가 신청</button>
 							  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                      <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
 		                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">수정</button>
 		                </div>
 	                </div>
+                </form>
 
-				<br><br><br><br>	
-				</div>
-			</form>
+			<br><br><br><br>	
+			</div>
+			<!-- </form> -->
 <!-- 		//4. 마이페이지 탭 메뉴 - 회원정보수정 탭 -->
 
 <!-- 		* 5. 마이페이지 탭 메뉴 - 내작품관리 탭 -->
@@ -973,12 +975,11 @@
 		
 		if(pageName != null){
 			anotherHidden(pageName)
-		}/*  else{
-			//anotherHidden('order-menu');			
-			$('.order-menu').css({"display":"block"});
-			$('#order-menu').css({"color":"black", "background":"white"});
-		} */
-	
+		} else{
+			anotherHidden('order-menu');			
+			/* $('.order-menu').css({"display":"block"});
+			$('#order-menu').css({"color":"black", "background":"white"}); */
+		}
 	});
             		  
 //	* 탭 선택 함수
@@ -1009,10 +1010,9 @@
 			$('.checkUserPwd').val("");
 // 			alert($('.memberInfoArea' + ' *').val());    해당 클래스의 하위 요소 초기화 시키기
 		}
-
 	};
 	
-// 	* 패스워드 체크
+// 	* 패스워드 확인창
 	function pwdCheck(){
 		var userPwd = $('#checkUserPwd').val();
 		if(userPwd != null && userPwd != ""){
@@ -1033,28 +1033,62 @@
 		}
 	};
 	
-// 	* 닉네임 중복 체크	
-	function nickNameCheck(){
-		var userNickName = $('#checkUserNickName').val();
-		if(userNickName != null && userNickName != ""){
+// 	* 패스워드 비교
+	function comparePwd(){
+		var userPwd1 = $('#userPwd1').val();
+		var userPwd2 = $('#userPwd2').val();
+		
+		if(userPwd1 != "" && userPwd2 != ""){
+			if(userPwd1 != userPwd2){
+				$('#pwdResult').css({"color":"orangered"})
+				$("#pwdResult").text("비밀번호가 일치하지 않습니다.");
+			}else{
+				$("#pwdResult").empty();
+			}
+		}
+	};
+	
+// 	* 기존 닉네임과 같은지 비교
+	function nickNameChangeCheck(){
+		var nickUniqueCheck;
+		
+		if($('#checkUserNickName').val() != "<%= loginUser.getNick_name() %>"){
+			nickUniqueCheck = $("#nickNameBtn").val("resultFalse");
+			/* alert("다름"); */
+		}else{
+			nickUniqueCheck = $("#nickNameBtn").val("resultTrue");
+			/* alert("같음"); */
+		}
+	};
+	
+// 	* 닉네임 중복 체크		
+	function nickNameUniqueCheck(){
+		var nickName = $('#checkUserNickName').val();
+		if(nickName != null && nickName != "" && $("#nickNameBtn").val() == "resultFalse"){
 			$.ajax({
 				url : "<%= request.getContextPath() %>/nickNameCheck.me",
 				type : "post",
-				data : {userNickName : userNickName},
+				data : {nickName : nickName},
 				success : function(data){
 					if(data > 0){
 						$('#nnResult').css({"display":""});
 						$('#nnResult').css({"color":"orangered"});
+						$('#nnResult').text("이미 사용중인 닉네임입니다.");
 					}else{
-						$('#nnResult').val("사용 가능한 닉네임입니다.");
+						$('#nnResult').text("사용 가능한 닉네임입니다.");
 						$('#nnResult').css({"display":""});
-						$('#nnResult').css({"color":"orangered"});
+						$('#nnResult').css({"color":"green"});
+						$("#nickNameBtn").val("resultTrue");
 					}
 // 					alert(data);
 				}
 			});
 		} 
 	};
+	
+	function updateMember(form){
+		
+	}
 	                   	
 // 	* 구매 목록 필터링 - 전체 보기 / 구매 내역 / 판매 내역					***수정사항 : select요소 change 함수 통합 하기
     $('#stmt-Filter').change(function(){    	
