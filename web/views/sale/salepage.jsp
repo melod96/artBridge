@@ -75,6 +75,10 @@
 .left{
 	float:left;
 }
+.paginate a:hover{
+	cursor:pointer;
+	border:1px solid rgb(52,152,219);
+}
 </style>
 </head>
 <body>
@@ -325,11 +329,11 @@
 					
 					<!-- 페이징 처리 부분 -->
 					<div class="paginate">
-						<a onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<a onclick="location.href='<%=request.getContextPath()%>/selectSaleList.bo?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
 						<% if(currentPage <=1){ %>
 							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
 						<%}else{ %>
-							<a onclick = "location.href='<%= request.getContextPath()%>/selectList.bo?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<a onclick = "location.href='<%= request.getContextPath()%>/selectSaleList.bo?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
 							<em class="blind">목록에서 이전 페이지 이동</em></a>
 						<%} %>
 						<span class="paging-numbers">
@@ -337,18 +341,18 @@
 								if(p==currentPage){%>
 									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
 								<%}else{ %>
-									<a onclick= "location.href='<%= request.getContextPath()%>/selectList.bo?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+									<a onclick= "location.href='<%= request.getContextPath()%>/selectSaleList.bo?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
 								<%} %>
 							<%} %>
 						</span>
 						<% if(currentPage >= maxPage){ %>
-<!-- 							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> -->
+							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 						<%}else{ %>
-							<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.bo?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+							<a onclick = "location.href = '<%= request.getContextPath()%>/selectSaleList.bo?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
 							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 						<%} %>
 						
-						<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.bo?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectSaleList.bo?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
 					

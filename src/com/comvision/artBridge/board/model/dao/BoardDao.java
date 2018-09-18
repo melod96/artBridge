@@ -60,13 +60,14 @@ public class BoardDao {
 	}
 
 	//판매글 출력
-	public ArrayList<Board> selectList(Connection con, int currentPage, int limit) {
+	public ArrayList<Board> selectSaleList(Connection con, int currentPage, int limit) {
 		
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Board> list = null;
 		
-		String query = prop.getProperty("selectList");
+		
+		String query = prop.getProperty("selectSaleList");
 		
 		try {
 			pstmt = con.prepareStatement(query);
