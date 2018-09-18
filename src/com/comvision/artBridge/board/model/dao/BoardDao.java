@@ -451,6 +451,7 @@ public class BoardDao {
 		return listCount;
 	}
 
+	//조회수 카운트
 	public int updateCount(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -473,53 +474,5 @@ public class BoardDao {
 		return result;
 	}
 
-	public Board selectOneSalepage(Connection con, int num) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		Board b = null;
-		
-		String query = prop.getProperty("selectOne");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, num);
-			
-			rset = pstmt.executeQuery();
-			
-			if(rset.next()){
-				b= new Board();
-				
-				/*b.setBid(rset.getInt("bid"));
-				b.setbType(rset.getInt("btype"));
-				b.setBno(rset.getInt("bno"));
-				b.setCategory(rset.getString("cname"));
-				b.setbTitle(rset.getString("btitle"));
-				b.setbContent(rset.getString("bcontent"));
-				b.setbWriter(rset.getString("nick_name"));
-				b.setbCount(rset.getInt("bcount"));
-				b.setRefBid(rset.getInt("ref_bid"));
-				b.setReplyLevel(rset.getInt("reply_level"));
-				b.setbDate(rset.getDate("bdate"));
-//				b.setModifyDate(rset.getDate("modify_date"));
-				b.setStatus(rset.getString("status"));*/
-				
-			}
-			System.out.println(b);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
-			close(pstmt);
-			close(rset);
-		}
-		return b;
-	}
-
-
-
-
-
-	
-	
 	
 }

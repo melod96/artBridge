@@ -124,22 +124,6 @@ public class BoardService {
 		return listCount;
 	}
 
-	//해당하는 판매글 상세조회
-	public Board selectOneSalepage(int num) {
-		Connection con = getConnection();
-		Board b= null;
-		
-		int result = new BoardDao().updateCount(con,num);
-		System.out.println(result);
-		if(result>0){
-			commit(con);
-			b = new BoardDao().selectOneSalepage(con,num);
-			System.out.println(b);
-		}else{
-			rollback(con);
-		}
-		
-		return b;
-	}
+	
 
 }

@@ -79,10 +79,9 @@ public class SelectSaleListServlet extends HttpServlet {
 
 		//판매글 출력
 		ArrayList<Board> list = new BoardService().selectSaleList(currentPage, limit);
-		System.out.println("페이징 처리 : " + list);
 		
 		//해당하는 판매글의 옵션
-		ArrayList<HashMap<String,Object>> opmap = null;
+		ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
 		for(Board b : list){
 			ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(b.getBoard_no());
 			
@@ -105,6 +104,7 @@ public class SelectSaleListServlet extends HttpServlet {
 			request.setAttribute("filelist", filelist);
 			request.setAttribute("pi", pi);
 			request.setAttribute("rlist", rlist);
+			request.setAttribute("oplist", opmap);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 조회 실패");
