@@ -141,6 +141,36 @@ public class BoardService {
 		return b;
 	}
 
+	public ArrayList<Board> selecNoticetList() {
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectNoticeList(con);
+		
+		close(con);
+		
+		
+		return list;
+	}
+
+	public Board selectOneNotice(String num) {
+		
+		Connection con = getConnection();
+		
+		Board b = new BoardDao().selectNoticeOne(con, num);
+		System.out.println(b);
+		if(b != null){
+			int result = new BoardDao().updateNoticeCount(con, b.getBoard_no());
+			
+			if(result > 0) commit(con);
+			else rollback(con);
+		}
+		
+		close(con);
+		
+		return b;
+	}
+
+
 	
 
 	

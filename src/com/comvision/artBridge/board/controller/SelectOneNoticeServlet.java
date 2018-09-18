@@ -1,7 +1,6 @@
 package com.comvision.artBridge.board.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,29 +12,37 @@ import javax.servlet.http.HttpServletResponse;
 import com.comvision.artBridge.board.model.service.BoardService;
 import com.comvision.artBridge.board.model.vo.Board;
 
-@WebServlet("/viewPage.no")
-public class ViewNoticePageServlet extends HttpServlet {
+@WebServlet("/selectOne.no")
+public class SelectOneNoticeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public ViewNoticePageServlet() {
+    public SelectOneNoticeServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ArrayList<Board> list = new BoardService().selecNoticetList();
 		
+		String num = request.getParameter("num");
+		System.out.println("서블렛 num : " + num);
+		
+		Board b = new BoardService().selectOneNotice(num);
+		
+		System.out.println("서블렛b : " + b);
 		String page = "";
-		
-		if(list != null){
-			page = "views/board/noticeBoardList.jsp";
-			request.setAttribute("list", list);
+		if(b != null){
+			page = "views/notice/noticeBoardDetail.jsp";
+			request.setAttribute("b", b);
 		}else{
 			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "공지사항 조회 실패");
+			request.setAttribute("msg", "게시글 상세보기 실패!");
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+		
+		
+		
+		
 		
 	}
 

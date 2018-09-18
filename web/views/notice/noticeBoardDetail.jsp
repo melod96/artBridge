@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.comvision.artBridge.board.model.vo.*"%>
+    
+    <%Board b = (Board)request.getAttribute("b"); %>
+    
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -27,6 +31,19 @@
                 <h2 class="tit1">공지사항</h2>
             </div>
         </section>
+	<script>
+	 $(function(){
+			
+			$(".tit1").mouseenter(function(){
+				$(this).css({ "cursor":"pointer"});
+			}).click(function(){
+			
+				location.href = "<%=request.getContextPath()%>/viewPage.no";
+
+				});
+			});
+	</script>
+
 
         <!-- 주석 영역 -->
         <div class="contents">
@@ -49,17 +66,17 @@
                             <tr>
                                 <th>글 제목</th>
                                 <td colspan="3">
-                                   	글의 제목이 들어가는 자리입니다.
+                                   	<%=b.getBoard_title() %>
                                 </td>
                             </tr>
                             <tr>
                                 <th>작성자</th>
                                 <td>
-                                  	뽀짝쓰
+                                  	관리자
                                 </td>
                                 <th>작성일자</th>
                                 <td>
-                                   	작성일자가 들어가는 자리입니다.
+                                   	<%=b.getBoard_date() %>
                                 </td>
                             </tr>
                             
@@ -67,7 +84,7 @@
                             	 <th>글 내용</th>
                                 <td colspan="4">
                                    <pre>
-글의 내용이 들어가는 자리입니다.
+<%=b.getBoard_content() %>
                                    	
                                    </pre>
                                 </td>

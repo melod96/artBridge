@@ -25,106 +25,7 @@
     <div id="all">
        
         <!-- Header -->
-        <header>
-            <div class="navbar-affixed-top" data-spy="affix" data-offset-top="200">
-                <div class="navbar navbar-default yamm" role="navigation" id="navbar">
-
-                    <div class="container">
-                        <div class="navbar-header">
-                            <!-- 로고 -->
-                            <a class="navbar-brand home" href="../index.html">
-                                <img src="/artBridge/image/logo.png" alt="Art Bridge logo">
-                            </a>
-                            <!-- // 로고 -->
-                            <!-- 토글버튼 -->
-                            <div class="navbar-buttons">
-                                <button type="button" class="navbar-toggle btn-template-main" data-toggle="collapse" data-target="#navigation">
-                                    <span class="sr-only">Toggle navigation</span>
-                                    <i class="fa fa-align-justify"></i>
-                                </button>
-                            </div>
-                             <!-- // 토글버튼 -->
-                        </div>
-                        <!-- 메뉴영역 -->
-                        <div class="navbar-collapse collapse" id="navigation">
-                            <ul class="nav navbar-nav navbar-right">
-                                <li class="">
-                                    <a href="#" class="">일러스트 </a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="" class="dropdown-toggle">이용안내</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href=""> 의뢰자 이용안내</a>
-                                        </li>
-                                        <li><a href="infoUseArtist.jsp">작가 이용안내</a>
-                                        </li>
-                                        <li><a href="infoUseOther.jsp">환불규정 및 유의사항</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle">고객센터</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">자주하는 질문</a>
-                                        </li>
-                                        <li><a href="#">고객문의</a>
-                                        </li>
-                                        <li><a href="#">광고상품 안내</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="">
-                                    <a href="#" class="login">&nbsp;로그인&nbsp;</a>
-                                </li>
-                                <li class="">
-                                    <a href="#" class="join">회원가입</a>
-                                </li>
-                                <!-- <li class="dropdown">
-                                    <a href="#" class="login" data-toggle="dropdown">마이페이지</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">마이페이지</a>
-                                        </li>
-                                        <li><a href="#">쪽지함</a>
-                                        </li>
-                                        <li><a href="#">주문 관리</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="join" data-toggle="dropdown">님</a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">로그아웃</a>
-                                        </li>
-                                        <li><a href="#">회원 정보 수정</a>
-                                        </li>
-                                    </ul>
-                                </li> -->
-                                <li class="">
-                                    <a href="#" class="msg">
-                                        <span class="glyphicon glyphicon-envelope"></span>
-                                        <span class="msg-num on">1</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                         <!-- // 메뉴영역 -->
-                        <!-- 검색 왜있지? -->
-                        <div class="collapse clearfix" id="search">
-                            <form class="navbar-form" role="search">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                    <span class="input-group-btn">
-                                       <button type="submit" class="btn btn-template-main"><i class="fa fa-search"></i></button>
-                                    </span>
-                                </div>
-                            </form>
-                        </div>
-                        <!-- // 검색 왜있지? -->
-                    </div>
-
-                </div>
-            </div>
-        </header>
+       <%@ include file="/views/common/header.jsp"%>
         <!-- // Header -->
 
         <section class="tit-area" style="background:#99B5C7"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
@@ -163,12 +64,11 @@
 					 	 <% for(Board b : list){ %>
 						
 							<tr>
-								<input type="hidden" value="<%=b.getBd_no()%>">
-								<td><%= b.getBd_no() %></td>
-								<td><%= b.getBd_title()%></td>
+								<td><%= b.getBoard_no()%></td>
+								<td><%= b.getBoard_title()%></td>
 								<td>관리자</td>
-								<td>5조5억번 </td>
-								<td><%=b.getBd_date()%></td>
+								<td><%= b.getBoard_count()%> </td>
+								<td><%=b.getBoard_date()%></td>
 							</tr>
 						<% } %>
 
@@ -230,6 +130,25 @@
     </div>
     
     <script>
+    
+    
+ 
+	$(function(){
+		$("#listArea td").mouseenter(function(){
+			$(this).parent().css({"background":"darkgray", "cursor":"pointer"});
+		}).mouseout(function(){
+			$(this).parent().css({"background":"white"});
+		}).click(function(){
+			console.log($(this).parent().children().eq(0).text());
+			var num = $(this).parent().children().eq(0).text();
+			
+			location.href = "<%=request.getContextPath()%>/selectOne.no	?num=" + num;
+		
+		});
+	});
+
+    
+    
 	/* 	$(function(){
 			$("#listArea td").mouseenter(function(){
 				$(this).parent().css({"background":"gray", "cursor":"pointer"});

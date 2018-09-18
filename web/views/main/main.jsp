@@ -258,7 +258,7 @@
 					$(this).css({ "cursor":"pointer"});
 				}).click(function(){
 				
-					location.href = "/artBridge/views/notice/noticeBoard.jsp";
+					location.href = "<%=request.getContextPath()%>/viewPage.no";
 	
 					});
 				});
