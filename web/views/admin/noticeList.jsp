@@ -2,6 +2,7 @@
     pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*"%>
 <% 
 	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list"); 
+	/* Notice n = (Notice)request.getAttribute("n"); */
 	/* PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
@@ -26,22 +27,8 @@
       .tbl-type02 .tit{text-align:left; padding:12px; cursor:pointer;}
     </style>
     <script>
-	    function boxChecked(){
-   			var input = $('input[type=checkbox]');
-   			
-			$("input").click(function(){
-	    		var ckbox = $(this).prop("checked");
-				if(ckbox != true){
-					$(this).attr('checked', false);
-  	    		}else{
-  	    			$(this).attr('checked', true);
-  	    		}
-			});
-	    }
-	    
-   		function contDel(){
-   			location.href='<%=request.getContextPath()%>/deleteNotice.no?boxChecked()=' + num;
-   		}
+    	
+		
     </script>
 </head>
 <body>
@@ -90,47 +77,71 @@
 		                    </tbody>
 		                </table>
 	                	<!-- // 검색 테이블 영역 -->
+		                <div class="btn-right">
+		                   <button type="button" class="btn btn-danger" onclick="delContent()" style="float:left;">삭제</button>
+		                   <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/admin/noticeInsertForm.jsp'">공지사항 등록</button>
+		                </div>
+		                <!-- 공지사항 리스트  -->
+		                <table class="tbl-type02 table-hover">
+		                    <colgroup>
+		                        <col style="width: 80px;">
+		                        <col style="width: 100px;">
+		                        <col style="width: *">
+		                        <col style="width: 120px;">
+		                        <col style="width: 180px;">
+		                    </colgroup>
+		                    <thead>
+		                        <tr>
+		                            <th scope="col">선택</th>
+		                            <th scope="col">NO</th>
+		                            <th scope="col">제목</th>
+		                            <th scope="col">조회수</th>
+		                            <th scope="col">등록일</th>
+		                        </tr>
+		                    </thead>
+		                    <tbody>
+		                    	<% if(list != null){
+		                    		for(Notice n : list){ %>
+		                        <tr>
+		                            <td><input type="checkbox" name="contCheck"><div style="display:none"><%= n.getnNo() %></div></td>
+		                            <td><%= n.getRownum() %></td>
+		                            <td id="noticeTit" class="tit" onclick="location.href='<%=request.getContextPath()%>/noticeDetail.no?num=<%= n.getnNo() %>'"><%= n.getnTitle() %></td>
+		                            <td><%= n.getnCount() %></td>
+		                            <td><%= n.getnDate() %></td>
+		                        </tr>
+		                        <% 	}
+		                    	}else{ %>
+		                    	<tr>
+		                    		<td colspan="5">등록된 게시물이 없습니다.</td>
+		                    	</tr>		
+		                    	<% } %>
+		                    </tbody>
+		                </table>
 	                </form>
-	                <div class="btn-right">
-	                   <button type="button" class="btn btn-danger" onclick="location.href='<%=request.getContextPath()%>/delNotice.no'" style="float:left;">삭제</button>
-	                   <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/admin/noticeInsertForm.jsp'">공지사항 등록</button>
-	                </div>
-	                <!-- 공지사항 리스트  -->
-	                <table class="tbl-type02 table-hover">
-	                    <colgroup>
-	                        <col style="width: 80px;">
-	                        <col style="width: 100px;">
-	                        <col style="width: *">
-	                        <col style="width: 120px;">
-	                        <col style="width: 180px;">
-	                    </colgroup>
-	                    <thead>
-	                        <tr>
-	                            <th scope="col">선택</th>
-	                            <th scope="col">NO</th>
-	                            <th scope="col">제목</th>
-	                            <th scope="col">조회수</th>
-	                            <th scope="col">등록일</th>
-	                        </tr>
-	                    </thead>
-	                    <tbody>
-	                    	<% if(list != null){
-	                    		for(Notice n : list){ %>
-	                        <tr>
-	                            <td><input type="checkbox" id="del-check" name=""></td>
-	                            <td><%= n.getRownum() %></td>
-	                            <td id="noticeTit" class="tit" onclick="location.href='<%=request.getContextPath()%>/noticeDetail.no?num=<%= n.getnNo() %>'"><%= n.getnTitle() %></td>
-	                            <td><%= n.getnCount() %></td>
-	                            <td><%= n.getnDate() %></td>
-	                        </tr>
-	                        <% 	}
-	                    	}else{ %>
-	                    	<tr>
-	                    		<td colspan="5">등록된 게시물이 없습니다.</td>
-	                    	</tr>		
-	                    	<% } %>
-	                    </tbody>
-	                </table>
+	                
+	                <script>
+	                	$(function(){
+	                		
+	                		
+	                		var wow = $('input[name=contCheck]');
+	                		$(wow).click(function(){
+	                			$(this).each(function(){
+	                				if($(this).prop("checked") == true){
+	                					var onlyNum = $(this).next().text(); 
+	                					console.log(onlyNum);
+	                					
+	                				}
+	                			});
+	                		});
+	                		
+	                		function delContent(){
+	                			//삭제버튼을 눌럿을때 서블릿으로 이동(체크가 선택된, 게시글의 넘버를, 배열로 가져간다.)
+	                			
+	                			<%-- location.href='<%=request.getContextPath()%>/deleteNotice.no?num'+num --%>
+	                			location.href='<%=request.getContextPath()%>/deleteNotice.no?num'+onlyNum
+	                		}
+	                	});
+	                </script>
 	                <!-- // 공지사항 리스트  -->
 	                <!-- 페이징 영역 -->
 	                <div class="paginate">

@@ -166,8 +166,7 @@ public class NoticeDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, n.getnTitle());
 			pstmt.setString(2, n.getnContent());
-			pstmt.setDate(3, n.getnDate());
-			pstmt.setInt(4, n.getnNo());
+			pstmt.setInt(3, n.getnNo());
 			
 			result = pstmt.executeUpdate();
 			
