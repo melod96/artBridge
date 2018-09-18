@@ -39,7 +39,7 @@
 					<br />
 			
 					<div class="heading">
-                        <h2 class="tit1">애송이 구라칠 생각말라구?</h2>
+                        <h2 class="tit1">아트브릿지에 오신걸 환영합니다!</h2>
                     </div>
                     
                     <br /><br />
@@ -48,7 +48,7 @@
 						<table>
 							<tr>
 								<td width="150px"><h5 style="line-height:2;">* 아이디</h5></td>
-								<td><input type="text" maxlength="30" name="joinUserId"	id="joinUserId" class="form-control input-short" placeholder="아이디"/></td>
+								<td><input type="text" maxlength="30" name="joinUserId"	id="joinUserId" class="form-control input-short" placeholder="아이디" onchange="idChange();"/></td>
 								<td width="100px">&nbsp;&nbsp;<button type="button" id="idCheck" class="btn btn-primary btn-sm">중복확인</button></td>
 							</tr>
 							<tr>
@@ -72,8 +72,13 @@
 								<td></td>
 							</tr>
 							<tr>
+								<td><h5 style="line-height:2;">* 이름</h5></td>
+								<td><input type="text" maxlength="30" name="joinUserName" id="joinUserName" class="form-control" placeholder="이름" onchange="checkName();" /></td>
+								<td></td>
+							</tr>
+							<tr>
 								<td><h5 style="line-height:2;">* 닉네임</h5></td>
-								<td><input type="text" maxlength="30" name="nickName" id="nickName" class="form-control input-short" placeholder="닉네임"/></td>
+								<td><input type="text" maxlength="30" name="nickName" id="nickName" class="form-control input-short" placeholder="닉네임" onchange="nickChange();"/></td>
 								<td>&nbsp;&nbsp;<button type="button" id="nickNameCheck" class="btn btn-primary btn-sm">중복확인</button></td>
 							</tr>
 							<tr>
@@ -103,6 +108,9 @@
 								<button type="submit" id="joinBtn" class="btn btn-primary btn-lg">가입하기</button>
 							</div>
 						<script>
+							var idCheck = false;
+							var nickCheck = false;
+						
 							function formCheck(frm){
 								//아이디 입력조건
 								if(frm.joinUserId.value == ""){
@@ -122,10 +130,26 @@
 									frm.joinUserPwd2.focus();
 									return false;
 								}
+								//이름 입력조건
+								if(frm.joinUserName.value == ""){
+									alert("이름을 입력해주세요!");
+									frm.joinUserName.focus();
+									return false;
+								}
 								//닉네임 입력조건
 								if(frm.nickName.value == ""){
 									alert("닉네임을 입력해주세요!");
 									frm.nickName.focus();
+									return false;
+								}
+								
+								if(!idCheck){
+									alert("아이디 중복확인을 해주세요!");
+									return false;
+								}
+								
+								if(!nickCheck){
+									alert("닉네임 중복확인을 해주세요!");
 									return false;
 								}
 								
@@ -150,9 +174,26 @@
 								
 							} 
 							
+							function idChange(){
+								idCheck = false;
+							}
+							
+							function nickChange(){
+								nickCheck = false;
+							}
+							
+							function idCk(){
+								idCheck = true;
+							}
+							
+							function nickCh(){
+								nickCheck = true;
+							}
+							
 							//아이디 중복체크
 							$("#idCheck").click(function(){
 								var joinUserId = $("#joinUserId").val();
+								var idCheck = false;
 								if(joinUserId != "" && joinUserId != null){
 									$.ajax({
 										url : "<%= request.getContextPath() %>/idCheck.me",
@@ -163,6 +204,7 @@
 												$("#checkIdResult").html("<p style='color:orange; font-weight:bold'>사용불가능한 아이디 입니다.</p>");
 											}else{
 												$("#checkIdResult").html("<p style='color:green; font-weight:bold'>사용가능한 아이디 입니다.</p>");
+												idCk();
 											}
 										},
 										error : function(){
@@ -185,6 +227,7 @@
 												$("#checkNickNameResult").html("<p style='color:orange; font-weight:bold'>사용불가능한 닉네임 입니다.</p>");
 											}else{
 												$("#checkNickNameResult").html("<p style='color:green; font-weight:bold'>사용가능한 닉네임 입니다.</p>");
+												nickCh();
 											}
 										},
 										error : function(){
