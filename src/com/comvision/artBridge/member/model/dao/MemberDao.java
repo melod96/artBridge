@@ -37,7 +37,8 @@ private Properties prop = new Properties();
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, userId);
-			pstmt.setString(2, userPwd);
+			pstmt.setString(2, userId);
+			pstmt.setString(3, userPwd);
 
 			rset = pstmt.executeQuery();
 			
@@ -87,9 +88,10 @@ private Properties prop = new Properties();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, m.getId());
 			pstmt.setString(2, m.getPassword());
-			pstmt.setString(3, m.getNick_name());
-			pstmt.setString(4, m.getPhone());
-			pstmt.setString(5, m.getEmail());
+			pstmt.setString(3, m.getName());
+			pstmt.setString(4, m.getNick_name());
+			pstmt.setString(5, m.getPhone());
+			pstmt.setString(6, m.getEmail());
 			
 			result = pstmt.executeUpdate();
 			
