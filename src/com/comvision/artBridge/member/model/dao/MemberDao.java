@@ -38,6 +38,7 @@ private Properties prop = new Properties();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, userId);
 			pstmt.setString(2, userId);
+			
 			pstmt.setString(3, userPwd);
 
 			rset = pstmt.executeQuery();
