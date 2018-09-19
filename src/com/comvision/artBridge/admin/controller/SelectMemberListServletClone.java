@@ -17,7 +17,7 @@ import com.comvision.artBridge.member.model.vo.Member;
 /**
  * Servlet implementation class SelectMemberListServlet
  */
-@WebServlet("/selectMemberList.ad")
+@WebServlet("/selectMemberListClone.ad")
 public class SelectMemberListServletClone extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
