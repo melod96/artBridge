@@ -2,8 +2,8 @@
     pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*"%>
 <% 
 	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list"); 
-	/* Notice n = (Notice)request.getAttribute("n"); */
 	/* PageInfo pi = (PageInfo)request.getAttribute("pi");
+	//ArrayList<HashMap<String,Object>> oplist = (ArrayList<HashMap<String,Object>>)request.getAttribute("oplist");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
@@ -77,6 +77,9 @@
 		                    </tbody>
 		                </table>
 	                	<!-- // 검색 테이블 영역 -->
+	                </form>
+	                
+	               	<form name="listForm" id="listForm" action="" method="post">
 		                <div class="btn-right">
 		                   <button type="button" class="btn btn-danger" onclick="delContent()" style="float:left;">삭제</button>
 		                   <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/admin/noticeInsertForm.jsp'">공지사항 등록</button>
@@ -103,7 +106,7 @@
 		                    	<% if(list != null){
 		                    		for(Notice n : list){ %>
 		                        <tr>
-		                            <td><input type="checkbox" name="contCheck"><div style="display:none"><%= n.getnNo() %></div></td>
+		                            <td><input type="checkbox" name="contCheck" value="<%= n.getnNo() %>"></td>
 		                            <td><%= n.getRownum() %></td>
 		                            <td id="noticeTit" class="tit" onclick="location.href='<%=request.getContextPath()%>/noticeDetail.no?num=<%= n.getnNo() %>'"><%= n.getnTitle() %></td>
 		                            <td><%= n.getnCount() %></td>
@@ -118,33 +121,20 @@
 		                    </tbody>
 		                </table>
 	                </form>
-	                
+
 	                <script>
-	                	$(function(){
-	                		
-	                		
-	                		var wow = $('input[name=contCheck]');
-	                		$(wow).click(function(){
-	                			$(this).each(function(){
-	                				if($(this).prop("checked") == true){
-	                					var onlyNum = $(this).next().text(); 
-	                					console.log(onlyNum);
-	                					
-	                				}
-	                			});
-	                		});
-	                		
-	                		function delContent(){
-	                			//삭제버튼을 눌럿을때 서블릿으로 이동(체크가 선택된, 게시글의 넘버를, 배열로 가져간다.)
-	                			
-	                			<%-- location.href='<%=request.getContextPath()%>/deleteNotice.no?num'+num --%>
-	                			location.href='<%=request.getContextPath()%>/deleteNotice.no?num'+onlyNum
-	                		}
-	                	});
+                		function delContent(){
+                			//삭제버튼을 눌럿을때 서블릿으로 이동(체크가 선택된, 게시글의 넘버를, 배열로 가져간다.)
+                			var listForm = document.getElementById("listForm");
+							listForm.action = "<%=request.getContextPath()%>/deleteNotice.no";
+							listForm.submit();
+                		}
 	                </script>
+
+
 	                <!-- // 공지사항 리스트  -->
 	                <!-- 페이징 영역 -->
-	                <div class="paginate">
+	                <!-- <div class="paginate">
 	                  <a href="#" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a>
 	                  <a href="#" class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a>
 	                  <span class="paging-numbers">
@@ -156,38 +146,38 @@
 	                  </span>
 	                  <a href="#" class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 	                  <a href="#" class="btn-last" title="끝"><span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
-	               </div>
+	               </div> -->
 	                <!-- // 페이징 영역 -->
 	                
 	                
 	                <!-- 페이징 영역2222222222222 -->
-	                <%-- <div class="paginArea" align="center">
-			<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=1'"><<</button>
-			<% if(currentPage <= 1){ %>
-				<button disabled><</button>
-			<% }else{ %>
-				<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%=currentPage -1 %>'"><</button>
-			<% } %>
-			
-			
-			<% for(int p = startPage; p <= endPage; p++){
-					if(p == currentPage){	
-			%>
-					<button disabled><%= p %></button>
-			<%      }else{ %>
-						<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%=p%>'"><%= p %></button>
-			<% 		}  %>
-			<% }  %>
-			
-			
-			<% if(currentPage >= maxPage){ %>
-				<button disabled>></button>
-			<% }else{ %>
-				<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%=currentPage + 1%>'">></button>
-			<% } %>
-			
-			<button onclick="location.href='<%=request.getContextPath()%>/selectList.bo?currentPage=<%=maxPage%>'">>></button>
-		</div> --%>
+	              <%-- <div class="paginate">
+						<a onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<% if(currentPage <=1){ %>
+							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
+						<%}else{ %>
+							<a onclick = "location.href='<%= request.getContextPath()%>/selectNoticeList.no?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<em class="blind">목록에서 이전 페이지 이동</em></a>
+						<%} %>
+						<span class="paging-numbers">
+							<% for(int p = startPage; p <=endPage;p++){
+								if(p==currentPage){%>
+									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
+								<%}else{ %>
+									<a onclick= "location.href='<%= request.getContextPath()%>/selectNoticeList.no?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+								<%} %>
+							<%} %>
+						</span>
+						<% if(currentPage >= maxPage){ %>
+							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%}else{ %>
+							<a onclick = "location.href = '<%= request.getContextPath()%>/selectNoticeList.no?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%} %>
+						
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectSaleList.bo?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+					</div> --%>
 		<!-- // 페이징 영역2222222222222 -->
 		
 		
