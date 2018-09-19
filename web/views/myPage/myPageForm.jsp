@@ -795,39 +795,40 @@
 						<td width="255px"><div id="pwdStatus">비밀번호를 잘못 입력하였습니다.</div></td>
 					</tr>
 				</table>
-				<form action="<%=request.getContextPath() %>/updateInfo.me" onsubmit="return updateMember(this)" method="post" class="memberInfoArea" style="display:none;">
+				
+				<form id="memberInfoForm" onsubmit="return updateMember(this)" action="<%=request.getContextPath() %>/updateInfo.me" method="post" class="memberInfoArea" style="display:none;">
 					<div class="memberInfoArea">
-						<table>
+						<table border="1">
 							<tr>
-								<td width="150px">아이디 </td>
-								<td><input type="text" value="<%= loginUser.getId() %>" maxlength="13" name="userId" id="updateUserId" class="form-control input-short textBox" readonly/></td>
+								<td width="150px">* 아이디 </td>
+								<td><input type="text" value="<%= loginUser.getId() %>" maxlength="13" name="updateUserId" id="updateUserId" class="form-control input-short textBox" readonly/></td>
 							</tr>
 							<tr>
-								<td>비밀번호</td>
-								<td><input type="password" maxlength="13" id="userPwd1" name="userPwd1" onchange="comparePwd()" class="form-control input-short textBox"/></td>
+								<td>* 비밀번호</td>
+								<td><input type="password" maxlength="13" id="updateUserPwd1" name="updateUserPwd" onchange="comparePwd();" class="form-control input-short textBox"/></td>
 								<td></td>
 							</tr>
 							<tr>
-								<td>비밀번호 확인</td>
-								<td><input type="password" maxlength="13" id="userPwd2" name="userPwd2" onchange="comparePwd()" class="form-control input-short textBox"/></td>
-								<td><label id="pwdResult"></label></td>
+								<td>* 비밀번호 확인</td>
+								<td><input type="password" maxlength="13" id="updateUserPwd2" name="updateUserPwd2" onchange="comparePwd();" class="form-control input-short textBox"/></td>
+								<td colspan="2"><label id="pwdResult">비밀번호가 일치하지 않습니다.</label></td>
 							</tr>
 							<tr>
-								<td>이름</td>
-								<td><input type="text" value="<%= loginUser.getName() %>" maxlength="5" name="userName" class="form-control input-short textBox" readonly></td>
+								<td>* 이름</td>
+								<td><input type="text" value="<%= loginUser.getName() %>" maxlength="5" name="updateUserName" class="form-control input-short textBox" readonly></td>
 							</tr>
 							<tr>
-								<td>닉네임</td>
-								<td><input type="text" value="<%= loginUser.getNick_name() %>" id="checkUserNickName" onchange="nickNameChangeCheck();" maxlength="30" name="nickName" class="form-control input-short textBox"></td>
-								<td><button class="btn btn-primary btn-lg btn-plus-design" id="nickNameBtn" onclick="nickNameUniqueCheck();" style="height:30px; line-height:0;" value="resultTrue">중복확인</button></td>
-								<td><label id="nnResult"></label></td>
+								<td>* 닉네임</td>
+								<td><input type="text" value="<%= loginUser.getNick_name() %>" id="updateNickName" maxlength="30" name="updateNickName" class="form-control input-short textBox"></td>
+								<td width="130px"><label class="btn btn-primary btn-lg btn-plus-design" id="nickNameCheckBtn" onclick="nickNameUniqueCheck();" value="resultTrue">중복확인</label></td>
+								<td width="300px"><label id="nnResult"></label></td>
 							</tr>
 							<tr>
 								<td>연락처</td>
-								<td width="200px">
+								<td width="200px" style="text-align:center;">
 									<input type="text" maxlength="3" value="<%= tel1 %>" name="tel1" style="width:28%; display: inline-block;" class="form-control textBox"/> -
-									<input type="text" maxlength="4" value="<%= tel2 %>" name="tel2" style="width:30%; display: inline-block;" class="form-control textBox"/> -
-									<input type="text" maxlength="4" value="<%= tel3 %>" name="tel3" style="width:30%; display: inline-block;" class="form-control textBox"/>
+									<input type="text" maxlength="4" value="<%= tel2 %>" name="tel2" style="width:29.5%; display: inline-block;" class="form-control textBox"/> -
+									<input type="text" maxlength="4" value="<%= tel3 %>" name="tel3" style="width:29.5%; display: inline-block;" class="form-control textBox"/>
 								</td>
 								<td></td>
 							</tr>
@@ -839,11 +840,14 @@
 						</table>					
 						<br /><br /><br />
 						
-						<div class="btn-center btn-outer-style" style="padding-right:80px;">
-							  <button id=""class="btn btn-primary btn-lg btn-plus-design">작가 신청</button>
-							  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<div class="btn-center btn-outer-style" style="width:50%; padding-right:80px;">
 		                      <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
 		                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">수정</button>
+		                </div>
+						<div class="btn-center btn-outer-style" align="right" style="width:50%; padding-right:80px;">
+		                      <button class="btn btn-primary btn-lg btn-del btn-plus-design" style="background: darkorange; border-color: darkorang">회원 탈퇴</button>
+		                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							  <button class="btn btn-primary btn-lg btn-plus-design">작가 신청</button>
 		                </div>
 	                </div>
                 </form>
@@ -1005,13 +1009,40 @@
 			$('.msg-list').css({"display":""});	
 		}
 		if(thisMenu == "memberinfo-menu"){
+			$('#checkUserPwd').val("");
 			$('#pwdStatus').css({"display":"none"});
 			$('#nnResult').css({"display":"none"});
-			$('.checkUserPwd').val("");
+			$('#pwdResult').css({"display":"none"});
+			$('#updateUserPwd1').val("");
+			$('#updateUserPwd2').val("");
+			checkPwd = false;
+			checkNick = false;
+			
 // 			alert($('.memberInfoArea' + ' *').val());    해당 클래스의 하위 요소 초기화 시키기
 		}
 	};
 	
+//	* 회원정보 수정 폼 submit 함수
+ 	var checkPwd = false;
+	var checkNick = false;
+// 	var updateMemberInfoSave = false;
+	
+	function updateMember(){
+		if(checkPwd == false){
+			return false;
+		}
+		if(checkNick == false){
+			return false;
+		}
+/* 		if(updateMemberInfoSave == true){
+			
+			updateMemberInfoSave = false;
+			return true;
+		} */
+		return true;
+	}
+	
+
 // 	* 패스워드 확인창
 	function pwdCheck(){
 		var userPwd = $('#checkUserPwd').val();
@@ -1035,61 +1066,72 @@
 	
 // 	* 패스워드 비교
 	function comparePwd(){
-		var userPwd1 = $('#userPwd1').val();
-		var userPwd2 = $('#userPwd2').val();
+		var updateUserPwd1 = $('#updateUserPwd1').val();
+		var updateUserPwd2 = $('#updateUserPwd2').val();
 		
-		if(userPwd1 != "" && userPwd2 != ""){
-			if(userPwd1 != userPwd2){
+		if(updateUserPwd1 != "" && updateUserPwd2 != ""){
+			if(updateUserPwd1 != updateUserPwd2){
 				$('#pwdResult').css({"color":"orangered"})
-				$("#pwdResult").text("비밀번호가 일치하지 않습니다.");
+				$('#pwdResult').css({"display":""})
+// 				$("#pwdResult").text("비밀번호가 일치하지 않습니다.");
+				
+				checkPwd = false;			
 			}else{
-				$("#pwdResult").empty();
+				$('#pwdResult').css({"display":"none"})
+				
+				checkPwd = true;
 			}
 		}
 	};
 	
-// 	* 기존 닉네임과 같은지 비교
-	function nickNameChangeCheck(){
-		var nickUniqueCheck;
-		
-		if($('#checkUserNickName').val() != "<%= loginUser.getNick_name() %>"){
-			nickUniqueCheck = $("#nickNameBtn").val("resultFalse");
+	function nickNameUniqueCheck(){		
+	// 	* 기존 닉네임과 같은지 비교	
+		if($('#updateNickName').val() != "<%= loginUser.getNick_name() %>"){
+			$("#nickNameCheckBtn").val("changeTrue");
+			
+			checkNick = false;
 			/* alert("다름"); */
 		}else{
-			nickUniqueCheck = $("#nickNameBtn").val("resultTrue");
+			$("#nickNameCheckBtn").val("changeFalse");
+			$('#nnResult').text("현재 사용중인 닉네임입니다.");
+			$('#nnResult').css({"color":"green"});
+			$('#nnResult').css({"display":""});
+			
+			checkNick = true;
 			/* alert("같음"); */
 		}
-	};
+		
+		//alert($("#nickNameCheckBtn").val());
 	
-// 	* 닉네임 중복 체크		
-	function nickNameUniqueCheck(){
-		var nickName = $('#checkUserNickName').val();
-		if(nickName != null && nickName != "" && $("#nickNameBtn").val() == "resultFalse"){
+	// 	* 닉네임 중복 체크		
+		var nickName = $('#updateNickName').val();
+		if(nickName != null && nickName != "" && $("#nickNameCheckBtn").val() == "changeTrue"){
 			$.ajax({
 				url : "<%= request.getContextPath() %>/nickNameCheck.me",
 				type : "post",
 				data : {nickName : nickName},
 				success : function(data){
 					if(data > 0){
-						$('#nnResult').css({"display":""});
-						$('#nnResult').css({"color":"orangered"});
 						$('#nnResult').text("이미 사용중인 닉네임입니다.");
+						$('#nnResult').css({"color":"orangered"});
+						$('#nnResult').css({"display":""});
+						
+						checkNick = false;
 					}else{
 						$('#nnResult').text("사용 가능한 닉네임입니다.");
-						$('#nnResult').css({"display":""});
 						$('#nnResult').css({"color":"green"});
-						$("#nickNameBtn").val("resultTrue");
+						$('#nnResult').css({"display":""});
+						$("#nickNameCheckBtn").val("changeFalse");
+						
+						checkNick = true;
 					}
-// 					alert(data);
+					//alert(checkNick);
 				}
 			});
 		} 
 	};
-	
-	function updateMember(form){
-		
-	}
-	                   	
+
+                	
 // 	* 구매 목록 필터링 - 전체 보기 / 구매 내역 / 판매 내역					***수정사항 : select요소 change 함수 통합 하기
     $('#stmt-Filter').change(function(){    	
     	var value = this.value;

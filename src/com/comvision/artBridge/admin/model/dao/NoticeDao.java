@@ -222,5 +222,48 @@ public class NoticeDao {
 		return list;
 			
 	}
+
+	//공지사항 삭제용 메소드
+	public ArrayList<Notice> delNotice(Connection con, String delCk) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Notice> list = null;
+		
+		String query = prop.getProperty("deleteNotice");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, delCk);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Notice>();
+			
+			while(rset.next()){
+				Notice n = new Notice();
+				n.setRownum(rset.getInt(1));
+				n.setnNo(rset.getInt("board_no"));
+				n.setnType(rset.getInt("board_type"));
+				n.setnTitle(rset.getString("board_title"));
+				n.setnContent(rset.getString("board_content"));
+				n.setnDate(rset.getDate("board_date"));
+				n.setMemberNo(rset.getInt("member_no"));
+				n.setModifyDate(rset.getDate("modify_date"));
+				n.setnStatus(rset.getInt("board_status"));
+				n.setnCount(rset.getInt("board_count"));
+				n.setMain_view(rset.getInt("main_view"));
+				
+				list.add(n);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
+	}
 	
 }

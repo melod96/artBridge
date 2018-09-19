@@ -142,7 +142,7 @@ ul.tab-menu li>a:hover {
 							<%if(list != null){for(Board b : list){%>
 								
 								<tr>
-									<td><input type="checkbox" id="check"></td>
+									<td><input type="checkbox" id="check" name="check" value=<%=b.getBoard_no() %>></td>
 									<td><label><%= b.getBoard_no() %></label></td>
 									<td><label><%= b.getNick_name() %></label></td>
 									<td colspan="5"><label><%= b.getBoard_title()%></label> 
@@ -153,8 +153,8 @@ ul.tab-menu li>a:hover {
 							</tbody>
 						</table>
 						
-						
-						<!-- 페이징 처리 부분 -->
+					<%if(num == 1){ %>
+						<!-- 페이징 처리 부분  mainAdmin -->
 					<div class="paginate">
 						<a onclick="location.href='<%=request.getContextPath()%>/selectMain.ad?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
 						<% if(currentPage <=1){ %>
@@ -186,7 +186,44 @@ ul.tab-menu li>a:hover {
 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
 					</div>
-	
+					
+					<!--//페이징 처리-->
+				<%}else{ %>
+				
+				<!-- 페이징 처리 부분 search-->
+					<div class="paginate">
+						<a onclick="location.href='<%=request.getContextPath()%>/search.ad?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<% if(currentPage <=1){ %>
+							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
+						<%}else{ %>
+							<a onclick = "location.href='<%= request.getContextPath()%>/search.ad?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<em class="blind">목록에서 이전 페이지 이동</em></a>
+						<%} %>
+						
+						
+						<span class="paging-numbers">
+							<% for(int p = startPage; p <=endPage;p++){
+								if(p==currentPage){%>
+									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
+								<%}else{ %>
+									<a onclick= "location.href='<%= request.getContextPath()%>/search.ad?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+								<%} %>
+							<%} %>
+						</span>
+						
+						<% if(currentPage >= maxPage){ %>
+					<!-- <a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> -->
+						<%}else{ %>
+							<a onclick = "location.href = '<%= request.getContextPath()%>/search.ad?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%} %>
+						
+						<a onclick = "location.href = '<%= request.getContextPath()%>/search.ad?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+					</div>
+					</div>
+				
+				<%} %>
 					<div class="btn-center">
 						<button type="submit" name="mainBtn"
 							class="btn btn-primary btn-sm" onclick="add();">추가하기</button>
@@ -229,12 +266,46 @@ ul.tab-menu li>a:hover {
 					<br>
 				
 					<script>
+					
 						var i = 1;
 						function add() {
+						var str = "";
 							if (i == 5) {
 								alert('5개 이상 생성할 수 없습니다.')
 							} else {
-								$(function() {
+								$("input[id='check']").each(function() {
+									if ($(this).prop("checked") == true) {
+										str += $(this).val() + "," ;
+										
+									}
+
+								});
+									location.href = '<%= request.getContextPath()%>/deleteSale.ad?str='+str;
+							}
+						}	
+								/* $("input:checkbox").each(function() {
+									if ($(this).prop("checked") == true) {
+										$(this).parent().parent().appendTo(
+												$(".trtr"));
+										i++;
+									}
+
+								}); */
+								
+								//$('input:checkbox[name="check"]:checked').length{
+									
+									
+								
+									
+									<%-- value += "," + $("#searchText").val();
+									
+									console.log(value);
+								location.href="<%= request.getContextPath() %>/search.ad?value=" + value; --%>
+									
+								//}
+
+							
+								 /*  $(function() {
 									$(
 											"<tr><td><input type="+"checkbox"+">"
 											+ "</td>"
@@ -242,13 +313,13 @@ ul.tab-menu li>a:hover {
 													+ "<input type = "+"text"+"value="+"빈 텍스트"+" readonly>"
 													+ "</td></tr>").appendTo(
 											$(".trtr"));
-								});
-								i++;
-							}
+								}); */
+								//i++;
+							//} 
+ 
+						//};
 
-						};
-
-						function del() {
+					/* 	function del() {
 							$("input:checkbox").each(function() {
 								if ($(this).prop("checked") == true) {
 									$(this).parent().parent().remove();
@@ -257,7 +328,8 @@ ul.tab-menu li>a:hover {
 
 							});
 
-						}
+						} */
+						//}
 					</script>
 
 					<br> <br> <br> <br>

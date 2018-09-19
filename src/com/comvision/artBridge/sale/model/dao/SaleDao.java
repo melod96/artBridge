@@ -13,6 +13,7 @@ import java.util.Properties;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.relate.model.vo.Relate;
 
 import static com.comvision.artBridge.common.JDBCTemplate.*;
 
@@ -94,7 +95,6 @@ public class SaleDao {
 				b.setBoard_count(rset.getInt("board_count"));
 				
 			}
-			System.out.println(b);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
@@ -118,6 +118,7 @@ public class SaleDao {
 			
 			rset = pstmt.executeQuery();
 			
+			flist = new ArrayList<Files>();
 			while(rset.next()){
 				Files f= new Files();
 				
@@ -142,6 +143,40 @@ public class SaleDao {
 		}
 		
 		return flist;
+	}
+
+	//해당하는 판매글의 연관검색어
+	public ArrayList<Relate> selectRelateList(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Relate> rlist = null;
+		
+		String query = prop.getProperty("selectRelateList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			rlist = new ArrayList<Relate>();
+			
+			while(rset.next()){
+				Relate r = new Relate();
+				
+				r.setRelate_no(rset.getInt("relate_no"));
+				r.setRelate_name(rset.getString("relate_name"));
+				
+				rlist.add(r);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return rlist;
 	}
 
 }

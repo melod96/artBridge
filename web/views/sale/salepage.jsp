@@ -227,8 +227,6 @@
 							for(Board b :list){
 							HashMap<String,Object> hmap = oplist.get(i);
 							i++;
-							System.out.println(i);
-							System.out.println(hmap);
 						%>
 							<div id="list_img" style="display: block;">
 							<div class="list_img_box both left">

@@ -60,15 +60,16 @@ public class SelectMainAdminServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 	
 		//판매글 출력
-		ArrayList<Board> list = new BoardService().selectList(currentPage, limit);
+		ArrayList<Board> list = new BoardService().selectSaleList(currentPage, limit);
 		
 		String page = "";
-		
+		int num = 1;
 		if(list != null){
 			page = "views/admin/mainAdmin.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 			request.setAttribute("pageName", request.getParameter("pageName"));
+			request.setAttribute("num", num);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 조회 실패");
@@ -85,3 +86,4 @@ public class SelectMainAdminServlet extends HttpServlet {
 	}
 
 }
+

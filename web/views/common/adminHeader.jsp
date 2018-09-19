@@ -32,7 +32,7 @@ ul.tab-menu li>a:hover {
 		<ul class="tab-menu">
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMain.ad?pageName=mainAdmin'" id="mainAdmin">메인관리 </a></li>
 		<li><a href="/artBridge/views/admin/commissionAdmin.jsp">커미션 관리</a></li>
-		<li><a href="/artBridge/views/admin/customerQna.jsp" >고객문의 관리</a></li>
+		<li><a href="/artBridge/views/admin/customerAdmin.jsp" >고객문의 관리</a></li>
 		<li><a href="/artBridge/views/admin/memberAdmin.jsp">회원 관리</a></li>
 		<li><a href="/artBridge/views/admin/transactionAdmin.jsp">거래내역 관리</a></li>
 		<li><a href="/artBridge/views/admin/noticeInsertForm.jsp">공지사항</a></li>
