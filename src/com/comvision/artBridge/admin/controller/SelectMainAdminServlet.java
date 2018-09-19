@@ -68,6 +68,7 @@ public class SelectMainAdminServlet extends HttpServlet {
 			page = "views/admin/mainAdmin.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
+			request.setAttribute("pageName", request.getParameter("pageName"));
 			request.setAttribute("num", num);
 		}else{
 			page = "views/common/errorPage.jsp";

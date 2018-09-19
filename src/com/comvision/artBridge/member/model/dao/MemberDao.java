@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Properties;
 
 import com.comvision.artBridge.member.model.vo.Member;
@@ -257,6 +258,63 @@ private Properties prop = new Properties();
 		}
 		
 		return result;
+	}
+
+	public ArrayList<String> findId(Connection con, String name, String email) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<String> idList = null;
+		
+		String query = prop.getProperty("findId");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, name);
+			pstmt.setString(2, email);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				idList.add(rset.getString("id"));
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return idList;
+	}
+
+	public int findPassword(Connection con, String id, String name, String email) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int member_no = 0;
+		
+		String query = prop.getProperty("findPassword");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, id);
+			pstmt.setString(2, name);
+			pstmt.setString(3, email);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				member_no = rset.getInt("member_no");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return member_no;
 	}
 
 }

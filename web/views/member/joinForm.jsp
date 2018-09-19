@@ -73,7 +73,7 @@
 							</tr>
 							<tr>
 								<td><h5 style="line-height:2;">* 이름</h5></td>
-								<td><input type="text" maxlength="30" name="joinUserName" id="joinUserName" class="form-control" placeholder="이름" onchange="checkName();" /></td>
+								<td><input type="text" maxlength="30" name="joinUserName" id="joinUserName" class="form-control" placeholder="이름" /></td>
 								<td></td>
 							</tr>
 							<tr>
@@ -89,15 +89,15 @@
 							<tr>
 								<td><h5 style="line-height:2;">연락처</h5></td>
 								<td>
-									<input type="text" maxlength="3" name="tel1" size="2" class="form-control phone" placeholder="---"/>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;
-									<input type="text" maxlength="4" name="tel2" size="2" class="form-control phone" placeholder="----"/>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;
-									<input type="text" maxlength="4" name="tel3" size="2" class="form-control phone" placeholder="----"/>
+									<input type="tel" maxlength="3" name="tel1" id="tel1" size="2" class="form-control phone" placeholder="---"/>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;
+									<input type="tel" maxlength="4" name="tel2" id="tel2" size="2" class="form-control phone" placeholder="----"/>&nbsp;&nbsp;&nbsp;-&nbsp;&nbsp;
+									<input type="tel" maxlength="4" name="tel3" id="tel3" size="2" class="form-control phone" placeholder="----"/>
 								</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td><h5 style="line-height:2;">이메일</h5></td>
-								<td><input type="email" name="email" class="form-control input-short" placeholder="이메일"/></td>
+								<td><input type="email" name="email" class="form-control input-short" placeholder="이메일"/><font size="1px">* 이메일이 없는경우 아이디/비밀번호 찾기가 불가능합니다.</font></td>
 								<td></td>
 							</tr>
 						</table>
@@ -111,6 +111,8 @@
 							var idCheck = false;
 							var nickCheck = false;
 						
+							var regExp = /^[0-9]+$/;
+							
 							function formCheck(frm){
 								//아이디 입력조건
 								if(frm.joinUserId.value == ""){
@@ -153,6 +155,12 @@
 									return false;
 								}
 								
+								//연락처 입력조건
+								if(!(regExp.test($("#tel1").val()) && regExp.test($("#tel1").val()) && regExp.test($("#tel1").val()))){
+									alert("연락처를 확인해주세요!")
+									return false;
+								}
+								
 								return true;
 							}
 							
@@ -160,9 +168,6 @@
 							function checkPwd(){
 								var joinUserPwd = $('#joinUserPwd').val();
 								var joinUserPwd2 = $('#joinUserPwd2').val();
-								
-								console.log(joinUserPwd);
-								console.log(joinUserPwd2);
 								
 								if(joinUserPwd != "" && joinUserPwd2 != ""){
 									if(joinUserPwd != joinUserPwd2){

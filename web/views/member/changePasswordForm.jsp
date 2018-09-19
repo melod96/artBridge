@@ -16,11 +16,37 @@
         <!-- // Header -->
 
         <!-- subHeader -->
- 		<%@ include file="/views/common/subHeader.jsp" %>
+		<section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
+			<div class="container">
+	        	<h2>비밀번호 재설정</h2>       
+	     	</div>
+	    </section>
         <!-- //subHeader -->
 
         <!-- 주석 영역 -->
-        
+        <div class="contents" align="center">
+			<!-- contents 필수 사용 -->
+			<div class="container">
+				<!-- container 필수 사용 -->
+				<div class="col-md-12">
+	
+					<br />
+			
+					<div class="heading">
+                        <h2 class="tit1">비밀번호를 다시입력해 주세요!</h2>
+                    </div>
+                    
+                    <br /><br />
+                    
+                    
+                    
+                    <br />
+					<br />
+					<br />
+                    
+				</div>
+			</div>
+		</div>
         <!-- // 주석 영역 -->
 
         <!-- Footer -->

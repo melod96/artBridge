@@ -32,7 +32,7 @@
 						<button type="button" id="goMain" class="btn btn-primary btn-md" onclick="join();">회원가입</button>
 						<br />
 						<br />
-						<a href="/artBridge/views/member/findId.jsp">아이디 찾기</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="/artBridge/views/member/findPassword.jsp">비밀번호 찾기</a>
+						<a href="/artBridge/views/member/findIdForm.jsp">아이디 찾기</a>&nbsp;&nbsp;/&nbsp;&nbsp;<a href="/artBridge/views/member/findPasswordForm.jsp">비밀번호 찾기</a>
 					</div>
 					<script>
 					function join(){
