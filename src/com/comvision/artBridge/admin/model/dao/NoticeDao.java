@@ -53,7 +53,7 @@ public class NoticeDao {
 	}
 	
 	//공지사항 리스트 출력용 메소드
-	public ArrayList<Notice> selectList(Connection con) {
+	/*public ArrayList<Notice> selectList(Connection con) {
 		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<Notice> list = null;
@@ -91,7 +91,89 @@ public class NoticeDao {
 		}
 		
 		return list;
+	}*/
+	
+	public ArrayList<Notice> selectList(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Notice> list = null;
+		Notice n = null;
+		System.out.println(currentPage);
+		System.out.println(limit);
+		String query = prop.getProperty("selectNoticeList2");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Notice>();
+			
+			while(rset.next()){
+				n = new Notice();
+				n.setRownum(rset.getInt(1));
+				n.setnNo(rset.getInt("board_no"));
+				n.setnType(rset.getInt("board_type"));
+				n.setnTitle(rset.getString("board_title"));
+				n.setnContent(rset.getString("board_content"));
+				n.setnDate(rset.getDate("board_date"));
+				//n.setMemberNo(rset.getInt("member_no"));
+				n.setModifyDate(rset.getDate("modify_date"));
+				n.setnStatus(rset.getInt("board_status"));
+				n.setnCount(rset.getInt("board_count"));
+				n.setMain_view(rset.getInt("main_view"));
+				
+				list.add(n);
+				System.out.println(n);
+			}
+		System.out.println(list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return list;
 	}
+	
+	
+
+	//페이징처리
+		public int getListCount(Connection con) {
+			Statement stmt= null;
+			ResultSet rset = null;
+			
+			String query = prop.getProperty("listCount");
+			
+			int listCount = 0;
+			
+			try {
+				stmt = con.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()){
+					listCount = rset.getInt(1);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(stmt);
+				close(rset);
+			}
+			
+			return listCount;
+		}
+		
+		
+		
+	
+	
+	
 
 	//공지사항 상세보기용 메소드
 	public Notice selectOne(Connection con, String num) {
@@ -180,7 +262,7 @@ public class NoticeDao {
 	}
 
 	//공지사항 검색용 메소드
-	public ArrayList<Notice> searchNotice(Connection con, String search) {
+	/*public ArrayList<Notice> searchNotice(Connection con, String search) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Notice> list = null;
@@ -221,13 +303,12 @@ public class NoticeDao {
 		
 		return list;
 			
-	}
+	}*/
 
 	//공지사항 삭제용 메소드
-	public ArrayList<Notice> delNotice(Connection con, String delCk) {
+	public int delNotice(Connection con, String delCk) {
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Notice> list = null;
+		int result = 0;
 		
 		String query = prop.getProperty("deleteNotice");
 		
@@ -235,35 +316,15 @@ public class NoticeDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, delCk);
 			
-			rset = pstmt.executeQuery();
-			
-			list = new ArrayList<Notice>();
-			
-			while(rset.next()){
-				Notice n = new Notice();
-				n.setRownum(rset.getInt(1));
-				n.setnNo(rset.getInt("board_no"));
-				n.setnType(rset.getInt("board_type"));
-				n.setnTitle(rset.getString("board_title"));
-				n.setnContent(rset.getString("board_content"));
-				n.setnDate(rset.getDate("board_date"));
-				n.setMemberNo(rset.getInt("member_no"));
-				n.setModifyDate(rset.getDate("modify_date"));
-				n.setnStatus(rset.getInt("board_status"));
-				n.setnCount(rset.getInt("board_count"));
-				n.setMain_view(rset.getInt("main_view"));
-				
-				list.add(n);
-			}
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
-			close(rset);
 			close(pstmt);
 		}
 		
-		return list;
+		return result;
 	}
 	
 }

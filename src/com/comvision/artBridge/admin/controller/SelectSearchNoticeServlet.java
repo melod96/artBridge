@@ -26,7 +26,7 @@ public class SelectSearchNoticeServlet extends HttpServlet {
 		
 		System.out.println(search);
 				
-		ArrayList<Notice> list = new NoticeService().searchNotice(search);
+		/*ArrayList<Notice> list = new NoticeService().searchNotice(search);
 		 
 		String page = "";
 		if(list != null){
@@ -38,7 +38,7 @@ public class SelectSearchNoticeServlet extends HttpServlet {
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
+		*/
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

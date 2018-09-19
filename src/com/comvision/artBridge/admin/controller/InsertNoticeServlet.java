@@ -38,7 +38,7 @@ public class InsertNoticeServlet extends HttpServlet {
 		String page = "";
 		if(result > 0){
 			page = "/views/admin/noticeList.jsp";
-			request.setAttribute("list", new NoticeService().selectList());
+			//request.setAttribute("list", new NoticeService().selectList());
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "공지사항 등록 실패!");

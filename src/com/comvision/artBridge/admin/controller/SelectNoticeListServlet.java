@@ -23,57 +23,43 @@ public class SelectNoticeListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		//페이징 처리
-		/*int currentPage;
+		int currentPage;
 		int limit;		
 		int maxPage; 	
 		int startPage;	
 		int endPage; 	
 
-
 		currentPage = 1;
-
-
 		limit = 10;
 
 		if(request.getParameter("currentPage")!= null){
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
-
 		int listCount = new NoticeService().getListCount();
 
-
 		maxPage = (int)((double)listCount/limit + 0.9);
-
-
 		startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
-
-
+		
 		endPage = startPage + limit -1;
-
 		if(maxPage<endPage){
 			endPage = maxPage;
 		}
 
 		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
-		*/
-		
-		
-		
-		
 		
 		//공지사항 리스트 출력
-		ArrayList<Notice> list = new NoticeService().selectList();
-		//ArrayList<Notice> list = new NoticeService().selectList(currentPage, limit);
+		//ArrayList<Notice> list = new NoticeService().selectList();
+		ArrayList<Notice> list = new NoticeService().selectList(currentPage, limit);
+		System.out.println(list);
 	
 		String page = "";
 		if(list != null){
 			page = "/views/admin/noticeList.jsp";
-			//request.setAttribute("list", list);
-			request.setAttribute("list", new NoticeService().selectList());
-			//request.setAttribute("pi", pi);
+			request.setAttribute("list", list);
+			//request.setAttribute("list", new NoticeService().selectList());
+			request.setAttribute("pi", pi);
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "공지사항 등록 실패!");
