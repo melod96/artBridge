@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.comvision.artBridge.admin.model.vo.Notice"%>
+<% Notice n = (Notice)request.getAttribute("n"); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,13 +8,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Art Bridge</title>
 	<%@ include file="/views/common/head.jsp" %>
-<style type="text/css">
-	#nContent{height:500px;}
-	#nContent th{text-align:center;}
-	#nHead th{text-align:center;}
-	#nHead td{vertical-align:top;}
-	#nContent pre{border:0px; background:white;}	
-</style>
+	<style type="text/css">
+      .heading{margin-bottom:20px !important;}
+      .btn-center{margin-bottom:50px;}
+      .cont-area{min-height:200px; padding:30px;}
+    </style>
 </head>
 <body>
     <div id="all">
@@ -22,69 +21,56 @@
         <%@ include file="/views/common/header.jsp" %>
         <!-- // Header -->
 
-		<section class="tit-area" style="background:#99B5C7"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
+        <!-- 주석 영역 -->
+        <section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
             <div class="container">
-                <h2 class="tit1">공지사항</h2>
+                <h2>서브페이지 타이틀</h2>
             </div>
         </section>
 
-        <!-- 주석 영역 -->
+        <!-- contents area -->
         <div class="contents">
             <div class="container">
                 <div class="col-md-12">
-                    <!-- 이 영역에서 작업하세요 -->
-					
-					<div class="btn-right add-some">
-                        
-                        
-                     </div>
+                    
+                    <div class="heading">
+                      <h2 class="tit1">공지사항</h2>
+                    </div>
                     <table class="tbl-type01">
                         <colgroup>
-                            <col style="width: 20%;">
-                            <col style="width: 30%;">
-                            <col style="width: 20%;">
-                            <col style="width: 30%;">
+                            <col style="width: 200px;">
+                            <col style="width: 500px;">
+                            <col style="width: 200px;">
+                            <col style="width: *">
                         </colgroup>
-                        <tbody id="nHead">
+                        <tbody>
                             <tr>
-                                <th>글 제목</th>
+                                <th>제목</th>
                                 <td colspan="3">
-                                   	글의 제목이 들어가는 자리입니다.
+                                	<div><%= n.getnTitle() %></div>
                                 </td>
                             </tr>
                             <tr>
-                                <th>작성자</th>
-                                <td>
-                                  	뽀짝쓰
-                                </td>
-                                <th>작성일자</th>
-                                <td>
-                                   	작성일자가 들어가는 자리입니다.
-                                </td>
+                            	<th>등록일</th>
+                            	<td><%= n.getnDate() %></td>
+                            	<th>조회수</th>
+                            	<td><%= n.getnCount() %></td>
                             </tr>
-                            
-                            <tr id="nContent">
-                            	 <th>글 내용</th>
-                                <td colspan="4">
-                                   <pre>
-글의 내용이 들어가는 자리입니다.
-                                   	
-                                   </pre>
-                                </td>
-                            
+                            <tr>
+                            	<td colspan="4">
+                            		<div class="cont-area"><%= n.getnContent() %></div>
+                            	</td>
                             </tr>
-                            
                         </tbody>
                     </table>
-					
-					
-					
-					
-                   
-                   <!-- // 이 영역에서 작업하세요 -->
+                    <div class="btn-center">
+                   		<button type="reset" class="btn btn-primary btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectList.nb'">목록</button>
+                    </div>
+
                 </div>
             </div>
         </div>
+        <!-- // contents area -->
         <!-- // 주석 영역 -->
 
         <!-- Footer -->
