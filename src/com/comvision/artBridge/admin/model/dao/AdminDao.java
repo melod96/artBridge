@@ -2,16 +2,19 @@ package com.comvision.artBridge.admin.model.dao;
 
 import static com.comvision.artBridge.common.JDBCTemplate.close;
 
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.relate.model.vo.Relate;
 
 
 
@@ -85,6 +88,7 @@ private Properties prop = new Properties();
 		return list;
 	}
 
+	//메인
 	public int insertAdmin(Connection con, Board b) {
 		PreparedStatement pstmt = null;
 		int result = 0;
@@ -106,6 +110,67 @@ private Properties prop = new Properties();
 		
 		return result;
 
+	}
+
+	//연관검색어insert
+	public int insertRelate(Connection con, Relate r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertRelate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, r.getRelate_no());
+			pstmt.setString(2, r.getRelate_name());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	//연관검색어 전체 조회
+	public ArrayList<Relate> selectRelate(Connection con) {
+				Statement stmt = null;
+				ResultSet rset = null;
+				ArrayList<Relate> list = null;
+				
+				String query = prop.getProperty("selectRelate");
+				
+				try {
+					stmt = con.createStatement();
+					
+					rset = stmt.executeQuery(query);
+					
+					list = new ArrayList<Relate>();
+					
+					while(rset.next()){
+						Relate r = new Relate();
+						
+						r.setRelate_no(rset.getInt("relate_no"));
+						r.setRelate_name(rset.getString("relate_name"));
+					
+						
+						list.add(r);
+						
+					}
+					
+					//System.out.println("dao : " + list );
+					
+				} catch (SQLException e) {
+					e.printStackTrace();
+				} finally{
+					close(stmt);
+					close(rset);
+				}
+				//System.out.println("dao");
+				return list;
 	}
 	
 

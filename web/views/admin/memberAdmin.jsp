@@ -1,5 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.ArrayList, com.comvision.artBridge.member.model.vo.Member, com.comvision.artBridge.board.model.vo.PageInfo"%>
+<%
+	ArrayList<Member> list = null;
+	if(request.getAttribute("list") != null){
+		list = (ArrayList<Member>)request.getAttribute("list");
+	}
+	PageInfo pi = null;
+	int listCount = 0;
+	int currentPage = 0;
+	int maxPage = 0;
+	int startPage = 0;
+	int endPage = 0;
+	int limit = 0;
+	if(request.getAttribute("pi") != null){
+		pi = (PageInfo)request.getAttribute("pi");
+		listCount = pi.getListCount();
+		currentPage = pi.getCurrentPage();
+		maxPage = pi.getMaxPage();
+		startPage = pi.getStartPage();
+		endPage = pi.getEndPage();
+		limit = pi.getLimit();
+	}
+
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -153,86 +176,84 @@ ul.tab-menu li>a:hover {
 							</tr>
 						</thead>
 						<tbody>
-
-							<tr>
-								<td><input type="checkbox" name="chBox4"></td>
-								<td class="num4">1</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td><input type="checkbox" name="chBox4"></td>
-								<td class="num4">2</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td><input type="checkbox" name="chBox4"></td>
-								<td class="num4">3</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td><input type="checkbox" name="chBox4"></td>
-								<td class="num4">4</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td><input type="checkbox" name="chBox4"></td>
-								<td class="num4">5</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+							<% if(list != null){for(Member m : list){ %>
+								<tr>
+									<input type="hidden" value="<%= m.getMember_no() %>" />
+									<td><input type="checkbox" name="chBox4"></td>
+									<td><%= m.getMember_no() %></td>
+									<% 	String right = null;
+										if(m.getWriter_right() != 0){
+											right = "작가";
+										}else{
+											right = "일반";
+										}
+									%>
+									<td><%= right %></td>
+									<%
+										String rating_name = null;
+										if(m.getRating_name() != null){
+											rating_name = m.getRating_name();
+										}else{
+											rating_name = "-";
+										}
+									%>
+									<td><%= rating_name %></td>
+									<td><%= m.getName() %></td>
+									<td><%= m.getId() %></td>
+									<td><%= m.getPhone() %></td>
+									<td><%= m.getEmail() %></td>
+									<td><%= m.getEnroll_date() %></td>
+								</tr>
+							<% }} %>
 
 						</tbody>
 					</table>
 
 					<div class="paginate">
-						<a href="#" class="btn-first" title="처음"><em class="blind">목록에서
-								처음 페이지 이동</em></a> <a href="#" class="btn-prev" title="이전"><em
-							class="blind">목록에서 이전 페이지 이동</em></a> <span class="paging-numbers">
-							<a href="#">1<span class="blind">페이지로 이동</span></a> <a href="#"
-							class="on">2<span class="blind">페이지로 이동</span></a> <a href="#">3<span
-								class="blind">페이지로 이동</span></a> <a href="#">4<span
-								class="blind">페이지로 이동</span></a> <a href="#">5<span
-								class="blind">페이지로 이동</span></a>
-						</span> <a href="#" class="btn-next" title="다음"><span class="spr"><em
-								class="blind">목록에서 다음 페이지 이동</em></span></a> <a href="#" class="btn-last"
-							title="끝"><span class="spr"><em class="blind">목록에서
-									끝 페이지 이동</em></span></a>
+						<a href="#" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a>
+						<a href="#" class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
+						<span class="paging-numbers">
+							<a href="#">1<span class="blind">페이지로 이동</span></a> 
+							<a href="#" class="on">2<span class="blind">페이지로 이동</span></a> 
+							<a href="#">3<span class="blind">페이지로 이동</span></a> 
+							<a href="#">4<span class="blind">페이지로 이동</span></a> 
+							<a href="#">5<span class="blind">페이지로 이동</span></a>
+						</span> <a href="#" class="btn-next" title="다음">
+						<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> 
+						<a href="#" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
-
-
+					
+					<!-- 페이징 -->
+	
+					<div class="pagingArea" align="center">
+					<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=1'"><<</button>
+					<% if(currentPage <= 1){ %>
+						<button disabled><</button>
+					<% }else{ %>
+						<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?cuttentPage=<%= currentPage - 1 %>'"><</button>
+					<% } %>
+					
+					<% 
+						for(int p = startPage; p <= endPage; p++){ 
+							if(p == currentPage){
+					%>
+								<button disabled><%= p %></button>
+					<% 		}else{ %>
+								<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= p %>'"><%= p %></button>
+					<% 		
+							}
+						}		
+					%>
+					
+					<% if(currentPage >= maxPage){ %>
+						<button disabled>></button>
+					<% }else{ %>
+						<button onclick="location.href'<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= currentPage + 1 %>'">></button>
+					<% } %>
+					
+					<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= maxPage %>'">>></button>
+					</div>
 
 					<br> <br>
 				</div>
