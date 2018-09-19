@@ -234,7 +234,7 @@
 <!--인기 작가 영역-->
 <section name="bbox">
 
-<div class="popArea"> <h2 id="popA">인기 작가 추천</h2></div>
+
 <div class="box-wrap">
 		
 	
