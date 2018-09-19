@@ -14,7 +14,7 @@
 			<div class="container">
 				<div class="navbar-header">
 					<!-- 로고 -->
-					<a class="navbar-brand home" href="../main/main.jsp"> <img
+					<a class="navbar-brand home" href="/artBridge/views/main/main.jsp"> <img
 						src="/artBridge/image/logo.png" alt="Art Bridge logo">
 					</a>
 					<!-- // 로고 -->

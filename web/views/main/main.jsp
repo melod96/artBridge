@@ -222,23 +222,6 @@
              </div>
         </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
-
         <!-- Footer -->
         <%@ include file="/views/common/footer.jsp" %>
        <!-- // Footer -->
@@ -258,7 +241,7 @@
 					$(this).css({ "cursor":"pointer"});
 				}).click(function(){
 				
-					location.href = "/artBridge/views/notice/noticeBoard.jsp";
+					location.href = "/artBridge/selectList.nb";
 	
 					});
 				});
