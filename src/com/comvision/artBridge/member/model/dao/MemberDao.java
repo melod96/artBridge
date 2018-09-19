@@ -65,7 +65,6 @@ private Properties prop = new Properties();
 				loginUser.setReception_status(rset.getInt("reception_status"));
 				loginUser.setWriter_slot(rset.getInt("writer_slot"));
 				loginUser.setRating_no(rset.getInt("rating_no"));
-				loginUser.setMember_secession(rset.getInt("member_secession"));
 				
 			}
 			
