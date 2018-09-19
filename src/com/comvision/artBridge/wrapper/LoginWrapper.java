@@ -24,6 +24,8 @@ public class LoginWrapper extends HttpServletRequestWrapper{
 			value = getSha512(super.getParameter("joinUserPwd"));
 		}else if(key != null && key.equals("updateUserPwd")){
 			value = getSha512(super.getParameter("updateUserPwd"));
+		}else if(key != null && key.equals("changeUserPassword")){
+			value = getSha512(super.getParameter("changeUserPassword"));
 		}else{
 			value = super.getParameter(key);
 		}

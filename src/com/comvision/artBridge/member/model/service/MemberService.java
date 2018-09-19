@@ -108,4 +108,20 @@ public class MemberService {
 		return member_no;
 	}
 
+	public int chagePassword(int member_no, String password) {
+		Connection con = getConnection();
+		
+		int result = new MemberDao().changePassword(con, member_no, password);
+		
+		if(result > 0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
 }

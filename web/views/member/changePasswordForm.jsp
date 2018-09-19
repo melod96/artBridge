@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	int member_no = (int)request.getAttribute("member_no");
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -33,17 +36,50 @@
 					<br />
 			
 					<div class="heading">
-                        <h2 class="tit1">비밀번호를 다시입력해 주세요!</h2>
+                        <h2 class="tit1">새 비밀번호를 입력해 주세요!</h2>
                     </div>
                     
                     <br /><br />
-                    
-                    
-                    
-                    <br />
+
+					<form onsubmit="return formCheck(this)" action="<%=request.getContextPath()%>/changePassword.me" method="post">
+						<input type="hidden" name="member_no" value="<%= member_no %>"/>
+						<table>
+							<tr>
+								<td width="150px"><h5 style="line-height:2;">* 새 비밀번호</h5></td>
+								<td><input type="password" maxlength="30" name="changeUserPassword" id="changeUserPassword" class="form-control" placeholder="비밀번호" /></td>
+							</tr>
+							<tr>
+								<td><h5 style="line-height:2;">* 새 비밀번호 확인</h5></td>
+								<td><input type="password" maxlength="30" name="changeUserPasswordCheck" id="changeUserPasswordCheck" class="form-control" placeholder="비밀번호 확인" /></td>
+							</tr>
+						</table>	
+						<br />
+							<div class="btns" align="center">
+								<button type="button" id="goMain" class="btn btn-default btn-lg" onclick="goMain();">메인</button>
+								<button type="submit" id="joinBtn" class="btn btn-primary btn-lg">변경하기</button>
+							</div>
+					</form>
 					<br />
 					<br />
-                    
+					<br />
+                    <script>
+                    function formCheck(frm){
+						//비밀번호 입력조건
+						if(frm.changeUserPassword.value == ""){
+							alert("비밀번호를 입력해주세요!");
+							frm.joinUserPwd.focus();
+							return false;
+						}
+						//비밀번호 확인조건
+						if(frm.changeUserPasswordCheck.value == "" || (frm.changeUserPassword.value != frm.changeUserPasswordCheck.value)){
+							alert("비밀번호를 확인해주세요!");
+							frm.joinUserPwd2.focus();
+							return false;
+						}
+						
+						return true;
+					}
+                    </script>
 				</div>
 			</div>
 		</div>

@@ -156,9 +156,11 @@
 								}
 								
 								//연락처 입력조건
-								if(!(regExp.test($("#tel1").val()) && regExp.test($("#tel1").val()) && regExp.test($("#tel1").val()))){
-									alert("연락처를 확인해주세요!")
-									return false;
+								if($("#tel1").val() != "" || $("#tel2").val() != "" || $("#tel3").val() != ""){
+									if(!(regExp.test($("#tel1").val()) && regExp.test($("#tel1").val()) && regExp.test($("#tel1").val()))){
+										alert("연락처를 확인해주세요!")
+										return false;
+									}
 								}
 								
 								return true;
