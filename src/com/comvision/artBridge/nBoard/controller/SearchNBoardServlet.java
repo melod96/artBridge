@@ -26,6 +26,7 @@ public class SearchNBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String search = request.getParameter("search");
+		System.out.println("search : " + search);
 		
 		//페이징 처리
 		int currentPage;
@@ -41,9 +42,9 @@ public class SearchNBoardServlet extends HttpServlet {
 		limit = 10;
 
 		if(request.getParameter("currentPage")!= null){
+			System.out.println();
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-
 
 		int listCount = new NBoardService().getSearchListCount(search);
 
@@ -56,7 +57,9 @@ public class SearchNBoardServlet extends HttpServlet {
 
 		endPage = startPage + limit -1;
 
+		
 		if(maxPage<endPage){
+			
 			endPage = maxPage;
 		}
 
@@ -64,13 +67,13 @@ public class SearchNBoardServlet extends HttpServlet {
 		
 		int num = 0;
 		
-		
 		ArrayList<Notice> list = new NBoardService().searchNotice(currentPage, limit,search);
 		 
 		String page = "";
+		
 		if(list != null){
 			page = "/views/notice/noticeBoardList.jsp";
-			request.setAttribute("list", new NoticeService().searchNotice(search));
+			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 			request.setAttribute("search", search);
 			request.setAttribute("num", num);

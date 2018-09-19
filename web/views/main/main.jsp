@@ -222,23 +222,6 @@
              </div>
         </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		
-
         <!-- Footer -->
         <%@ include file="/views/common/footer.jsp" %>
        <!-- // Footer -->

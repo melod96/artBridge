@@ -1,12 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*"%>
 <% 
-	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list"); 
+	ArrayList<Notice> list= (ArrayList<Notice>)request.getAttribute("list");
+	
 	int num = (int)request.getAttribute("num");
 	String search="";
-	if(num == 0){
-		search = (String)request.getAttribute("search");
-	}
+	
+		if(num == 0){
+			search = (String)request.getAttribute("search");
+			}
+		
 	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
@@ -65,8 +68,7 @@
 		                            <th>제목검색</th>
 		                            <td>
 		                              <input name="search" class="form-control input-mid" type="text" placeholder="검색할 제목을 입력하세요">
-		                              <!--인풋으로 페이지 값을 1로 하여같이 전달-->
-		                              <button type="submit" class="btn btn-primary">검색</button>
+		                              <button type="submit" class="btn btn-primary" style="display:inline-block; margin-top:0px;">검색</button>
 		                            </td>
 		                        </tr>
 		                    </tbody>
@@ -89,36 +91,42 @@
 		                        </tr>
 		                    </thead>
 		                    <tbody>
-		                    	<% if(list != null){
-		                    		for(Notice n : list){ %>
-		                        <tr>
-		                            <td><%= n.getRownum() %></td>
-		                            <td id="noticeTit" class="tit" onclick="location.href='<%=request.getContextPath()%>/selectDetail.nb?num=<%= n.getnNo() %>'"><%= n.getnTitle() %></td>
-		                            <td><%= n.getnCount() %></td>
-		                            <td><%= n.getnDate() %></td>
-		                        </tr>
-		                        <% 	}
-		                    	}else{ %>
-		                    	<tr>
-		                    		<td colspan="5">등록된 게시물이 없습니다.</td>
-		                    	</tr>		
-		                    	<% } %>
-		                    </tbody>
+								<%
+									if (list != null) {
+
+										for (Notice n : list) {
+								%>
+								<tr>
+									<td><%=n.getRownum()%></td>
+									<td id="noticeTit" class="tit"
+										onclick="location.href='<%=request.getContextPath()%>/selectDetail.nb?num=<%=n.getnNo()%>'"><%=n.getnTitle()%></td>
+									<td><%=n.getnCount()%></td>
+									<td><%=n.getnDate()%></td>
+								</tr>
+								<%
+										}
+									}
+								%>
+
+
+							</tbody>
 		                </table>
 	                </form>
 	                
 	                <!-- // 공지사항 리스트  -->
 	              
-	              <% if(num == 0){ %>
+	              <%
+	              	              	if (num == 0) {
+	              	              %>
 	              
 	              <!--페이징 search -->
 	              
 					<div class="paginate">
-						<a onclick="location.href='<%=request.getContextPath()%>/selectList.nb?currentPag=1'+'search=<%=search%>'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<a onclick="location.href='<%=request.getContextPath()%>/search.nb?currentPage=<%=currentPage%>&search=<%=search%>'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
 						<% if(currentPage <=1){ %>
 							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
 						<%}else{ %>
-							<a onclick = "location.href='<%= request.getContextPath()%>/selectList.nb?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<a onclick = "location.href='<%= request.getContextPath()%>/search.nb?currentPage=<%=currentPage -1%>&search=<%=search%>s'" class="btn-prev" title="이전">
 							<em class="blind">목록에서 이전 페이지 이동</em></a>
 						<%} %>
 						<span class="paging-numbers">
@@ -126,18 +134,18 @@
 								if(p==currentPage){%>
 									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
 								<%}else{ %>
-									<a onclick= "location.href='<%= request.getContextPath()%>/selectList.nb?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+									<a onclick= "location.href='<%= request.getContextPath()%>/search.nb?currentPage=<%=p%>&search=<%=search%>'"><%= p %><span class="blind">페이지로 이동</span></a>
 								<%} %>
 							<%} %>
 						</span>
 						<% if(currentPage >= maxPage){ %>
 							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 						<%}else{ %>
-							<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.nb?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+							<a onclick = "location.href = '<%= request.getContextPath()%>/search.nb?currentPage=<%=currentPage +1%>&search=<%=search%>'" class="btn-next" title="다음">
 							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 						<%} %>
 						
-						<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.nb?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<a onclick = "location.href = '<%= request.getContextPath()%>/search.nb?currentPage=<%=maxPage%>&search=<%=search%>'" class="btn-last" title="끝">
 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
 					
