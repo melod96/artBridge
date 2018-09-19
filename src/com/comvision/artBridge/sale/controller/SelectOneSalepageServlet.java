@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.service.SaleService;
 
@@ -50,6 +51,8 @@ public class SelectOneSalepageServlet extends HttpServlet {
 		//한 게시글 마다 해당하는 이미지 파일 불러오기
 		ArrayList<Files> flist = new SaleService().selectFileList(num);
 		
+		//해당하는 작가의 등급
+		Rating r= new SaleService().selectRating(b.getMember_no());
 		String page = null;
 		
 		if(b!=null){
@@ -58,6 +61,7 @@ public class SelectOneSalepageServlet extends HttpServlet {
 			request.setAttribute("oplist", oplist);
 			request.setAttribute("flist", flist);
 			request.setAttribute("rlist", rlist);
+			request.setAttribute("r", r);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 상세 조회 실패");
@@ -67,9 +71,6 @@ public class SelectOneSalepageServlet extends HttpServlet {
 		view.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

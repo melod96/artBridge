@@ -1,4 +1,4 @@
-<%@page import="com.comvision.artBridge.board.model.vo.Board, java.util.*, com.comvision.artBridge.files.model.vo.*, com.comvision.artBridge.relate.model.vo.*"%>
+<%@page import="com.comvision.artBridge.board.model.vo.Board, java.util.*, com.comvision.artBridge.files.model.vo.*, com.comvision.artBridge.relate.model.vo.*,com.comvision.artBridge.member.model.vo.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%
@@ -6,6 +6,7 @@
 	ArrayList<Files> flist = (ArrayList<Files>)request.getAttribute("flist");
 	ArrayList<HashMap<String, Object>> oplist = (ArrayList<HashMap<String, Object>>)request.getAttribute("oplist");
 	ArrayList<Relate> rlist = (ArrayList<Relate>)request.getAttribute("rlist");
+	Rating ra = (Rating)request.getAttribute("r");
 	%>
 <!DOCTYPE html>
 <html>
@@ -27,7 +28,6 @@
 
 .left {
 	float: left;
-	border: 1px solid black;
 }
 
 .hugiheader {
@@ -49,11 +49,13 @@
 }
 
 .right #text {
-	background: lightgray;
+	background: #8cbae8;
 	height: 50px;
 	margin-bottom: 30px;
-	font-size: 20px;
+	font-size: 18px;
 	color: black;
+	line-height:50px;
+	vertical-align:middle;
 }
 
 .right #text span {
@@ -98,9 +100,10 @@
 							<a href=""><%= b.getNick_name() %></a> - <%= b.getBoard_title() %>
 						</h2>
 					</div>
-					<div class="left">
+					<div>
+					<div class="left" style = "width:740px;">
 					<%for(Files f : flist){ %>
-						<img src="<%=f.getFiles_root() %>" alt=""/>
+						<img src="<%=f.getFiles_root() %>" alt="" style = "width:732px;"/>
 					<%} %>
 					</div>
 					<div class="right">
@@ -123,39 +126,45 @@
 						<div align="center" id="text">상세옵션</div>
 						<div>
 							<p>
-								<span>제출 파일 유형</span> : <span>벡터파일 / jpg,png</span>
+								<span>제출 파일 유형</span><span style="float:right;"><%= b.getSubmit_file_type() %></span>
 							</p>
 							<p>
-								<span>해상도</span> : <span>300dpi</span>
+								<span>해상도</span><span style="float:right;"><%= b.getResolution() %>dpi</span>
 							</p>
 							<p>
-								<span>사이즈</span> : <span>A4</span>
+								<span>사이즈</span><span style="float:right;"><%= b.getSubmit_size() %></span>
 							</p>
 							<p>
-								<span>수정 횟수</span> : <span>3회</span>
+								<span>수정 횟수</span><span style="float:right;">3회</span>
 							</p>
 							<p>
-								<span>작업 기간</span> : <span>시작일로부터 15일</span>
+								<span>작업 기간</span><span style="float:right;">시작일로부터 <%=b.getWorking_period() %>일</span>
 							</p>
 						</div>
 						<div align="center" id="text">가격옵션</div>
 						<form>
-							<label>옵션</label> <select>
-								<option>옵션을 선택하세요1</option>
-								<option>옵션을 선택하세요2</option>
-							</select><br> <label>요구사항 추가</label> <input type="text" id = "requirement">
-							<button type="button" class="btn btn-primary btn-sm" onclick = "add()">추가</button>
+							<label>옵션</label> <select style= "width:200px;float:right;" onchange="changeSelect()" name = "sel">
+							<option value="0">옵션을 선택해주세요</option>
+							<%for(int i=0; i<oplist.size(); i++){
+								HashMap<String,Object> hmap = oplist.get(i);%>
+								<option value = "<%= hmap.get("options_price")%>"><%= hmap.get("options_name") %> - <%= hmap.get("options_price") %></option>
+								<%} %>
+							</select><br> <label>요구사항 추가</label>
+							<button type="button" class="btn btn-primary btn-sm" onclick = "add()" style="float:right;">추가</button>
+							<div id = "requirement">
+							<input type="text" style="width:320px;">
+							</div> 
 							<script>
 								function add(){
 									var d = document.getElementById("requirement");
-									d.innerHTML += "<input type = 'text'>";
+									d.innerHTML += "<input type = 'text' style='width:320px;''>";
 								}
 							</script>
 							<div class="orderline"></div>
 							<div id="payment">
 								<ul align="right">
 									<div class="totalTitle">
-										결제 금액 : <span id="totals">0</span><font
+										최소 결제 금액 : <span id="totals">0</span><font
 											style="font-size: 24px">원</font>
 									</div>
 								</ul>
@@ -164,28 +173,38 @@
 										보내기</button>
 								</ul>
 							</div>
+							<script>
+								function changeSelect(){
+									var sel_val = document.all.sel.value;
+									
+									
+								}
+							</script>
 							<div align="center" id="text">information</div>
 							<div>
 								<ul class="cf">
 
 									<p>
-										<span>작가등급</span> : <span>일반작가</span>
+										<span>작가등급</span><span style="float:right;"><%= ra.getRating_name() %></span>
 									</p>
 									<p>
-										<span>게시글 카테고리</span> : 
+										<span>게시글 카테고리</span>
 										<%for(Relate r : rlist){ %>
-										<span>#<%= r.getRelate_name() %> </span>
+										<span style="float:right;">#<%= r.getRelate_name() %>&nbsp; </span>
 										<%} %>
 									</p>
 									<p>슬롯</p>
+									<%for(int i = 0; i<ra.getSlot(); i++){%>
 									<input type="radio">
-									<input type="radio">
-									<input type="radio">
+									<%} %>
 								</ul>
 							</div>
 						</form>
 					</div>
-					<div id="text">
+					</div>
+
+				</div>
+					<div id="textinfo">
 						<p align="center"><%=b.getBoard_content() %></p>
 					</div>
 					<div style="height: 30px"></div>
@@ -195,10 +214,8 @@
 
 					<div style="height: 30px"></div>
 					<p align="center">모든 이미지는 저작권이 있는 이미지 입니다. 무단 도용 및 복제를 금합니다.</p>
-
-				</div>
 				<div class="hugiheader">
-					<div>
+					<div style = "display:inline-block;">
 						<h4>이용후기</h4>
 						<button type="button" class="btn btn-md">후기 작성</button>
 					</div>

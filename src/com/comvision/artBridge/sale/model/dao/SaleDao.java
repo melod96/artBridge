@@ -13,6 +13,7 @@ import java.util.Properties;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
 
 import static com.comvision.artBridge.common.JDBCTemplate.*;
@@ -93,6 +94,10 @@ public class SaleDao {
 				b.setMember_no(rset.getInt("member_no"));
 				b.setNick_name(rset.getString("nick_name"));
 				b.setBoard_count(rset.getInt("board_count"));
+				b.setResolution(rset.getInt("resolution"));
+				b.setSubmit_file_type(rset.getString("submit_file_type"));
+				b.setSubmit_size(rset.getString("submit_size"));
+				b.setWorking_period(rset.getInt("working_period"));
 				
 			}
 		} catch (SQLException e) {
@@ -177,6 +182,39 @@ public class SaleDao {
 			close(rset);
 		}
 		return rlist;
+	}
+
+	public Rating selectRating(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Rating r= null;
+		
+		String query = prop.getProperty("selectRating");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				r= new Rating();
+				
+				r.setRating_no(rset.getInt("rating_no"));
+				r.setRating_name(rset.getString("rating_name"));
+				r.setSlot(rset.getInt("slot"));
+				r.setCommission(rset.getInt("commission"));
+			
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return r;
 	}
 
 }
