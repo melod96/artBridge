@@ -22,22 +22,25 @@
    	.btn-plus-design{ padding:2px 20px; font-size: 15px; margin-left: 0px; }
    	.btn-cancel{ background:#DBDBDB; }
   	.btn-cancel:hover{ background: #808080; color:white; }
+    .btn{ cursor:pointer; } 	
     	
+/*  팝업 통합 스타일 */
+   	.settingArea { z-index:300; position: absolute; top:0px; padding-top:8%; display:none; width:100%;
+      				/* padding-left:auto; padding-right:auto; text-align:center; */ 	}
+      				
 /*  구입목록 */
-    .stmtShowBtn{ cursor:pointer; } 	
     .seller-list{ background-color:rgba(255, 117, 223, 0.2); }
     .buyer-list{ background:rgba(117, 230, 255 , 0.2); }
 /*  .seller-list .buyer-list{ padding-top:5px; background-clip: content-box; !important; } */
     	
 /*  명세표 팝업 */
-   	.settingArea { z-index:300; position: absolute; top:0px; display:none; width:100%;
-      				/* padding-left:auto; padding-right:auto; text-align:center; */ 	}
-	.stmt-List{ position:absolute; width:600px; background:white; top:100px; padding-bottom:40px;
+	.stmt-List{ position:absolute; width:600px; background:white; /* top:100px; */ padding-bottom:40px;
 				left:50%; margin-left:-300px; }
 	.stmt-title{ text-align:right; font-weight:bold; }
 	.stmtBtn button{ width:32%; height:30px; line-height:0; margin-bottom:10px; }
 	.stmt-table td{ padding:5px; }
-  		
+  	.stmt-table-title{ background-color:lightgray; }
+  	
 /*  쪽지함 스타일 */
 	.messenger{ font-weight: bold; line-height:2em; }
 	
@@ -139,15 +142,12 @@
 			tel3 = phone.substring(6, 10);
 		}
 	}
-	
-// 	String pwd = ((Member)(session.getAttribute("loginUser"))).getPassword();
-	
 %>
 
         <!-- 주석 영역 -->
         
 <!-- 	* 마이페이지 탭 메뉴 -->
-		<section class="tit-area bg-yellow">	<!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->	
+		<section class="tit-area bg-yellow">	<!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
 		<div class="container">
 			<h2>마이 페이지</h2>
 			<ul class="tab-menu">
@@ -168,8 +168,8 @@
 
 <!--      	* 1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 			<form action="">
-				<div id="settingBoardArea" class="w3-modal" onclick="displayNone();"></div>
-				<div id="settingArea" class="settingArea">
+				<div id="stmtModalBlock" class="w3-modal" onclick="stmtDisplayNone();"></div>
+				<div id="stmtArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
 					<div class=stmt-List align="center">
 						<h3 style="margin-top:40px; font-weight:bold;">명 &nbsp; 세 &nbsp; 서</h3> <br />
@@ -202,10 +202,10 @@
 							<tr>
 							<td colspan="5" width="540px">
 								<table border="1" >
-									<tr style="background:lightgray; !important; font-weight:bold;" height="25px">
-										<td align="center" width="35px">No</td>
-										<td align="center" width="380px">요 구 사 항</td>
-										<td align="center" width="87px">금 액</td>
+									<tr class="stmt-table-title" style="font-weight:bold; text-align:center;" height="25px">
+										<td width="35px">No</td>
+										<td width="380px">요 구 사 항</td>
+										<td width="87px">금 액</td>
 									</tr>
 									<tr height="23px">
 										<td align="center">1</td>
@@ -242,6 +242,86 @@
 			</form>
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
+<!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
+			<!-- <form action="">
+				<div id="settingBoardArea" class="w3-modal" onclick="displayNone();"></div>
+				<div id="settingArea" class="settingArea">
+			-->
+			<form action="">
+				<div id="reqWriterBlock" class="w3-modal" onclick="stmtDisplayNone();"></div>
+				<div id="reqWriterFormArea" class="settingArea">
+					<!-- 모달 요소 넣기 -->
+					<div class=stmt-List align="center">
+						<h3 style="margin-top:40px; font-weight:bold;">명 &nbsp; 세 &nbsp; 서</h3> <br />
+						<table class="stmt-table">
+							<tr>
+								<td width="15px"></td>
+								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td>
+								<td colspan="3">귀여운 캐릭터 그려드려요</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="stmt-title">신 청 일  : </td>
+								<td colspan="3">2018-09-00</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="stmt-title">구 매 자  : </td>
+								<td width="230px">소나나</td>
+								<td width="80px" class="stmt-title">판 매 자  : </td>
+								<td width="150px">crala</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="stmt-title">옵 션 명  : </td>
+								<td colspan="3">인물화</td>
+							</tr>
+							<tr>
+								<td colspan="5" height="30px"></td>
+							</tr>
+							<tr>
+							<td colspan="5" width="540px">
+								<table border="1" >
+									<tr class="stmt-table-title" style="font-weight:bold; text-align:center;" height="25px">
+										<td width="35px">No</td>
+										<td width="380px">요 구 사 항</td>
+										<td width="87px">금 액</td>
+									</tr>
+									<tr height="23px">
+										<td align="center">1</td>
+										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~</td>
+										<td align="right">작가기입 원</td>
+									</tr>
+									<tr>
+										<td align="center">2</td>
+										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~ 귀염뽀짝하게 해주시면 더 좋아요~!</td>
+										<td align="right">45,454원</td>
+									</tr>
+								</table>
+								<br>
+								<table align="right">
+									<tr >
+										<td>총   금 액  :  </td>
+										<td><label>123,456원</label></td>
+									</tr>
+								</table>
+							</td>
+							</tr>
+							<tr>
+								<td colspan="5">
+									<div class="btn-center stmtBtn">
+										  <button class="btn btn-primary btn-lg btn-plus-design" style="width:67%;">거 래 수 락</button><br>
+					                      <button class="btn btn-primary btn-lg btn-plus-design" style="margin-left:0;">재 요청</button>
+					                      <button class="btn btn-default btn-lg btn-plus-design">거래 취소</button>
+					                </div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</form>
+<!--      	//4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
+
 
 <!-- 	* 마이페이지 탭 제목/바디 영역 -->
 		<div class="container">		<!-- container 필수 사용 -->
@@ -249,7 +329,7 @@
 				
 				
 <!-- 	   	* 마이페이지 탭 제목 -->
-			<div class="heading">			
+			<div class="heading">
 				<h2 class="order-menu tit1">주문 관리</h2>
 				<h2 class="msg-menu tit1">쪽지함</h2>
 				<h2 class="bookmark-menu tit1">관심 작가</h2>
@@ -259,7 +339,7 @@
 			</div>	<hr>
 <!-- 	   	//마이페이지 탭 제목 -->
 					
-<!--        * 1. 마이페이지 탭 바디 - 주문관리 탭 -->
+<!--        * 1. 마이페이지 탭 메뉴 - 주문관리 탭 -->
 			<form action="" method="get"class="order-menu tab-menu-content-form">
 				<div class="order-menu">	<!-- ***수정사항 : 구매자(buyer) 판매자(seller) 입장에 따른 필터링, 행 색 속성, DB처리 등  -->
 					<select id="stmt-Filter" class="form-control input-xshort selectBox">
@@ -301,7 +381,7 @@
 <!-- 						<tr id="buyer" class="buyer-list transInfo-list"> -->
 <!-- 							<td>구매</td> -->
 <%-- 								<% } %> --%>
-<!-- 							<td><a onclick="displayBlock()" class="stmtShowBtn">18083001</a></td> -->
+<!-- 							<td><a onclick="stmtModalBlock();" class="btn">18083001</a></td> -->
 <!-- 							<td>소나나</td> -->
 <!-- 							<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td> -->
 <!-- 							<td>컨펌 1단계</td> -->
@@ -313,7 +393,7 @@
 							 	 
 							<tr id="" class="seller-list transInfo-list">
 								<td>판매</td>
-								<td><a onclick="displayBlock();" class="stmtShowBtn">18083001</a></td>
+								<td><a onclick="stmtModalBlock();" class="btn">18083001</a></td>
 								<td>소나나</td>
 								<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td>
 								<td>컨펌 1단계</td>
@@ -323,7 +403,7 @@
 							</tr>
 							<tr id="" class="buyer-list transInfo-list">
 								<td>구매</td>
-								<td><a onclick="displayBlock();" class="stmtShowBtn">18083001</a></td>
+								<td><a onclick="stmtModalBlock();" class="btn">18083001</a></td>
 								<td>소나나</td>
 								<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td>
 								<td>컨펌 1단계</td>
@@ -783,6 +863,8 @@
 <!-- 		* 4. 마이페이지 탭 메뉴 - 회원정보수정 탭 -->
 			<!-- <form id="memberInfoForm" method="post" class="memberinfo-menu tab-menu-content-form"> -->
 			<div id="memberInfo" class="memberinfo-menu tab-menu-content-form"> <br>
+			
+<!--      		* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원 인증 비밀번호 확인 창 -->			
 				<table id="pwdCheckArea" style="margin-left:30px;">
 					<tr>
 						<td>비밀번호</td>
@@ -795,10 +877,12 @@
 						<td width="255px"><div id="pwdStatus">비밀번호를 잘못 입력하였습니다.</div></td>
 					</tr>
 				</table>
-				
+<!--      		//4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원 인증 비밀번호 확인 창 -->
+
+<!--      		* 4-2. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원정보 수정 본 화면 -->					
 				<form id="memberInfoForm" onsubmit="return updateMember(this)" action="<%=request.getContextPath() %>/updateInfo.me" method="post" class="memberInfoArea" style="display:none;">
 					<div class="memberInfoArea">
-						<table border="1">
+						<table>
 							<tr>
 								<td width="150px">* 아이디 </td>
 								<td><input type="text" value="<%= loginUser.getId() %>" maxlength="13" name="updateUserId" id="updateUserId" class="form-control input-short textBox" readonly/></td>
@@ -819,38 +903,38 @@
 							</tr>
 							<tr>
 								<td>* 닉네임</td>
-								<td><input type="text" value="<%= loginUser.getNick_name() %>" id="updateNickName" maxlength="30" name="updateNickName" class="form-control input-short textBox"></td>
-								<td width="130px"><label class="btn btn-primary btn-lg btn-plus-design" id="nickNameCheckBtn" onclick="nickNameUniqueCheck();" value="resultTrue">중복확인</label></td>
+								<td><input type="text" value="<%= loginUser.getNick_name() %>" id="updateNickName" onchange="nickNameChangeCheck();" maxlength="30" name="updateNickName" class="form-control input-short textBox"></td>
+								<td width="130px"><label class="btn btn-default btn-lg btn-cancel btn-plus-design" id="nickNameCheckBtn" onclick="nickNameUniqueCheck();">중복확인</label></td>
 								<td width="300px"><label id="nnResult"></label></td>
 							</tr>
 							<tr>
 								<td>연락처</td>
 								<td width="200px" style="text-align:center;">
-									<input type="text" maxlength="3" value="<%= tel1 %>" name="tel1" style="width:28%; display: inline-block;" class="form-control textBox"/> -
-									<input type="text" maxlength="4" value="<%= tel2 %>" name="tel2" style="width:29.5%; display: inline-block;" class="form-control textBox"/> -
-									<input type="text" maxlength="4" value="<%= tel3 %>" name="tel3" style="width:29.5%; display: inline-block;" class="form-control textBox"/>
+									<input type="text" maxlength="3" value="<%= tel1 %>" id="tel1" name="tel1" style="width:28%; display: inline-block;" class="form-control textBox"/> -
+									<input type="text" maxlength="4" value="<%= tel2 %>" id="tel2" name="tel2" style="width:29.5%; display: inline-block;" class="form-control textBox"/> -
+									<input type="text" maxlength="4" value="<%= tel3 %>" id="tel3" name="tel3" style="width:29.5%; display: inline-block;" class="form-control textBox"/>
 								</td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>이메일</td>
-								<td><input type="email" value="<%= loginUser.getEmail() %>" name="email" class="form-control input-short textBox"/></td>
+								<td><input type="email" value="<%= loginUser.getEmail() %>" id="email" name="email" class="form-control input-short textBox"/></td>
 								<td></td>
 							</tr>
 						</table>					
 						<br /><br /><br />
 						
-						<div class="btn-center btn-outer-style" style="width:50%; padding-right:80px;">
+						<div class="btn-center btn-outer-style" style="width:50%;">
 		                      <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
 		                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">수정</button>
+		                      <button class="btn btn-lg btn-default btn-plus-design" style="float:right;">회원 탈퇴</button>
 		                </div>
-						<div class="btn-center btn-outer-style" align="right" style="width:50%; padding-right:80px;">
-		                      <button class="btn btn-primary btn-lg btn-del btn-plus-design" style="background: darkorange; border-color: darkorang">회원 탈퇴</button>
-		                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-							  <button class="btn btn-primary btn-lg btn-plus-design">작가 신청</button>
+						<div class="btn-center btn-outer-style" style="width:50%;">
+							  <button id="reqWriterBtn" class="btn btn-primary btn-lg btn-plus-design" style="float:left; margin-left:10px;">작가 신청</button>
 		                </div>
 	                </div>
                 </form>
+<!--      		//4-2. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원정보 수정 본 화면 -->
 
 			<br><br><br><br>	
 			</div>
@@ -969,259 +1053,296 @@
 
     </div>
 
-<script>
 
-//	* 페이지 호출
-	$(function(){
-		var pageName = '<%= (String)request.getParameter("pageName") %>';	
-
-		$('.order-menu, .bookmark-menu, .msg-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
-		
-		if(pageName != null){
-			anotherHidden(pageName)
-		} else{
-			anotherHidden('order-menu');			
-			/* $('.order-menu').css({"display":"block"});
-			$('#order-menu').css({"color":"black", "background":"white"}); */
-		}
-	});
-            		  
-//	* 탭 선택 함수
-	function anotherHidden(thisMenu){	
-		//var thisMenu = event.srcElement.id;
- 
-		$('.order-menu, .msg-menu, .bookmark-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
-		
-		$('.' + thisMenu).css({"display":"block"});
-
-		$(':not(#' + thisMenu + ')').css({"color":"", "background":""});
-		$('#mywork-menu').css({"color":"white", "background":"#FF7373"});
+<!-- ** 페이지 호출 & 선택 탭 영역 보이기 스크립트 -->
+	<script>
+	//	* 페이지 호출
+		$(function(){
+			var pageName = '<%= (String)request.getParameter("pageName") %>';	
 	
-		$('#' + thisMenu).css({"color":"black", "background":"white"});
-		
-		
-		if(thisMenu == "order-menu"){			//오더메뉴, 메시지 메뉴 둘 다 가능 할 듯 ( -list 선택자로  / filter선택자로)
-			$('#stmt-Filter').val("전체 보기");
-			$('.transInfo-list').css({"display":""});
-		}
-		if(thisMenu == "msg-menu" || thisMenu == "qna-menu"){
-			$('.msg-Filter').val("전체 보기");
-			$('.msg-list').css({"display":""});	
-		}
-		if(thisMenu == "memberinfo-menu"){
-			$('#checkUserPwd').val("");
-			$('#pwdStatus').css({"display":"none"});
-			$('#nnResult').css({"display":"none"});
-			$('#pwdResult').css({"display":"none"});
-			$('#updateUserPwd1').val("");
-			$('#updateUserPwd2').val("");
-			checkPwd = false;
-			checkNick = false;
+			$('.order-menu, .bookmark-menu, .msg-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
 			
-// 			alert($('.memberInfoArea' + ' *').val());    해당 클래스의 하위 요소 초기화 시키기
-		}
-	};
-	
-//	* 회원정보 수정 폼 submit 함수
- 	var checkPwd = false;
-	var checkNick = false;
-// 	var updateMemberInfoSave = false;
-	
-	function updateMember(){
-		if(checkPwd == false){
-			return false;
-		}
-		if(checkNick == false){
-			return false;
-		}
-/* 		if(updateMemberInfoSave == true){
-			
-			updateMemberInfoSave = false;
-			return true;
-		} */
-		return true;
-	}
-	
-
-// 	* 패스워드 확인창
-	function pwdCheck(){
-		var userPwd = $('#checkUserPwd').val();
-		if(userPwd != null && userPwd != ""){
-			$.ajax({
-				url : "<%= request.getContextPath() %>/pwdCheck.me",
-				type : "post",
-				data : {userPwd : userPwd},
-				success : function(data){
-					if(data > 0){
-						$('#pwdCheckArea').css({"display":"none"});
-						$('.memberInfoArea').css({"display":"block"});
-					}else{
-						$('#pwdStatus').css({"display":""});
-						$('#pwdStatus').css({"color":"orangered"});
-					}
-				}
-			});
-		}
-	};
-	
-// 	* 패스워드 비교
-	function comparePwd(){
-		var updateUserPwd1 = $('#updateUserPwd1').val();
-		var updateUserPwd2 = $('#updateUserPwd2').val();
-		
-		if(updateUserPwd1 != "" && updateUserPwd2 != ""){
-			if(updateUserPwd1 != updateUserPwd2){
-				$('#pwdResult').css({"color":"orangered"})
-				$('#pwdResult').css({"display":""})
-// 				$("#pwdResult").text("비밀번호가 일치하지 않습니다.");
-				
-				checkPwd = false;			
-			}else{
-				$('#pwdResult').css({"display":"none"})
-				
-				checkPwd = true;
+			if(pageName != null){
+				anotherHidden(pageName)
+			} else{
+				anotherHidden('order-menu');			
+				/* $('.order-menu').css({"display":"block"});
+				$('#order-menu').css({"color":"black", "background":"white"}); */
 			}
-		}
-	};
+		});
+	            		  
+	//	* 탭 선택 함수
+		function anotherHidden(thisMenu){	
+			//var thisMenu = event.srcElement.id;
+	 
+			$('.order-menu, .msg-menu, .bookmark-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
+			
+			$('.' + thisMenu).css({"display":"block"});
 	
-	function nickNameUniqueCheck(){		
-	// 	* 기존 닉네임과 같은지 비교	
-		if($('#updateNickName').val() != "<%= loginUser.getNick_name() %>"){
-			$("#nickNameCheckBtn").val("changeTrue");
-			
-			checkNick = false;
-			/* alert("다름"); */
-		}else{
-			$("#nickNameCheckBtn").val("changeFalse");
-			$('#nnResult').text("현재 사용중인 닉네임입니다.");
-			$('#nnResult').css({"color":"green"});
-			$('#nnResult').css({"display":""});
-			
-			checkNick = true;
-			/* alert("같음"); */
-		}
+			$(':not(#' + thisMenu + ')').css({"color":"", "background":""});
+			$('#mywork-menu').css({"color":"white", "background":"#FF7373"});
 		
-		//alert($("#nickNameCheckBtn").val());
-	
-	// 	* 닉네임 중복 체크		
-		var nickName = $('#updateNickName').val();
-		if(nickName != null && nickName != "" && $("#nickNameCheckBtn").val() == "changeTrue"){
-			$.ajax({
-				url : "<%= request.getContextPath() %>/nickNameCheck.me",
-				type : "post",
-				data : {nickName : nickName},
-				success : function(data){
-					if(data > 0){
-						$('#nnResult').text("이미 사용중인 닉네임입니다.");
-						$('#nnResult').css({"color":"orangered"});
-						$('#nnResult').css({"display":""});
-						
-						checkNick = false;
-					}else{
-						$('#nnResult').text("사용 가능한 닉네임입니다.");
-						$('#nnResult').css({"color":"green"});
-						$('#nnResult').css({"display":""});
-						$("#nickNameCheckBtn").val("changeFalse");
-						
-						checkNick = true;
-					}
-					//alert(checkNick);
+			$('#' + thisMenu).css({"color":"black", "background":"white"});
+			
+			
+			if(thisMenu == "order-menu"){			//오더메뉴, 메시지 메뉴 둘 다 가능 할 듯 ( -list 선택자로  / filter선택자로)
+				$('#stmt-Filter').val("전체 보기");
+				$('.transInfo-list').css({"display":""});
+			}
+			if(thisMenu == "msg-menu" || thisMenu == "qna-menu"){
+				$('.msg-Filter').val("전체 보기");
+				$('.msg-list').css({"display":""});	
+			}
+			if(thisMenu == "memberinfo-menu"){
+				$('#checkUserPwd').val("");
+				$('#pwdStatus').css({"display":"none"});
+				
+				$('#pwdResult').css({"display":"none"});
+				$('#updateUserPwd1').val("");
+				$('#updateUserPwd2').val("");
+				checkPwd = false;
+
+				$('#updateNickName').val('<%= loginUser.getNick_name() %>');
+				$("#nickNameCheckBtn").text("사용가능");
+				$('#nickNameCheckBtn').css({"background":"mediumseagreen", "color":"white"});
+				$('#nnResult').css({"display":"none"});
+				checkNick = true;
+				
+				$('#tel1').val('<%= tel1 %>');
+				$('#tel2').val('<%= tel2 %>');
+				$('#tel3').val('<%= tel3 %>');
+				
+				$('#email').val('<%= loginUser.getEmail() %>');
+
+				//alert($('.memberInfoArea' + ' *').val());    해당 클래스의 하위 요소 초기화 시키기
+			}
+		};
+	</script>
+<!-- //페이지 호출 & 선택 탭 영역 보이기 스크립트 -->
+
+<!-- * 1. 주문관리 탭 스크립트 -->
+	<script>
+	// 	* 구매 목록 필터링 - 전체 보기 / 구매 내역 / 판매 내역					***수정사항 : select요소 change 함수 통합 하기
+	    $('#stmt-Filter').change(function(){    	
+	    	var value = this.value;
+	    	
+	    	if(value == "판매 내역"){
+	    		$('.buyer-list').css({"display":"none"});
+	    		$('.seller-list').css({"display":""});
+	    		
+	    	}else if(value == "구매 내역"){
+	    		$('.seller-list').css({"display":"none"});
+	    		$('.buyer-list').css({"display":""});
+	    		
+	    	}else{
+	    		$('.transInfo-list').css({"display":""});
+	    	}
+	    	
+	    });
+	    
+	// 	* 명세표 모달 띄우기
+	   	function stmtModalBlock(){
+			document.getElementById('stmtModalBlock').style.display='block';
+			document.getElementById('stmtArea').style.display='block';
+	  	};							
+	// 	* 명세표 모달 닫기
+		function stmtDisplayNone(){
+			document.getElementById('stmtArea').style.display='none';
+			document.getElementById('stmtModalBlock').style.display='none';
+		};
+	</script>
+<!-- //1. 주문관리 탭 스크립트 -->
+
+<!-- * 2. 쪽지함 / 이용문의 탭 스크립트 -->	
+	<script>
+	// 	* 쪽지 목록 필터링 - 전체 보기 / 보낸 쪽지 / 받은 쪽지
+	    $('.msg-Filter').change(function(){    	
+	    	var value = this.value;
+	    	
+	    	if(value == "보낸 쪽지"){
+	    		$('.rec-list').css({"display":"none"});
+	    		$('.send-list').css({"display":""});
+	    		
+	    	}else if(value == "받은 쪽지"){
+	    		$('.send-list').css({"display":"none"});
+	    		$('.rec-list').css({"display":""});
+	    		
+	    	}else{
+	    		$('.msg-list').css({"display":""});
+	    	}
+	    	
+	    }); 
+	    
+	// 	* 쪽지 목록 전체/부분 선택 체크박스    
+		function allCheckFunc( obj ) {
+				$("[name=checkMsg]").prop("checked", $(obj).prop("checked") );
+		};	
+		function oneCheckFunc( obj ){
+			var allObj = $("[name=checkAll]");
+			var objName = $(obj).attr("name");
+		
+			if( $(obj).prop("checked")){
+				checkBoxLength = $("[name="+ objName +"]").length;
+				checkedLength = $("[name="+ objName +"]:checked").length;
+		
+				if(checkBoxLength == checkedLength){
+					allObj.prop("checked", true);
+				}else{
+					allObj.prop("checked", false);
 				}
-			});
-		} 
-	};
-
-                	
-// 	* 구매 목록 필터링 - 전체 보기 / 구매 내역 / 판매 내역					***수정사항 : select요소 change 함수 통합 하기
-    $('#stmt-Filter').change(function(){    	
-    	var value = this.value;
-    	
-    	if(value == "판매 내역"){
-    		$('.buyer-list').css({"display":"none"});
-    		$('.seller-list').css({"display":""});
-    		
-    	}else if(value == "구매 내역"){
-    		$('.seller-list').css({"display":"none"});
-    		$('.buyer-list').css({"display":""});
-    		
-    	}else{
-    		$('.transInfo-list').css({"display":""});
-    	}
-    	
-    });
-    
-// 	* 쪽지 목록 필터링 - 전체 보기 / 보낸 쪽지 / 받은 쪽지
-    $('.msg-Filter').change(function(){    	
-    	var value = this.value;
-    	
-    	if(value == "보낸 쪽지"){
-    		$('.rec-list').css({"display":"none"});
-    		$('.send-list').css({"display":""});
-    		
-    	}else if(value == "받은 쪽지"){
-    		$('.send-list').css({"display":"none"});
-    		$('.rec-list').css({"display":""});
-    		
-    	}else{
-    		$('.msg-list').css({"display":""});
-    	}
-    	
-    }); 
-    
-// 	* 쪽지 목록 전체 선택 체크박스    
-	function allCheckFunc( obj ) {
-			$("[name=checkMsg]").prop("checked", $(obj).prop("checked") );
-	}
-
-	function oneCheckFunc( obj ){
-		var allObj = $("[name=checkAll]");
-		var objName = $(obj).attr("name");
-	
-		if( $(obj).prop("checked")){
-			checkBoxLength = $("[name="+ objName +"]").length;
-			checkedLength = $("[name="+ objName +"]:checked").length;
-	
-			if(checkBoxLength == checkedLength){
-				allObj.prop("checked", true);
 			}else{
 				allObj.prop("checked", false);
 			}
-		}else{
-			allObj.prop("checked", false);
-		}
-	}
-	
-	$(function(){
-		$("[name=checkAll]").click(function(){
-			allCheckFunc( this );
-		});
-		$("[name=checkMsg]").each(function(){
-			$(this).click(function(){
-				oneCheckFunc( $(this) );
+		};		
+		$(function(){
+			$("[name=checkAll]").click(function(){
+				allCheckFunc( this );
+			});
+			$("[name=checkMsg]").each(function(){
+				$(this).click(function(){
+					oneCheckFunc( $(this) );
+				});
 			});
 		});
-	});
-	             			
-// 	* 명세표 모달 띄우기
-   	function displayBlock(){
-		document.getElementById('settingBoardArea').style.display='block';
-		document.getElementById('settingArea').style.display='block';
-  	};							
-// 	* 명세표 모달 닫기
-	function displayNone(){
-		document.getElementById('settingArea').style.display='none';
-		document.getElementById('settingBoardArea').style.display='none';
-	};
+		             			
 	
-	
-	//별점 매기기
-	$( ".star_rating a" ).click(function() {
-	     $(this).parent().children("a").removeClass("on");
-	     $(this).addClass("on").prevAll("a").addClass("on");
-	     return false;
-	});
-	
-</script>
+		
+		
+		//별점 매기기
+		$( ".star_rating a" ).click(function() {
+		     $(this).parent().children("a").removeClass("on");
+		     $(this).addClass("on").prevAll("a").addClass("on");
+		     return false;
+		});		
+	</script>
+<!-- //2. 쪽지함 탭 스크립트 -->
+
+<!-- * 4. 회원정보 수정 탭 스크립트 -->
+	<script>
+	//	* 회원정보 수정 정보 저장 가능(정보 입력/변경)여부 판단 함수
+	 	var checkPwd = false;
+		var checkNick = false;
+		/* var checkPhone = false;		//작가 권한 일 때만 널 비허용
+		var checkEmail = false; */
+		
+		function updateMember(){
+			if(checkPwd == false){
+				return false;
+			}
+			if(checkNick == false){
+				return false;
+			}
+			/* if($('#nickNameCheckBtn').text() == "중복확인"){
+				return false;
+			} */
+			
+			return true;
+		};
+		
+	// 	* 회원 인증 패스워드 확인창
+		function pwdCheck(){
+			var userPwd = $('#checkUserPwd').val();
+			if(userPwd != null && userPwd != ""){
+				$.ajax({
+					url : "<%= request.getContextPath() %>/pwdCheck.me",
+					type : "post",
+					data : {userPwd : userPwd},
+					success : function(data){
+						if(data > 0){
+							$('#pwdCheckArea').css({"display":"none"});
+							$('.memberInfoArea').css({"display":"block"});
+						}else{
+							$('#pwdStatus').css({"display":""});
+							$('#pwdStatus').css({"color":"orangered"});
+						}
+					}
+				});
+			}
+		};
+		
+	// 	* 패스워드 pwd1, pwd2 일치 여부 확인
+		function comparePwd(){
+			var updateUserPwd1 = $('#updateUserPwd1').val();
+			var updateUserPwd2 = $('#updateUserPwd2').val();
+			
+			if(updateUserPwd1 != "" && updateUserPwd2 != ""){
+				if(updateUserPwd1 != updateUserPwd2){
+					$('#pwdResult').css({"color":"orangered"})
+					$('#pwdResult').css({"display":""})
+	 				//$("#pwdResult").text("비밀번호가 일치하지 않습니다.");
+					
+					checkPwd = false;			
+				}else{
+					$('#pwdResult').css({"display":"none"})
+					
+					checkPwd = true;
+				}
+			}
+		};
+		
+	// 	* 닉네임 변경 여부 / 중복 체크	
+		function nickNameChangeCheck(){
+		// 	* 기존 닉네임과 같은지 비교	
+			if($('#updateNickName').val() != "<%= loginUser.getNick_name() %>"){
+				$("#nickNameCheckBtn").text("중복확인");
+				$('#nickNameCheckBtn').css({"background":"", "color":""});
+				$('#nnResult').text("");
+				checkNick = false;
+				/* alert("다름"); */
+			}else{
+				$("#nickNameCheckBtn").text("사용가능");
+				$('#nickNameCheckBtn').css({"background":"mediumseagreen", "color":"white"});
+				$('#nnResult').text("현재 사용중인 닉네임입니다.");
+				$('#nnResult').css({"color":"green"});
+				$('#nnResult').css({"display":""});
+				
+				checkNick = true;
+				/* alert("같음"); */
+			}
+		};
+		function nickNameUniqueCheck(){
+		// 	* 닉네임 중복 체크		
+			var nickName = $('#updateNickName').val();
+			if(nickName != null && nickName != "" && $("#nickNameCheckBtn").text() == "중복확인"){
+				$.ajax({
+					url : "<%= request.getContextPath() %>/nickNameCheck.me",
+					type : "post",
+					data : {nickName : nickName},
+					success : function(data){
+						if(data > 0){
+							$("#nickNameCheckBtn").text("중복확인");
+							$('#nickNameCheckBtn').css({"background":"", "color":""});
+							$('#nnResult').text("이미 사용중인 닉네임입니다.");
+							$('#nnResult').css({"color":"orangered"});
+							$('#nnResult').css({"display":""});
+							
+							checkNick = false;
+						}else{
+							$("#nickNameCheckBtn").text("사용가능");
+							$('#nickNameCheckBtn').css({"background":"mediumseagreen", "color":"white"});
+							$('#nnResult').text("사용 가능한 닉네임입니다.");
+							$('#nnResult').css({"color":"green"});
+							$('#nnResult').css({"display":""});
+							
+							checkNick = true;
+						}
+					}
+				});
+			} 
+		};
+		
+	// 	* 작가신청 양식 모달 띄우기
+	   	function displayBlock(){
+			document.getElementById('settingBoardArea').style.display='block';
+			document.getElementById('settingArea').style.display='block';
+	  	};							
+	// 	* 작가신청 양식 모달 닫기
+		function displayNone(){
+			document.getElementById('settingArea').style.display='none';
+			document.getElementById('settingBoardArea').style.display='none';
+		};
+	</script>
+<!-- //4. 회원정보 수정 탭 스크립트 -->
 
 
 </body>
