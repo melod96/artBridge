@@ -1,7 +1,12 @@
-<%@page import="com.comvision.artBridge.board.model.vo.Board"%>
+<%@page import="com.comvision.artBridge.board.model.vo.Board, java.util.*, com.comvision.artBridge.files.model.vo.*, com.comvision.artBridge.relate.model.vo.*"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	<%Board b = (Board)request.getAttribute("b"); %>
+	<%
+	Board b = (Board)request.getAttribute("b"); 
+	ArrayList<Files> flist = (ArrayList<Files>)request.getAttribute("flist");
+	ArrayList<HashMap<String, Object>> oplist = (ArrayList<HashMap<String, Object>>)request.getAttribute("oplist");
+	ArrayList<Relate> rlist = (ArrayList<Relate>)request.getAttribute("rlist");
+	%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -62,6 +67,7 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+
 </style>
 </head>
 <body>
@@ -93,18 +99,23 @@
 						</h2>
 					</div>
 					<div class="left">
-						<p>이미지 들어갈 곳</p>
+					<%for(Files f : flist){ %>
+						<img src="<%=f.getFiles_root() %>" alt=""/>
+					<%} %>
 					</div>
 					<div class="right">
-						<img src="../image/piece/writerimg.PNG" id="img">
+						<img src="/artBridge/image/saletest/salepageimg.jpg" id="img">
 						<p align="center">
 							<a href=""><%= b.getNick_name() %></a>
 						</p>
 						<ol id="receive" align="center">접수중
 						</ol>
+					
 						<ol align="center">
+						<div class="rateit" data-rateit-value="2.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+
 							평점
-							<font class="lsp0">0.0</font>
+							<font class="lsp0">2.5</font>
 						</ol>
 						<div align="center" style="margin-bottom: 15px;">
 							<button type="button" class="btn btn-primary">작가에게 쪽지보내기</button>
@@ -161,7 +172,10 @@
 										<span>작가등급</span> : <span>일반작가</span>
 									</p>
 									<p>
-										<span>게시글 카테고리</span> : <span>#sd , #귀염뽀작</span>
+										<span>게시글 카테고리</span> : 
+										<%for(Relate r : rlist){ %>
+										<span>#<%= r.getRelate_name() %> </span>
+										<%} %>
 									</p>
 									<p>슬롯</p>
 									<input type="radio">

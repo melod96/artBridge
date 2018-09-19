@@ -4,25 +4,25 @@ import java.io.Serializable;
 
 public class Relate implements Serializable{
 
-	private int repate_no;
+	private int relate_no;
 	private String relate_name;
 	
 	public Relate(){
 		
 	}
 
-	public Relate(int repate_no, String relate_name) {
+	public Relate(int relate_no, String relate_name) {
 		super();
-		this.repate_no = repate_no;
+		this.relate_no = relate_no;
 		this.relate_name = relate_name;
 	}
 
-	public int getRepate_no() {
-		return repate_no;
+	public int getRelate_no() {
+		return relate_no;
 	}
 
-	public void setRepate_no(int repate_no) {
-		this.repate_no = repate_no;
+	public void setRelate_no(int relate_no) {
+		this.relate_no = relate_no;
 	}
 
 	public String getRelate_name() {
@@ -35,8 +35,10 @@ public class Relate implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Relate [repate_no=" + repate_no + ", relate_name=" + relate_name + "]";
+		return "Relate [relate_no=" + relate_no + ", relate_name=" + relate_name + "]";
 	}
+
+	
 	
 	
 }
