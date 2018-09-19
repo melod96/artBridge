@@ -7,6 +7,8 @@
 		list = (ArrayList<Board>)request.getAttribute("list");
 	}
 	
+	int num = (int)request.getAttribute("num");
+	
 	PageInfo pi = null;
 	int listCount = 0;
 	int currentPage = 0;

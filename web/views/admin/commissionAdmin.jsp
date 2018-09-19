@@ -48,9 +48,18 @@ ul.tab-menu li>a:hover {
 					<div id="searchWord">
 						<input type="text" name="scArea" style="width: 50%;" id="relate">
 						<button name="mainBtn" class="btn btn-primary btn-sm"
-							onclick="add();" id="insertRelate">검색어 추가</button>
+							onclick="add();" id="insertRelate" oncilck="add();">검색어 추가</button>
 						<button name="mainBtn" class="btn btn-primary btn-sm"
 							onclick="del();">검색어 삭제</button>
+							
+							<script>
+								function add(){
+									$("#addText"){
+										
+									}
+								}
+							
+							</script>
 
 						<br> <br>
 					</div>

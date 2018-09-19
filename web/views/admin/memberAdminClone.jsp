@@ -187,7 +187,6 @@ ul.tab-menu li>a:hover {
 
 							</tr>
 						</thead>
-						<!-- 
 						<tbody>
 							<% if(list != null){for(Member m : list){ %>
 								<tr>
@@ -220,7 +219,6 @@ ul.tab-menu li>a:hover {
 							<% }} %>
 
 						</tbody>
-						 -->
 					</table>
 
 					<div class="paginate">

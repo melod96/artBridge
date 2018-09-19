@@ -5,6 +5,7 @@ import static com.comvision.artBridge.common.JDBCTemplate.commit;
 import static com.comvision.artBridge.common.JDBCTemplate.getConnection;
 import static com.comvision.artBridge.common.JDBCTemplate.rollback;
 
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ import com.comvision.artBridge.admin.model.dao.AdminDao;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.member.model.dao.MemberDao;
+import com.comvision.artBridge.relate.model.vo.Relate;
 
 public class AdminService {
 
@@ -49,6 +51,39 @@ public class AdminService {
 		return result;
 
 	}
+
+	//연관검색어 추가
+	public int insertRelate(Relate r) {
+Connection con = getConnection();
+		
+		int result = new AdminDao().insertRelate(con, r);
+		
+		if(result > 0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	//추가된 연관검색어 모두 출력
+	public ArrayList<Relate> selectRelate() {
+		
+		Connection con = getConnection();
+		
+		ArrayList<Relate> list = new AdminDao().selectRelate(con);
+		
+		close(con);
+		
+
+		
+		return list;
+
+	}
+	
 	
 
 }
