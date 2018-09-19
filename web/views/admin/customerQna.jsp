@@ -174,10 +174,12 @@ div#editor {
 
 					<button type="submit" id="searchBtn" name="searchBtn"
 						class="btn btn-primary btn-lg"
-						style="padding: 2px 30px; float: right;">저장</button>
+						style="padding: 2px 30px; float: right;"
+						onclick = "location.href='/artBridge/views/admin/customerAdmin.jsp'">저장</button>
 					<button type="submit" id="searchBtn" name="searchBtn"
 						class="btn btn-primary btn-lg"
-						style="padding: 2px 30px; background: gray; float: right; margin-right: 10px;">목록</button>
+						style="padding: 2px 30px; background: gray; float: right; margin-right: 10px;"
+						onclick = "location.href='/artBridge/views/admin/customerAdmin.jsp'">목록</button>
 
 					<br> <br>
 				</div>
