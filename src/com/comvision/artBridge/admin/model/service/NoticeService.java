@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.comvision.artBridge.admin.model.dao.NoticeDao;
 import com.comvision.artBridge.admin.model.vo.Notice;
+
 import static com.comvision.artBridge.common.JDBCTemplate.*;
 
 public class NoticeService {
@@ -28,9 +29,11 @@ public class NoticeService {
 
 	//공지사항 리스트 출력용 메소드
 	public ArrayList<Notice> selectList() {
+	//public ArrayList<Notice> selectList(int currentPage, int limit) {
 		Connection con = getConnection();
 		
 		ArrayList<Notice> list = new NoticeDao().selectList(con);
+		//ArrayList<Notice> list = new NoticeDao().selectList(con, currentPage, limit);
 		
 		close(con);
 		
@@ -85,7 +88,27 @@ public class NoticeService {
 		return list;
 	}
 
-	
+	//공지사항 삭제용 메소드
+	public ArrayList<Notice> delNotice(String delCk) {
+		Connection con = getConnection();
+		
+		ArrayList<Notice> list = new NoticeDao().delNotice(con, delCk);
+		
+		close(con);
+		
+		return list;
+	}
+
+	//페이징처리
+	/*public int getListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new NoticeDao().getListCount(con);
+		
+		close(con);
+		
+		return listCount;
+	}*/
 	
 
 }
