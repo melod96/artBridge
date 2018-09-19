@@ -24,6 +24,7 @@ import com.comvision.artBridge.relate.model.vo.Relate;
 public class SelectChangeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
