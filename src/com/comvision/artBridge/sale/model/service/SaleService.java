@@ -12,9 +12,9 @@ import java.util.HashMap;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.dao.SaleDao;
-import com.comvision.artBridge.sale.model.vo.Options;
 
 public class SaleService {
 
@@ -64,6 +64,14 @@ public class SaleService {
 		close(con);
 		
 		return rlist;
+	}
+
+	public Rating selectRating(int num) {
+		Connection con = getConnection();
+		
+		Rating r = new SaleDao().selectRating(con, num);
+		
+		return r;
 	}
 
 	

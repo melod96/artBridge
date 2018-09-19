@@ -237,7 +237,7 @@
 												<%-- <li style="background: url(<%= f.getFiles_root()%>) no-repeat center 15%"></li> --%>
 												<li style="display:inline-block;" id = "thumbnail">
 												<input type="hidden" value = "<%=b.getBoard_no() %>" />
-													<img src="<%=f.getFiles_root() %>" alt=""/>
+													<img src="<%=f.getFiles_root() %>" alt="" style = "width:162px; height:122px;"/>
 												</li>
 												</dl>
 											<%} %>
