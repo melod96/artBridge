@@ -2,13 +2,12 @@
     pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*"%>
 <% 
 	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list"); 
-	/* PageInfo pi = (PageInfo)request.getAttribute("pi");
-	//ArrayList<HashMap<String,Object>> oplist = (ArrayList<HashMap<String,Object>>)request.getAttribute("oplist");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage(); */
+	int endPage = pi.getEndPage();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -26,10 +25,6 @@
       .btn-right button{position:relative; top:0;}
       .tbl-type02 .tit{text-align:left; padding:12px; cursor:pointer;}
     </style>
-    <script>
-    	
-		
-    </script>
 </head>
 <body>
     <div id="all">
@@ -121,7 +116,6 @@
 		                    </tbody>
 		                </table>
 	                </form>
-
 	                <script>
                 		function delContent(){
                 			//삭제버튼을 눌럿을때 서블릿으로 이동(체크가 선택된, 게시글의 넘버를, 배열로 가져간다.)
@@ -130,28 +124,10 @@
 							listForm.submit();
                 		}
 	                </script>
-
-
 	                <!-- // 공지사항 리스트  -->
+	                
 	                <!-- 페이징 영역 -->
-	                <!-- <div class="paginate">
-	                  <a href="#" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a>
-	                  <a href="#" class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a>
-	                  <span class="paging-numbers">
-	                      <a href="#">1<span class="blind">페이지로 이동</span></a>
-	                      <a href="#" class="on">2<span class="blind">페이지로 이동</span></a>
-	                      <a href="#">3<span class="blind">페이지로 이동</span></a>
-	                      <a href="#">4<span class="blind">페이지로 이동</span></a>
-	                      <a href="#">5<span class="blind">페이지로 이동</span></a>
-	                  </span>
-	                  <a href="#" class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
-	                  <a href="#" class="btn-last" title="끝"><span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
-	               </div> -->
-	                <!-- // 페이징 영역 -->
-	                
-	                
-	                <!-- 페이징 영역2222222222222 -->
-	              <%-- <div class="paginate">
+	                <div class="paginate">
 						<a onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
 						<% if(currentPage <=1){ %>
 							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
@@ -177,10 +153,8 @@
 						
 						<a onclick = "location.href = '<%= request.getContextPath()%>/selectSaleList.bo?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
-					</div> --%>
-		<!-- // 페이징 영역2222222222222 -->
-		
-		
+					</div>
+	                <!-- // 페이징 영역 -->
 
                 </div>
             </div>

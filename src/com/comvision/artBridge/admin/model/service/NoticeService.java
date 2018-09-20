@@ -28,16 +28,27 @@ public class NoticeService {
 	}
 
 	//공지사항 리스트 출력용 메소드
-	public ArrayList<Notice> selectList() {
-	//public ArrayList<Notice> selectList(int currentPage, int limit) {
+	//public ArrayList<Notice> selectList() {
+	public ArrayList<Notice> selectList(int currentPage, int limit) {
 		Connection con = getConnection();
 		
-		ArrayList<Notice> list = new NoticeDao().selectList(con);
-		//ArrayList<Notice> list = new NoticeDao().selectList(con, currentPage, limit);
+		//ArrayList<Notice> list = new NoticeDao().selectList(con);
+		ArrayList<Notice> list = new NoticeDao().selectList(con, currentPage, limit);
 		
 		close(con);
 		
 		return list;
+	}
+
+	//페이징처리
+	public int getListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new NoticeDao().getListCount(con);
+		
+		close(con);
+		
+		return listCount;
 	}
 	
 	//공지사항 상세보기용 메소드
@@ -78,37 +89,38 @@ public class NoticeService {
 	}
 
 	//공지사항 검색용 메소드
-	public ArrayList<Notice> searchNotice(String search) {
+	public ArrayList<Notice> searchNotice(String search, int currentPage, int limit) {
 		Connection con = getConnection();
 		
-		ArrayList<Notice> list = new NoticeDao().searchNotice(con, search);
+		ArrayList<Notice> list = new NoticeDao().searchNotice(con, search, currentPage, limit);
 		
+		System.out.println(list);//여기서 문제네??
 		close(con);
-		
 		return list;
 	}
 
 	//공지사항 삭제용 메소드
-	public ArrayList<Notice> delNotice(String delCk) {
+	public ArrayList<Notice> delNotice(String[] contCheck, int currentPage, int limit) {
 		Connection con = getConnection();
+		ArrayList<Notice> list = null;
+		int result = 0;
 		
-		ArrayList<Notice> list = new NoticeDao().delNotice(con, delCk);
+		for(int i = 0; i < contCheck.length; i++){
+			result += new NoticeDao().delNotice(con, contCheck[i]);
+			System.out.println(result);
+		}
+		if(result == contCheck.length){
+			commit(con);
+			list = new NoticeDao().selectList(con, currentPage, limit);
+		}else{
+			rollback(con);
+		}
 		
 		close(con);
 		
 		return list;
 	}
 
-	//페이징처리
-	/*public int getListCount() {
-		Connection con = getConnection();
-		
-		int listCount = new NoticeDao().getListCount(con);
-		
-		close(con);
-		
-		return listCount;
-	}*/
 	
 
 }
