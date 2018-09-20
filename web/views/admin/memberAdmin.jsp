@@ -34,6 +34,7 @@
 ul.tab-menu li>a:hover {
 	background: darkgray;
 }
+
 </style>
 </head>
 <body>
@@ -84,6 +85,14 @@ ul.tab-menu li>a:hover {
 											<option>전체</option>
 											<option>작가</option>
 											<option>일반사용자</option>
+									</select></td>
+								</tr>
+								<tr>
+									<td style="background: lightgray">작가 신청</td>
+									<td><select class="form-control input-short">
+									<option>전체</option>
+											<option>승인</option>
+											<option>미승인</option>
 									</select></td>
 								</tr>
 								<tr>

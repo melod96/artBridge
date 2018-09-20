@@ -18,6 +18,7 @@ import com.comvision.artBridge.relate.model.vo.Relate;
 
 
 
+
 public class AdminDao {
 	
 private Properties prop = new Properties();
@@ -137,40 +138,91 @@ private Properties prop = new Properties();
 
 	//연관검색어 전체 조회
 	public ArrayList<Relate> selectRelate(Connection con) {
-				Statement stmt = null;
-				ResultSet rset = null;
-				ArrayList<Relate> list = null;
+		ArrayList<Relate> list = null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectRelate");
+		
+		try {
+			stmt = con.createStatement();
+			rset=stmt.executeQuery(query);
+			
+			list = new ArrayList<Relate>();
+			
+			while(rset.next()){
+				Relate r =new Relate();
+				r.setRelate_no(rset.getInt("relate_no"));
+				r.setRelate_name(rset.getString("relate_name"));
 				
-				String query = prop.getProperty("selectRelate");
+				list.add(r);
+
 				
-				try {
-					stmt = con.createStatement();
-					
-					rset = stmt.executeQuery(query);
-					
-					list = new ArrayList<Relate>();
-					
-					while(rset.next()){
-						Relate r = new Relate();
-						
-						r.setRelate_no(rset.getInt("relate_no"));
-						r.setRelate_name(rset.getString("relate_name"));
-					
-						
-						list.add(r);
-						
-					}
-					
-					//System.out.println("dao : " + list );
-					
-				} catch (SQLException e) {
-					e.printStackTrace();
-				} finally{
-					close(stmt);
-					close(rset);
-				}
-				//System.out.println("dao");
-				return list;
+			}
+		} catch (SQLException e) {
+	
+			e.printStackTrace();
+		}finally{
+			
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
+	}
+
+	public int updateMainView(Connection con, int bno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int b = 0;
+		
+		String query = prop.getProperty("updateMainView");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bno);
+			
+			b = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return b;
+	}
+
+	public ArrayList<Board> selectMainView(Connection con) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> blist = null;
+		
+		String query = prop.getProperty("selectMainView");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			rset = pstmt.executeQuery();
+			
+			blist = new ArrayList<Board>();
+			
+			while(rset.next()){
+				Board b = new Board();
+				
+				b.setBoard_no(rset.getInt("board_no"));
+				
+				blist.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return blist;
 	}
 	
 

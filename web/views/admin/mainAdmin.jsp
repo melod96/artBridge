@@ -7,6 +7,8 @@
 		list = (ArrayList<Board>)request.getAttribute("list");
 	}
 	
+	
+	
 	int num = (int)request.getAttribute("num");
 	
 	PageInfo pi = null;
@@ -36,6 +38,7 @@
 ul.tab-menu li>a:hover {
 	background: darkgray;
 }
+
 </style>
 </head>
 <body>
@@ -139,7 +142,7 @@ ul.tab-menu li>a:hover {
 									</th>
 								</tr>
 							</thead>
-							<tbody style="overflow-Y: scroll;">
+							<tbody>
 							
 							<%if(list != null){for(Board b : list){%>
 								
@@ -235,42 +238,14 @@ ul.tab-menu li>a:hover {
 					<br>
 					<br>
 					
-					<h3 style="margin-left:25%;">메인 배너</h3>
-					<div class="addTable">
-						<table class="tbl-type02" style="width: 600px; margin: auto;">
-							<colgroup>
-								<col style="width: 15%;">
-								<col style="width: *;">
-							</colgroup>
-							<thead>
-								<tr>
-									<th></th>
-									<th>작품번호</th>
-								</tr>
-							</thead>
-							<tbody class="trtr">
-								<tr>
-									<td><input type="checkbox" name=""></td>
-									<td colspan="5">
-									<input type="text" value="빈 텍스트" readonly>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-					<div class="btn-center">
-						<!-- <button type="submit" class="btn btn-primary btn-md"
-							style="margin-top: 10px;">저장</button> -->
-									<button type="button" name="mainBtn"
-							class="btn btn-default btn-sm" onclick="del();" id="del">삭제하기</button>
-					</div>
-
-					<br>
-				
 					<script>
 					
 						var i = 1;
 						function add() {
+							<%-- <%ArrayList<Board> blist = null; 
+	if((ArrayList<Board>)request.getAttribute("blist") != null){
+		list = (ArrayList<Board>)request.getAttribute("blist");
+	}%> --%>
 						var str = "";
 							if (i == 5) {
 								alert('5개 이상 생성할 수 없습니다.')
@@ -278,11 +253,26 @@ ul.tab-menu li>a:hover {
 								$("input[id='check']").each(function() {
 									if ($(this).prop("checked") == true) {
 										str += $(this).val() + "," ;
-										
 									}
 
 								});
-									location.href = '<%= request.getContextPath()%>/deleteSale.ad?str='+str;
+									<%-- location.href = '<%= request.getContextPath()%>/deleteSale.ad?str='+str; --%>
+									var result = [];
+									$.ajax({
+										url:"deleteSale.ad",
+										data:{str:str},
+										type:"get",
+										success:function(data){
+											/* var result = blist.board_no; */
+											result = hmap.blist;
+											console.log(blist);
+											$("#banner").val(result);
+											
+										},
+										error:function(){
+											console.log("실패");
+										}
+									});
 							}
 						}	
 								/* $("input:checkbox").each(function() {
@@ -333,6 +323,47 @@ ul.tab-menu li>a:hover {
 						} */
 						//}
 					</script>
+					<h3 style="margin-left:25%;">메인 배너</h3>
+					<div class="addTable">
+						<table class="tbl-type02" style="width: 600px; margin: auto;">
+							<colgroup>
+								<col style="width: 15%;">
+								<col style="width: *;">
+							</colgroup>
+							<thead>
+								<tr>
+									<th></th>
+									<th>작품번호</th>
+								</tr>
+							</thead>
+							<tbody class="trtr">
+							<%-- <% if(blist!=null){for( Board b : blist){ %>
+								<tr id="banner">
+									<td><input type="checkbox" name=""></td>
+									<td colspan="5">
+									<input type="text" value="<%=b.getBoard_no()%>" readonly>
+									</td>
+								</tr>
+								<% }}else{ %> --%>
+								<tr>
+									<td><input type="checkbox" name=""></td>
+									<td colspan="5">
+									<input type="text" value="작품번호" readonly>
+									</td>
+								</tr>
+								<%-- <%} %> --%>
+							</tbody>
+						</table>
+					</div>
+					<div class="btn-center">
+						<!-- <button type="submit" class="btn btn-primary btn-md"
+							style="margin-top: 10px;">저장</button> -->
+									<button type="button" name="mainBtn"
+							class="btn btn-default btn-sm" onclick="del();" id="del">삭제하기</button>
+					</div>
+
+					<br>
+				
 
 					<br> <br> <br> <br>
 				</div>

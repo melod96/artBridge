@@ -32,6 +32,7 @@ public class SelectRelateServlet extends HttpServlet {
 				ArrayList<Relate> list = new AdminService().selectRelate();
 				
 				String page = "";
+				System.out.println(list);
 
 				if(list != null){
 					page = "views/admin/commissionAdmin.jsp";
