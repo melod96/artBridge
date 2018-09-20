@@ -3,109 +3,109 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Art Bridge</title>
-	<%@ include file="/views/common/head.jsp" %>
-	<style type="text/css">
-    .frofile-box{overflow:hidden; position:relative; border:1px solid #9e9e9e; padding:30px; font-size:16px; width:1110px;}
-    .img-in{overflow:hidden; width:150px; height:150px; /*border:1px solid #ddd;*/ border-radius:50%;}
-    .img-in img{width:100%;}
-    .img-area{float:left; text-align:center;}
-    .img-area .file-btn{margin-top:15px;}
-    .img-area .file-btn input[type=file]{display:none;}
-    .img-area .file-btn label{width:150px;}
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Art Bridge</title>
+<%@ include file="/views/common/head.jsp" %>
+<style type="text/css">
+   .frofile-box{overflow:hidden; position:relative; border:1px solid #9e9e9e; padding:30px; font-size:16px; width:1110px;}
+   .img-in{overflow:hidden; width:150px; height:150px; /*border:1px solid #ddd;*/ border-radius:50%;}
+   .img-in img{width:100%;}
+   .img-area{float:left; text-align:center;}
+   .img-area .file-btn{margin-top:15px;}
+   .img-area .file-btn input[type=file]{display:none;}
+   .img-area .file-btn label{width:150px;}
 
-    .input-area{margin-left:40px; float:left; width:585px;}
-    .input-area label{vertical-align:top;}
-    .input-area input[type="text"], .input-area textarea{display:inline-block; width:515px; resize:none; margin-bottom:10px;}
-    .input-area textarea{margin-bottom:0;}
-    .input-area .info{margin-top: 5px;}
-    .input-area .info li{font-size:14px; margin-bottom:3px; color:#428bca;}
-    .input-area label[for=state1]{color:green; font-weight:bold;}
-    .input-area label[for=state2]{color:red; font-weight:bold;}
+   .input-area{margin-left:40px; float:left; width:585px;}
+   .input-area label{vertical-align:top;}
+   .input-area input[type="text"], .input-area textarea{display:inline-block; width:515px; resize:none; margin-bottom:10px;}
+   .input-area textarea{margin-bottom:0;}
+   .input-area .info{margin-top: 5px;}
+   .input-area .info li{font-size:14px; margin-bottom:3px; color:#428bca;}
+   .input-area label[for=state1]{color:green; font-weight:bold;}
+   .input-area label[for=state2]{color:red; font-weight:bold;}
 
-    .state-area{margin-left:20px; float:left; width:250px;}
-    .state-area li{position:relative; border-bottom:1px solid #bdbdbd; margin-bottom:10px;}
-    .state-area li span{float:right;}
+   .state-area{margin-left:20px; float:left; width:250px;}
+   .state-area li{position:relative; border-bottom:1px solid #bdbdbd; margin-bottom:10px;}
+   .state-area li span{float:right;}
 
-    .absol-btn{position:absolute; bottom:30px; right:30px;}
+   .absol-btn{position:absolute; bottom:30px; right:30px;}
 
-    .bord-wrap{overflow:hidden; width:1110px; font-size:16px;}
-    .bord-wrap .piece-list{float:left; border:1px solid #9e9e9e; padding:20px; width:545px; margin-left:20px; margin-bottom:20px; font-weight:bold;}
-    .bord-wrap .piece-list.default{width:100%; text-align:center; padding:50px 0;}
-    .bord-wrap .piece-list:nth-child(2n+1){margin-left:0;}
-    .bord-wrap .seting-area{overflow:hidden; float:right;}
-    .bord-wrap .seting-area li{float:left; margin-left:10px;}
-    .bord-wrap .seting-area li input{display:inline-block; width:25px; height:25px; background-size:100% !important; border: none;}
-    .bord-wrap .seting-area .btn-lock{background:url("../image/common/ico_lock.png") 0 0 no-repeat;}
-    .bord-wrap .seting-area .btn-lock.on{background:url("../image/common/ico_unlock.png") 0 0 no-repeat;}
-    .bord-wrap .seting-area .btn-edit{background:url("../image/common/ico_repaint.png") 0 0 no-repeat;}
-    .bord-wrap .seting-area .btn-del{background:url("../image/common/ico_delete.png") 0 0 no-repeat;}
+   .bord-wrap{overflow:hidden; width:1110px; font-size:16px;}
+   .bord-wrap .piece-list{float:left; border:1px solid #9e9e9e; padding:20px; width:545px; margin-left:20px; margin-bottom:20px; font-weight:bold;}
+   .bord-wrap .piece-list.default{width:100%; text-align:center; padding:50px 0;}
+   .bord-wrap .piece-list:nth-child(2n+1){margin-left:0;}
+   .bord-wrap .seting-area{overflow:hidden; float:right;}
+   .bord-wrap .seting-area li{float:left; margin-left:10px;}
+   .bord-wrap .seting-area li input{display:inline-block; width:25px; height:25px; background-size:100% !important; border: none;}
+   .bord-wrap .seting-area .btn-lock{background:url("../image/common/ico_lock.png") 0 0 no-repeat;}
+   .bord-wrap .seting-area .btn-lock.on{background:url("../image/common/ico_unlock.png") 0 0 no-repeat;}
+   .bord-wrap .seting-area .btn-edit{background:url("../image/common/ico_repaint.png") 0 0 no-repeat;}
+   .bord-wrap .seting-area .btn-del{background:url("../image/common/ico_delete.png") 0 0 no-repeat;}
 
-    .bord-wrap .img-area{float:none; overflow:hidden; width:100%;}
-    .bord-wrap .img-area .tmb{overflow:hidden; float:left; width:32%;}
-    .bord-wrap .img-area .tmb~.tmb{margin-left:1.9%;}
-    .bord-wrap .img-area .tmb img{width:100%;}
+   .bord-wrap .img-area{float:none; overflow:hidden; width:100%;}
+   .bord-wrap .img-area .tmb{overflow:hidden; float:left; width:32%;}
+   .bord-wrap .img-area .tmb~.tmb{margin-left:1.9%;}
+   .bord-wrap .img-area .tmb img{width:100%;}
 
-    .bord-wrap .info-area1{overflow:hidden; margin-top:20px;}
-    .bord-wrap .info-area1 span{float:left; width:30%;}
-    .bord-wrap .info-area1 span:first-child{width:40%;}
-    .bord-wrap .info-area2{overflow:hidden; margin-top:10px;}
-    .bord-wrap .info-area2 span{float:left;}
-    .bord-wrap .info-area2 .price{float:right; font-size:20px; font-weight:bold;}
+   .bord-wrap .info-area1{overflow:hidden; margin-top:20px;}
+   .bord-wrap .info-area1 span{float:left; width:30%;}
+   .bord-wrap .info-area1 span:first-child{width:40%;}
+   .bord-wrap .info-area2{overflow:hidden; margin-top:10px;}
+   .bord-wrap .info-area2 span{float:left;}
+   .bord-wrap .info-area2 .price{float:right; font-size:20px; font-weight:bold;}
 
-    .heading{margin: 30px 0 10px 0 !important;}
-    div.btn-right.add-some button{bottom:0; top:auto;}
-    .paginate{margin-bottom:50px;}
-    .btn-default{background-color:#e4e4e4; color:#4e4e4e;}
+   .heading{margin: 30px 0 10px 0 !important;}
+   div.btn-right.add-some button{bottom:0; top:auto;}
+   .paginate{margin-bottom:50px;}
+   .btn-default{background-color:#e4e4e4; color:#4e4e4e;}
 
-    .star_rating {display:inline-block; font-size:0; letter-spacing:-4px; text-align:right;}
-    .star_rating a {font-size:25px; letter-spacing:0; display:inline-block; color:#d6d6d6; text-decoration:none; line-height:0.9; margin-top:-2px;}
-    .star_rating a:first-child {margin-left:0;}
-    .star_rating a.on {color:#fcce18;}
-    </style>
-    <script>
-      $(function(){
-          //작품 보이기 숨기기
-          $(".btn-lock").click(function(){
-              var act = $(this).hasClass('on');
-              if(act == false){ //on이 없으면 숨김해지
-                $(this).addClass('on');
-                $(this).attr('title','작품 숨기기');
-                console.log('test');
-                alert("작품 숨김 해지 완료"); 
-              }else{ //on이 있으면 숨김처리
-                $(this).removeClass('on');
-                $(this).attr('title','작품 보이기');
-                alert("작품 숨기기 완료");
-              }
-          });
+   .star_rating {display:inline-block; font-size:0; letter-spacing:-4px; text-align:right;}
+   .star_rating a {font-size:25px; letter-spacing:0; display:inline-block; color:#d6d6d6; text-decoration:none; line-height:0.9; margin-top:-2px;}
+   .star_rating a:first-child {margin-left:0;}
+   .star_rating a.on {color:#fcce18;}
+   </style>
+   <script>
+     $(function(){
+         //작품 보이기 숨기기
+         $(".btn-lock").click(function(){
+             var act = $(this).hasClass('on');
+             if(act == false){ //on이 없으면 숨김해지
+               $(this).addClass('on');
+               $(this).attr('title','작품 숨기기');
+               console.log('test');
+               alert("작품 숨김 해지 완료"); 
+             }else{ //on이 있으면 숨김처리
+               $(this).removeClass('on');
+               $(this).attr('title','작품 보이기');
+               alert("작품 숨기기 완료");
+             }
+         });
 
-        //별점 매기기
-        $( ".star_rating a" ).click(function() {
-             $(this).parent().children("a").removeClass("on");
-             $(this).addClass("on").prevAll("a").addClass("on");
-             return false;
-        });
+       //별점 매기기
+       $( ".star_rating a" ).click(function() {
+            $(this).parent().children("a").removeClass("on");
+            $(this).addClass("on").prevAll("a").addClass("on");
+            return false;
+       });
 
-        //프로필 사진 변경
-        function readURL(input) {
-          if (input.files && input.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-              $('#img-change').attr('src', e.target.result);
-            }
-            reader.readAsDataURL(input.files[0]);
-          }
-        }
-        $("#sel-img").change(function() {
-          readURL(this);
-        });
+       //프로필 사진 변경
+       function readURL(input) {
+         if (input.files && input.files[0]) {
+           var reader = new FileReader();
+           reader.onload = function(e) {
+             $('#img-change').attr('src', e.target.result);
+           }
+           reader.readAsDataURL(input.files[0]);
+         }
+       }
+       $("#sel-img").change(function() {
+         readURL(this);
+       });
 
 
-      });
-    </script>
+     });
+   </script>
 </head>
 <body>
     <div id="all">
@@ -116,17 +116,17 @@
 
         <!-- 주석 영역 -->
          <section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
-            <div class="container">
-                <h2>마이페이지_내 작품관리</h2>
-                <ul class="tab-menu">
-                    <li><a href="#">주문관리</a></li>
-                    <li><a href="#">쪽지함</a></li>
-                    <li><a href="#">관심작품</a></li>
-                    <li><a href="#">회원정보수정</a></li>
-                    <li><a href="#">내 작품관리</a></li>
-                    <li><a href="#">이용문의</a></li>
-                </ul>
-            </div>
+	         <div class="container">
+				<h2>마이 페이지</h2>
+				<ul class="tab-menu">
+					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu">주문관리</a></li>
+					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=msg-menu">쪽지함</a></li>
+					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=bookmark-menu">관심작가</a></li>
+					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu">회원정보수정</a></li>
+					<li><a href="#" style="background:#fff; color:#000;">내작품관리</a></li>
+					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=qna-menu">이용문의</a></li>
+				</ul>
+			</div>
         </section>
 
         <!-- contents area -->
@@ -136,6 +136,10 @@
 
                     <form action="" method="post">
                       <!-- 프로필 작성 영역 -->
+                      <div class="heading">
+                        <h2 class="tit1">작가 프로필 관리</h2>
+                      </div>
+                      <hr>
                       <div class="frofile-box">
                           <div class="img-area">
                               <div class="img-in">
