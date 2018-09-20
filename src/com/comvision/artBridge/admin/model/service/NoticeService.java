@@ -94,7 +94,6 @@ public class NoticeService {
 		
 		ArrayList<Notice> list = new NoticeDao().searchNotice(con, search, currentPage, limit);
 		
-		System.out.println(list);//여기서 문제네??
 		close(con);
 		return list;
 	}

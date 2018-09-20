@@ -25,7 +25,15 @@
         <!-- 주석 영역 -->
         <section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
             <div class="container">
-                <h2>서브페이지 타이틀</h2>
+                <h2>관리자 페이지</h2>
+                <ul class="tab-menu">
+                    <li><a href="/artBridge/views/admin/mainAdmin.jsp">메인 관리</a></li>
+                    <li><a href="/artBridge/views/admin/commissionAdmin.jsp">커미션 관리</a></li>
+                    <li><a href="/artBridge/views/admin/customerQna.jsp">고객문의 관리</a></li>
+                    <li><a href="/artBridge/views/admin/memberAdmin.jsp">회원 관리</a></li>
+                    <li><a href="/artBridge/views/admin/transactionAdmin.jsp">거래내역 관리</a></li>
+                    <li><a href="<%=request.getContextPath()%>/selectNoticeList.no" style="background:orangered; color:white;">공지사항</a></li>
+                </ul>
             </div>
         </section>
 
