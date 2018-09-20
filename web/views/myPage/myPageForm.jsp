@@ -25,7 +25,7 @@
     .btn{ cursor:pointer; } 	
     	
 /*  팝업 통합 스타일 */
-   	.settingArea { z-index:300; position: absolute; top:0px; padding-top:8%; display:none; width:100%;
+   	.settingArea { z-index:300; position: absolute; top:0px; padding-top:9%; display:none; width:100%;
       				/* padding-left:auto; padding-right:auto; text-align:center; */ 	}
       				
 /*  구입목록 */
@@ -34,7 +34,7 @@
 /*  .seller-list .buyer-list{ padding-top:5px; background-clip: content-box; !important; } */
     	
 /*  명세표 팝업 */
-	.stmt-List{ position:absolute; width:600px; background:white; /* top:100px; */ padding-bottom:40px;
+	.stmt-List{ position:absolute; width:600px; background:white; padding-bottom:40px;
 				left:50%; margin-left:-300px; }
 	.stmt-title{ text-align:right; font-weight:bold; }
 	.stmtBtn button{ width:32%; height:30px; line-height:0; margin-bottom:10px; }
@@ -55,6 +55,9 @@
 	.textBox{ height:35px; } 		
 	#memberInfo td , #pwdCheckArea td{ text-align:left; height:45px; padding-left:20px; font-weight: bold; }
 	#memberInfo{ margin-left:50px; }
+	
+/*  작가회원신청 팝업 */	
+	.reqWriterFrom-title{ text-align:center; }
 				
 </style>
 
@@ -128,8 +131,8 @@
 	String phone = ((Member)(request.getSession().getAttribute("loginUser"))).getPhone();
 						
 	String tel1 = "";
-	String tel2 = "";;
-	String tel3 = "";;
+	String tel2 = "";
+	String tel3 = "";
 	
 	if(phone != null){
 		if(phone.length() > 10){
@@ -168,7 +171,7 @@
 
 <!--      	* 1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 			<form action="">
-				<div id="stmtModalBlock" class="w3-modal" onclick="stmtDisplayNone();"></div>
+				<div id="stmtModalArea" class="w3-modal" onclick="stmtDisplayNone();"></div>
 				<div id="stmtArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
 					<div class=stmt-List align="center">
@@ -243,44 +246,39 @@
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
 <!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
-			<!-- <form action="">
-				<div id="settingBoardArea" class="w3-modal" onclick="displayNone();"></div>
-				<div id="settingArea" class="settingArea">
-			-->
 			<form action="">
-				<div id="reqWriterBlock" class="w3-modal" onclick="stmtDisplayNone();"></div>
+				<div id="reqWriterModal" class="w3-modal" onclick="reqWriterDisplayNone();"></div>
 				<div id="reqWriterFormArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
 					<div class=stmt-List align="center">
-						<h3 style="margin-top:40px; font-weight:bold;">명 &nbsp; 세 &nbsp; 서</h3> <br />
-						<table class="stmt-table">
+						<h3 style="margin-top:40px; font-weight:bold;">작 가 &nbsp; 회 원 &nbsp; 전 환 &nbsp; 신 청</h3> <br />
+						<table class="stmt-table" border="1">
 							<tr>
-								<td width="15px"></td>
-								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td>
-								<td colspan="3">귀여운 캐릭터 그려드려요</td>
+								<td width="35px"></td>
+								<td width="80px" class="reqWriterFrom-title">I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
+								<td width="2px">:</td>
+								<td colspan="3">crala</td>
 							</tr>
 							<tr>
 								<td></td>
-								<td class="stmt-title">신 청 일  : </td>
+								<td class="reqWriterFrom-title">신 청 일</td>
+								<td width="2px">:</td>
 								<td colspan="3">2018-09-00</td>
 							</tr>
 							<tr>
 								<td></td>
-								<td class="stmt-title">구 매 자  : </td>
-								<td width="230px">소나나</td>
-								<td width="80px" class="stmt-title">판 매 자  : </td>
-								<td width="150px">crala</td>
+								<td class="reqWriterFrom-title">지급은행</td>
+								<td width="2px">:</td>
+								<td width="130px">신한</td>
+								<td width="80px" class="reqWriterFrom-title">계좌번호</td>
+								<td width="2px">:</td>
+								<td width="200px">110-111-121212</td>
 							</tr>
 							<tr>
-								<td></td>
-								<td class="stmt-title">옵 션 명  : </td>
-								<td colspan="3">인물화</td>
+								<td colspan="7" height="30px"></td>
 							</tr>
 							<tr>
-								<td colspan="5" height="30px"></td>
-							</tr>
-							<tr>
-							<td colspan="5" width="540px">
+							<td colspan="7" width="540px">
 								<table border="1" >
 									<tr class="stmt-table-title" style="font-weight:bold; text-align:center;" height="25px">
 										<td width="35px">No</td>
@@ -308,7 +306,7 @@
 							</td>
 							</tr>
 							<tr>
-								<td colspan="5">
+								<td colspan="7">
 									<div class="btn-center stmtBtn">
 										  <button class="btn btn-primary btn-lg btn-plus-design" style="width:67%;">거 래 수 락</button><br>
 					                      <button class="btn btn-primary btn-lg btn-plus-design" style="margin-left:0;">재 요청</button>
@@ -381,7 +379,7 @@
 <!-- 						<tr id="buyer" class="buyer-list transInfo-list"> -->
 <!-- 							<td>구매</td> -->
 <%-- 								<% } %> --%>
-<!-- 							<td><a onclick="stmtModalBlock();" class="btn">18083001</a></td> -->
+<!-- 							<td><a onclick="stmtDisplayBlock();" class="btn">18083001</a></td> -->
 <!-- 							<td>소나나</td> -->
 <!-- 							<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td> -->
 <!-- 							<td>컨펌 1단계</td> -->
@@ -393,7 +391,7 @@
 							 	 
 							<tr id="" class="seller-list transInfo-list">
 								<td>판매</td>
-								<td><a onclick="stmtModalBlock();" class="btn">18083001</a></td>
+								<td><a onclick="stmtDisplayBlock();" class="btn">18083001</a></td>
 								<td>소나나</td>
 								<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td>
 								<td>컨펌 1단계</td>
@@ -403,7 +401,7 @@
 							</tr>
 							<tr id="" class="buyer-list transInfo-list">
 								<td>구매</td>
-								<td><a onclick="stmtModalBlock();" class="btn">18083001</a></td>
+								<td><a onclick="stmtDisplayBlock();" class="btn">18083001</a></td>
 								<td>소나나</td>
 								<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td>
 								<td>컨펌 1단계</td>
@@ -895,7 +893,7 @@
 							<tr>
 								<td>* 비밀번호 확인</td>
 								<td><input type="password" maxlength="13" id="updateUserPwd2" name="updateUserPwd2" onchange="comparePwd();" class="form-control input-short textBox"/></td>
-								<td colspan="2"><label id="pwdResult">비밀번호가 일치하지 않습니다.</label></td>
+								<td colspan="2"><label id="pwdResult">패스워드가 일치하지 않습니다.</label></td>
 							</tr>
 							<tr>
 								<td>* 이름</td>
@@ -930,7 +928,7 @@
 		                      <button class="btn btn-lg btn-default btn-plus-design" style="float:right;">회원 탈퇴</button>
 		                </div>
 						<div class="btn-center btn-outer-style" style="width:50%;">
-							  <button id="reqWriterBtn" class="btn btn-primary btn-lg btn-plus-design" style="float:left; margin-left:10px;">작가 신청</button>
+							  <button onclick="reqWriterDisplayBlock();" id="reqWriterBtn" class="btn btn-primary btn-lg btn-plus-design" style="float:left; margin-left:10px;">작가 신청</button>
 		                </div>
 	                </div>
                 </form>
@@ -1054,7 +1052,7 @@
     </div>
 
 
-<!-- ** 페이지 호출 & 선택 탭 영역 보이기 스크립트 -->
+<!-- ** 마이페이지 호출 & 선택 탭 영역 보이기 스크립트 -->
 	<script>
 	//	* 페이지 호출
 		$(function(){
@@ -1137,18 +1135,17 @@
 	    	}else{
 	    		$('.transInfo-list').css({"display":""});
 	    	}
-	    	
 	    });
 	    
 	// 	* 명세표 모달 띄우기
-	   	function stmtModalBlock(){
-			document.getElementById('stmtModalBlock').style.display='block';
+	   	function stmtDisplayBlock(){
+			document.getElementById('stmtModalArea').style.display='block';
 			document.getElementById('stmtArea').style.display='block';
 	  	};							
 	// 	* 명세표 모달 닫기
 		function stmtDisplayNone(){
 			document.getElementById('stmtArea').style.display='none';
-			document.getElementById('stmtModalBlock').style.display='none';
+			document.getElementById('stmtModalArea').style.display='none';
 		};
 	</script>
 <!-- //1. 주문관리 탭 스크립트 -->
@@ -1223,18 +1220,23 @@
 	 	var checkPwd = false;
 		var checkNick = false;
 		/* var checkPhone = false;		//작가 권한 일 때만 널 비허용
-		var checkEmail = false; */
-		
+		var checkEmail = false; */	
 		function updateMember(){
+			var updateUserPwd1 = $('#updateUserPwd1').val();
+			var updateUserPwd2 = $('#updateUserPwd2').val();
+ 			if(updateUserPwd1 == "" || updateUserPwd2 == ""){
+				$('#pwdResult').css({"color":"orangered"});
+				$('#pwdResult').css({"display":""});
+ 				$("#pwdResult").text("패스워드를 입력하세요.");
+				return false;
+			}
+			
 			if(checkPwd == false){
 				return false;
 			}
 			if(checkNick == false){
 				return false;
 			}
-			/* if($('#nickNameCheckBtn').text() == "중복확인"){
-				return false;
-			} */
 			
 			return true;
 		};
@@ -1264,19 +1266,20 @@
 		function comparePwd(){
 			var updateUserPwd1 = $('#updateUserPwd1').val();
 			var updateUserPwd2 = $('#updateUserPwd2').val();
-			
 			if(updateUserPwd1 != "" && updateUserPwd2 != ""){
 				if(updateUserPwd1 != updateUserPwd2){
-					$('#pwdResult').css({"color":"orangered"})
-					$('#pwdResult').css({"display":""})
-	 				//$("#pwdResult").text("비밀번호가 일치하지 않습니다.");
+					$('#pwdResult').css({"color":"orangered"});
+					$('#pwdResult').css({"display":""});
+	 				$("#pwdResult").text("패스워드가 일치하지 않습니다.");
 					
 					checkPwd = false;			
 				}else{
-					$('#pwdResult').css({"display":"none"})
+					$('#pwdResult').css({"display":"none"});
 					
 					checkPwd = true;
 				}
+			}else if(updateUserPwd1 == "" || updateUserPwd2 == ""){
+ 				checkPwd = false;
 			}
 		};
 		
@@ -1287,8 +1290,8 @@
 				$("#nickNameCheckBtn").text("중복확인");
 				$('#nickNameCheckBtn').css({"background":"", "color":""});
 				$('#nnResult').text("");
+				
 				checkNick = false;
-				/* alert("다름"); */
 			}else{
 				$("#nickNameCheckBtn").text("사용가능");
 				$('#nickNameCheckBtn').css({"background":"mediumseagreen", "color":"white"});
@@ -1297,7 +1300,6 @@
 				$('#nnResult').css({"display":""});
 				
 				checkNick = true;
-				/* alert("같음"); */
 			}
 		};
 		function nickNameUniqueCheck(){
@@ -1332,14 +1334,14 @@
 		};
 		
 	// 	* 작가신청 양식 모달 띄우기
-	   	function displayBlock(){
-			document.getElementById('settingBoardArea').style.display='block';
-			document.getElementById('settingArea').style.display='block';
+	   	function reqWriterDisplayBlock(){
+			document.getElementById('reqWriterModal').style.display='block';
+			document.getElementById('reqWriterFormArea').style.display='block';
 	  	};							
 	// 	* 작가신청 양식 모달 닫기
-		function displayNone(){
-			document.getElementById('settingArea').style.display='none';
-			document.getElementById('settingBoardArea').style.display='none';
+		function reqWriterDisplayNone(){
+			document.getElementById('reqWriterFormArea').style.display='none';
+			document.getElementById('reqWriterModal').style.display='none';
 		};
 	</script>
 <!-- //4. 회원정보 수정 탭 스크립트 -->
