@@ -246,7 +246,7 @@ ul.tab-menu li>a:hover {
 	if((ArrayList<Board>)request.getAttribute("blist") != null){
 		list = (ArrayList<Board>)request.getAttribute("blist");
 	}%> --%>
-						var str = "";
+						<%-- var str = "";
 							if (i == 5) {
 								alert('5개 이상 생성할 수 없습니다.')
 							} else {
@@ -256,7 +256,7 @@ ul.tab-menu li>a:hover {
 									}
 
 								});
-									<%-- location.href = '<%= request.getContextPath()%>/deleteSale.ad?str='+str; --%>
+									location.href = '<%= request.getContextPath()%>/deleteSale.ad?str='+str;
 									var result = [];
 									$.ajax({
 										url:"deleteSale.ad",
@@ -274,7 +274,7 @@ ul.tab-menu li>a:hover {
 										}
 									});
 							}
-						}	
+						}	 --%>
 								/* $("input:checkbox").each(function() {
 									if ($(this).prop("checked") == true) {
 										$(this).parent().parent().appendTo(
