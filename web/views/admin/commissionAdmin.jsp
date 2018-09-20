@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.relate.model.vo.*"%>
+ 	<%
+	ArrayList<Relate> list = null; 
+	if((ArrayList<Relate>)request.getAttribute("list") != null){
+		list = (ArrayList<Relate>)request.getAttribute("list");
+	}
+	%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -18,6 +25,10 @@
 
 ul.tab-menu li>a:hover {
 	background: darkgray;
+}
+
+hr{
+border-color:darkgray;
 }
 </style>
 </head>
@@ -42,8 +53,9 @@ ul.tab-menu li>a:hover {
 				<div class="col-md-12">
 					<div class="heading">
 						<h2>연관검색어 관리</h2>
+						
 					</div>
-					<hr>
+					
 					<br>
 					<div id="searchWord">
 						<input type="text" name="scArea" style="width: 50%;" id="relate">
@@ -64,8 +76,8 @@ ul.tab-menu li>a:hover {
 						<br> <br>
 					</div>
 
-					<div style="overflow-Y: scroll;">
-						<table class="tbl-type02">
+					<div style="overflow-Y : scroll; height:280px;">
+						<table class="tbl-type02" >
 							<colgroup>
 								<col style="width: 10%;">
 								<col style="width: 10%;">
@@ -81,6 +93,13 @@ ul.tab-menu li>a:hover {
 								</tr>
 							</thead>
 							<tbody class="addsh2">
+							<%if(list != null){for(Relate r : list){%>
+								<tr>
+									<td><input type="checkbox" id="check" name="check" value=<%=r.getRelate_no() %>></td>
+									<td><label><%= r.getRelate_no() %></label></td>
+									<td><label><%= r.getRelate_name() %></label></td>
+								</tr>								
+								<% }} %> 
 							</tbody>
 						</table>
 					</div>
@@ -115,13 +134,13 @@ ul.tab-menu li>a:hover {
 								}
 							});
 
-							var j = 1;
+						 	var j = 1;
 							$(".num").each(function() {
 								$(this).text(j);
 								j++;
 							});
 
-						}
+						} 
 										
 					</script>
 
