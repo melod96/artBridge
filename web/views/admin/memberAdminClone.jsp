@@ -43,19 +43,9 @@ ul.tab-menu li>a:hover {
 		<%@ include file="/views/common/header.jsp"%>
 		<!-- // Header -->
 		
-		<section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
-            <div class="container">
-                <h2>관리자 페이지</h2>
-                <ul class="tab-menu">
-                    <li><a href="/artBridge/views/admin/mainAdmin.jsp" >메인 관리</a></li>
-                    <li><a href="/artBridge/views/admin/commissionAdmin.jsp">커미션 관리</a></li>
-                    <li><a href="/artBridge/views/admin/customerAdmin.jsp" >고객문의 관리</a></li>
-                    <li><a href="#" style="background:orangered; color:white;">회원 관리</a></li>
-                    <li><a href="/artBridge/views/admin/transactionAdmin.jsp" >거래내역 관리</a></li>
-                    <li><a href="/artBridge/views/admin/noticeInsertForm.jsp">공지사항</a></li>
-                </ul>
-            </div>
-        </section>
+		<!-- adminHeader -->
+		<%@ include file="/views/common/adminHeader.jsp"%>
+		<!-- //adminHeader -->
 
 		<!-- 주석 영역 -->
 		<div class="contents">
@@ -68,53 +58,55 @@ ul.tab-menu li>a:hover {
 					</div>
 					<hr>
 					<br>
-					<div>
-						<table class="tbl-type02">
-							<colgroup>
-								<col style="width: 20%;">
-								<col style="width: *;">
-							</colgroup>
-							<tbody>
-								<tr>
-									<td style="background: lightgray; width: 200px;">검색옵션</td>
-									<td><select class="form-control input-short">
-											<option>전체</option>
-											<option>이름</option>
-											<option>아이디</option>
-											<option>연락처</option>
-											<option>이메일</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td style="background: lightgray">검색어 입력</td>
-									<td><input type="text" style="width: 500px; float: left;">
-									</td>
-								</tr>
-								<tr>
-									<td style="background: lightgray">사용자 구분</td>
-									<td><select class="form-control input-short">
-											<option>전체</option>
-											<option>작가</option>
-											<option>일반사용자</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td style="background: lightgray;">작가 등급</td>
-									<td><select class="form-control input-short"
-										style="float: left;">
-											<option>전체</option>
-											<option>신뢰작가</option>
-											<option>일반작가</option>
-											<option>신규작가</option>
-											<option>블랙작가</option>
-									</select>
-										<button type="submit" name="mainBtn"
-											class="btn btn-primary btn-md" style="float: right;">검색</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					<form action="<%= request.getContextPath() %>/" method="post">
+						<div>
+							<table class="tbl-type02">
+								<colgroup>
+									<col style="width: 20%;">
+									<col style="width: *;">
+								</colgroup>
+								<tbody>
+									<tr>
+										<td style="background: lightgray; width: 200px;">검색옵션</td>
+										<td><select class="form-control input-short">
+												<option>전체</option>
+												<option>이름</option>
+												<option>아이디</option>
+												<option>연락처</option>
+												<option>이메일</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td style="background: lightgray">검색어 입력</td>
+										<td><input type="text" style="width: 500px; float: left;">
+										</td>
+									</tr>
+									<tr>
+										<td style="background: lightgray">사용자 구분</td>
+										<td><select class="form-control input-short">
+												<option>전체</option>
+												<option>작가</option>
+												<option>일반사용자</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td style="background: lightgray;">작가 등급</td>
+										<td><select class="form-control input-short"
+											style="float: left;">
+												<option>전체</option>
+												<option>신뢰작가</option>
+												<option>일반작가</option>
+												<option>신규작가</option>
+												<option>블랙작가</option>
+										</select>
+											<button type="submit" name="mainBtn"
+												class="btn btn-primary btn-md" style="float: right;">검색</button>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</form>
 
 					<br> <br>
 
@@ -125,7 +117,7 @@ ul.tab-menu li>a:hover {
 						style="padding: 5px 22px; float: right; margin-right: 5px;">정보수정</button>
 					<br>
 					<script>
-      					/* function popupOpen() {
+      					function popupOpen() {
 
        					var popUrl = "userPop.jsp"; //팝업창에 출력될 페이지 URL
 
@@ -140,7 +132,7 @@ ul.tab-menu li>a:hover {
 					    //팝업창 옵션(optoin)
 					    window.open(popUrl,"", popOption);
 					
-					    } */
+					    }
 					    //=================del4 함수 부분======================
 					
 						function del4(){
@@ -220,51 +212,38 @@ ul.tab-menu li>a:hover {
 
 						</tbody>
 					</table>
-
-					<div class="paginate">
-						<a href="#" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a>
-						<a href="#" class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
-						<span class="paging-numbers">
-							<a href="#">1<span class="blind">페이지로 이동</span></a> 
-							<a href="#" class="on">2<span class="blind">페이지로 이동</span></a> 
-							<a href="#">3<span class="blind">페이지로 이동</span></a> 
-							<a href="#">4<span class="blind">페이지로 이동</span></a> 
-							<a href="#">5<span class="blind">페이지로 이동</span></a>
-						</span> <a href="#" class="btn-next" title="다음">
-						<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> 
-						<a href="#" class="btn-last" title="끝">
-						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
-					</div>
 					
 					<!-- 페이징 -->
 	
-					<div class="pagingArea" align="center">
-					<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=1'"><<</button>
+					<div class="paginate" align="center">
+					<a class="btn-first" title="처음" onclick="location.href='<%= request.getContextPath() %>/selectMemberListClone.ad?pageName=memberAdmin&currentPage=1'"><em class="blind">목록에서 처음 페이지 이동</em></a>
 					<% if(currentPage <= 1){ %>
-						<button disabled><</button>
+						<a class="btn-prev" title="이전" disabled><em class="blind">목록에서 이전 페이지 이동</em></a>
 					<% }else{ %>
-						<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?cuttentPage=<%= currentPage - 1 %>'"><</button>
+						<a class="btn-prev" title="이전" onclick="location.href='<%= request.getContextPath() %>/selectMemberListClone.ad?pageName=memberAdmin&cuttentPage=<%= currentPage - 1 %>'"><em class="blind">목록에서 이전 페이지 이동</em></a>
 					<% } %>
 					
+					<span class="paging-numbers">
 					<% 
 						for(int p = startPage; p <= endPage; p++){ 
 							if(p == currentPage){
 					%>
-								<button disabled><%= p %></button>
+								<a class="on" disabled><%= p %><span class="blind">페이지로 이동</span></a>
 					<% 		}else{ %>
-								<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= p %>'"><%= p %></button>
+								<a onclick="location.href='<%= request.getContextPath() %>/selectMemberListClone.ad?pageName=memberAdmin&currentPage=<%= p %>'"><%= p %><span class="blind">페이지로 이동</span></a>
 					<% 		
 							}
 						}		
 					%>
+					</span>
 					
 					<% if(currentPage >= maxPage){ %>
-						<button disabled>></button>
+						<a class="btn-next" title="다음" disabled><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 					<% }else{ %>
-						<button onclick="location.href'<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= currentPage + 1 %>'">></button>
+						<a class="btn-next" title="다음" onclick="location.href'<%= request.getContextPath() %>/selectMemberListClone.ad?pageName=memberAdmin&currentPage=<%= currentPage + 1 %>'"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 					<% } %>
 					
-					<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= maxPage %>'">>></button>
+					<a class="btn-last" title="끝" onclick="location.href='<%= request.getContextPath() %>/selectMemberListClone.ad?pageName=memberAdmin&currentPage=<%= maxPage %>'"><span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
 					
 					<!-- //페이징 -->

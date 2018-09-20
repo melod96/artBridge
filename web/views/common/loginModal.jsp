@@ -36,7 +36,7 @@
 					</div>
 					<script>
 					function join(){
-						location.href="../member/joinForm.jsp";
+						location.href="/artBridge/views/member/joinForm.jsp";
 					}
 					</script>
 				</div>
