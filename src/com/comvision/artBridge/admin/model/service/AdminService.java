@@ -83,6 +83,25 @@ Connection con = getConnection();
 		return list;
 
 	}
+
+	public int updateMainView(String bno) {
+		Connection con = getConnection();
+		
+		int b = new AdminDao().updateMainView(con, Integer.parseInt(bno));
+		
+		close(con);
+		
+		return b;
+	}
+
+	public ArrayList<Board> selectMainView() {
+		Connection con = getConnection();
+		
+		ArrayList<Board> blist = new AdminDao().selectMainView(con);
+		
+		close(con);
+		return blist;
+	}
 	
 	
 

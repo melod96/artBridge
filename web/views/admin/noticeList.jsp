@@ -1,13 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*"%>
 <% 
-	ArrayList<Notice> list = (ArrayList<Notice>)request.getAttribute("list"); 
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	int listCount = pi.getListCount();
-	int currentPage = pi.getCurrentPage();
-	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
+	ArrayList<Notice> list = null;
+	if(request.getAttribute("list") != null){
+		list = (ArrayList<Notice>)request.getAttribute("list");
+	}
+	PageInfo pi = null;
+	int listCount = 0;
+	int currentPage = 0;
+	int maxPage = 0;
+	int startPage = 0;
+	int endPage = 0;
+	if(request.getAttribute("pi") != null){
+		pi = (PageInfo)request.getAttribute("pi");
+		listCount = pi.getListCount();
+		currentPage = pi.getCurrentPage();
+		maxPage = pi.getMaxPage();
+		startPage = pi.getStartPage();
+		endPage = pi.getEndPage();
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -99,15 +110,18 @@
 		                    </thead>
 		                    <tbody>
 		                    	<% if(list != null){
-		                    		for(Notice n : list){ %>
+		                  			int no = listCount - (currentPage - 1) * 10;
+		                    		for(int i = 0; i < list.size(); i++){
+		                    		Notice n = list.get(i);%>
 		                        <tr>
 		                            <td><input type="checkbox" name="contCheck" value="<%= n.getnNo() %>"></td>
-		                            <td><%= n.getRownum() %></td>
+		                            <td><%= no %></td>
 		                            <td id="noticeTit" class="tit" onclick="location.href='<%=request.getContextPath()%>/noticeDetail.no?num=<%= n.getnNo() %>'"><%= n.getnTitle() %></td>
 		                            <td><%= n.getnCount() %></td>
 		                            <td><%= n.getnDate() %></td>
 		                        </tr>
-		                        <% 	}
+		                        <% 	no--;
+		                        	}
 		                    	}else{ %>
 		                    	<tr>
 		                    		<td colspan="5">등록된 게시물이 없습니다.</td>
@@ -151,7 +165,7 @@
 							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 						<%} %>
 						
-						<a onclick = "location.href = '<%= request.getContextPath()%>/selectSaleList.bo?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectNoticeList.no?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
 	                <!-- // 페이징 영역 -->

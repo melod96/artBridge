@@ -27,6 +27,9 @@
 /*  팝업 통합 스타일 */
    	.settingArea { z-index:300; position: absolute; top:0px; padding-top:9%; display:none; width:100%;
       				/* padding-left:auto; padding-right:auto; text-align:center; */ 	}
+	.settingArea h3{ margin-top:55px; margin-bottom:50px; font-weight:bold; }
+	.form-table td{ padding:5px; }
+  	.form-inner-table-title{ background-color:lightgray; }
       				
 /*  구입목록 */
     .seller-list{ background-color:rgba(255, 117, 223, 0.2); }
@@ -34,12 +37,10 @@
 /*  .seller-list .buyer-list{ padding-top:5px; background-clip: content-box; !important; } */
     	
 /*  명세표 팝업 */
-	.stmt-List{ position:absolute; width:600px; background:white; padding-bottom:40px;
+	.stmtModal-Area-Style{ position:absolute; width:600px; background:white; padding-bottom:50px;
 				left:50%; margin-left:-300px; }
 	.stmt-title{ text-align:right; font-weight:bold; }
 	.stmtBtn button{ width:32%; height:30px; line-height:0; margin-bottom:10px; }
-	.stmt-table td{ padding:5px; }
-  	.stmt-table-title{ background-color:lightgray; }
   	
 /*  쪽지함 스타일 */
 	.messenger{ font-weight: bold; line-height:2em; }
@@ -57,17 +58,27 @@
 	#memberInfo{ margin-left:50px; }
 	
 /*  작가회원신청 팝업 */	
-	.reqWriterFrom-title{ text-align:center; }
-				
+	.reqWriterFrom-title{ text-align:center; font-weight:bold; }
+	.reqWriterForm-Area-Style{ position:absolute; width:740px; background:white; padding-bottom:50px;
+								left:50%; margin-left:-370px; }				
 </style>
 
-<style>		/*  관심작가 탭 스타일 */
+<style>		/*  관심작가 탭 스타일 */		/* 회원정보 수정 - 작가회원전환신청 모달 이미지 파일 삽입 영역 */
 	.frofile-box{overflow:hidden; position:relative; border:1px solid #9e9e9e; padding:30px; font-size:16px; width:1110px;}
     .img-in{overflow:hidden; width:150px; height:150px; /*background:url("/artBridge/image/common/img_profile.png") 0 0 no-repeat; background-size:100%;*/ border:1px solid #ddd; border-radius:50%;}
     .img-in img{width:100%;}
     .img-area{float:left; text-align:center;}
     .img-area input[type=file]{margin-top:20px; width:150px;}
-
+	
+	/* 회원정보 수정 - 작가회원전환신청 모달 이미지 파일 삽입 영역 */
+	.insert-img-area{overflow:hidden; margin-bottom:10px; margin-top:5px;}
+    .insert-img-area input{display:none;}
+    .insert-img-area label{width:210px; margin-bottom:10px;}
+    .insert-img-area li{/* float:left;  */display:inline-block; width:210px; margin-right:20px; }
+    .insert-img-area li p{overflow:hidden; height:140px;}
+    .insert-img-area img{width:100%;}
+	li strong{color:#e03939; font-weight:bold;}
+	
     .input-area{margin-left:40px; float:left; width:585px;}
     .input-area label{vertical-align:top;}
     .input-area input[type="text"], .input-area textarea{display:inline-block; width:515px; resize:none; margin-bottom:10px;}
@@ -174,9 +185,9 @@
 				<div id="stmtModalArea" class="w3-modal" onclick="stmtDisplayNone();"></div>
 				<div id="stmtArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
-					<div class=stmt-List align="center">
-						<h3 style="margin-top:40px; font-weight:bold;">명 &nbsp; 세 &nbsp; 서</h3> <br />
-						<table class="stmt-table">
+					<div class=stmtModal-Area-Style align="center">
+						<h3>명 &nbsp; 세 &nbsp; 서</h3>
+						<table class="form-table">
 							<tr>
 								<td width="15px"></td>
 								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td>
@@ -205,7 +216,7 @@
 							<tr>
 							<td colspan="5" width="540px">
 								<table border="1" >
-									<tr class="stmt-table-title" style="font-weight:bold; text-align:center;" height="25px">
+									<tr class="form-inner-table-title" style="font-weight:bold; text-align:center;" height="25px">
 										<td width="35px">No</td>
 										<td width="380px">요 구 사 항</td>
 										<td width="87px">금 액</td>
@@ -250,12 +261,12 @@
 				<div id="reqWriterModal" class="w3-modal" onclick="reqWriterDisplayNone();"></div>
 				<div id="reqWriterFormArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
-					<div class=stmt-List align="center">
-						<h3 style="margin-top:40px; font-weight:bold;">작 가 &nbsp; 회 원 &nbsp; 전 환 &nbsp; 신 청</h3> <br />
-						<table class="stmt-table" border="1">
+					<div class=reqWriterForm-Area-Style align="center">
+						<h3>작 가 &nbsp; 회 원 &nbsp; 전 환 &nbsp; 신 청</h3>
+						<table class="form-table">
 							<tr>
-								<td width="35px"></td>
-								<td width="80px" class="reqWriterFrom-title">I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
+								<td width="50px"></td>
+								<td width="65px" class="reqWriterFrom-title">I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
 								<td width="2px">:</td>
 								<td colspan="3">crala</td>
 							</tr>
@@ -269,48 +280,47 @@
 								<td></td>
 								<td class="reqWriterFrom-title">지급은행</td>
 								<td width="2px">:</td>
-								<td width="130px">신한</td>
-								<td width="80px" class="reqWriterFrom-title">계좌번호</td>
+								<td width="80px"><input type="text" width="35px"/>은행</td>
+								<td width="115px" class="reqWriterFrom-title">계좌번호('-'업이 숫자만 입력)</td>
 								<td width="2px">:</td>
-								<td width="200px">110-111-121212</td>
+								<td width="200px"><input type="number" width="180px" value="110111121212"/></td>
 							</tr>
 							<tr>
 								<td colspan="7" height="30px"></td>
 							</tr>
 							<tr>
-							<td colspan="7" width="540px">
-								<table border="1" >
-									<tr class="stmt-table-title" style="font-weight:bold; text-align:center;" height="25px">
-										<td width="35px">No</td>
-										<td width="380px">요 구 사 항</td>
-										<td width="87px">금 액</td>
-									</tr>
-									<tr height="23px">
-										<td align="center">1</td>
-										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~</td>
-										<td align="right">작가기입 원</td>
-									</tr>
-									<tr>
-										<td align="center">2</td>
-										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~ 귀염뽀짝하게 해주시면 더 좋아요~!</td>
-										<td align="right">45,454원</td>
-									</tr>
-								</table>
-								<br>
-								<table align="right">
-									<tr >
-										<td>총   금 액  :  </td>
-										<td><label>123,456원</label></td>
-									</tr>
-								</table>
-							</td>
+								<td height="25px" colspan="7" style="padding-left:25px; font-size:15px; font-weight:bold;"> * 인증 파일을 첨부하세요</td>
+							</tr>
+							<tr>
+								<td colspan="7" width="715px" style="padding-bottom:10px;">
+	                                <ul class="insert-img-area" style="text-align:center;">
+	                                  <li>
+	                                      <input type="file"  id="file-btn1">
+	                                      <label for="file-btn1" class="btn btn-primary">이미지 파일 불러오기</label>
+	                                      <p><img class="img1" src="/artBridge/image/common/no_thumb.jpg" /></p>
+	                                  </li>
+	                                  <li>
+	                                      <input type="file"  id="file-btn2">
+	                                       <label for="file-btn2" class="btn btn-primary">이미지 파일 불러오기</label>
+	                                      <p><img class="img2" src="/artBridge/image/common/no_thumb.jpg"></p>
+	                                  </li>
+	                                  <li style="margin-right:0px;">
+	                                      <input type="file"  id="file-btn3">
+	                                       <label for="file-btn3" class="btn btn-primary">이미지 파일 불러오기</label>
+	                                      <p><img class="img3" src="/artBridge/image/common/no_thumb.jpg"></p>
+	                                  </li>
+	                                </ul>
+	                                <ul>
+	                                    <li style="padding-left:25px;">- 이미지 최대 용량 : 1개당 <strong>50MB</strong> / 권장 사이즈 : <strong>가로 732px이상</strong></li>
+	                                    <li style="padding-left:25px;">- 파일 선택 후 저장 버튼을 누르셔야 이미지가 저장됩니다.</li>
+	                                </ul>
+								</td>
 							</tr>
 							<tr>
 								<td colspan="7">
-									<div class="btn-center stmtBtn">
-										  <button class="btn btn-primary btn-lg btn-plus-design" style="width:67%;">거 래 수 락</button><br>
-					                      <button class="btn btn-primary btn-lg btn-plus-design" style="margin-left:0;">재 요청</button>
-					                      <button class="btn btn-default btn-lg btn-plus-design">거래 취소</button>
+									<div class="btn-center reqWriterBtn">
+					                      <button class="btn btn-primary btn-lg btn-plus-design">신청</button>
+					                      <button class="btn btn-default btn-lg btn-plus-design">취소</button>
 					                </div>
 								</td>
 							</tr>
@@ -1343,6 +1353,28 @@
 			document.getElementById('reqWriterFormArea').style.display='none';
 			document.getElementById('reqWriterModal').style.display='none';
 		};
+		
+	// 	* 작가신청 양식 모달 - 사진 삽입 테이블	
+		function readURL(input, type) {
+	        if (input.files && input.files[0]) {
+	          var reader = new FileReader();
+	          reader.onload = function(e) {
+	            if(type == 'file-btn1'){
+	                $('.img1').attr('src', e.target.result);
+	            }else if(type == 'file-btn2'){
+	                $('.img2').attr('src', e.target.result);
+	            }else if(type == 'file-btn3'){
+	                $('.img3').attr('src', e.target.result);
+	            }
+	          }
+	          reader.readAsDataURL(input.files[0]);
+	        }
+		}
+		$(".img-area input").change(function() {
+		  var type = $(this).attr('id');
+		  readURL(this, type);
+		});
+		
 	</script>
 <!-- //4. 회원정보 수정 탭 스크립트 -->
 
