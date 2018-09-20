@@ -240,6 +240,7 @@ ul.tab-menu li>a:hover {
 					
 					<script>
 					
+					
 						var i = 1;
 						function add() {
 							<%-- <%ArrayList<Board> blist = null; 
