@@ -10,6 +10,7 @@
 </head>
 <body>
     <div id="all">
+    
        
         <!-- Header -->
         <%@ include file="/views/common/header.jsp" %>
