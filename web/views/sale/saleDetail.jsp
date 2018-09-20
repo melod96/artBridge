@@ -164,20 +164,19 @@
 							<div id="payment">
 								<ul align="right">
 									<div class="totalTitle">
-										최소 결제 금액 : <span id="totals">0</span><font
+										최소 결제 금액 : <span id="totals"></span><font
 											style="font-size: 24px">원</font>
 									</div>
 								</ul>
 								<ul style="margin-top: 10px;" align="center">
-									<button type="submit" class="btn btn-primary btn-mg">명세표
-										보내기</button>
+									<button type="submit" class="btn btn-primary btn-mg">명세표 보내기</button>
 								</ul>
 							</div>
 							<script>
 								function changeSelect(){
 									var sel_val = document.all.sel.value;
 									
-									
+									document.getElementById("totals").innerHTML = sel_val;
 								}
 							</script>
 							<div align="center" id="text">information</div>
@@ -217,7 +216,7 @@
 				<div class="hugiheader">
 					<div style = "display:inline-block;">
 						<h4>이용후기</h4>
-						<button type="button" class="btn btn-md">후기 작성</button>
+						<button type="button" class="btn btn-md" data-toggle="modal" data-target="#hugiModal">후기 작성</button>
 					</div>
 					<div class="hugi">
 						<table>
@@ -235,7 +234,8 @@
 		<!-- // contents area -->
 
 		<%@ include file="/views/common/footer.jsp"%>
-
+		<!-- modal -->
+		<%@ include file = "/views/sale/hugi.jsp" %>
 	</div>
 </body>
 </html>

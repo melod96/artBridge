@@ -69,7 +69,7 @@
 #list_img .list_img_box {
     position: relative;
     width: 534px;
-    height: 244px;
+    height: 215px;
     margin-bottom: 42px;
     border: 1px solid #d3d3d3;
     }
@@ -79,6 +79,11 @@
 .paginate a:hover{
 	cursor:pointer;
 	border:1px solid rgb(52,152,219);
+}
+#list_img .price {
+    float: right;
+    font-size: 24px;
+    margin-top: -55px;
 }
 </style>
 </head>
@@ -135,7 +140,11 @@
 								var sel_val = document.all.sel.value;
 								
 								if(sel_val == "0"){
-									location.href="<%=request.getContextPath()%>/selectList.bo";
+									$.ajax({
+										url:"selectSaleList.bo"
+									});
+									
+									<%-- location.href="<%=request.getContextPath()%>/selectSaleList.bo"; --%>
 								}else if(sel_val=="1"){
 									$.ajax({
 										url:"selectChangeList.bo",
