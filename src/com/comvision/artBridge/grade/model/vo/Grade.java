@@ -10,12 +10,14 @@ public class Grade implements Serializable{
 	private int grade;
 	private String grade_content;
 	private Date grade_date;
+	private String nick_name;
 	
 	public Grade(){
 		
 	}
 
-	public Grade(int greade_no, int board_no, int member_no, int grade, String grade_content, Date grade_date) {
+	public Grade(int greade_no, int board_no, int member_no, int grade, String grade_content, Date grade_date,
+			String nick_name) {
 		super();
 		this.greade_no = greade_no;
 		this.board_no = board_no;
@@ -23,6 +25,7 @@ public class Grade implements Serializable{
 		this.grade = grade;
 		this.grade_content = grade_content;
 		this.grade_date = grade_date;
+		this.nick_name = nick_name;
 	}
 
 	public int getGreade_no() {
@@ -49,6 +52,10 @@ public class Grade implements Serializable{
 		return grade_date;
 	}
 
+	public String getNick_name() {
+		return nick_name;
+	}
+
 	public void setGreade_no(int greade_no) {
 		this.greade_no = greade_no;
 	}
@@ -73,11 +80,16 @@ public class Grade implements Serializable{
 		this.grade_date = grade_date;
 	}
 
+	public void setNick_name(String nick_name) {
+		this.nick_name = nick_name;
+	}
+
 	@Override
 	public String toString() {
 		return "Grade [greade_no=" + greade_no + ", board_no=" + board_no + ", member_no=" + member_no + ", grade="
-				+ grade + ", grade_content=" + grade_content + ", grade_date=" + grade_date + "]";
+				+ grade + ", grade_content=" + grade_content + ", grade_date=" + grade_date + ", nick_name=" + nick_name
+				+ "]";
 	}
-	
+
 	
 }

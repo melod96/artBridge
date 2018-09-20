@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.grade.model.vo.Grade;
 import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.service.SaleService;
@@ -53,7 +54,16 @@ public class SelectOneSalepageServlet extends HttpServlet {
 		
 		//해당하는 작가의 등급
 		Rating r= new SaleService().selectRating(b.getMember_no());
+		
+		//해당하는 판매글의 후기
+		ArrayList<Grade> glist = new SaleService().selectGradeList(num);
 		String page = null;
+		System.out.println(b);
+		System.out.println(oplist);
+		System.out.println(rlist);
+		System.out.println(flist);
+		System.out.println(r);
+		System.out.println(glist);
 		
 		if(b!=null){
 			page = "views/sale/saleDetail.jsp";
@@ -62,6 +72,9 @@ public class SelectOneSalepageServlet extends HttpServlet {
 			request.setAttribute("flist", flist);
 			request.setAttribute("rlist", rlist);
 			request.setAttribute("r", r);
+			if(glist != null){
+				request.setAttribute("glist", glist);
+			}
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 상세 조회 실패");
