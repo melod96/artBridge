@@ -40,7 +40,7 @@ public class FindPasswordServlet extends HttpServlet {
 		
 		if(member_no > 0){
 			request.setAttribute("member_no", member_no);
-			request.getRequestDispatcher("views/common/changePasswordForm.jsp").forward(request, response);
+			request.getRequestDispatcher("views/member/changePasswordForm.jsp").forward(request, response);
 		}else{
 			request.setAttribute("msg", "아이디 조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
