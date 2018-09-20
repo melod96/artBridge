@@ -45,7 +45,7 @@
 								<td><input type="text" maxlength="30" name="findUserId" class="form-control" placeholder="아이디" /></td>
 							</tr>
 							<tr>
-								<td width="150px"><h5 style="line-height:2;">* 이름</h5></td>
+								<td><h5 style="line-height:2;">* 이름</h5></td>
 								<td><input type="text" maxlength="30" name="findUserName" class="form-control" placeholder="이름" /></td>
 							</tr>
 							<tr>

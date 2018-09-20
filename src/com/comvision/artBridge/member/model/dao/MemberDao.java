@@ -39,7 +39,8 @@ private Properties prop = new Properties();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, userId);
 			pstmt.setString(2, userId);
-			pstmt.setString(3, userPwd);
+			pstmt.setString(3, userId);
+			pstmt.setString(4, userPwd);
 
 			rset = pstmt.executeQuery();
 			
@@ -270,8 +271,12 @@ private Properties prop = new Properties();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, name);
 			pstmt.setString(2, email);
+			pstmt.setString(3, name);
+			pstmt.setString(4, email);
 			
 			rset = pstmt.executeQuery();
+			
+			idList = new ArrayList<String>();
 			
 			while(rset.next()){
 				idList.add(rset.getString("id"));
@@ -299,6 +304,9 @@ private Properties prop = new Properties();
 			pstmt.setString(1, id);
 			pstmt.setString(2, name);
 			pstmt.setString(3, email);
+			pstmt.setString(4, id);
+			pstmt.setString(5, name);
+			pstmt.setString(6, email);
 			
 			rset = pstmt.executeQuery();
 			
@@ -314,6 +322,26 @@ private Properties prop = new Properties();
 		}
 		
 		return member_no;
+	}
+
+	public int changePassword(Connection con, int member_no, String password) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("changePassword");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, password);
+			pstmt.setInt(2, member_no);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 }
