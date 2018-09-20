@@ -1,11 +1,14 @@
 package com.comvision.artBridge.sale.model.dao;
 
+import static com.comvision.artBridge.common.JDBCTemplate.close;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Properties;
@@ -13,10 +16,9 @@ import java.util.Properties;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.grade.model.vo.Grade;
 import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
-
-import static com.comvision.artBridge.common.JDBCTemplate.*;
 
 public class SaleDao {
 	
@@ -184,6 +186,7 @@ public class SaleDao {
 		return rlist;
 	}
 
+	//해당하는 작가의 등급
 	public Rating selectRating(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -215,6 +218,72 @@ public class SaleDao {
 		}
 		
 		return r;
+	}
+
+
+	//해당하는 판매글의 후기
+	public ArrayList<Grade> selectGradeList(Connection con, int num) {
+		PreparedStatement pstmt  = null;
+		ResultSet rset = null;
+		ArrayList<Grade> glist = null;
+		
+		String query = prop.getProperty("selectGradeList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			glist = new ArrayList<Grade>();
+			
+			while(rset.next()){
+				Grade g = new Grade();
+				
+				g.setBoard_no(rset.getInt("board_no"));
+				g.setGrade(rset.getInt("grade"));
+				g.setGrade_content(rset.getString("grade_content"));
+				g.setNick_name(rset.getString("nick_name"));
+				g.setGrade_date(rset.getDate("grade_date"));
+				
+				glist.add(g);
+			}
+			System.out.println(glist);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return glist;
+	}
+	
+	//후기 등록
+	public int insertGrade(Connection con, String content, int board_no, int member_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertGrade");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, board_no);
+			pstmt.setInt(2, member_no);
+			pstmt.setInt(3, 2);
+			pstmt.setString(4, content);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 }
