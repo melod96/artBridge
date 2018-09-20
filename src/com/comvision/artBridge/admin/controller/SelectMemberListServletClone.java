@@ -34,6 +34,7 @@ public class SelectMemberListServletClone extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
+		//페이징처리
 		int currentPage;		
 		int limit;				
 		int maxPage; 			
@@ -57,14 +58,54 @@ public class SelectMemberListServletClone extends HttpServlet {
 		}
 		
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		
+		
+		//검색옵션
+		String searchCondition = request.getParameter("searchCondition");
+		String searchWords = request.getParameter("searchWords");
+		String userDivision = request.getParameter("userDivision");
+		String writerGrade = request.getParameter("writerGrade");
+		
+		String addQuery = "";
+		
+		if(searchWords != null){
+			if(searchCondition != null){
+				switch(searchCondition){
+				case "name" : addQuery += "and m.name like '%' || '" + searchWords + "' || '%' "; break;
+				case "id" : addQuery += "and id m.like '%' || '" + searchWords + "' || '%'"; break; 
+				case "phone" : addQuery += "and m.phone like '%' || '" + searchWords + "' || '%' "; break; 
+				case "email" : addQuery += "and m.email like '%' || '" + searchWords + "' || '%' "; break;
+				}
+			}
+			if(userDivision != null){
+				switch(userDivision){
+				case "writer" : addQuery += "and m.writer_right = 1 "; 
+								if(writerGrade != null){
+									switch(writerGrade){
+									case "1" : addQuery += "and m.rating_no = 1 "; break;
+									case "2" : addQuery += "and m.rating_no = 2 "; break;
+									case "3" : addQuery += "and m.rating_no = 3 "; break;
+									case "4" : addQuery += "and m.rating_no = 4 "; break;
+									}
+								}
+								break;
+				case "nomal" : addQuery += "and m.writer_right = 0 "; writerGrade = "0"; break;
+				}
+			}
+		}
+		
 
-		ArrayList<Member> list = new AdminServiceClone().selectList(currentPage, limit);
+		ArrayList<Member> list = new AdminServiceClone().selectList(currentPage, limit, addQuery);
 		
 		String page = "";
 		if(list != null){
 			page = "views/admin/memberAdminClone.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
+			request.setAttribute("searchCondition", searchCondition);
+			request.setAttribute("searchWords", searchWords);
+			request.setAttribute("userDivision", userDivision);
+			request.setAttribute("writerGrade", writerGrade);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "회원 조회 실패");

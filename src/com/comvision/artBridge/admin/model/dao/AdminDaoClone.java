@@ -58,8 +58,8 @@ public class AdminDaoClone {
 		return listCount;
 	}
 
-	public ArrayList<Member> selectList(Connection con, int currentPage, int limit) {
-		PreparedStatement pstmt = null;
+	public ArrayList<Member> selectList(Connection con, int currentPage, int limit, String addQuery) {
+		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<Member> list = null;
 		Member m = null;
@@ -67,16 +67,19 @@ public class AdminDaoClone {
 		String query = prop.getProperty("selectMemberList");
 		
 		try {
-			pstmt = con.prepareStatement(query);
+			stmt = con.createStatement();
 			
-			//조회 시작할 행 번호와 마지막 행 번호 계산
+			query += " " + addQuery;
+			
+			query += ") ";
+			
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
+			String rnumQuery = "where rnum between " + startRow + " and " + endRow + " order by member_no desc";
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			query += rnumQuery;
 			
-			rset = pstmt.executeQuery();
+			rset = stmt.executeQuery(query);
 			
 			list = new ArrayList<Member>();
 			
@@ -101,7 +104,7 @@ public class AdminDaoClone {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			close(pstmt);
+			close(stmt);
 			close(rset);
 		}
 		
