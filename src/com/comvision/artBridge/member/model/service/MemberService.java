@@ -124,4 +124,21 @@ public class MemberService {
 		return result;
 	}
 
+	public int deleteMemberRequest(int mNo) {
+		Connection con = getConnection();
+		
+		int result = new MemberDao().deleteMemberRequest(con, mNo);
+		
+		if(result > 0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+	
+	
 }

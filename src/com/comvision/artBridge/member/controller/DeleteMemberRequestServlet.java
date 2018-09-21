@@ -11,16 +11,16 @@ import com.comvision.artBridge.member.model.service.MemberService;
 import com.comvision.artBridge.member.model.vo.Member;
 
 /**
- * Servlet implementation class UpdateMemberInfoServlet
+ * Servlet implementation class DeleteMemberRequestServlet
  */
-@WebServlet("/updateInfo.me")
-public class UpdateMemberInfoServlet extends HttpServlet {
+@WebServlet("/deleteRequest.me")
+public class DeleteMemberRequestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UpdateMemberInfoServlet() {
+    public DeleteMemberRequestServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,34 +29,14 @@ public class UpdateMemberInfoServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String userId = request.getParameter("myPageUserId");		
-		String userPwd = request.getParameter("myPageUserPwd");
-
-		String userName = request.getParameter("myPageUserName");		
-		String nickName = request.getParameter("myPageNickName");
-		String phone = "";
-		for(int i = 1; i <= 3; i++){
-			phone += request.getParameter("tel" + i);
-		}		
-		String email = request.getParameter("email");		
+		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
 		
-		Member m = new Member();
-		m.setId(userId);
-		m.setPassword(userPwd);
-		m.setName(userName);
-		m.setNick_name(nickName);
-		m.setPhone(phone);
-		m.setEmail(email);
+		int result = new MemberService().deleteMemberRequest(mNo);
 		
-		int result = new MemberService().updateMember(m);
-		
-		String Page = "";
 		if(result > 0){
-//			location.href="<%=request.getContextPath()%>/index.jsp";
-//			href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu"
-			response.sendRedirect("/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu");
+			response.sendRedirect("<%= request.getContextPath() %>/logout.me");
 		}else{
-			request.setAttribute("msg", "회원 정보 수정 실패!");
+			request.setAttribute("msg", "회원 탈퇴 실패!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 		

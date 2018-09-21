@@ -12,33 +12,33 @@
 
 <!-- My Page 추가 -->
 <link rel="stylesheet" href="/artBridge/css/w3.css">
-	
+
 <style>
+	.heading .tit1{margin-bottom:20px;}
 /*	통합 요소 스타일 */
 	.tab-menu-content-form { padding-top:15px; }
    	.selectBox { float:right; margin-bottom:20px; }
-   	
+
    	.btn-outer-style { float:right; padding-bottom:60px; } 
    	.btn-plus-design{ padding:2px 20px; font-size: 15px; margin-left: 0px; }
    	.btn-cancel{ background:#DBDBDB; }
   	.btn-cancel:hover{ background: #808080; color:white; }
-    .btn{ cursor:pointer; } 	
-    	
+    .btn{ cursor:pointer; }
+
 /*  팝업 통합 스타일 */
    	.settingArea { z-index:300; position: absolute; top:0px; padding-top:9%; display:none; width:100%;
-      				/* padding-left:auto; padding-right:auto; text-align:center; */ 	}
+      				/* padding-left:auto; padding-right:auto; text-align:center; */ }
 	.settingArea h3{ margin-top:55px; margin-bottom:50px; font-weight:bold; }
 	.form-table td{ padding:5px; }
   	.form-inner-table-title{ background-color:lightgray; }
-      				
+
 /*  구입목록 */
     .seller-list{ background-color:rgba(255, 117, 223, 0.2); }
     .buyer-list{ background:rgba(117, 230, 255 , 0.2); }
 /*  .seller-list .buyer-list{ padding-top:5px; background-clip: content-box; !important; } */
-    	
+
 /*  명세표 팝업 */
-	.stmtModal-Area-Style{ position:absolute; width:600px; background:white; padding-bottom:50px;
-				left:50%; margin-left:-300px; }
+	.stmtModal-Area-Style{ position:absolute; width:600px; background:white; padding-bottom:50px; left:50%; margin-left:-300px; }
 	.stmt-title{ text-align:right; font-weight:bold; }
 	.stmtBtn button{ width:32%; height:30px; line-height:0; margin-bottom:10px; }
   	
@@ -53,24 +53,14 @@
    	.bookmark-del-btn:hover { color:darkgray; }
 
 /*  회원정보 수정 탭 */
-	.textBox{ height:35px; } 		
+	.textBox{ height:35px; }
 	#memberInfo td , #pwdCheckArea td{ text-align:left; height:45px; padding-left:20px; font-weight: bold; }
 	#memberInfo{ margin-left:50px; }
 	
-/*  작가회원신청 팝업 */	
+/*  작가회원신청 팝업 */
 	.reqWriterFrom-title{ text-align:center; font-weight:bold; }
-	.reqWriterForm-Area-Style{ position:absolute; width:740px; background:white; padding-bottom:50px;
-								left:50%; margin-left:-370px; }				
-</style>
-
-<style>		/*  관심작가 탭 스타일 */		/* 회원정보 수정 - 작가회원전환신청 모달 이미지 파일 삽입 영역 */
-	.frofile-box{overflow:hidden; position:relative; border:1px solid #9e9e9e; padding:30px; font-size:16px; width:1110px;}
-    .img-in{overflow:hidden; width:150px; height:150px; /*background:url("/artBridge/image/common/img_profile.png") 0 0 no-repeat; background-size:100%;*/ border:1px solid #ddd; border-radius:50%;}
-    .img-in img{width:100%;}
-    .img-area{float:left; text-align:center;}
-    .img-area input[type=file]{margin-top:20px; width:150px;}
-	
-	/* 회원정보 수정 - 작가회원전환신청 모달 이미지 파일 삽입 영역 */
+	.reqWriterForm-Area-Style{ position:absolute; width:740px; background:white; padding-bottom:50px; left:50%; margin-left:-370px; }
+/*	작가회원신청 팝업 이미지 파일 삽입 영역 */
 	.insert-img-area{overflow:hidden; margin-bottom:10px; margin-top:5px;}
     .insert-img-area input{display:none;}
     .insert-img-area label{width:210px; margin-bottom:10px;}
@@ -78,7 +68,15 @@
     .insert-img-area li p{overflow:hidden; height:140px;}
     .insert-img-area img{width:100%;}
 	li strong{color:#e03939; font-weight:bold;}
-	
+</style>
+
+<style>		/*  관심작가 탭 스타일 */
+	.frofile-box{overflow:hidden; position:relative; border:1px solid #9e9e9e; padding:30px; font-size:16px; width:1110px;}
+    .img-in{overflow:hidden; width:150px; height:150px; /*background:url("/artBridge/image/common/img_profile.png") 0 0 no-repeat; background-size:100%;*/ border:1px solid #ddd; border-radius:50%;}
+    .img-in img{width:100%;}
+    .img-area{float:left; text-align:center;}
+    .img-area input[type=file]{margin-top:20px; width:150px;}
+		
     .input-area{margin-left:40px; float:left; width:585px;}
     .input-area label{vertical-align:top;}
     .input-area input[type="text"], .input-area textarea{display:inline-block; width:515px; resize:none; margin-bottom:10px;}
@@ -138,8 +136,8 @@
         <!-- // Header -->
 
 <% /* 4. 회원정보 수정 변수 코드 */
-// 	String phone = ((Member)(session.getAttribute("loginUser"))).getPhone();    아래와 같음
-	String phone = ((Member)(request.getSession().getAttribute("loginUser"))).getPhone();
+ 	String phone = ((Member)(session.getAttribute("loginUser"))).getPhone();
+//	String phone = ((Member)(request.getSession().getAttribute("loginUser"))).getPhone();
 						
 	String tel1 = "";
 	String tel2 = "";
@@ -265,25 +263,21 @@
 						<h3>작 가 &nbsp; 회 원 &nbsp; 전 환 &nbsp; 신 청</h3>
 						<table class="form-table">
 							<tr>
-								<td width="50px"></td>
-								<td width="65px" class="reqWriterFrom-title">I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
+								<td width="15px" height="52px"></td>
+								<td width="70px" class="reqWriterFrom-title">* I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
 								<td width="2px">:</td>
-								<td colspan="3">crala</td>
-							</tr>
+								<td colspan="4">crala</td>
+								<!-- <td class="reqWriterFrom-title" style="text-align:left;">* 닉 네 임</td>
+								<td>:</td>
+								<td>크랄라</td> -->
 							<tr>
-								<td></td>
-								<td class="reqWriterFrom-title">신 청 일</td>
+								<td height="52px"></td>
+								<td class="reqWriterFrom-title">* 은 행 명</td>
+								<td>:</td>
+								<td width="100px"><input type="text" style="width:50px;"/> 은행</td>
+								<td width="210px" class="reqWriterFrom-title" style="text-align:left;">* 계좌번호('-'없이 숫자만 입력)</td>
 								<td width="2px">:</td>
-								<td colspan="3">2018-09-00</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td class="reqWriterFrom-title">지급은행</td>
-								<td width="2px">:</td>
-								<td width="80px"><input type="text" width="35px"/>은행</td>
-								<td width="115px" class="reqWriterFrom-title">계좌번호('-'업이 숫자만 입력)</td>
-								<td width="2px">:</td>
-								<td width="200px"><input type="number" width="180px" value="110111121212"/></td>
+								<td width="160px"><input type="text" style="width:160px;" value="110111121212"/></td>
 							</tr>
 							<tr>
 								<td colspan="7" height="30px"></td>
@@ -893,30 +887,30 @@
 						<table>
 							<tr>
 								<td width="150px">* 아이디 </td>
-								<td><input type="text" value="<%= loginUser.getId() %>" maxlength="13" name="updateUserId" id="updateUserId" class="form-control input-short textBox" readonly/></td>
+								<td><input type="text" value="<%= loginUser.getId() %>" maxlength="13" name="myPageUserId" id="updateUserId" class="form-control input-short textBox" readonly/></td>
 							</tr>
 							<tr>
 								<td>* 비밀번호</td>
-								<td><input type="password" maxlength="13" id="updateUserPwd1" name="updateUserPwd" onchange="comparePwd();" class="form-control input-short textBox"/></td>
+								<td><input type="password" maxlength="13" id="updateUserPwd1" name="myPageUserPwd" onchange="comparePwd();" class="form-control input-short textBox"/></td>
 								<td></td>
 							</tr>
 							<tr>
 								<td>* 비밀번호 확인</td>
-								<td><input type="password" maxlength="13" id="updateUserPwd2" name="updateUserPwd2" onchange="comparePwd();" class="form-control input-short textBox"/></td>
+								<td><input type="password" maxlength="13" id="updateUserPwd2" name="myPageUserPwd2" onchange="comparePwd();" class="form-control input-short textBox"/></td>
 								<td colspan="2"><label id="pwdResult">패스워드가 일치하지 않습니다.</label></td>
 							</tr>
 							<tr>
 								<td>* 이름</td>
-								<td><input type="text" value="<%= loginUser.getName() %>" maxlength="5" name="updateUserName" class="form-control input-short textBox" readonly></td>
+								<td><input type="text" value="<%= loginUser.getName() %>" maxlength="5" name="myPageUserName" class="form-control input-short textBox" readonly></td>
 							</tr>
 							<tr>
 								<td>* 닉네임</td>
-								<td><input type="text" value="<%= loginUser.getNick_name() %>" id="updateNickName" onchange="nickNameChangeCheck();" maxlength="30" name="updateNickName" class="form-control input-short textBox"></td>
+								<td><input type="text" value="<%= loginUser.getNick_name() %>" id="updateNickName" onchange="nickNameChangeCheck();" maxlength="30" name="myPageNickName" class="form-control input-short textBox"></td>
 								<td width="130px"><label class="btn btn-default btn-lg btn-cancel btn-plus-design" id="nickNameCheckBtn" onclick="nickNameUniqueCheck();">중복확인</label></td>
 								<td width="300px"><label id="nnResult"></label></td>
 							</tr>
 							<tr>
-								<td>연락처</td>
+								<td> &nbsp;&nbsp;&nbsp;연락처</td>
 								<td width="200px" style="text-align:center;">
 									<input type="text" maxlength="3" value="<%= tel1 %>" id="tel1" name="tel1" style="width:28%; display: inline-block;" class="form-control textBox"/> -
 									<input type="text" maxlength="4" value="<%= tel2 %>" id="tel2" name="tel2" style="width:29.5%; display: inline-block;" class="form-control textBox"/> -
@@ -925,7 +919,7 @@
 								<td></td>
 							</tr>
 							<tr>
-								<td>이메일</td>
+								<td> &nbsp;&nbsp;&nbsp;이메일</td>
 								<td><input type="email" value="<%= loginUser.getEmail() %>" id="email" name="email" class="form-control input-short textBox"/></td>
 								<td></td>
 							</tr>
@@ -935,7 +929,7 @@
 						<div class="btn-center btn-outer-style" style="width:50%;">
 		                      <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
 		                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">수정</button>
-		                      <button class="btn btn-lg btn-default btn-plus-design" style="float:right;">회원 탈퇴</button>
+		                      <button onclick="deleteMember();" class="btn btn-lg btn-default btn-plus-design" style="float:right;">회원 탈퇴</button>
 		                </div>
 						<div class="btn-center btn-outer-style" style="width:50%;">
 							  <button onclick="reqWriterDisplayBlock();" id="reqWriterBtn" class="btn btn-primary btn-lg btn-plus-design" style="float:left; margin-left:10px;">작가 신청</button>
@@ -1343,6 +1337,40 @@
 			} 
 		};
 		
+	// 	* 회원 탈퇴 신청(행 삭제 x -> 탈퇴상태를 0->1로 변경)
+		function deleteMember(){
+			var pwdCheck = prompt("패스워드 확인", "");
+			/* alert(pwdCheck); */
+			
+			var userPwd = pwdCheck;
+			if(userPwd != null && userPwd != ""){
+				$.ajax({
+					url : "<%= request.getContextPath() %>/pwdCheck.me",
+					type : "post",
+					data : {userPwd : userPwd},
+					success : function(data){
+						if(data > 0){
+// 							탈퇴 안내 폼 열어서 내용 읽게 하고 다시 한 번 탈최신청 확인 받기
+// 							진행중인 거래가 있는지 거래 완료됐으나 입금받지 못한 돈이 있는지 서블릿으로 체크 
+							
+							var delBoolean = confirm("정말 탈퇴하시겠습니까?");
+							if(delBoolean){
+								location.href = "<%= request.getContextPath() %>/deleteRequest.me";
+// 								탈퇴 상태로 변경 후 로그아웃 서블릿 호출
+								<%-- location.href = "<%= request.getContextPath() %>/logout.me"; --%>
+							}else{
+								location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
+							}
+							
+						}else{
+							alert("패스워드가 일치하지 않습니다.");
+						}
+					}
+				});
+			}
+		};
+		
+		
 	// 	* 작가신청 양식 모달 띄우기
 	   	function reqWriterDisplayBlock(){
 			document.getElementById('reqWriterModal').style.display='block';
@@ -1374,7 +1402,6 @@
 		  var type = $(this).attr('id');
 		  readURL(this, type);
 		});
-		
 	</script>
 <!-- //4. 회원정보 수정 탭 스크립트 -->
 
