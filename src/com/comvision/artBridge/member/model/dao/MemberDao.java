@@ -363,5 +363,24 @@ private Properties prop = new Properties();
 		return result;
 	}
 
+	public int deleteAbleCheck(Connection con, int mNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteAbleCheck");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, mNo);
+			pstmt.setInt(2, mNo);
+			
+			result = pstmt.executeUpdate();			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 
 }
