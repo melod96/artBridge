@@ -21,7 +21,22 @@
 		endPage = pi.getEndPage();
 		limit = pi.getLimit();
 	}
-
+	String searchCondition = null;
+	if(request.getParameter("searchCondition") != null){
+		searchCondition = (String)request.getAttribute("searchCondition");
+	}
+	String searchWords = null;
+	if(request.getParameter("searchWords") != null){
+		searchWords = (String)request.getAttribute("searchWords");
+	}
+	String userDivision = null;
+	if(request.getParameter("userDivision") != null){
+		userDivision = (String)request.getAttribute("userDivision");
+	}
+	String writerGrade = null;
+	if(request.getParameter("writerGrade") != null){
+		writerGrade = (String)request.getAttribute("writerGrade");
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -58,7 +73,7 @@ ul.tab-menu li>a:hover {
 					</div>
 					<hr>
 					<br>
-					<form action="<%= request.getContextPath() %>/" method="post">
+					<form action="<%= request.getContextPath() %>/selectMemberListClone.ad?pageName=memberAdmin&currentPage=1" method="post">
 						<div>
 							<table class="tbl-type02">
 								<colgroup>
@@ -68,36 +83,35 @@ ul.tab-menu li>a:hover {
 								<tbody>
 									<tr>
 										<td style="background: lightgray; width: 200px;">검색옵션</td>
-										<td><select class="form-control input-short">
+										<td><select class="form-control input-short" id="searchCondition" name="searchCondition">
 												<option>전체</option>
-												<option>이름</option>
-												<option>아이디</option>
-												<option>연락처</option>
-												<option>이메일</option>
+												<option value="name" id="name">이름</option>
+												<option value="id" id="id">아이디</option>
+												<option value="phone" id="phone">연락처</option>
+												<option value="email" id="email">이메일</option>
 										</select></td>
 									</tr>
 									<tr>
 										<td style="background: lightgray">검색어 입력</td>
-										<td><input type="text" style="width: 500px; float: left;">
+										<td><input type="text" style="width: 500px; float: left;" id="searchWords" name="searchWords" value="">
 										</td>
 									</tr>
 									<tr>
 										<td style="background: lightgray">사용자 구분</td>
-										<td><select class="form-control input-short">
+										<td><select class="form-control input-short" id="userDivision" name="userDivision">
 												<option>전체</option>
-												<option>작가</option>
-												<option>일반사용자</option>
+												<option value="writer" id="writer">작가</option>
+												<option value="nomal" id="nomal">일반사용자</option>
 										</select></td>
 									</tr>
 									<tr>
 										<td style="background: lightgray;">작가 등급</td>
-										<td><select class="form-control input-short"
-											style="float: left;">
-												<option>전체</option>
-												<option>신뢰작가</option>
-												<option>일반작가</option>
-												<option>신규작가</option>
-												<option>블랙작가</option>
+										<td><select class="form-control input-short" style="float: left;" id="writerGrade" name="writerGrade">
+												<option id="0">전체</option>
+												<option value="1" id="1">신입작가</option>
+												<option value="2" id="2">일반작가</option>
+												<option value="3" id="3">인기작가</option>
+												<option value="4" id="4">블랙작가</option>
 										</select>
 											<button type="submit" name="mainBtn"
 												class="btn btn-primary btn-md" style="float: right;">검색</button>
@@ -105,6 +119,51 @@ ul.tab-menu li>a:hover {
 									</tr>
 								</tbody>
 							</table>
+							<script>
+								$(function(){
+									<% if(searchCondition != null){ 
+										switch(searchCondition){ 
+										case "name" : %>
+										$("#name").prop("selected","selected");
+									<% break; case "id" : %>
+										$("#id").prop("selected","selected");
+									<% break; case "phone" : %>
+										$("#phone").prop("selected","selected");
+									<% break; case "email" : %>
+										$("#email").prop("selected","selected");
+									<% break;}
+										} %>
+										
+									<% if(searchWords != null){ %>
+										$("#searchWords").val("<%= searchWords %>");
+									<% } %>
+									
+									<% if(userDivision != null){ 
+										switch(userDivision){ 
+										case "writer" : %>
+										$("#writer").prop("selected","selected");
+									<% break; case "nomal" : %>
+										$("#nomal").prop("selected","selected");
+									<% break;}
+										} %>
+									
+									<% if(writerGrade != null){ 
+										switch(writerGrade){
+										case "0" : %>
+										$("#0").prop("selected","selected");
+									<% break; case "1" : %>
+										$("#1").prop("selected","selected");
+									<% break; case "2" : %>
+										$("#2").prop("selected","selected");
+									<% break; case "3" : %>
+										$("#3").prop("selected","selected");
+									<% break; case "4" : %>
+										$("#4").prop("selected","selected");
+									<% break;}
+										} %>
+									
+								});
+							</script>
 						</div>
 					</form>
 

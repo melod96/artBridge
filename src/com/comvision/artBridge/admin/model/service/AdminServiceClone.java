@@ -20,10 +20,10 @@ public class AdminServiceClone {
 		return listCount;
 	}
 
-	public ArrayList<Member> selectList(int currentPage, int limit) {
+	public ArrayList<Member> selectList(int currentPage, int limit, String addQuery) {
 		Connection con = getConnection();
 		
-		ArrayList<Member> list = new AdminDaoClone().selectList(con, currentPage, limit);
+		ArrayList<Member> list = new AdminDaoClone().selectList(con, currentPage, limit, addQuery);
 		
 		close(con);
 		
