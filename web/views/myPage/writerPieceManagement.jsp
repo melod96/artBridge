@@ -264,7 +264,7 @@
                         <div class="heading">
                           <h2 class="tit1">내 작품 관리</h2>
                         </div>
-                       <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/myPage/writerPieceInsertForm.jsp'">커미션 작품등록</button>
+                       <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/myPage/writerPieceInsertAgree.jsp'">커미션 작품등록</button>
                    </div>
                     <div class="bord-wrap">
                     	<% if(list != null){
