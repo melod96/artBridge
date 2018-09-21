@@ -40,7 +40,7 @@ public class InsertHugiServlet extends HttpServlet {
 		String page = null;
 		
 		if(result >0){
-			System.out.println("완료");
+			response.sendRedirect("selectOneSalepage.bo?num="+board_no);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 상세 조회 실패");

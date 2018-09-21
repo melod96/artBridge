@@ -286,4 +286,30 @@ public class SaleDao {
 		return result;
 	}
 
+	public Grade avgGrade(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Grade g = null;
+		
+		String query = prop.getProperty("avgGrade");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				g = new Grade();
+				g.setGrade(rset.getDouble("avg(g.grade)"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return g;
+	}
+
 }

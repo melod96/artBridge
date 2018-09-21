@@ -3,7 +3,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%
-	Member m = (Member) session.getAttribute("loginUser");
+	Member m = null;
+	if(session.getAttribute("loginUser") != null){
+		m = (Member)session.getAttribute("loginUser");
+	}
 
 	Board b = (Board) request.getAttribute("b");
 	ArrayList<Files> flist = (ArrayList<Files>) request.getAttribute("flist");
@@ -15,6 +18,8 @@
 	if ((ArrayList<Grade>)request.getAttribute("glist") != null) {
 		glist = (ArrayList<Grade>)request.getAttribute("glist");
 	}
+	Grade avgGrade = (Grade)request.getAttribute("avgGrade");
+	
 %>
 <!DOCTYPE html>
 <html>
@@ -129,11 +134,11 @@
 							</ol>
 
 							<ol align="center">
-								<div class="rateit" data-rateit-value="2.5"
+								<div class="rateit" data-rateit-value="<%=avgGrade.getGrade() %>"
 									data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 
 								평점
-								<font class="lsp0">2.5</font>
+								<font class="lsp0"><%=avgGrade.getGrade() %></font>
 							</ol>
 							<div align="center" style="margin-bottom: 15px;">
 								<button type="button" class="btn btn-primary">작가에게
@@ -159,7 +164,6 @@
 								</p>
 							</div>
 							<div align="center" id="text">가격옵션</div>
-							<form>
 								<label>옵션</label> <select style="width: 200px; float: right;"
 									onchange="changeSelect()" name="sel">
 									<option value="0">옵션을 선택해주세요</option>
@@ -177,13 +181,21 @@
 								<button type="button" class="btn btn-primary btn-sm"
 									onclick="add()" style="float: right;">추가</button>
 								<div id="requirement">
-									<input type="text" style="width: 320px;">
+									<input type="text" style="width: 320px;" class = "requirmentcontent">
 								</div>
 								<script>
+								$(function(){
+									
+										var i = 1;
+									
+								});
+									
+								
 									function add() {
-										var d = document
-												.getElementById("requirement");
-										d.innerHTML += "<input type = 'text' style='width:320px;''>";
+										var count = document.getElementsByClassName("requirmentcontent").length
+										$("#requirement input:last-child").clone().appendTo("#requirement").val("");
+										$("#requirement input:last-child").attr("id","r"+count);
+									
 									}
 								</script>
 								<div class="orderline"></div>
@@ -195,8 +207,7 @@
 										</div>
 									</ul>
 									<ul style="margin-top: 10px;" align="center">
-										<button type="submit" class="btn btn-primary btn-mg">명세표
-											보내기</button>
+										<button onclick = "senddetailedlist()" class="btn btn-primary btn-mg">명세표 보내기</button>
 									</ul>
 								</div>
 								<script>
@@ -204,6 +215,30 @@
 										var sel_val = document.all.sel.value;
 
 										document.getElementById("totals").innerHTML = sel_val;
+									}
+									function senddetailedlist(){
+										/* var member_no = $("#member_no").val();
+										var board_no = $("#board_no").val();
+										var content = $("#editor").val(); */
+										var req = [];
+										var text = $("#requirmentcontent").val();
+										var count = document.getElementsByClassName("requirmentcontent").length; 
+										for(var i = 0; i<count; i++){
+											/* req += $("#requirmentcontent").val(); */
+										}
+										console.log(req);
+									
+										/* $.ajax({
+											url:"senddetailedlist.sp",
+											data:{member_no:member_no, board_no:board_no, content:content},
+											type:"post",
+											success:function(data){
+												console.log("서버 전송 성공");
+											},
+											error:function(status, msg){
+												console.log("서버 전송 실패");
+											}
+										}); */
 									}
 								</script>
 								<div align="center" id="text">information</div>
@@ -234,7 +269,6 @@
 										%>
 									</ul>
 								</div>
-							</form>
 						</div>
 					</div>
 
@@ -253,8 +287,10 @@
 				<div class="hugiheader">
 					<div style="display: inline-block;">
 						<h4>이용후기</h4>
+						<%if(m != null){ %>
 						<button type="button" class="btn btn-md" data-toggle="modal"
 							data-target="#hugiModal">후기 작성</button>
+							<%} %>
 					</div>
 					<div class="hugi">
 						<table>
@@ -266,10 +302,9 @@
 								<th>작성일</th>
 							</tr>
 							<%
-								if (m != null) {
-									if (glist != null) {
-										for (Grade g : glist) {
+								if (m != null || glist != null) {
 											int i = 1;
+										for (Grade g : glist) {
 							%>
 							<tr>
 								<th><%=i%></th>
@@ -281,8 +316,9 @@
 							<%
 								i++;
 										}
+									}else{
+										
 									}
-								}
 							%>
 						</table>
 					</div>
@@ -297,7 +333,9 @@
 			<div class="modal" id="hugiModal">
 				<div class="modal-dialog" style="width: 830px; height: 600px;">
 					<form action="<%=request.getContextPath()%>/hugi.sp" method="post">
+					<%if(m != null){ %>
 						<input type="hidden" value = "<%=m.getMember_no()%>"id = "member_no" name="member_no" />
+						<%} %>
 						<input type="hidden" value = "<%=b.getBoard_no()%>"id = "board_no" name="board_no" />
 					<div class="modal-content">
 
@@ -328,24 +366,16 @@
 							});
 						</script>
 
-
-						<!-- <script>
-					function grade(){
-						var star = $('#rateit10').rateit('value');
-
-
-						
-						document.getElementById("score").innerHTML = star;
-					}
-				</script> -->
 					</div>
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<button type="reset" class="btn btn-danger" data-dismiss="modal">취소</button>
-						<button onclick = "submitBtn()" class="btn">저장</button>
+						<button onclick = "submit" class="btn">저장</button>
 					</div>
-					<script>
+
+		</form>
+					<!-- <script>
 						function submitBtn(){
 							var member_no = $("#member_no").val();
 							var board_no = $("#board_no").val();
@@ -363,9 +393,7 @@
 								}
 							});
 						}
-					</script>
-
-		</form>
+					</script> -->
 	</div>
 	</div>
 	</div>
