@@ -57,13 +57,10 @@ public class SelectOneSalepageServlet extends HttpServlet {
 		
 		//해당하는 판매글의 후기
 		ArrayList<Grade> glist = new SaleService().selectGradeList(num);
+		
+		//평균 별점
+		Grade avgGrade = new SaleService().avgGrade(num);
 		String page = null;
-		System.out.println(b);
-		System.out.println(oplist);
-		System.out.println(rlist);
-		System.out.println(flist);
-		System.out.println(r);
-		System.out.println(glist);
 		
 		if(b!=null){
 			page = "views/sale/saleDetail.jsp";
@@ -75,6 +72,7 @@ public class SelectOneSalepageServlet extends HttpServlet {
 			if(glist != null){
 				request.setAttribute("glist", glist);
 			}
+				request.setAttribute("avgGrade", avgGrade);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 상세 조회 실패");

@@ -103,6 +103,20 @@ public class SaleService {
 		return result;
 	}
 
+	//평균 별점
+	public Grade avgGrade(int num) {
+		Connection con = getConnection();
+		
+		Grade avgGrade = new SaleDao().avgGrade(con,num);
+		
+		if(avgGrade !=null){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		return avgGrade;
+	}
+
 
 	
 
