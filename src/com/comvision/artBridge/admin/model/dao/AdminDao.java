@@ -90,7 +90,7 @@ private Properties prop = new Properties();
 	}
 
 	//메인
-	public int insertAdmin(Connection con, Board b) {
+	public int insertMain(Connection con, Board b) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -224,7 +224,44 @@ private Properties prop = new Properties();
 		
 		return blist;
 	}
+
+	//게시글 전체 조회
+	public ArrayList<Board> selectBoard(Connection con) {
+		ArrayList<Board> list = null;
+		Statement stmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectBoard");
+		
+		try {
+			stmt = con.createStatement();
+			rset=stmt.executeQuery(query);
+			
+			list = new ArrayList<Board>();
+			
+			while(rset.next()){
+				Board b =new Board();
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setNick_name(rset.getString("nick_name"));
+				b.setBoard_date(rset.getDate("board_date"));
+				b.setBoard_title(rset.getString("board_title"));
+				
+				list.add(b);
+
+				
+			}
+		} catch (SQLException e) {
 	
+			e.printStackTrace();
+		}finally{
+			
+			close(rset);
+			close(stmt);
+		}
+		
+		return list;
+
+	}
 
 	
 }

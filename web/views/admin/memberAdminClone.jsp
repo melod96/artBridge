@@ -171,14 +171,14 @@ ul.tab-menu li>a:hover {
 
 					<button type="submit" class="btn btn-primary btn-md"
 						style="padding: 5px 22px; float: right;" onclick="del4();">계정삭제</button>
-					<button onclick=popupOpen(); type="submit" id="deleteBtn"
+					<button onclick="popupOpen();" type="submit" id="deleteBtn"
 						name="deleteBtn" class="btn btn-primary btn-sm"
 						style="padding: 5px 22px; float: right; margin-right: 5px;">정보수정</button>
 					<br>
 					<script>
       					function popupOpen() {
 
-       					var popUrl = "userPop.jsp"; //팝업창에 출력될 페이지 URL
+       					var popUrl = "/artBridge/views/admin/userPop.jsp"; //팝업창에 출력될 페이지 URL
 
                      
 				        var popupX = (window.screen.width / 2 ) - (580 / 2);

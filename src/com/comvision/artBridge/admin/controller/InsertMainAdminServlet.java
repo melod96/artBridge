@@ -14,7 +14,7 @@ import com.comvision.artBridge.admin.model.service.NoticeService;
 import com.comvision.artBridge.admin.model.vo.Notice;
 import com.comvision.artBridge.board.model.vo.Board;
 
-@WebServlet("/InsertMain.ad")
+@WebServlet("/insertMain.ad")
 public class InsertMainAdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -37,7 +37,7 @@ public class InsertMainAdminServlet extends HttpServlet {
 		String page = "";
 		if(result > 0){
 			page = "/views/admin/mainAdmin.jsp";
-			request.setAttribute("list", new NoticeService().selectList());
+			/*request.setAttribute("list", new AdminService().insertMain());*/
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "공지사항 등록 실패!");
