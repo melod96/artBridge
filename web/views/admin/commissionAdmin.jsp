@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.relate.model.vo.*"%>
- 	<%
+	pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.relate.model.vo.*, com.comvision.artBridge.board.model.vo.*"%>
+  	<%
 	ArrayList<Relate> list = null; 
 	if((ArrayList<Relate>)request.getAttribute("list") != null){
 		list = (ArrayList<Relate>)request.getAttribute("list");
+	}
+	%> 
+	<%
+	ArrayList<Board> list2 = null; 
+	if((ArrayList<Board>)request.getAttribute("blist") != null){
+		list2 = (ArrayList<Board>)request.getAttribute("blist");
 	}
 	%>
 
@@ -232,44 +238,15 @@ border-color:darkgray;
 					<tbody>
 
 						<tr>
-							<td><input type="checkbox" name="chBox2"></td>
-							<td class="num2">1</td>
-							<td></td>
-							<td></td>
-							<td></td>
+						<%if(list2 != null){for(Board b : list2){%>
+							<td><input type="checkbox" name="chBox2" value="<%=b.getBoard_no() %>"></td>
+							<td class="num2"><label><%=b.getBoard_no() %></label></td>
+							<td><label><%=b.getNick_name() %></label></td>
+							<td><label><%=b.getBoard_date() %></label></td>
+							<td><label><%=b.getBoard_title() %></label></td>
 						</tr>
+						<% }} %> 
 
-						<tr>
-							<td><input type="checkbox" name="chBox2"></td>
-							<td class="num2">2</td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-
-						<tr>
-							<td><input type="checkbox" name="chBox2"></td>
-							<td class="num2">3</td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-
-						<tr>
-							<td><input type="checkbox" name="chBox2"></td>
-							<td class="num2">4</td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
-
-						<tr>
-							<td><input type="checkbox" name="chBox2"></td>
-							<td class="num2">5</td>
-							<td></td>
-							<td></td>
-							<td></td>
-						</tr>
 					</tbody>
 				</table>
 

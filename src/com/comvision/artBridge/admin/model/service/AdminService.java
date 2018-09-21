@@ -36,7 +36,7 @@ public class AdminService {
 		Connection con = getConnection();
 		int result = 0;
 		
-		int result1 = new AdminDao().insertAdmin(con, b);
+		int result1 = new AdminDao().insertMain(con, b);
 
 		
 		if(result1 > 0){
@@ -103,6 +103,31 @@ Connection con = getConnection();
 		return blist;
 	}
 	
+	//게시글 전체 출력
+	public ArrayList<Board> selectBoard(int currentPage, int limit) {
+	Connection con = getConnection();
+		
+		ArrayList<Board> list = new AdminDao().selectBoard(con);
+		
+		close(con);
+		
+		return list;
+	}
 	
+	//게시글 선택 출력
+	public ArrayList<Board> selectBoardList(int currentPage, int limit, String kind, String keyword) {
+		Connection con = getConnection();
+			
+			ArrayList<Board> list = new AdminDao().selectSaleList(con,currentPage, limit,kind,keyword);
+			
+			close(con);
 
+			
+			return list;
+
+		
+
+
+}
+	
 }

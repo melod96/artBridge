@@ -79,6 +79,8 @@ public class AdminDaoClone {
 			
 			query += rnumQuery;
 			
+			System.out.println("최종 실행되는 Query : " + query);
+			
 			rset = stmt.executeQuery(query);
 			
 			list = new ArrayList<Member>();

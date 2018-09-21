@@ -92,8 +92,17 @@ public class SelectMemberListServletClone extends HttpServlet {
 				case "nomal" : addQuery += "and m.writer_right = 0 "; writerGrade = "0"; break;
 				}
 			}
+			if(writerGrade != null){
+				switch(writerGrade){
+				case "1" : addQuery += "and m.rating_no = 1 "; break;
+				case "2" : addQuery += "and m.rating_no = 2 "; break;
+				case "3" : addQuery += "and m.rating_no = 3 "; break;
+				case "4" : addQuery += "and m.rating_no = 4 "; break;
+				}
+			}
 		}
 		
+		System.out.println("추가되는 Query : " + addQuery);
 
 		ArrayList<Member> list = new AdminServiceClone().selectList(currentPage, limit, addQuery);
 		
