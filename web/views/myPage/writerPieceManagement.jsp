@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="com.comvision.artBridge.member.model.vo.Member"%>
+    pageEncoding="UTF-8" 
+    import="java.util.*,
+    		com.comvision.artBridge.member.model.vo.Member, 
+    		com.comvision.artBridge.board.model.vo.*"
+%>
 <% 
-	/* ArrayList<> list = null;
+	ArrayList<Board> list = null;
 	if(request.getAttribute("list") != null){
-		list = (ArrayList<Notice>)request.getAttribute("list");
+		list = (ArrayList<Board>)request.getAttribute("list");
 	}
 	PageInfo pi = null;
 	int listCount = 0;
@@ -18,7 +22,7 @@
 		maxPage = pi.getMaxPage();
 		startPage = pi.getStartPage();
 		endPage = pi.getEndPage();
-	} */
+	}
 	
 	Member m = null;
 	if(session.getAttribute("loginUser") != null){
@@ -29,6 +33,8 @@
 	if(m.getWriter_slot() > 0){
 		slot = m.getWriter_slot();
 	}
+	
+	
 	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -56,13 +62,11 @@
    .input-area label[for=state1]{color:green; font-weight:bold;}
    .input-area label[for=state2]{color:red; font-weight:bold;}
    .pro-save{width:200px; height:40px; font-size:15px;}
-   .input-area .state{display:inline-block; margin-left:20px;}
+   .input-area .state{display:inline-block; margin-left:15px; line-height:30px; color:#afafaf; font-weight:bold;}
 
    .state-area{margin-left:20px; float:left; width:250px;}
    .state-area li{position:relative; border-bottom:1px solid #bdbdbd; margin-bottom:10px; font-weight:bold;}
    .state-area li span{float:right; font-weight:normal;}
-
-   .absol-btn{position:absolute; bottom:30px; right:30px;}
 
    .bord-wrap{overflow:hidden; width:1110px; font-size:16px;}
    .bord-wrap .piece-list{float:left; border:1px solid #9e9e9e; padding:20px; width:545px; margin-left:20px; margin-bottom:20px; font-weight:bold;}
@@ -98,16 +102,17 @@
    .star_rating a:first-child {margin-left:0;}
    .star_rating a.on {color:#fcce18;}
    
-	.switch {position: relative; display: inline-block; width: 60px; height: 34px;}
+	.switch {position: relative; display: inline-block; width: 55px; height: 27px; margin-bottom:0;}
 	.switch input {display:none;}
 	.slider {position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; -webkit-transition: .4s; transition: .4s;}
-	.slider:before {position: absolute; content: ""; height: 26px; width: 26px; left: 4px; bottom: 4px; background-color: white; -webkit-transition: .4s; transition: .4s;}
+	.slider:before {position: absolute; content: ""; height: 20px; width: 20px; left: 4px; bottom: 4px; background-color: white; -webkit-transition: .4s; transition: .4s;}
 	input:checked + .slider {background-color: #2196F3;}
 	input:focus + .slider {box-shadow: 0 0 1px #2196F3;}
 	input:checked + .slider:before {-webkit-transform: translateX(26px); -ms-transform: translateX(26px); transform: translateX(26px);}
 	.slider.round {border-radius: 34px;}
 	.slider.round:before {border-radius: 50%}
-
+	.txt-off{margin-right:5px;}
+    .txt-on{margin-left:5px;}
    </style>
    <script>
      $(function(){
@@ -167,7 +172,7 @@
 					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=msg-menu">쪽지함</a></li>
 					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=bookmark-menu">관심작가</a></li>
 					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu">회원정보수정</a></li>
-					<li><a href="#" style="background:#fff; color:#000;">내작품관리</a></li>
+					<li><a href="<%=request.getContextPath()%>/selectPieceList.wr" style="background:#fff; color:#000;">내작품관리</a></li>
 					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=qna-menu">이용문의</a></li>
 				</ul>
 			</div>
@@ -203,27 +208,35 @@
                               
                               <label>커미션 접수 상태</label>
                               <div class="state">
-	                              <span>OFF</span>
+	                              <span class="txt-off" value="" title="접수불가">OFF</span>
 	                              <label class="switch">
-								  	 <input type="checkbox" checked>
+								  	 <input type="checkbox" checked onclick="swichTg(this)">
 								 	 <span class="slider round"></span>
 								  </label>
-	                              <span>ON</span>
+	                              <span class="txt-on" value="" title="접수중">ON</span>
                               </div>
 							  
-                              <!-- <input type="radio" id="state1" name="state" value="접수중">
-                              <label for="state1">접수중</label>&nbsp;&nbsp;&nbsp;
-                              <input type="radio" id="state2" name="state" value="접수예정">
-                              <label for="state2">접수예정</label> -->
+							  <script>
+								 function swichTg(ck){
+									  var test = $(ck).prop('checked');
+								  		if(test == true){
+								  			$('.txt-on').css('color','#ff5722');
+								  			$('.txt-off').css('color','#afafaf');
+								  		}else{
+								  			$('.txt-on').css('color','#afafaf');
+								  			$('.txt-off').css('color','#ff5722');
+								  		}
+								  }
+							  </script>
                               <ul class="info">
-                                  <li>- 의뢰 접수가 불가능한 기간에는 <strong>[접수예정]</strong>상태로 변경하세요.</li>
-                                  <li>- <strong>[접수중]</strong>으로 변경은 수동으로 하셔야 합니다. </li>
+                                  <li>- 의뢰 접수가 불가능한 기간에는 <strong>[OFF]</strong>상태로 변경하세요.</li>
+                                  <li>- 의뢰 접수가 가능할 경우 <strong>[ON]</strong>상태로 변경하세요.</li>
                               </ul>
-                              
                           </div>
+                          
                           <div class="state-area">
                               <ul>
-                                <li>작품리스트 <span>1개</span></li>
+                                <li>작품리스트 <span>0개</span></li>
                                 <li>평점 
                                   <span>
                                     <p class="star_rating">
@@ -235,13 +248,10 @@
                                     </p> 0.0점</span>
                                 </li>
                                 <li>진행중인 의뢰 <span>0건</span></li>
-                                <li>슬롯 갯수 <span>0개</span></li>
+                                <li>슬롯 갯수 <span><%= slot %> 개</span></li>
                                 <li>입금 예정 금액 <span>0원</span></li>
                               </ul>
                           </div>
-                          <!-- <div class="absol-btn">
-                              <button type="button" class="btn btn-sm btn-default">슬롯갯수 변경</button>
-                          </div> -->
                       </div>
                       <div class="btn-center" style="margin-top:30px;">
                         <button type="submit" class="btn btn-primary pro-save">프로필 저장</button>
@@ -254,10 +264,13 @@
                         <div class="heading">
                           <h2 class="tit1">내 작품 관리</h2>
                         </div>
-                       <button type="button" class="btn btn-primary">커미션 작품등록</button>
+                       <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/myPage/writerPieceInsertForm.jsp'">커미션 작품등록</button>
                    </div>
                     <div class="bord-wrap">
-                    	  
+                    	<% if(list != null){
+                  			int no = listCount - (currentPage - 1) * 10;
+                    		for(int i = 0; i < list.size(); i++){
+                    		Board b = list.get(i);%>
                         <div class="piece-list">
                           <ul class="seting-area">
                               <!-- <li><input type="button" class="btn-lock" title="작품 보이기"><label class="hide">숨기기</label></li> -->
@@ -270,7 +283,7 @@
                               <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
                           </div>
                           <div class="info-area1">
-                              <span>작가명</span>
+                              <span><%= m.getNick_name() %>작가</span>
                               <span>신뢰도 : 100%</span>
                               <span>
                                 <p class="star_rating">
@@ -283,45 +296,47 @@
                             </span>
                           </div>
                           <div class="info-area2">
-                              <span>커미션 제목</span>
+                              <%-- <span><%= b.getBoard_title() %></span> --%>
                               <span class="price">7,000 ~</span>
                           </div>
                         </div>
-                       
+                        <% 	no--;
+	                        	}
+	                    	} else if(list == null){ %>
                         <div class="piece-list default">첫 작품을 등록해주세요.</div>
+                        <% } %>
                     </div>
                     <!-- // 내 작품 관리 영역 -->
 
                     <!-- 페이징 영역 -->
-                    <%-- <div class="paginate">
-				<a onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
-				<% if(currentPage <=1){ %>
-					<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
-				<%}else{ %>
-					<a onclick = "location.href='<%= request.getContextPath()%>/selectNoticeList.no?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
-					<em class="blind">목록에서 이전 페이지 이동</em></a>
-				<%} %>
-				<span class="paging-numbers">
-					<% for(int p = startPage; p <=endPage;p++){
-						if(p==currentPage){%>
-							<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
+                    <div class="paginate">
+						<a onclick="location.href='<%=request.getContextPath()%>/selectPieceList.wr?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<% if(currentPage <=1){ %>
+							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
 						<%}else{ %>
-							<a onclick= "location.href='<%= request.getContextPath()%>/selectNoticeList.no?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+							<a onclick = "location.href='<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<em class="blind">목록에서 이전 페이지 이동</em></a>
 						<%} %>
-					<%} %>
-				</span>
-				<% if(currentPage >= maxPage){ %>
-					<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
-				<%}else{ %>
-					<a onclick = "location.href = '<%= request.getContextPath()%>/selectNoticeList.no?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
-					<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
-				<%} %>
-				
-				<a onclick = "location.href = '<%= request.getContextPath()%>/selectNoticeList.no?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
-				<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
-			</div> --%>
+						<span class="paging-numbers">
+							<% for(int p = startPage; p <=endPage;p++){
+								if(p==currentPage){%>
+									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
+								<%}else{ %>
+									<a onclick= "location.href='<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+								<%} %>
+							<%} %>
+						</span>
+						<% if(currentPage >= maxPage){ %>
+							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%}else{ %>
+							<a onclick = "location.href = '<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%} %>
+						
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+					</div>
                    <!-- // 페이징 영역 -->
-                  
 
                 </div>
             </div>
