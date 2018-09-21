@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.relate.model.vo.Relate"%>
+    pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.relate.model.vo.Relate, com.comvision.artBridge.member.model.vo.Member"%>
 <% //Relate r = (Relate)request.getAttribute("r"); 
-	ArrayList<Relate> rlist = (ArrayList<Relate>)request.getAttribute("rlist"); 
+	ArrayList<Relate> rlist = (ArrayList<Relate>)request.getAttribute("rlist");
+	
+	Member m = null;
+	if(session.getAttribute("loginUser") != null){
+		m = (Member)session.getAttribute("loginUser");
+	}
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -69,7 +74,7 @@
     //옵션 추가 삭제
     $(function(){
        $("#opt-add").click(function(){
-           $(".option-tbl tbody tr:last-child").clone(true).appendTo('.option-tbl tbody');
+           $(".option-tbl tbody tr:last-child").clone(true).appendTo('.option-tbl tbody').find('input').val("");
        });
 		
        $(".option-tbl input").click(function(){
@@ -144,7 +149,8 @@
             <div class="container">
                 <div class="col-md-12">
                     
-                    <form action="<%=request.getContextPath()%>/insertPiece.wr" method="post">
+                    <form action="<%=request.getContextPath()%>/insertPiece.wr" method="post" encType="multipart/form-data">
+                   	 	<input type="hidden" name="member_no" value="<%= m.getMember_no() %>">
                         <div class="heading">
                             <h2 class="tit1">내 작품 등록</h2>
                           </div>
@@ -165,17 +171,17 @@
                                   <td>
                                     <ul class="img-area">
                                       <li>
-                                          <input type="file"  id="file-btn1">
+                                          <input type="file" name="thumb01"  id="file-btn1">
                                           <label for="file-btn1" class="btn btn-primary">썸네일 이미지 선택1</label>
                                           <p><img class="img1" src="/artBridge/image/common/no_thumb.jpg" /></p>
                                       </li>
                                       <li>
-                                          <input type="file"  id="file-btn2">
+                                          <input type="file" name="thumb02" id="file-btn2">
                                            <label for="file-btn2" class="btn btn-primary">썸네일 이미지 선택2</label>
                                           <p><img class="img2" src="/artBridge/image/common/no_thumb.jpg"></p>
                                       </li>
                                       <li>
-                                          <input type="file"  id="file-btn3">
+                                          <input type="file" name="thumb03" id="file-btn3">
                                            <label for="file-btn3" class="btn btn-primary">썸네일 이미지 선택3</label>
                                           <p><img class="img3" src="/artBridge/image/common/no_thumb.jpg"></p>
                                       </li>
@@ -190,18 +196,18 @@
                                   <th>상세옵션</th>
                                   <td>
                                       <div class="row-inp">
-                                           <label>제출파일유형</label><input type="text" name="" class="form-control input-short" placeholder="ex) png, jpg, ai...">
+                                           <label>제출파일유형</label><input type="text" name="file_type" class="form-control input-short" placeholder="ex) png, jpg, ai...">
                                            <!-- <label>백터 파일</label><input type="checkbox" value=""> -->
-                                           <label>작업 해상도(dpi)</label><input type="text" id="" name="" class="form-control input-xshort">
+                                           <label>작업 해상도(dpi)</label><input type="text" name="resolution" class="form-control input-xshort">
                                       </div>
                                       <div class="row-inp">
-                                          <label>사이즈(단위 필수)</label><input type="text" id="" name="" class="form-control input-short" placeholder="ex) 가로 3000px, A4...">
+                                          <label>사이즈(단위 필수)</label><input type="text" name="file_size" class="form-control input-short" placeholder="ex) 가로 3000px, A4...">
                                           <label>작업 소요 일 수</label>
-                                          <select class="form-control input-xshort">
-                                            <option>선택</option>
-                                            <option>1일</option>
-                                            <option>2일</option>
-                                            <option>3일</option>
+                                          <select class="form-control input-xshort" name="working_period">
+                                            <option value="0">선택</option>
+                                            <option value="1">1일</option>
+                                            <option value="2">2일</option>
+                                            <option value="3">3일</option>
                                           </select>
                                       </div>
                                       <!-- <div class="row-inp">
@@ -237,19 +243,19 @@
                                           </thead>
                                           <tbody>
                                               <tr>
-                                                  <td><input type="checkbox" name=""></td>
+                                                  <td><input type="checkbox" name="option01"></td>
                                                   <td><input type="text" class="form-control" placeholder="옵션명 입력"></td>
-                                                  <td><input type="number" min="0" step="100"  class="form-control" placeholder="금액(원)"></td>
+                                                  <td><input type="number" name="price01" min="0" step="100" class="form-control" placeholder="금액(원)"></td>
                                               </tr>
                                               <tr>
-                                                  <td><input type="checkbox" name=""></td>
+                                                  <td><input type="checkbox" name="option02"></td>
                                                   <td><input type="text" class="form-control" placeholder="옵션명 입력"></td>
-                                                  <td><input type="number" min="0" step="100"  class="form-control" placeholder="금액(원)"></td>
+                                                  <td><input type="number" name="price02" min="0" step="100" class="form-control" placeholder="금액(원)"></td>
                                               </tr>
                                               <tr>
-                                                  <td><input type="checkbox" name=""></td>
+                                                  <td><input type="checkbox" name="option03"></td>
                                                   <td><input type="text" class="form-control" placeholder="옵션명 입력"></td>
-                                                  <td><input type="number" min="0" step="100"  class="form-control" placeholder="금액(원)"></td>
+                                                  <td><input type="number" name="price03" min="0" step="100" class="form-control" placeholder="금액(원)"></td>
                                               </tr>
                                           </tbody>
                                       </table>
@@ -324,7 +330,7 @@
                       </table>
                       <br>
                       <!-- 에디터 영역 -->
-                      <textarea id="editor"></textarea>
+                      <textarea id="editor" name="contents"></textarea>
                       <!-- // 에디터 영역 -->
                       <div class="btn-center">
                           <button type="reset" class="btn btn-default btn-lg" onclick="location.href='/artBridge/selectPieceList.wr'">취소</button>

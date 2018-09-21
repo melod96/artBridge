@@ -929,7 +929,7 @@
 						<div class="btn-center btn-outer-style" style="width:50%;">
 		                      <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
 		                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">수정</button>
-		                      <button onclick="deleteMember();" class="btn btn-lg btn-default btn-plus-design" style="float:right;">회원 탈퇴</button>
+		                      <button onclick="deleteMemberRequest();" class="btn btn-lg btn-default btn-plus-design" style="float:right;">회원 탈퇴</button>
 		                </div>
 						<div class="btn-center btn-outer-style" style="width:50%;">
 							  <button onclick="reqWriterDisplayBlock();" id="reqWriterBtn" class="btn btn-primary btn-lg btn-plus-design" style="float:left; margin-left:10px;">작가 신청</button>
@@ -937,6 +937,28 @@
 	                </div>
                 </form>
 <!--      		//4-2. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원정보 수정 본 화면 -->
+
+<!--      		* 4-3. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원 탈퇴 안내 화면 -->					
+				<form action="">
+					<div class="deleteMemberNotice" style="display:none; width:100%; padding-left:30px;">
+						<div style="font-weight:bold; font-size:20px; border=1">
+							* 진행중인 프로젝트가 있을 경우, 프로젝트가 완료 된 후에 탈퇴가 가능합니다. <br /><br />
+							* 주문하신 이력이 있는 경우, 주문 정보는 정책에 따라 일정기간 보존됩니다. <br /><br />
+							* 회원 정보는 탈퇴 신청 후 30일 간 보관됩니다. <br /><br />
+							* 동일한 아이디로는 재가입 하실 수 없습니다. <br /><br /><br /><br />
+							<div style="text-align:center;">
+								<input type="checkbox" id="checkDeleteMemberNotice"/>
+								<label>위 내용을 모두 확인하였고, 동의합니다.</label>
+							</div>
+						</div>
+						<div class="btn-center btn-outer-style" style="width:50%;" align="center">
+		                      <button onclick="" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
+		                      <button onclick="" class="btn btn-lg btn-default btn-plus-design">회원 탈퇴</button>
+		                </div>
+	                </div>
+				</form>
+<!--      		//4-3. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원 탈퇴 안내 화면 -->
+
 
 			<br><br><br><br>	
 			</div>
@@ -1338,7 +1360,7 @@
 		};
 		
 	// 	* 회원 탈퇴 신청(행 삭제 x -> 탈퇴상태를 0->1로 변경)
-		function deleteMember(){
+		function deleteMemberRequest(){
 			var pwdCheck = prompt("패스워드 확인", "");
 			/* alert(pwdCheck); */
 			
@@ -1350,14 +1372,16 @@
 					data : {userPwd : userPwd},
 					success : function(data){
 						if(data > 0){
+							$('.memberInfoArea').css({"display":"none"});
+							$(".deleteMemberNotice").css({"display":"block"});
 // 							탈퇴 안내 폼 열어서 내용 읽게 하고 다시 한 번 탈최신청 확인 받기
 // 							진행중인 거래가 있는지 거래 완료됐으나 입금받지 못한 돈이 있는지 서블릿으로 체크 
 							
 							var delBoolean = confirm("정말 탈퇴하시겠습니까?");
 							if(delBoolean){
+								$(".deleteMemberNotice").css({"display":"none"});
+								/* 탈퇴 상태로 변경 후 로그아웃 서블릿 호출 */
 								location.href = "<%= request.getContextPath() %>/deleteRequest.me";
-// 								탈퇴 상태로 변경 후 로그아웃 서블릿 호출
-								<%-- location.href = "<%= request.getContextPath() %>/logout.me"; --%>
 							}else{
 								location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
 							}

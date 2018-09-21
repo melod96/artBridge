@@ -28,13 +28,13 @@ public class DeleteMemberRequestServlet extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
 		
 		int result = new MemberService().deleteMemberRequest(mNo);
 		
 		if(result > 0){
-			response.sendRedirect("<%= request.getContextPath() %>/logout.me");
+			response.sendRedirect(request.getContextPath() + "/logout.me");
 		}else{
 			request.setAttribute("msg", "회원 탈퇴 실패!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
