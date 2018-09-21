@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.relate.model.vo.Relate"%>
+<% //Relate r = (Relate)request.getAttribute("r"); 
+	ArrayList<Relate> rlist = (ArrayList<Relate>)request.getAttribute("rlist"); 
+%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +20,7 @@
     .row-inp label{width:150px;}
     .row-inp input, .row-inp select{display:inline-block;}
     .row-inp select{margin-left:-5px}
-    .row-inp:first-child input+ label{width:90px;}
+    /* .row-inp:first-child input+ label{width:90px;} */
     .row-inp:first-child input[type='checkbox']{vertical-align:text-bottom;}
     .row-inp input + label{margin-left:50px;}
 
@@ -27,7 +31,7 @@
     .img-area li p{overflow:hidden; height:140px;}
     .img-area img{width:100%;}
 
-    .option-tbl{height:245px; overflow-y:scroll; }
+    .option-tbl{height:320px; overflow-y:scroll; }
     .option-tbl table{/*width:680px;*/ margin-top:15px;}
     .option-tbl table td{padding:12px;}
 
@@ -123,16 +127,16 @@
         <!-- 주석 영역 -->
         <section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
             <div class="container">
-                <h2>마이페이지_내 작품관리</h2>
-                <ul class="tab-menu">
-                    <li><a href="#">주문관리</a></li>
-                    <li><a href="#">쪽지함</a></li>
-                    <li><a href="#">관심작품</a></li>
-                    <li><a href="#">회원정보수정</a></li>
-                    <li><a href="#">내 작품관리</a></li>
-                    <li><a href="#">이용문의</a></li>
-                </ul>
-            </div>
+				<h2>마이 페이지</h2>
+				<ul class="tab-menu">
+					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu">주문관리</a></li>
+					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=msg-menu">쪽지함</a></li>
+					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=bookmark-menu">관심작가</a></li>
+					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu">회원정보수정</a></li>
+					<li><a href="<%=request.getContextPath()%>/selectPieceList.wr" style="background:#fff; color:#000;">내작품관리</a></li>
+					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=qna-menu">이용문의</a></li>
+				</ul>
+			</div>
         </section>
 
         <!-- contents area -->
@@ -140,7 +144,7 @@
             <div class="container">
                 <div class="col-md-12">
                     
-                    <form action="" method="">
+                    <form action="<%=request.getContextPath()%>/insertPiece.wr" method="post">
                         <div class="heading">
                             <h2 class="tit1">내 작품 등록</h2>
                           </div>
@@ -153,7 +157,7 @@
                               <tr>
                                   <th>제목</th>
                                   <td>
-                                      <input id="" name="" class="form-control" type="text" placeholder="작품의 제목을 입력하세요">
+                                      <input type="text" name="title" class="form-control" placeholder="작품의 제목을 입력하세요">
                                   </td>
                               </tr>
                               <tr>
@@ -163,17 +167,17 @@
                                       <li>
                                           <input type="file"  id="file-btn1">
                                           <label for="file-btn1" class="btn btn-primary">썸네일 이미지 선택1</label>
-                                          <p><img class="img1" src="../image/common/no_thumb.jpg" /></p>
+                                          <p><img class="img1" src="/artBridge/image/common/no_thumb.jpg" /></p>
                                       </li>
                                       <li>
                                           <input type="file"  id="file-btn2">
                                            <label for="file-btn2" class="btn btn-primary">썸네일 이미지 선택2</label>
-                                          <p><img class="img2" src="../image/common/no_thumb.jpg"></p>
+                                          <p><img class="img2" src="/artBridge/image/common/no_thumb.jpg"></p>
                                       </li>
                                       <li>
                                           <input type="file"  id="file-btn3">
                                            <label for="file-btn3" class="btn btn-primary">썸네일 이미지 선택3</label>
-                                          <p><img class="img3" src="../image/common/no_thumb.jpg"></p>
+                                          <p><img class="img3" src="/artBridge/image/common/no_thumb.jpg"></p>
                                       </li>
                                     </ul>
                                     <ul>
@@ -186,14 +190,12 @@
                                   <th>상세옵션</th>
                                   <td>
                                       <div class="row-inp">
-                                           <label>제출파일유형</label><input type="text" id="" name="" class="form-control input-short" placeholder="ex) png, jpg, ai...">
-                                           <label>백터 파일</label><input type="checkbox" value="백터파일">
+                                           <label>제출파일유형</label><input type="text" name="" class="form-control input-short" placeholder="ex) png, jpg, ai...">
+                                           <!-- <label>백터 파일</label><input type="checkbox" value=""> -->
+                                           <label>작업 해상도(dpi)</label><input type="text" id="" name="" class="form-control input-xshort">
                                       </div>
                                       <div class="row-inp">
                                           <label>사이즈(단위 필수)</label><input type="text" id="" name="" class="form-control input-short" placeholder="ex) 가로 3000px, A4...">
-                                          <label>작업 해상도(dpi)</label><input type="text" id="" name="" class="form-control input-xshort">
-                                      </div>
-                                      <div class="row-inp">
                                           <label>작업 소요 일 수</label>
                                           <select class="form-control input-xshort">
                                             <option>선택</option>
@@ -202,6 +204,15 @@
                                             <option>3일</option>
                                           </select>
                                       </div>
+                                      <!-- <div class="row-inp">
+                                          <label>작업 소요 일 수</label>
+                                          <select class="form-control input-xshort">
+                                            <option>선택</option>
+                                            <option>1일</option>
+                                            <option>2일</option>
+                                            <option>3일</option>
+                                          </select>
+                                      </div> -->
                                   </td>
                               </tr>
                               <tr>
@@ -252,6 +263,26 @@
                                     <div class="relate-word">
                                       <!-- <input type="text" id="in-test" class="form-control" disabled placeholder="선택한 연관검색어"> -->
                                       <p>작품과 연관된 단어를 선택해주세요!</p>
+                                      
+	                                   	<%-- <% if(rlist != null){
+				                    		for(Relate r : rlist){ %>
+				                        <tr>
+				                            <td><input type="checkbox" id="del-check" name=""></td>
+				                            <td><%= r.getRownum() %></td>
+				                            <td id="noticeTit" class="tit" onclick="location.href='<%=request.getContextPath()%>/noticeDetail.no?num=<%= n.getnNo() %>'"><%= n.getnTitle() %></td>
+				                            <td><%= r.getnCount() %></td>
+				                            <td><%= r.getnDate() %></td>
+				                        </tr>
+				                        <% 	}
+				                    	}else{ %>
+				                    	<tr>
+				                    		<td colspan="5">등록된 게시물이 없습니다.</td>
+				                    	</tr>		
+				                    	<% } %> --%>
+			                    	
+			                    	
+			                    	
+			                    	
                                       <ul>
                                         <li><input type="checkbox" id="word1" value="SD" ><label for="word1" class="btn btn-default">SD</label></li>
                                         <li><input type="checkbox" id="word2" value="커미션" ><label for="word2" class="btn btn-default">커미션</label></li>
@@ -296,7 +327,7 @@
                       <textarea id="editor"></textarea>
                       <!-- // 에디터 영역 -->
                       <div class="btn-center">
-                          <button type="reset" class="btn btn-default btn-lg">취소</button>
+                          <button type="reset" class="btn btn-default btn-lg" onclick="location.href='/artBridge/selectPieceList.wr'">취소</button>
                           <button type="submit" class="btn btn-primary btn-lg">저장</button>
                       </div>
                     </form>

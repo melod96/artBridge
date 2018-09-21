@@ -63,7 +63,9 @@
 								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=msg-menu">쪽지함</a></li>
 								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=bookmark-menu">관심작가</a></li>
 								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu">회원정보 수정</a></li>
-<!-- 							<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=mywork-menu">내 작품관리</a></li> -->
+								<% if(loginUser.getWriter_right() == 1){ %>
+								<li><a href="<%= request.getContextPath() %>/selectPieceList.wr">내 작품관리</a></li>
+								<% } %>
 								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=qna-menu">이용문의</a></li>
 							</ul></li>
 						<li class="dropdown"><a href="#" class="join dropdown-toggle"><%= loginUser.getNick_name() %>님</a>
