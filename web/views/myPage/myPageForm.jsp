@@ -57,6 +57,13 @@
 	#memberInfo td , #pwdCheckArea td{ text-align:left; height:45px; padding-left:20px; font-weight: bold; }
 	#memberInfo{ margin-left:50px; }
 	
+/* 	회원 탈퇴 안내 화면 */
+	.info-box{border:1px solid #ddd; padding:70px 85px 75px; font-size:16px; line-height:1.5; font-weight:bold; width:80%; margin-right:auto; margin-left:auto;}
+	.tit{text-align:center; color:#3446d1; font-weight:bold; font-size:30px; margin-bottom:50px;}
+	.agree-ck{margin-top:20px; vertical-align:middle; padding-left:60px; width:80%; margin-right:auto; margin-left:auto;}
+    .agree-ck input{width:20px; height:20px; vertical-align:text-bottom;}
+    .agree-ck label{font-size:18px; font-weight:bold; margin-left:5px;}
+    
 /*  작가회원신청 팝업 */
 	.reqWriterFrom-title{ text-align:center; font-weight:bold; }
 	.reqWriterForm-Area-Style{ position:absolute; width:740px; background:white; padding-bottom:50px; left:50%; margin-left:-370px; }
@@ -739,124 +746,127 @@
 				                </tr>
 				            </table>     
 		                </div>
-
 		            </div>
+		            
+<table>		<!-- 지울지 말지 체크하기 -->
+	<!-- <!--      			* 3-1. 마이페이지 탭 바디 - 관심작가 탭 / 작가별 세부 화면 --> 			
+	<!-- 																id를 bookmark-detail-view 로 만든 버튼에 연결 -->
+	<!-- 					<form action="" method="get"class="bookmark-detail-view tab-menu-content-form"> -->
+	<!-- 						<div id="bookmark-detail-view" class="bookmark-detail-view"> -->
+	<!-- 							프로필 영역 -->
+	<!-- 			                <div class="frofile-box"> -->
+	<!-- 			                    <div class="img-area"> -->
+	<!-- 			                        <div class="img-in"> -->
+	<!-- 			                          <img src="/artBridge/image/common/img_profile.png" alt="default frofile image"> -->
+	<!-- 			                        </div> -->
+	<!-- 			                    </div> -->
+	<!-- 			                    <div class="input-area"> -->
+	<!-- 			                        <label for="nick">닉네임</label> -->
+	<!-- 			                        <input id="authorNickName" name="" class="form-control" type="text" readonly><br> -->
+	<!-- 			                        <label for="introtxt">소개글</label> -->
+	<!-- 			                        <textarea id="intro" name="" class="form-control" rows="3" readonly></textarea><br><br>   -->
+	<!-- 			                        <label>커미션 접수 상태 : </label>&nbsp; -->
+	<!-- 			                        <label for="state1">접수중</label> -->
+	<!-- 			                        <label for="state2">접수예정</label> -->
+	<!-- 			                    </div> -->
+	<!-- 			                    <div class="state-area"> -->
+	<!-- 			                        <ul> -->
+	<!-- 			                          <li>작품리스트 <span>1개</span></li> -->
+	<!-- 			                          <li>평점  -->
+	<!-- 			                            <span> -->
+	<!-- 			                              <p class="star_rating">		별 갯수 평균으로 반영하기 -->
+	<!-- 			                                <a href="#" class="on">★</a> -->
+	<!-- 			                                <a href="#" class="on">★</a> -->
+	<!-- 			                                <a href="#" class="on">★</a> -->
+	<!-- 			                                <a href="#">★</a> -->
+	<!-- 			                                <a href="#">★</a> -->
+	<!-- 			                              </p> 0.0점</span> -->
+	<!-- 			                          </li> -->
+	<!-- 			                          <li>진행중인 의뢰 <span>0건</span></li> -->
+	<!-- 			                          <li>슬롯 갯수 <span>0개</span></li> -->
+	<!-- 			                        </ul> -->
+	<!-- 			                    </div> -->
+	<!-- 			                </div> -->
+	<!-- 			                //프로필 영역 -->
+				
+	<!-- 			                작가 작품 영역 -->
+	<!-- 			                <div class="heading"> -->
+	<!-- 			                  <h2 class="tit1">작가의 커미션 작품</h2> -->
+	<!-- 			                </div> -->
+	<!-- 			                <div class="bord-wrap"> -->
+	<!-- 			                    <div class="piece-list"> -->
+	<!-- 			                      <div class="img-area"> -->
+	<!-- 			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span> -->
+	<!-- 			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span> -->
+	<!-- 			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span> -->
+	<!-- 			                      </div> -->
+	<!-- 			                      <div class="info-area1"> -->
+	<!-- 			                          <span>작가명</span> -->
+	<!-- 			                          <span>신뢰도 : 100%</span> -->
+	<!-- 			                          <span> -->
+	<!-- 			                            <p class="star_rating"> -->
+	<!-- 			                              <a href="#" class="on">★</a> -->
+	<!-- 			                              <a href="#" class="on">★</a> -->
+	<!-- 			                              <a href="#" class="on">★</a> -->
+	<!-- 			                              <a href="#">★</a> -->
+	<!-- 			                              <a href="#">★</a> -->
+	<!-- 			                          </p> -->
+	<!-- 			                        </span> -->
+	<!-- 			                      </div> -->
+	<!-- 			                      <div class="info-area2"> -->
+	<!-- 			                          <span>커미션 제목</span> -->
+	<!-- 			                          <span class="price">7,000 ~</span> -->
+	<!-- 			                      </div> -->
+	<!-- 			                    </div> -->
+	<!-- 			                    <div class="piece-list"> -->
+	<!-- 			                      <div class="img-area"> -->
+	<!-- 			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span> -->
+	<!-- 			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span> -->
+	<!-- 			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span> -->
+	<!-- 			                      </div> -->
+	<!-- 			                      <div class="info-area1"> -->
+	<!-- 			                          <span>작가명</span> -->
+	<!-- 			                          <span>신뢰도 : 100%</span> -->
+	<!-- 			                          <span> -->
+	<!-- 			                            <p class="star_rating"> -->
+	<!-- 			                              <a href="#" class="on">★</a> -->
+	<!-- 			                              <a href="#" class="on">★</a> -->
+	<!-- 			                              <a href="#" class="on">★</a> -->
+	<!-- 			                              <a href="#">★</a> -->
+	<!-- 			                              <a href="#">★</a> -->
+	<!-- 			                          </p> -->
+	<!-- 			                        </span> -->
+	<!-- 			                      </div> -->
+	<!-- 			                      <div class="info-area2"> -->
+	<!-- 			                          <span>커미션 제목</span> -->
+	<!-- 			                          <span class="price">7,000 ~</span> -->
+	<!-- 			                      </div> -->
+	<!-- 			                    </div> -->
+	<!-- 			                </div> -->
+	<!-- 			                // 작가 작품 영역 -->
+				
+	<!-- 			                페이징 영역 -->
+	<!-- 			                <div class="paginate"> -->
+	<!-- 								<a href="#" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> -->
+	<!-- 								<a href="#" class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> -->
+	<!-- 								<span class="paging-numbers"> -->
+	<!-- 								    <a href="#">1<span class="blind">페이지로 이동</span></a> -->
+	<!-- 								    <a href="#" class="on">2<span class="blind">페이지로 이동</span></a> -->
+	<!-- 								    <a href="#">3<span class="blind">페이지로 이동</span></a> -->
+	<!-- 								    <a href="#">4<span class="blind">페이지로 이동</span></a> -->
+	<!-- 								    <a href="#">5<span class="blind">페이지로 이동</span></a> -->
+	<!-- 								</span> -->
+	<!-- 								<a href="#" class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> -->
+	<!-- 								<a href="#" class="btn-last" title="끝"><span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a> -->
+	<!-- 			            	</div> -->
+	<!-- 			            	// 페이징 영역					 -->
 							
-<!--      			* 3-1. 마이페이지 탭 바디 - 관심작가 탭 / 작가별 세부 화면 --> 			<!-- id를 bookmark-detail-view 로 만든 버튼에 연결 -->
-					<form action="" method="get"class="bookmark-detail-view tab-menu-content-form">		
-						<div id="bookmark-detail-view" class="bookmark-detail-view">
-							<!-- 프로필 영역 -->
-			                <div class="frofile-box">
-			                    <div class="img-area">
-			                        <div class="img-in">
-			                          <img src="/artBridge/image/common/img_profile.png" alt="default frofile image">
-			                        </div>
-			                    </div>
-			                    <div class="input-area">
-			                        <label for="nick">닉네임</label>
-			                        <input id="authorNickName" name="" class="form-control" type="text" readonly><br>
-			                        <label for="introtxt">소개글</label>
-			                        <textarea id="intro" name="" class="form-control" rows="3" readonly></textarea><br><br>  
-			                        <label>커미션 접수 상태 : </label>&nbsp;
-			                        <label for="state1">접수중</label>
-			                        <!-- <label for="state2">접수예정</label> -->
-			                    </div>
-			                    <div class="state-area">
-			                        <ul>
-			                          <li>작품리스트 <span>1개</span></li>
-			                          <li>평점 
-			                            <span>
-			                              <p class="star_rating">		<!-- 별 갯수 평균으로 반영하기 -->
-			                                <a href="#" class="on">★</a>
-			                                <a href="#" class="on">★</a>
-			                                <a href="#" class="on">★</a>
-			                                <a href="#">★</a>
-			                                <a href="#">★</a>
-			                              </p> 0.0점</span>
-			                          </li>
-			                          <li>진행중인 의뢰 <span>0건</span></li>
-			                          <li>슬롯 갯수 <span>0개</span></li>
-			                        </ul>
-			                    </div>
-			                </div>
-			                <!-- //프로필 영역 -->
-			
-			                <!-- 작가 작품 영역 -->
-			                <div class="heading">
-			                  <h2 class="tit1">작가의 커미션 작품</h2>
-			                </div>
-			                <div class="bord-wrap">
-			                    <div class="piece-list">
-			                      <div class="img-area">
-			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
-			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
-			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
-			                      </div>
-			                      <div class="info-area1">
-			                          <span>작가명</span>
-			                          <span>신뢰도 : 100%</span>
-			                          <span>
-			                            <p class="star_rating">
-			                              <a href="#" class="on">★</a>
-			                              <a href="#" class="on">★</a>
-			                              <a href="#" class="on">★</a>
-			                              <a href="#">★</a>
-			                              <a href="#">★</a>
-			                          </p>
-			                        </span>
-			                      </div>
-			                      <div class="info-area2">
-			                          <span>커미션 제목</span>
-			                          <span class="price">7,000 ~</span>
-			                      </div>
-			                    </div>
-			                    <div class="piece-list">
-			                      <div class="img-area">
-			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
-			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
-			                          <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
-			                      </div>
-			                      <div class="info-area1">
-			                          <span>작가명</span>
-			                          <span>신뢰도 : 100%</span>
-			                          <span>
-			                            <p class="star_rating">
-			                              <a href="#" class="on">★</a>
-			                              <a href="#" class="on">★</a>
-			                              <a href="#" class="on">★</a>
-			                              <a href="#">★</a>
-			                              <a href="#">★</a>
-			                          </p>
-			                        </span>
-			                      </div>
-			                      <div class="info-area2">
-			                          <span>커미션 제목</span>
-			                          <span class="price">7,000 ~</span>
-			                      </div>
-			                    </div>
-			                </div>
-			                <!-- // 작가 작품 영역 -->
-			
-			                <!-- 페이징 영역 -->
-			                <div class="paginate">
-								<a href="#" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a>
-								<a href="#" class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a>
-								<span class="paging-numbers">
-								    <a href="#">1<span class="blind">페이지로 이동</span></a>
-								    <a href="#" class="on">2<span class="blind">페이지로 이동</span></a>
-								    <a href="#">3<span class="blind">페이지로 이동</span></a>
-								    <a href="#">4<span class="blind">페이지로 이동</span></a>
-								    <a href="#">5<span class="blind">페이지로 이동</span></a>
-								</span>
-								<a href="#" class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
-								<a href="#" class="btn-last" title="끝"><span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
-			            	</div>
-			            	<!-- // 페이징 영역 -->					
-						
-						<br><br><br><br>
-						</div>
-					</form>			
-<!--      			//3-1. 마이페이지 탭 바디 - 관심작가 탭 / 작가별 세부 화면 -->
+	<!-- 						<br><br><br><br> -->
+	<!-- 						</div> -->
+	<!-- 					</form>			 -->
+	<!-- <!--      			//3-1. 마이페이지 탭 바디 - 관심작가 탭 / 작가별 세부 화면 -->
+</table>
+
 				<br><br><br><br>	
 				</div>
 			</form>
@@ -940,21 +950,45 @@
 
 <!--      		* 4-3. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원 탈퇴 안내 화면 -->					
 				<form action="">
-					<div class="deleteMemberNotice" style="display:none; width:100%; padding-left:30px;">
-						<div style="font-weight:bold; font-size:20px; border=1">
+					<div class="deleteMemberNotice" style="display:none; width:100%;">
+						<div class="info-box">
+							<p class="tit">※ 회원 탈퇴 신청 전 확인하세요.</p>
 							* 진행중인 프로젝트가 있을 경우, 프로젝트가 완료 된 후에 탈퇴가 가능합니다. <br /><br />
 							* 주문하신 이력이 있는 경우, 주문 정보는 정책에 따라 일정기간 보존됩니다. <br /><br />
 							* 회원 정보는 탈퇴 신청 후 30일 간 보관됩니다. <br /><br />
-							* 동일한 아이디로는 재가입 하실 수 없습니다. <br /><br /><br /><br />
-							<div style="text-align:center;">
-								<input type="checkbox" id="checkDeleteMemberNotice"/>
-								<label>위 내용을 모두 확인하였고, 동의합니다.</label>
-							</div>
+							* 동일한 아이디로는 재가입 하실 수 없습니다.
 						</div>
-						<div class="btn-center btn-outer-style" style="width:50%;" align="center">
-		                      <button onclick="" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
-		                      <button onclick="" class="btn btn-lg btn-default btn-plus-design">회원 탈퇴</button>
+						<div class="agree-ck">
+							<input type="checkbox" id="agree"/>
+							<label>위의 내용을 모두 확인하였고, 동의합니다.</label>
+						</div>
+						<div class="btn-center">
+		                      <input type="button" value="회원 탈퇴" class="delMemChk btn btn-lg btn-default btn-cancel" style="padding:10px 35px; margin-right:15px;">
+		                      <input type="button" value="취소" id="trst" class="delMemChk btn btn-lg btn-primary">
 		                </div>
+<!-- 		                <script>
+		                $(function(){
+		                
+		                		
+		                	$(".delMemChk").click(function(){
+		                		alert($(this).val());
+		                	});
+		                
+		                })
+		                
+		                /* function delMemChk(){
+		                	var test = $(this).val();
+		                	alert("dfjdkosl");
+		                	alert(result);
+							if(result == "delMem"){
+								alert("진짜 탈퇴한다");
+								
+							}else if(result == "cancelDel"){
+								alert("취소하냐");
+								
+							}
+						}; */
+						</script> -->
 	                </div>
 				</form>
 <!--      		//4-3. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원 탈퇴 안내 화면 -->
@@ -1372,23 +1406,31 @@
 					data : {userPwd : userPwd},
 					success : function(data){
 						if(data > 0){
+							$('.heading .memberinfo-menu').html("회원 탈퇴 신청");
 							$('.memberInfoArea').css({"display":"none"});
 							$(".deleteMemberNotice").css({"display":"block"});
-// 							탈퇴 안내 폼 열어서 내용 읽게 하고 다시 한 번 탈최신청 확인 받기
-// 							진행중인 거래가 있는지 거래 완료됐으나 입금받지 못한 돈이 있는지 서블릿으로 체크 
 							
-							var delBoolean = confirm("정말 탈퇴하시겠습니까?");
-							if(delBoolean){
-								$(".deleteMemberNotice").css({"display":"none"});
-								/* 탈퇴 상태로 변경 후 로그아웃 서블릿 호출 */
-								location.href = "<%= request.getContextPath() %>/deleteRequest.me";
-							}else{
-								location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
-							}
-							
+							$(".delMemChk").click(function(){
+		                		var result = $(this).val();
+		                		
+		                		if(result == "회원 탈퇴"){
+		                			/* $(".deleteMemberNotice").css({"display":"none"});
+		                			$('.heading .memberinfo-menu').html("회원 탈퇴 신청"); */
+									/* 탈퇴 상태로 변경 후 로그아웃 서블릿 호출 */
+									
+// 									진행중인 거래가 있는지 거래 완료됐으나 입금받지 못한 돈이 있는지 서블릿으로 체크 
+									location.href = "<%= request.getContextPath() %>/memberDelCheck.me";
+									
+									
+<%-- 									location.href = "<%= request.getContextPath() %>/deleteRequest.me"; --%>
+								}else{
+									location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
+								}
+							});
 						}else{
 							alert("패스워드가 일치하지 않습니다.");
 						}
+						
 					}
 				});
 			}

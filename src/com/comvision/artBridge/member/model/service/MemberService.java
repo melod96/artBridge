@@ -139,6 +139,16 @@ public class MemberService {
 		
 		return result;
 	}
+
+	public int deleteAbleChceck(int mNo) {
+		Connection con = getConnection();
+		
+		int result = new MemberDao().deleteAbleCheck(con, mNo);
+		
+		close(con);
+		
+		return result;
+	}
 	
 	
 }
