@@ -3,6 +3,7 @@ package com.comvision.artBridge.sale.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,11 +33,23 @@ public class SendDetailedListServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String req = request.getParameter("req");
+		int member_no = Integer.parseInt(request.getParameter("member_no"));
+		int board_no = Integer.parseInt(request.getParameter("board_no"));
+		int writer_no = Integer.parseInt(request.getParameter("writer_no"));
+		
 		String[] rsplit = req.split("@");
 		
-			int rlist = new SaleService().insertRequirements(rsplit);
-			
+		int result = new SaleService().insertRequirements(rsplit, member_no, board_no, writer_no);
+		String page = "";
 		
+		if(result >0){
+			response.sendRedirect("selectOneSalepage.bo?num="+board_no);
+		}else{
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "명세표 전송 실패");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
+		}
 	}
 
 	/**

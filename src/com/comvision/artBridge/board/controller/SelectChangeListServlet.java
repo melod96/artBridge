@@ -16,11 +16,12 @@ import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.sale.model.service.SaleService;
 
 /**
  * Servlet implementation class ChangeSelectListServlet
  */
-@WebServlet("/selectChangeList.bo")
+@WebServlet("/selectChangeList.sp")
 public class SelectChangeListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -41,7 +42,6 @@ public class SelectChangeListServlet extends HttpServlet {
 
 		int changenum = Integer.parseInt(request.getParameter("sel_val"));
 		
-		System.out.println(changenum);
 
 		//페이징 처리
 		int currentPage;
@@ -86,11 +86,20 @@ public class SelectChangeListServlet extends HttpServlet {
 			ArrayList<Board> list = new BoardService().selectCheapList(currentPage, limit);
 			System.out.println("페이징 처리 : " + list);
 			
+			//해당하는 판매글의 옵션
+			ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
+			for(Board bb : list){
+				ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(bb.getBoard_no());
+				
+				opmap.addAll(oplist);
+			}
+			
 			//한 게시글 마다 해당하는 이미지 파일 불러오기
 			HashMap<String, Object> hmap = new BoardService().selectFileList(list);
 			
 			Board b = (Board)hmap.get("board");
 			ArrayList<Files> filelist = (ArrayList<Files>)hmap.get("files");
+			
 			
 			//연관 검색어 출력
 			ArrayList<Relate> rlist = new BoardService().selectRelateList();
@@ -102,6 +111,7 @@ public class SelectChangeListServlet extends HttpServlet {
 				request.setAttribute("filelist", filelist);
 				request.setAttribute("pi", pi);
 				request.setAttribute("rlist", rlist);
+				request.setAttribute("oplist", opmap);
 			}else{
 				page = "views/common/errorPage.jsp";
 				request.setAttribute("msg", "게시판 조회 실패");
@@ -116,6 +126,14 @@ public class SelectChangeListServlet extends HttpServlet {
 			ArrayList<Board> list = new BoardService().selectExpensiveList(currentPage, limit);
 			System.out.println("페이징 처리 : " + list);
 			
+			//해당하는 판매글의 옵션
+			ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
+			for(Board bb : list){
+				ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(bb.getBoard_no());
+				
+				opmap.addAll(oplist);
+			}
+			
 			//한 게시글 마다 해당하는 이미지 파일 불러오기
 			HashMap<String, Object> hmap = new BoardService().selectFileList(list);
 			
@@ -132,6 +150,7 @@ public class SelectChangeListServlet extends HttpServlet {
 				request.setAttribute("filelist", filelist);
 				request.setAttribute("pi", pi);
 				request.setAttribute("rlist", rlist);
+				request.setAttribute("oplist", opmap);
 			}else{
 				page = "views/common/errorPage.jsp";
 				request.setAttribute("msg", "게시판 조회 실패");
@@ -146,6 +165,14 @@ public class SelectChangeListServlet extends HttpServlet {
 			ArrayList<Board> list = new BoardService().selectCredibilityList(currentPage, limit);
 			System.out.println("페이징 처리 : " + list);
 			
+			//해당하는 판매글의 옵션
+			ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
+			for(Board bb : list){
+				ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(bb.getBoard_no());
+				
+				opmap.addAll(oplist);
+			}
+			
 			//한 게시글 마다 해당하는 이미지 파일 불러오기
 			HashMap<String, Object> hmap = new BoardService().selectFileList(list);
 			
@@ -162,6 +189,7 @@ public class SelectChangeListServlet extends HttpServlet {
 				request.setAttribute("filelist", filelist);
 				request.setAttribute("pi", pi);
 				request.setAttribute("rlist", rlist);
+				request.setAttribute("oplist", opmap);
 			}else{
 				page = "views/common/errorPage.jsp";
 				request.setAttribute("msg", "게시판 조회 실패");
@@ -176,6 +204,14 @@ public class SelectChangeListServlet extends HttpServlet {
 			ArrayList<Board> list = new BoardService().selectStarList(currentPage, limit);
 			System.out.println("페이징 처리 : " + list);
 			
+			//해당하는 판매글의 옵션
+			ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
+			for(Board bb : list){
+				ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(bb.getBoard_no());
+				
+				opmap.addAll(oplist);
+			}
+			
 			//한 게시글 마다 해당하는 이미지 파일 불러오기
 			HashMap<String, Object> hmap = new BoardService().selectFileList(list);
 			
@@ -192,6 +228,7 @@ public class SelectChangeListServlet extends HttpServlet {
 				request.setAttribute("filelist", filelist);
 				request.setAttribute("pi", pi);
 				request.setAttribute("rlist", rlist);
+				request.setAttribute("oplist", opmap);
 			}else{
 				page = "views/common/errorPage.jsp";
 				request.setAttribute("msg", "게시판 조회 실패");
@@ -200,6 +237,7 @@ public class SelectChangeListServlet extends HttpServlet {
 			view.forward(request, response);
 			
 		}
+		
 	}
 
 	/**

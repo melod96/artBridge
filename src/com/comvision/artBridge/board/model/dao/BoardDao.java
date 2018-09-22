@@ -140,6 +140,8 @@ public class BoardDao {
 				b.setNick_name(rset.getString("nick_name"));
 				b.setBoard_date(rset.getDate("board_date"));
 				b.setBoard_status(rset.getInt("board_status"));
+				b.setBoard_count(rset.getInt("board_count"));
+				b.setMain_view(rset.getInt("main_view"));
 				
 				list.add(b);
 			}
@@ -185,6 +187,8 @@ public class BoardDao {
 				b.setNick_name(rset.getString("nick_name"));
 				b.setBoard_date(rset.getDate("board_date"));
 				b.setBoard_status(rset.getInt("board_status"));
+				b.setBoard_count(rset.getInt("board_count"));
+				b.setMain_view(rset.getInt("main_view"));
 				
 				list.add(b);
 			}
@@ -230,6 +234,8 @@ public class BoardDao {
 				b.setNick_name(rset.getString("nick_name"));
 				b.setBoard_date(rset.getDate("board_date"));
 				b.setBoard_status(rset.getInt("board_status"));
+				b.setBoard_count(rset.getInt("board_count"));
+				b.setMain_view(rset.getInt("main_view"));
 				
 				list.add(b);
 			}
@@ -276,6 +282,8 @@ public class BoardDao {
 				b.setNick_name(rset.getString("nick_name"));
 				b.setBoard_date(rset.getDate("board_date"));
 				b.setBoard_status(rset.getInt("board_status"));
+				b.setBoard_count(rset.getInt("board_count"));
+				b.setMain_view(rset.getInt("main_view"));
 				
 				list.add(b);
 			}
@@ -312,14 +320,15 @@ public class BoardDao {
 				
 				while(rset.next()){
 					b = new Board();
+					f = new Files();
 					b.setBoard_no(rset.getInt("board_no"));
 					b.setBoard_title(rset.getString("board_title"));
 					b.setBoard_content(rset.getString("board_content"));
+					f.setFiles_root(rset.getString("files_root"));
+					b.setMember_no(rset.getInt("member_no"));
 					b.setNick_name(rset.getString("nick_name"));
 					
-					f = new Files();
 					
-					f.setFiles_root(rset.getString("files_root"));
 					
 					flist.add(f);
 				}
