@@ -13,9 +13,11 @@ import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.grade.model.vo.Grade;
+import com.comvision.artBridge.member.model.dao.MemberDao;
 import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.dao.SaleDao;
+import com.comvision.artBridge.sale.model.vo.Requirements;
 
 public class SaleService {
 
@@ -115,6 +117,17 @@ public class SaleService {
 			rollback(con);
 		}
 		return avgGrade;
+	}
+
+	//명세표 보내기
+	public int insertRequirements(String[] rsplit) {
+		Connection con = getConnection();
+		
+		int order = new SaleDao().insertOrder(con,rsplit);
+		int currval = new SaleDao().selectOrderCurrval(con);
+		int rinsert = new SaleDao().insertRequirements(con,currval ,rsplit);
+		int ord = new SaleDao().insertOrderDetail(con, currval);
+		return 0;
 	}
 
 

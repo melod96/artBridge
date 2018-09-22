@@ -19,6 +19,7 @@ import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.grade.model.vo.Grade;
 import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.sale.model.vo.Requirements;
 
 public class SaleDao {
 	
@@ -311,5 +312,26 @@ public class SaleDao {
 		}
 		return g;
 	}
+
+	public int insertOrder(Connection con, String[] rsplit) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int selectOrderCurrval(Connection con) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int insertRequirements(Connection con, int currval, String[] rsplit) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int insertOrderDetail(Connection con, int currval) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }
