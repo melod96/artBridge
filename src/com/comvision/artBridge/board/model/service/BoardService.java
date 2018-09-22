@@ -2,7 +2,6 @@ package com.comvision.artBridge.board.model.service;
 
 
 import static com.comvision.artBridge.common.JDBCTemplate.*;
-import static com.comvision.artBridge.common.JDBCTemplate.getConnection;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -11,6 +10,7 @@ import java.util.HashMap;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.nBoard.model.dao.NBoardDao;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.vo.Options;
 
@@ -122,6 +122,20 @@ public class BoardService {
 		close(con);
 		
 		return listCount;
+	}
+
+	public int getListSearchCount(String kind, String keyword) {
+		
+		Connection con = getConnection();
+		
+		int listCount = new BoardDao().getListSearchCount(con, kind, keyword);
+		
+		close(con);
+		
+		return listCount;
+		
+		
+		
 	}
 
 	

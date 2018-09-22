@@ -471,5 +471,46 @@ public class BoardDao {
 		return result;
 	}
 
+	public int getListSearchCount(Connection con, String kind, String keyword) {
+		
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		String query = null;
+		if(kind=="board_no"){
+		query = prop.getProperty("ListSearchNoCount");
+		}else{
+		query = prop.getProperty("ListSearchCount");	
+		}
+		
+		int listCount = 0;
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, kind);
+			pstmt.setString(2, keyword);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return listCount;
+		
+		
+		
+		
+		
+	}
+
+
+
 	
 }
