@@ -126,7 +126,7 @@
 						<% if(currentPage <=1){ %>
 							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
 						<%}else{ %>
-							<a onclick = "location.href='<%= request.getContextPath()%>/search.nb?currentPage=<%=currentPage -1%>&search=<%=search%>s'" class="btn-prev" title="이전">
+							<a onclick = "location.href='<%= request.getContextPath()%>/search.nb?currentPage=<%=currentPage -1%>&search=<%=search%>'" class="btn-prev" title="이전">
 							<em class="blind">목록에서 이전 페이지 이동</em></a>
 						<%} %>
 						<span class="paging-numbers">

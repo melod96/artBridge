@@ -105,20 +105,30 @@ Connection con = getConnection();
 	
 	//게시글 전체 출력
 	public ArrayList<Board> selectBoard(int currentPage, int limit) {
-	Connection con = getConnection();
+		
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new BoardDao().selectSaleList(con,currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	/*Connection con = getConnection();
 		
 		ArrayList<Board> list = new AdminDao().selectBoard(con);
 		
 		close(con);
 		
-		return list;
+		return list;*/
 	}
 	
 	//게시글 선택 출력
+	
+	
 	public ArrayList<Board> selectBoardList(int currentPage, int limit, String kind, String keyword) {
 		Connection con = getConnection();
 			
-			ArrayList<Board> list = new AdminDao().selectSaleList(con,currentPage, limit,kind,keyword);
+			ArrayList<Board> list = new AdminDao().selectBoardList(con,currentPage, limit,kind,keyword);
 			
 			close(con);
 

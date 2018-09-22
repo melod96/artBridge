@@ -27,6 +27,7 @@ public class SearchBoardServlet extends HttpServlet {
     }
 
 
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String value = request.getParameter("value");
@@ -68,16 +69,16 @@ public class SearchBoardServlet extends HttpServlet {
 
 				PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 		
+				int num  = 0;
 				
 				
 				//판매글 출력
-				ArrayList<Board> list = new AdminService().selectBoardList(currentPage, limit, kind, keyword);
+				ArrayList<Board> blist = new AdminService().selectBoardList(currentPage, limit, kind, keyword);
 				
 				String page = "";
-				int num  = 2;
-				if(list != null){
+				if(blist != null){
 					page = "views/admin/commissionAdmin.jsp";
-					request.setAttribute("list", list);
+					request.setAttribute("blist", blist);
 					request.setAttribute("pi", pi);
 					request.setAttribute("num", num);
 					request.setAttribute("value", value);

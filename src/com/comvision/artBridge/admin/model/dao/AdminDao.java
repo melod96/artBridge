@@ -226,8 +226,47 @@ private Properties prop = new Properties();
 	}
 
 	//게시글 전체 조회
-	public ArrayList<Board> selectBoard(Connection con) {
+	public ArrayList<Board> selectBoard(Connection con, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		ArrayList<Board> list = null;
+		
+		
+		String query = prop.getProperty("selectBoard");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			pstmt.setInt(1, startRow);
+			pstmt.setInt(2, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			while(rset.next()){
+				Board b= new Board();
+				
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setNick_name(rset.getString("nick_name"));
+				b.setBoard_date(rset.getDate("board_date"));
+				b.setBoard_title(rset.getString("board_title"));
+				
+				list.add(b);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+		/*ArrayList<Board> list = null;
 		Statement stmt = null;
 		ResultSet rset = null;
 		
@@ -259,8 +298,65 @@ private Properties prop = new Properties();
 			close(stmt);
 		}
 		
-		return list;
+		return list;*/
 
+	}
+	
+	//게시글 선택 조회
+	
+	
+	public ArrayList<Board> selectBoardList(Connection con, int currentPage, int limit, String kind, String keyword) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = null;
+		String query = "";
+		
+		if(kind.equals("BOARD_NO")){
+			 query = prop.getProperty("selectNoList");
+		}else if(kind.equals("NICK_NAME")){
+			 query = prop.getProperty("selectNameList");
+		}else if(kind.equals("BOARD_TITLE")){
+			 query = prop.getProperty("selectTitleList");
+		}
+		
+		System.out.println(kind);
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			if(kind.equals("no")){
+				pstmt.setInt(1, Integer.parseInt(keyword));
+			}else{
+			pstmt.setString(1, keyword);
+			}
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			
+			while(rset.next()){
+				Board b= new Board();
+				
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setNick_name(rset.getString("nick_name"));
+				b.setBoard_title(rset.getString("board_title"));
+				
+				list.add(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
 	}
 
 	

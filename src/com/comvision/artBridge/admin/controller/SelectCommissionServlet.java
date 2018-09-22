@@ -64,7 +64,7 @@ public class SelectCommissionServlet extends HttpServlet {
 			
 				//출력
 				ArrayList<Relate> list = new AdminService().selectRelate();
-				ArrayList<Board> blist = new AdminService().selectBoard();
+				ArrayList<Board> blist = new AdminService().selectBoard( currentPage,  limit);
 				
 				String page = "";
 				int num = 1;

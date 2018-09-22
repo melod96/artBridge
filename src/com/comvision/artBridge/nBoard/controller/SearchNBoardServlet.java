@@ -65,6 +65,7 @@ public class SearchNBoardServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 		
+		//num은 서치를 했을 때 페이징을 하면서 구분 할 수 있게해주는 임의 구분자임.
 		int num = 0;
 		
 		ArrayList<Notice> list = new NBoardService().searchNotice(currentPage, limit,search);

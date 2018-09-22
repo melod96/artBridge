@@ -5,12 +5,45 @@
 	if((ArrayList<Relate>)request.getAttribute("list") != null){
 		list = (ArrayList<Relate>)request.getAttribute("list");
 	}
-	%> 
-	<%
+
 	ArrayList<Board> list2 = null; 
 	if((ArrayList<Board>)request.getAttribute("blist") != null){
 		list2 = (ArrayList<Board>)request.getAttribute("blist");
 	}
+	
+	
+	int num = (int)request.getAttribute("num");
+	String value="";
+	
+		if(num == 0){
+			value = (String)request.getAttribute("value");
+			}
+		
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage(); 
+	
+	/* int num = (int)request.getAttribute("num");
+	
+	PageInfo pi = null;
+	int listCount = 0;
+	int currentPage = 0;
+	int maxPage = 0;
+	int startPage = 0;
+	int endPage = 0;
+	
+	if((PageInfo)request.getAttribute("pi") != null){
+		pi = (PageInfo)request.getAttribute("pi");
+		listCount = pi.getListCount();
+		currentPage = pi.getCurrentPage();
+		maxPage = pi.getMaxPage();
+		startPage = pi.getStartPage();
+		endPage = pi.getEndPage(); 
+	}*/
+	
 	%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -172,26 +205,41 @@ border-color:darkgray;
 							<tr>
 								<td style="background: lightgray;">검색옵션</td>
 								<td><select name="national2"
-									style="float: left; width: 200px;">
-										<option value="ko">전체</option>
-										<option value="ch">작가명</option>
-										<option value="jp">제목</option>
+									style="float: left; width: 200px;" id="selectBox">
+										<option value="no">글번호</option>
+										<option value="name">작가명</option>
+										<option value="title">제목</option>
 								</select></td>
 							</tr>
 
 							<tr>
 								<td style="background: lightgray">검색어 입력</td>
-								<td><input type="text" style="float: left; width: 400px;">
+								<td><input type="text" style="float: left; width: 400px;" id="searchText">
 									<button type="submit" id="searchBtn" name="searchBtn"
 										class="btn btn-primary btn-sm"
-										style="padding: 5px 22px; float: right;">검색</button></td>
+										style="padding: 5px 22px; float: right;" onclick="search();">검색</button></td>
 							</tr>
-
-
 						</tbody>
 					</table>
 				</div>
+<script>
+function search(){
+	var value = "";
+	
+	if($("#selectBox").val() == "no"){
+		value = "BOARD_NO";
+	}else if($("#selectBox").val() == "name"){
+		value = "NICK_NAME";
+	}else if($("#selectBox").val() == "title"){
+		value = "BOARD_TITLE";
+	}
+	value += "," + $("#searchText").val();
 
+	console.log(value);
+location.href="<%= request.getContextPath() %>/searchBoard.ad?value=" + value;
+
+};
+</script>
 				<br> <br>
 
 				<button type="submit" id="deleteBtn" name="deleteBtn"
@@ -246,23 +294,82 @@ border-color:darkgray;
 							<td><label><%=b.getBoard_title() %></label></td>
 						</tr>
 						<% }} %> 
-
 					</tbody>
 				</table>
-
-				<div class="paginate">
-					<a href="#" class="btn-first" title="처음"><em class="blind">목록에서
-							처음 페이지 이동</em></a> <a href="#" class="btn-prev" title="이전"><em
-						class="blind">목록에서 이전 페이지 이동</em></a> <span class="paging-numbers">
-						<a href="#">1<span class="blind">페이지로 이동</span></a> <a href="#"
-						class="on">2<span class="blind">페이지로 이동</span></a> <a href="#">3<span
-							class="blind">페이지로 이동</span></a> <a href="#">4<span class="blind">페이지로
-								이동</span></a> <a href="#">5<span class="blind">페이지로 이동</span></a>
-					</span> <a href="#" class="btn-next" title="다음"><span class="spr"><em
-							class="blind">목록에서 다음 페이지 이동</em></span></a> <a href="#" class="btn-last"
-						title="끝"><span class="spr"><em class="blind">목록에서
-								끝 페이지 이동</em></span></a>
-				</div>
+				
+				   <%
+	              	              	if (num == 0) {
+	              	              %>
+	              
+	              <!--페이징 search -->
+	              
+					<div class="paginate">
+						<a onclick="location.href='<%=request.getContextPath()%>/searchBoard.ad?currentPage=<%=currentPage%>&value=<%=value%>'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<% if(currentPage <=1){ %>
+							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
+						<%}else{ %>
+							<a onclick = "location.href='<%= request.getContextPath()%>/searchBoard.ad?currentPage=<%=currentPage -1%>&value=<%=value%>'" class="btn-prev" title="이전">
+							<em class="blind">목록에서 이전 페이지 이동</em></a>
+						<%} %>
+						<span class="paging-numbers">
+							<% for(int p = startPage; p <=endPage;p++){
+								if(p==currentPage){%>
+									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
+								<%}else{ %>
+									<a onclick= "location.href='<%= request.getContextPath()%>/searchBoard.ad?currentPage=<%=p%>&value=<%=value%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+								<%} %>
+							<%} %>
+						</span>
+						<% if(currentPage >= maxPage){ %>
+							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%}else{ %>
+							<a onclick = "location.href = '<%= request.getContextPath()%>/searchBoard.ad?currentPage=<%=currentPage +1%>&value=<%=value%>'" class="btn-next" title="다음">
+							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%} %>
+						
+						<a onclick = "location.href = '<%= request.getContextPath()%>/searchBoard.ad?currentPage=<%=maxPage%>&value=<%=value%>'" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+					</div>
+					
+	              <!--//페이징 search -->
+	              
+	              <%}else{ %>
+	              
+	              <!--페이징 normal -->
+	              
+					<div class="paginate">
+						<a onclick="location.href='<%=request.getContextPath()%>/selectCommision.ad?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<% if(currentPage <=1){ %>
+							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
+						<%}else{ %>
+							<a onclick = "location.href='<%= request.getContextPath()%>/selectCommision.ad?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<em class="blind">목록에서 이전 페이지 이동</em></a>
+						<%} %>
+						<span class="paging-numbers">
+							<% for(int p = startPage; p <=endPage;p++){
+								if(p==currentPage){%>
+									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
+								<%}else{ %>
+									<a onclick= "location.href='<%= request.getContextPath()%>/selectCommision.ad?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+								<%} %>
+							<%} %>
+						</span>
+						<% if(currentPage >= maxPage){ %>
+							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%}else{ %>
+							<a onclick = "location.href = '<%= request.getContextPath()%>/selectCommision.ad?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%} %>
+						
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectCommision.ad?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+					</div>
+					
+	              <!--//페이징 normal -->
+	              
+				   <%} %>	              
+				
+			
 			</div>
 		</div>
 
