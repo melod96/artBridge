@@ -81,23 +81,8 @@ ul.tab-menu li>a:hover {
 											class="btn btn-primary btn-sm" onclick="search();">검색</button>
 											
 											
-										<!-- 	function del() {
-							$("input:checkbox").each(function() {
-								if ($(this).prop("checked") == true) {
-									$(this).parent().parent().remove();
-									i--;
-								}
-
-							});
-
-						} -->
 										
 					<script>
-						/* var Objs = $("selectBox option");
-						for(i=1; i<Objs.length;i++){
-							if(Objs.eq(i).text() == "작가명"
-									)
-						} */
 						
 
 							function search(){
@@ -242,88 +227,31 @@ ul.tab-menu li>a:hover {
 					
 					
 						var i = 1;
-						function add() {
-							<%-- <%ArrayList<Board> blist = null; 
-	if((ArrayList<Board>)request.getAttribute("blist") != null){
-		list = (ArrayList<Board>)request.getAttribute("blist");
-	}%> --%>
-						<%-- var str = "";
-							if (i == 5) {
-								alert('5개 이상 생성할 수 없습니다.')
-							} else {
+						function add(){
+							
+							//추가하기 함수
+							
+							function add() {
+												
+									var str = "";
+													
 								$("input[id='check']").each(function() {
 									if ($(this).prop("checked") == true) {
 										str += $(this).val() + "," ;
 									}
-
 								});
-									location.href = '<%= request.getContextPath()%>/deleteSale.ad?str='+str;
-									var result = [];
-									$.ajax({
-										url:"deleteSale.ad",
-										data:{str:str},
-										type:"get",
-										success:function(data){
-											/* var result = blist.board_no; */
-											result = hmap.blist;
-											console.log(blist);
-											$("#banner").val(result);
-											
-										},
-										error:function(){
-											console.log("실패");
-										}
-									});
-							}
-						}	 --%>
-								/* $("input:checkbox").each(function() {
-									if ($(this).prop("checked") == true) {
-										$(this).parent().parent().appendTo(
-												$(".trtr"));
-										i++;
+								
+								if(str==""){
+									location.href = '<%= request.getContextPath()%>/selectMain.ad';
+									console.log('1');
+								}else{
+									location.href = '<%= request.getContextPath()%>/insertMain.ad?str='+str;
+									console.log('2');
 									}
-
-								}); */
-								
-								//$('input:checkbox[name="check"]:checked').length{
-									
-									
-								
-									
-									<%-- value += "," + $("#searchText").val();
-									
-									console.log(value);
-								location.href="<%= request.getContextPath() %>/search.ad?value=" + value; --%>
-									
-								//}
-
-							
-								 /*  $(function() {
-									$(
-											"<tr><td><input type="+"checkbox"+">"
-											+ "</td>"
-											+"<td colspan="+"5"+">"
-													+ "<input type = "+"text"+"value="+"빈 텍스트"+" readonly>"
-													+ "</td></tr>").appendTo(
-											$(".trtr"));
-								}); */
-								//i++;
-							//} 
- 
-						//};
-
-					/* 	function del() {
-							$("input:checkbox").each(function() {
-								if ($(this).prop("checked") == true) {
-									$(this).parent().parent().remove();
-									i--;
-								}
-
-							});
-
-						} */
-						//}
+								};
+						}
 					</script>
+					
 					<h3 style="margin-left:25%;">메인 배너</h3>
 					<div class="addTable">
 						<table class="tbl-type02" style="width: 600px; margin: auto;">
@@ -377,5 +305,53 @@ ul.tab-menu li>a:hover {
 		<!-- // Footer -->
 
 	</div>
+
+	<script>
+		//화면 로딩시 메인배너 테이블을 자동으로 로드
+		$(function() {
+
+			$
+					.ajax({
+						//서블렛 주소
+						url : "autoSelect.ad",
+						//방식
+						type : "get",
+						//서블렛에서 성공적으로 data를 받아 왔을 때 실행 할 함수
+						success : function(data) {
+							for(var key in data){
+							//데이터에 따라 생성될 행(tr)들이 추가될 table body의 class명 trtr을 명시하는 변수 선언 
+							$trtr = $(".trtr");
+
+							//생성될 tr태그를 선언 (*닫기 태그는  하지 않아도 자동 생성 된다.)
+							var $tr = $("<tr>");
+							//tr태그 안의 td태그 선언
+							var $checkTd = $("<td><input type='checkbox'>");
+							var $noTd = $("<td colspan='5'>");
+							var $input = $("<input name='bdNo' type='text' readonly>").val(data[key].board_no);
+							
+							console.log(data[key].board_no);
+							
+							//생성한 $tr에 $checkTd를 추가(테이블 형식에따라 순서를 맞춰줘야 한다.)
+							$tr.append($checkTd);
+							
+							//$noTd에 $input을 추가 후 $tr에 $noTd를 추가
+							$noTd.append($input);
+							$tr.append($noTd);
+							
+							
+
+							//마지막으로 $tr을 $trtr이라는 table body에 추가
+							$trtr.append($tr);
+							}
+
+						},
+						error : function() {
+							alert("메인 베너로 설정된 글이 없습니다.")
+						}
+					});
+
+		});
+	</script>
+
 </body>
 </html>
