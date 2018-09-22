@@ -249,7 +249,6 @@ public class SaleDao {
 				
 				glist.add(g);
 			}
-			System.out.println(glist);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -287,6 +286,7 @@ public class SaleDao {
 		return result;
 	}
 
+	//평점 평균
 	public Grade avgGrade(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -313,24 +313,95 @@ public class SaleDao {
 		return g;
 	}
 
-	public int insertOrder(Connection con, String[] rsplit) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertOrder(Connection con, int member_no, int board_no, int writer_no) {
+		PreparedStatement pstmt =  null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertOrder");
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, member_no);
+			pstmt.setInt(2, board_no);
+			pstmt.setInt(3, writer_no);
+			
+			result= pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	public int selectOrderCurrval(Connection con) {
-		// TODO Auto-generated method stub
-		return 0;
+		Statement stmt = null;
+		ResultSet rset= null;
+		int result = 0;
+		
+		String query = prop.getProperty("selectOrderCurrval");
+		
+		try {
+			stmt = con.createStatement();
+			
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()){
+				result = rset.getInt("currval");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(stmt);
+			close(rset);
+		}
+		return result;
 	}
 
-	public int insertRequirements(Connection con, int currval, String[] rsplit) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertRequirements(Connection con, int member_no, int currval, String rsplit) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertRequirements");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, currval);
+			pstmt.setInt(2, member_no);
+			pstmt.setString(3, rsplit);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return result;
 	}
 
 	public int insertOrderDetail(Connection con, int currval) {
-		// TODO Auto-generated method stub
-		return 0;
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertOrderDetail");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, currval);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return result;
 	}
 
 

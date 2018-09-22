@@ -219,13 +219,16 @@
 										for(var i = 0; i<count; i++){
 											req += $("#rid"+i).val() + "@";
 										}
+										var member_no = $("#member_no").val();
+										var board_no = $("#board_no").val();
+										var writer_no = $("#writer_no").val();
 									
 										$.ajax({
 											url:"senddetailedlist.sp",
-											data:{req:req},
+											data:{req:req, member_no:member_no,writer_no:writer_no,board_no:board_no},
 											type:"post",
 											success:function(data){
-												console.log("서버 전송 성공");
+												alert("명세표를 성공적으로 전송하였습니다!");
 											},
 											error:function(status, msg){
 												console.log("서버 전송 실패");
@@ -331,6 +334,8 @@
 					<%} %>
 					<input type="hidden" value="<%=b.getBoard_no()%>" id="board_no"
 						name="board_no" />
+						<input type="hidden" value="<%=b.getMember_no()%>" id="writer_no"
+						name="writer_no" />
 					<div class="modal-content">
 
 						<!-- Modal Header -->

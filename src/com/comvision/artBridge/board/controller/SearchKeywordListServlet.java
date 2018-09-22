@@ -16,6 +16,7 @@ import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.sale.model.service.SaleService;
 
 /**
  * Servlet implementation class SelectKeywordList
@@ -23,14 +24,14 @@ import com.comvision.artBridge.relate.model.vo.Relate;
 @WebServlet("/searchkeyword.bo")
 public class SearchKeywordListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public SearchKeywordListServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public SearchKeywordListServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -38,73 +39,82 @@ public class SearchKeywordListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=UTF-8");
-		
+
 		String search = request.getParameter("search");
-		
 
 		//페이징 처리
-				int currentPage;
-				int limit;		
-				int maxPage; 	
-				int startPage;	
-				int endPage; 	
+		int currentPage;
+		int limit;		
+		int maxPage; 	
+		int startPage;	
+		int endPage; 	
 
 
-				currentPage = 1;
+		currentPage = 1;
 
 
-				limit = 10;
+		limit = 10;
 
-				if(request.getParameter("currentPage")!= null){
-					currentPage = Integer.parseInt(request.getParameter("currentPage"));
-				}
-
-
-				int listCount = new BoardService().getKeywordListCount(search);
+		if(request.getParameter("currentPage")!= null){
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
 
 
-				maxPage = (int)((double)listCount/limit + 0.9);
+		int listCount = new BoardService().getKeywordListCount(search);
 
 
-				startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
+		maxPage = (int)((double)listCount/limit + 0.9);
 
 
-				endPage = startPage + limit -1;
-
-				if(maxPage<endPage){
-					endPage = maxPage;
-				}
-
-				PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
+		startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
 
 
-				//판매글 출력
-//				ArrayList<Board> list = new BoardService().selectList(currentPage, limit);
-				ArrayList<Board> list = new BoardService().searchKeywordList(currentPage, limit,search);
-				System.out.println("페이징 처리 : " + list);
-				
-				//한 게시글 마다 해당하는 이미지 파일 불러오기
-				HashMap<String, Object> hmap = new BoardService().selectFileList(list);
-				
-				Board b = (Board)hmap.get("board");
-				ArrayList<Files> filelist = (ArrayList<Files>)hmap.get("files");
+		endPage = startPage + limit -1;
 
-				//연관 검색어 출력
-				ArrayList<Relate> rlist = new BoardService().selectRelateList();
-				String page = "";
-			
-				if(list != null){
-					page = "views/sale/salepage.jsp";
-					request.setAttribute("list", list);
-					request.setAttribute("filelist", filelist);
-					request.setAttribute("pi", pi);
-					request.setAttribute("rlist", rlist);
-				}else{
-					page = "views/common/errorPage.jsp";
-					request.setAttribute("msg", "게시판 조회 실패");
-				}
-				RequestDispatcher view = request.getRequestDispatcher(page);
-				view.forward(request, response);
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+
+		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
+
+
+		//판매글 출력
+		ArrayList<Board> list = new BoardService().searchKeywordList(currentPage, limit,search);
+
+		//해당하는 판매글의 옵션
+		ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
+		for(Board b : list){
+			ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(b.getBoard_no());
+
+			opmap.addAll(oplist);
+		}
+
+		//연관 검색어 출력
+		ArrayList<Relate> rlist = new BoardService().selectRelateList();
+		//한 게시글 마다 해당하는 이미지 파일 불러오기
+		HashMap<String, Object> hmap = new BoardService().selectFileList(list);
+		Board b = null;
+		ArrayList<Files> filelist = null;
+		if(hmap != null){
+			b = (Board)hmap.get("board");
+			filelist = (ArrayList<Files>)hmap.get("files");
+		}
+
+			String page = "";
+
+			if(list != null && filelist != null && pi !=null && rlist !=null && opmap !=null){
+				page = "views/sale/salepage.jsp";
+				request.setAttribute("list", list);
+				request.setAttribute("filelist", filelist);
+				request.setAttribute("pi", pi);
+				request.setAttribute("rlist", rlist);
+				request.setAttribute("oplist", opmap);
+			}else{
+				page = "views/common/errorPage.jsp";
+				request.setAttribute("msg", "게시판 조회 실패");
+			}
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 	}
 
 	/**

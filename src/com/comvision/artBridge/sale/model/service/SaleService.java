@@ -120,14 +120,24 @@ public class SaleService {
 	}
 
 	//명세표 보내기
-	public int insertRequirements(String[] rsplit) {
+	public int insertRequirements(String[] rsplit, int member_no, int board_no, int writer_no) {
 		Connection con = getConnection();
+		int result = 0;
 		
-		int order = new SaleDao().insertOrder(con,rsplit);
+		int order = new SaleDao().insertOrder(con, member_no, board_no, writer_no);
 		int currval = new SaleDao().selectOrderCurrval(con);
-		int rinsert = new SaleDao().insertRequirements(con,currval ,rsplit);
+		for(int i = 0; i<rsplit.length; i++){
+			int rinsert = new SaleDao().insertRequirements(con,member_no,currval ,rsplit[i]);			
+		}
 		int ord = new SaleDao().insertOrderDetail(con, currval);
-		return 0;
+		
+		if(order>0&&currval>0&&ord>0){
+			commit(con);
+			result++;
+		}else{
+			rollback(con);
+		}
+		return result;
 	}
 
 

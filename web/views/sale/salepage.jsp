@@ -1,11 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
 	import="java.util.*, com.comvision.artBridge.board.model.vo.*,com.comvision.artBridge.files.model.vo.*, com.comvision.artBridge.relate.model.vo.*"%>
-<%ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
-	ArrayList<Files> filelist = (ArrayList<Files>)request.getAttribute("filelist");
-	ArrayList<Relate> rlist = (ArrayList<Relate>)request.getAttribute("rlist");
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
-	ArrayList<HashMap<String,Object>> oplist = (ArrayList<HashMap<String,Object>>)request.getAttribute("oplist");
+<%
+	Member m = null;
+	if(session.getAttribute("loginUser") != null){
+		m = (Member)session.getAttribute("loginUser");
+	}
+	ArrayList<Board> list = null;
+	if((ArrayList<Board>)request.getAttribute("list") != null){
+		list = (ArrayList<Board>)request.getAttribute("list");
+	}
+	ArrayList<Files> filelist = null;
+	if((ArrayList<Files>)request.getAttribute("filelist") != null){
+		filelist =(ArrayList<Files>)request.getAttribute("filelist");
+	}
+	ArrayList<Relate> rlist = null;
+	if((ArrayList<Relate>)request.getAttribute("rlist") != null){
+		rlist = (ArrayList<Relate>)request.getAttribute("rlist");
+	}
+	PageInfo pi = null;
+	if((PageInfo)request.getAttribute("pi")!= null){
+		pi = (PageInfo)request.getAttribute("pi");
+	}
+	ArrayList<HashMap<String,Object>> oplist = null;
+	if((ArrayList<HashMap<String,Object>>)request.getAttribute("oplist")!= null){
+		oplist = (ArrayList<HashMap<String,Object>>)request.getAttribute("oplist");
+	}
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
 	int maxPage = pi.getMaxPage();
@@ -114,10 +134,8 @@
 
 						<div class="ui action input">
 							<form style="display: inline-block;" action="<%= request.getContextPath() %>/searchkeyword.bo" method="get">
-								<input name="search" class="input-short form-inline" type="text"
-									placeholder="텍스트를 입력하세요">
-								<!--			<input id="" name="" class="form-control input-short" type="text" placeholder="텍스트를 입력하세요">-->
-
+								<input name="search" class="input-short form-inline" type="text" placeholder="텍스트를 입력하세요">
+								
 								<button type="submit" class="btn btn-default btn-sg form-inline">검색</button>
 							</form>
 							<!-- option 태그 미완성 -->
@@ -126,13 +144,14 @@
 								<option value="0" name="0">전체</option>	
 								<option value="1"name="1">최저가</option>
 								<option value="2"name="2">최고가</option>
-								<option value="3"name="3">거래완료율</option>
+								<option value="3" name="3">거래완료율</option>
 								<option value="4"name="4">별점</option>
 							</select></li>
+							<%if(m != null){ %>
 							<ul class="right">
-								<div class="sBtn1" style="height: 42px; line-height: 42px;"
-									onclick="">작품 등록 / 수정</div>
+								<div class="sBtn1" style="height: 42px; line-height: 42px;" onclick="">작품 등록 / 수정</div>
 							</ul>
+							<%} %>
 
 						</div>
 						<script>
@@ -144,10 +163,9 @@
 										url:"selectSaleList.bo"
 									});
 									
-									<%-- location.href="<%=request.getContextPath()%>/selectSaleList.bo"; --%>
 								}else if(sel_val=="1"){
 									$.ajax({
-										url:"selectChangeList.bo",
+										url:"selectChangeList.sp",
 										data:{sel_val:sel_val},
 										type:"get",
 										success:function(data){
@@ -159,7 +177,7 @@
 									});
 								}else if(sel_val=="2"){
 									$.ajax({
-										url:"selectChangeList.bo",
+										url:"selectChangeList.sp",
 										data:{sel_val:sel_val},
 										type:"get",
 										success:function(data){
@@ -171,7 +189,7 @@
 									});
 								}else if(sel_val=="3"){
 									$.ajax({
-										url:"selectChangeList.bo",
+										url:"selectChangeList.sp",
 										data:{sel_val:sel_val},
 										type:"get",
 										success:function(data){
@@ -183,7 +201,7 @@
 									});
 								}else{
 									$.ajax({
-										url:"selectChangeList.bo",
+										url:"selectChangeList.sp",
 										data:{sel_val:sel_val},
 										type:"get",
 										success:function(data){
@@ -209,7 +227,6 @@
 						</ul>
 						<ul class="tag_box">
 
-							
 							<%for(Relate r : rlist){ %>
 								<ol>
 									<a href="" class="tag21">#<%= r.getRelate_name() %></a>
@@ -223,7 +240,6 @@
 					<div class="clear" style="height: 30px;">&nbsp;</div>
 
 
-					<form name="listForm" method="post" action="">
 						<div id="list_list" style="display: none;">
 							<table cellspacing="0" cellpadding="0" border="0" width="100%">
 								<tbody id="list_table"></tbody>
@@ -237,6 +253,7 @@
 							HashMap<String,Object> hmap = oplist.get(i);
 							i++;
 						%>
+						
 							<div id="list_img" style="display: block;">
 							<div class="list_img_box both left">
 								<ul>
@@ -278,7 +295,6 @@
 						<%} %>
 
 						
-					</form>
 					
 					<script>
 					//체이닝 방식
