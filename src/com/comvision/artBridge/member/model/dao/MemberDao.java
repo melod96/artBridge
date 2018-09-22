@@ -365,6 +365,7 @@ private Properties prop = new Properties();
 
 	public int deleteAbleCheck(Connection con, int mNo) {
 		PreparedStatement pstmt = null;
+		ResultSet rset = null;
 		int result = 0;
 		
 		String query = prop.getProperty("deleteAbleCheck");
@@ -374,7 +375,12 @@ private Properties prop = new Properties();
 			pstmt.setInt(1, mNo);
 			pstmt.setInt(2, mNo);
 			
-			result = pstmt.executeUpdate();			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result += 1;
+			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

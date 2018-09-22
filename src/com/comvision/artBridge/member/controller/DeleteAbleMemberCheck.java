@@ -34,10 +34,11 @@ public class DeleteAbleMemberCheck extends HttpServlet {
 		int result = new MemberService().deleteAbleChceck(mNo);
 		
 		if(result > 0){
+			response.getWriter().print(result);
+			
 		}else{
 			response.sendRedirect(request.getContextPath() + "/deleteRequest.me");
 		}
-		
 	}
 
 	/**
