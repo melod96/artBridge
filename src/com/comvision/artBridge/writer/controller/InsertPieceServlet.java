@@ -76,6 +76,7 @@ public class InsertPieceServlet extends HttpServlet {
 			
 			//Board객체 생성
 			Board b = new Board();
+			b.setMember_no(member_no);
 			b.setBoard_title(title);
 			b.setResolution(resolution);
 			b.setSubmit_file_type(file_type);
@@ -102,7 +103,7 @@ public class InsertPieceServlet extends HttpServlet {
 			
 			
 			//service 전송
-			/*int result = new WriterService().insertThumbnail(b, fileList);
+			int result = new WriterService().insertPiece(b, fileList);
 			
 			System.out.println("결과 : " + result);
 			
@@ -120,18 +121,12 @@ public class InsertPieceServlet extends HttpServlet {
 				//에러페이지로 메시지 전달
 				request.setAttribute("msg", "사진 게시판 등록 실패");
 				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-			}*/
-			
-			
-			
-			
+			}
 		}
-		
-		
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+		
 	}
 
 }

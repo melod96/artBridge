@@ -296,13 +296,13 @@
                             </span>
                           </div>
                           <div class="info-area2">
-                              <%-- <span><%= b.getBoard_title() %></span> --%>
+                              <span><%= b.getBoard_title() %></span>
                               <span class="price">7,000 ~</span>
                           </div>
                         </div>
                         <% 	no--;
-	                        	}
-	                    	} else if(list == null){ %>
+	                        }
+	                    } else { %>
                         <div class="piece-list default">첫 작품을 등록해주세요.</div>
                         <% } %>
                     </div>

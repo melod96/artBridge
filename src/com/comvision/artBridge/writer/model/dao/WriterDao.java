@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.files.model.vo.Files;
+
 import static com.comvision.artBridge.common.JDBCTemplate.*;
 
 public class WriterDao {
@@ -55,7 +57,7 @@ public class WriterDao {
 				b.setBoard_content(rset.getString("board_content"));
 				b.setBoard_date(rset.getDate("board_date"));
 				b.setMember_no(rset.getInt("member_no"));
-				b.setModify_date(rset.getDate("modify_date"));
+				//b.setModify_date(rset.getDate("modify_date"));
 				b.setBoard_status(rset.getInt("board_status"));
 				b.setBoard_count(rset.getInt("board_count"));
 				b.setMain_view(rset.getInt("main_view"));
@@ -97,6 +99,66 @@ public class WriterDao {
 		}
 		
 		return listCount;
+	}
+
+	//작가 작품등록 메소드
+	public int insertPiece(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertPiece");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, b.getBoard_title());
+			pstmt.setString(2, b.getBoard_content());
+			pstmt.setInt(3, b.getMember_no());
+			pstmt.setInt(4, b.getResolution());
+			pstmt.setString(5, b.getSubmit_file_type());
+			pstmt.setString(6, b.getSubmit_size());
+			pstmt.setInt(7, b.getWorking_period());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	//첨부파일 저장용 메소드
+	public int insertAttachment(Connection con, ArrayList<Files> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertThumb");
+		
+		try {
+			for(int i = 0; i < fileList.size(); i++){
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, fileList.get(i).getF_reference_no());
+				System.out.println("1 : "  +  fileList.get(i).getF_reference_no());
+				pstmt.setString(2, fileList.get(i).getFiles_title());
+				System.out.println("2 : "  +  fileList.get(i).getFiles_title());
+				pstmt.setString(3, fileList.get(i).getChange_title());
+				System.out.println("3 : "  +  fileList.get(i).getChange_title());
+				pstmt.setInt(4, fileList.get(i).getFiles_type());
+				System.out.println("4 : "  +  fileList.get(i).getFiles_type());
+				pstmt.setString(5, fileList.get(i).getFiles_root());
+				System.out.println("5 : "  +  fileList.get(i).getFiles_root());
+				
+				result += pstmt.executeUpdate();
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+	
+		return result;
 	}
 
 }
