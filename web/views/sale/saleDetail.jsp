@@ -134,7 +134,8 @@
 							</ol>
 
 							<ol align="center">
-								<div class="rateit" data-rateit-value="<%=avgGrade.getGrade() %>"
+								<div class="rateit"
+									data-rateit-value="<%=avgGrade.getGrade() %>"
 									data-rateit-ispreset="true" data-rateit-readonly="true"></div>
 
 								평점
@@ -164,73 +165,64 @@
 								</p>
 							</div>
 							<div align="center" id="text">가격옵션</div>
-								<label>옵션</label> <select style="width: 200px; float: right;"
-									onchange="changeSelect()" name="sel">
-									<option value="0">옵션을 선택해주세요</option>
-									<%
+							<label>옵션</label> <select style="width: 200px; float: right;"
+								onchange="changeSelect()" name="sel">
+								<option value="0">옵션을 선택해주세요</option>
+								<%
 										for (int i = 0; i < oplist.size(); i++) {
 											HashMap<String, Object> hmap = oplist.get(i);
 									%>
-									<option value="<%=hmap.get("options_price")%>"><%=hmap.get("options_name")%>
-										-
-										<%=hmap.get("options_price")%></option>
-									<%
+								<option value="<%=hmap.get("options_price")%>"><%=hmap.get("options_name")%>
+									-
+									<%=hmap.get("options_price")%></option>
+								<%
 										}
 									%>
-								</select><br> <label>요구사항 추가</label>
-								<button type="button" class="btn btn-primary btn-sm"
-									onclick="add()" style="float: right;">추가</button>
-								<div id="requirement">
-									<input type="text" style="width: 320px;" class = "requirmentcontent">
-								</div>
-								<script>
-								$(function(){
-									
-										var i = 1;
-									
-								});
-									
-								
-									function add() {
-										var count = document.getElementsByClassName("requirmentcontent").length
-										$("#requirement input:last-child").clone().appendTo("#requirement").val("");
-										$("#requirement input:last-child").attr("id","r"+count);
-									
-									}
-								</script>
-								<div class="orderline"></div>
-								<div id="payment">
-									<ul align="right">
-										<div class="totalTitle">
-											최소 결제 금액 : <span id="totals"></span><font
-												style="font-size: 24px">원</font>
-										</div>
-									</ul>
-									<ul style="margin-top: 10px;" align="center">
-										<button onclick = "senddetailedlist()" class="btn btn-primary btn-mg">명세표 보내기</button>
-									</ul>
-								</div>
-								<script>
+							</select><br> <label>요구사항 추가</label>
+							<button type="button" class="btn btn-primary btn-sm"
+								onclick="add()" style="float: right;">추가</button>
+							<div id="requirement">
+								<input type="text" style="width: 320px;"
+									class="requirmentcontent" id="rid0" name="rname0">
+							</div>
+							<script>
+                           function add() {
+                              var count = document.getElementsByClassName("requirmentcontent").length
+                              $("#requirement input:last-child").clone().appendTo("#requirement").val("");
+                              $("#requirement input:last-child").attr("id","rid"+count);
+                              $("#requirement input:last-child").attr("name","rname"+count);
+                           
+                           }
+                        </script>
+							<div class="orderline"></div>
+							<div id="payment">
+								<ul align="right">
+									<div class="totalTitle">
+										최소 결제 금액 : <span id="totals"></span><font
+											style="font-size: 24px">원</font>
+									</div>
+								</ul>
+								<ul style="margin-top: 10px;" align="center">
+									<button onclick="senddetailedlist()"
+										class="btn btn-primary btn-mg">명세표 보내기</button>
+								</ul>
+							</div>
+							<script>
 									function changeSelect() {
 										var sel_val = document.all.sel.value;
 
 										document.getElementById("totals").innerHTML = sel_val;
 									}
 									function senddetailedlist(){
-										/* var member_no = $("#member_no").val();
-										var board_no = $("#board_no").val();
-										var content = $("#editor").val(); */
 										var req = [];
-										var text = $("#requirmentcontent").val();
 										var count = document.getElementsByClassName("requirmentcontent").length; 
 										for(var i = 0; i<count; i++){
-											/* req += $("#requirmentcontent").val(); */
+											req += $("#rid"+i).val() + "@";
 										}
-										console.log(req);
 									
-										/* $.ajax({
+										$.ajax({
 											url:"senddetailedlist.sp",
-											data:{member_no:member_no, board_no:board_no, content:content},
+											data:{req:req},
 											type:"post",
 											success:function(data){
 												console.log("서버 전송 성공");
@@ -238,37 +230,37 @@
 											error:function(status, msg){
 												console.log("서버 전송 실패");
 											}
-										}); */
+										});
 									}
 								</script>
-								<div align="center" id="text">information</div>
-								<div>
-									<ul class="cf">
+							<div align="center" id="text">information</div>
+							<div>
+								<ul class="cf">
 
-										<p>
-											<span>작가등급</span><span style="float: right;"><%=ra.getRating_name()%></span>
-										</p>
-										<p>
-											<span>게시글 카테고리</span>
-											<%
+									<p>
+										<span>작가등급</span><span style="float: right;"><%=ra.getRating_name()%></span>
+									</p>
+									<p>
+										<span>게시글 카테고리</span>
+										<%
 												for (Relate r : rlist) {
 											%>
-											<span style="float: right;">#<%=r.getRelate_name()%>&nbsp;
-											</span>
-											<%
+										<span style="float: right;">#<%=r.getRelate_name()%>&nbsp;
+										</span>
+										<%
 												}
 											%>
-										</p>
-										<p>슬롯</p>
-										<%
+									</p>
+									<p>슬롯</p>
+									<%
 											for (int i = 0; i < ra.getSlot(); i++) {
 										%>
-										<input type="radio">
-										<%
+									<input type="radio">
+									<%
 											}
 										%>
-									</ul>
-								</div>
+								</ul>
+							</div>
 						</div>
 					</div>
 
@@ -290,7 +282,7 @@
 						<%if(m != null){ %>
 						<button type="button" class="btn btn-md" data-toggle="modal"
 							data-target="#hugiModal">후기 작성</button>
-							<%} %>
+						<%} %>
 					</div>
 					<div class="hugi">
 						<table>
@@ -330,13 +322,15 @@
 
 		<%@ include file="/views/common/footer.jsp"%>
 		<!-- modal -->
-			<div class="modal" id="hugiModal">
-				<div class="modal-dialog" style="width: 830px; height: 600px;">
-					<form action="<%=request.getContextPath()%>/hugi.sp" method="post">
+		<div class="modal" id="hugiModal">
+			<div class="modal-dialog" style="width: 830px; height: 600px;">
+				<form action="<%=request.getContextPath()%>/hugi.sp" method="post">
 					<%if(m != null){ %>
-						<input type="hidden" value = "<%=m.getMember_no()%>"id = "member_no" name="member_no" />
-						<%} %>
-						<input type="hidden" value = "<%=b.getBoard_no()%>"id = "board_no" name="board_no" />
+					<input type="hidden" value="<%=m.getMember_no()%>" id="member_no"
+						name="member_no" />
+					<%} %>
+					<input type="hidden" value="<%=b.getBoard_no()%>" id="board_no"
+						name="board_no" />
 					<div class="modal-content">
 
 						<!-- Modal Header -->
@@ -371,11 +365,11 @@
 					<!-- Modal footer -->
 					<div class="modal-footer">
 						<button type="reset" class="btn btn-danger" data-dismiss="modal">취소</button>
-						<button onclick = "submit" class="btn">저장</button>
+						<button onclick="submit" class="btn">저장</button>
 					</div>
 
-		</form>
-					<!-- <script>
+				</form>
+				<!-- <script>
 						function submitBtn(){
 							var member_no = $("#member_no").val();
 							var board_no = $("#board_no").val();
@@ -394,8 +388,8 @@
 							});
 						}
 					</script> -->
-	</div>
-	</div>
+			</div>
+		</div>
 	</div>
 	<!-- </div> -->
 </body>
