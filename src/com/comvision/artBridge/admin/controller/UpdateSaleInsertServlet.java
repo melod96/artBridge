@@ -17,16 +17,16 @@ import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
 
 @WebServlet("/deleteSale.ad")
-public class UpdateSaleDeleteServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+public class UpdateSaleInsertServlet extends HttpServlet {
        
-    public UpdateSaleDeleteServlet() {
+	private static final long serialVersionUID = 4410622727618731515L;
+
+	public UpdateSaleInsertServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//ÆäÀÌÂ¡ Ã³¸®
 				int currentPage;
 				int limit;
 				int maxPage;
@@ -59,38 +59,30 @@ public class UpdateSaleDeleteServlet extends HttpServlet {
 
 				PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 			
-				//ÆÇ¸Å±Û Ãâ·Â
 				ArrayList<Board> list = new BoardService().selectSaleList(currentPage, limit);
 				
-				String page = "";
-				int num = 1;
+		String page = "";
+		int num = 1;
 		
 		String str = request.getParameter("str");
 		String[] arr = str.split(",");
 		
-		//¼±ÅÃÇÑ °Ô½Ã±Û ¹øÈ£ ¾÷µ¥ÀÌÆ®
 		for(int i = 0; i < arr.length ; i ++){
 			int b = new AdminService().updateMainView(arr[i]);
 		}
 		
-		//¸ÞÀÎ ºä=1ÀÎ°Å select
-		ArrayList<Board> blist = new AdminService().selectMainView();
-		HashMap<String, Object> hmap = new HashMap<String,Object>();
-		hmap.put("blist", blist);
 		
 		String page1 = "";
 
-		if(blist != null){
+		if(list != null){
 			page1 = "views/admin/mainAdmin.jsp";
-			request.setAttribute("blist", blist);
-			request.setAttribute("hmap", hmap);
 
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 
 		}else{
 			page1 = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "°Ô½ÃÆÇ Á¶È¸ ½ÇÆÐ");
+			request.setAttribute("msg", "ì‹¤íŒ¨ì‹¤íŒ¨!");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page1);
 		view.forward(request, response);
