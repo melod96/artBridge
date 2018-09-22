@@ -52,6 +52,9 @@ public class SelectOneSalepageServlet extends HttpServlet {
 		//한 게시글 마다 해당하는 이미지 파일 불러오기
 		ArrayList<Files> flist = new SaleService().selectFileList(num);
 		
+		//작가 프로필 사진
+		Files f = new SaleService().selectProfile(num);
+		
 		//해당하는 작가의 등급
 		Rating r= new SaleService().selectRating(b.getMember_no());
 		
@@ -60,6 +63,7 @@ public class SelectOneSalepageServlet extends HttpServlet {
 		
 		//평균 별점
 		Grade avgGrade = new SaleService().avgGrade(num);
+		
 		String page = null;
 		
 		if(b!=null){
@@ -69,6 +73,7 @@ public class SelectOneSalepageServlet extends HttpServlet {
 			request.setAttribute("flist", flist);
 			request.setAttribute("rlist", rlist);
 			request.setAttribute("r", r);
+			request.setAttribute("f", f);
 			if(glist != null){
 				request.setAttribute("glist", glist);
 			}

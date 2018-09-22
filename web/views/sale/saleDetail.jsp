@@ -19,6 +19,7 @@
 		glist = (ArrayList<Grade>)request.getAttribute("glist");
 	}
 	Grade avgGrade = (Grade)request.getAttribute("avgGrade");
+	Files prof = (Files)request.getAttribute("f");
 	
 %>
 <!DOCTYPE html>
@@ -126,7 +127,7 @@
 							%>
 						</div>
 						<div class="right">
-							<%-- <img src="<!-- /artBridge/image/saletest/salepageimg.jpg -->" id="img"> --%>
+							<img src="<%=prof.getFiles_root() %>" id="img">
 							<p align="center">
 								<a href=""><%=b.getNick_name()%></a>
 							</p>
@@ -202,10 +203,16 @@
 											style="font-size: 24px">원</font>
 									</div>
 								</ul>
+								<%if(m!=null){ %>
 								<ul style="margin-top: 10px;" align="center">
 									<button onclick="senddetailedlist()"
 										class="btn btn-primary btn-mg">명세표 보내기</button>
 								</ul>
+								<%}else{ %>
+								<ul style="margin-top: 10px;" align="center">
+									<button data-toggle="modal" data-target="#login-modal" class="btn btn-primary btn-mg">명세표 보내기</button>
+								</ul>
+								<%} %>
 							</div>
 							<script>
 									function changeSelect() {
@@ -245,23 +252,15 @@
 									</p>
 									<p>
 										<span>게시글 카테고리</span>
-										<%
-												for (Relate r : rlist) {
-											%>
+										<%for (Relate r : rlist) {%>
 										<span style="float: right;">#<%=r.getRelate_name()%>&nbsp;
 										</span>
-										<%
-												}
-											%>
+										<%}%>
 									</p>
 									<p>슬롯</p>
-									<%
-											for (int i = 0; i < ra.getSlot(); i++) {
-										%>
+									<%for (int i = 0; i < ra.getSlot(); i++) {%>
 									<input type="radio">
-									<%
-											}
-										%>
+									<%}%>
 								</ul>
 							</div>
 						</div>
@@ -296,11 +295,9 @@
 								<th>작성자</th>
 								<th>작성일</th>
 							</tr>
-							<%
-								if (m != null || glist != null) {
+							<%if (m != null || glist != null) {
 											int i = 1;
-										for (Grade g : glist) {
-							%>
+										for (Grade g : glist) {%>
 							<tr>
 								<th><%=i%></th>
 								<th><%=g.getGrade()%></th>

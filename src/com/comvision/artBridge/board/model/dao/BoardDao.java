@@ -297,55 +297,6 @@ public class BoardDao {
 		
 		return list;
 	}
-	//판매글에 해당하는 이미지 출력
-	public HashMap<String, Object> selectFileList(Connection con, ArrayList<Board> list) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Files> flist = null;
-		HashMap<String, Object> filelist = null;
-		Board b= null;
-		Files f= null;
-		
-		String query = prop.getProperty("selectFileList");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			
-			for(int i = 0; i<list.size(); i++){
-				pstmt.setInt(1, list.get(i).getBoard_no());
-				
-				rset = pstmt.executeQuery();
-				
-				flist= new ArrayList<Files>();
-				
-				while(rset.next()){
-					b = new Board();
-					f = new Files();
-					b.setBoard_no(rset.getInt("board_no"));
-					b.setBoard_title(rset.getString("board_title"));
-					b.setBoard_content(rset.getString("board_content"));
-					f.setFiles_root(rset.getString("files_root"));
-					b.setMember_no(rset.getInt("member_no"));
-					b.setNick_name(rset.getString("nick_name"));
-					
-					
-					
-					flist.add(f);
-				}
-				
-				filelist = new HashMap<String,Object>();
-				filelist.put("board", b);
-				filelist.put("files", flist);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-			close(pstmt);
-			close(rset);
-		}
-		return filelist;
-	}
-
 	//연관검색어 출력
 	public ArrayList<Relate> selectRelateList(Connection con) {
 		Statement stmt = null;

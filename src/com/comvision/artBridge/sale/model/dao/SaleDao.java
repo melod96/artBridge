@@ -113,7 +113,7 @@ public class SaleDao {
 	}
 
 	//해당하는 이미지 조회
-	public ArrayList<Files> selectFileList(Connection con, int num) {
+	/*public ArrayList<Files> selectFileList(Connection con, int num) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Files> flist = null;
@@ -151,7 +151,7 @@ public class SaleDao {
 		}
 		
 		return flist;
-	}
+	}*/
 
 	//해당하는 판매글의 연관검색어
 	public ArrayList<Relate> selectRelateList(Connection con, int num) {
@@ -403,6 +403,161 @@ public class SaleDao {
 		}
 		return result;
 	}
+
+	/*public HashMap<String, Object> selectFileList(Connection con, ArrayList<Board> list) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Files> flist = null;
+		HashMap<String, Object> filelist = null;
+		Board b= null;
+		Files f= null;
+		
+		String query = prop.getProperty("selectFileList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			filelist = new HashMap<String,Object>();
+			for(int i = 0; i<list.size(); i++){
+				pstmt.setInt(1, list.get(i).getBoard_no());
+				
+				rset = pstmt.executeQuery();
+				flist= new ArrayList<Files>();
+				
+				
+				while(rset.next()){
+					b = new Board();
+					f = new Files();
+					b.setBoard_no(rset.getInt("board_no"));
+					b.setBoard_title(rset.getString("board_title"));
+					b.setBoard_content(rset.getString("board_content"));
+					f.setFiles_root(rset.getString("files_root"));
+					b.setMember_no(rset.getInt("member_no"));
+					b.setNick_name(rset.getString("nick_name"));
+					
+					
+					
+					flist.add(f);
+				}
+				
+				filelist.put("board", b);
+				filelist.put("files", flist);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return filelist;
+	}*/
+
+	public ArrayList<HashMap<String, Object>> selectFileAllList(Connection con, int board_no) {
+		PreparedStatement pstmt = null;
+		ArrayList<HashMap<String,Object>> list = null;
+		HashMap<String,Object> hmap= null;
+
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("selectFileList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, board_no);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<HashMap<String,Object>>();
+			
+			while(rset.next()){
+				hmap = new HashMap<String,Object>();
+				
+				hmap.put("board_no", rset.getInt("board_no"));
+				hmap.put("board_title", rset.getString("board_title"));
+				hmap.put("board_content", rset.getString("board_content"));
+				hmap.put("files_root", rset.getString("files_root"));
+				hmap.put("member_no", rset.getInt("member_no"));
+				hmap.put("nick_name", rset.getString("nick_name"));
+				
+				list.add(hmap);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+
+	public ArrayList<Files> selectFileList(Connection con, int board_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Board b = null;
+		Files f = null;
+		ArrayList<Files> list = null;
+		
+		String query = prop.getProperty("selectFileList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, board_no);
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Files>();
+			
+			while(rset.next()){
+				b = new Board();
+				f = new Files();
+				
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				f.setFiles_root(rset.getString("files_root"));
+				b.setMember_no(rset.getInt("member_no"));
+				b.setNick_name(rset.getString("nick_name"));
+				
+				list.add(f);
+			}	
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+
+	public Files selectProfile(Connection con, int num) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Files f= null;
+		
+		String query = prop.getProperty("selectProfile");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, num);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()){
+				f= new Files();
+				f.setF_reference_no(rset.getInt("F_REFERENCE_NO"));
+				f.setFiles_root(rset.getString("files_root"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return f;
+	}
+
+	
+
+	
 
 
 }
