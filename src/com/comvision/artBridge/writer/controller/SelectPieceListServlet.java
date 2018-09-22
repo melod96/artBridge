@@ -51,7 +51,7 @@ public class SelectPieceListServlet extends HttpServlet {
 		
 		//작가 작품관리 리스트
 		ArrayList<Board> list = new WriterService().selectList(currentPage, limit);
-		//System.out.println(list);
+		System.out.println(list);
 		
 		String page = "";
 		if(list != null){

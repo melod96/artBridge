@@ -35,20 +35,11 @@ public class WriterService {
 	}
 
 	//작가 작품등록 메소드
-	/*public int insertThumbnail(Board b, ArrayList<Files> fileList) {
+	public int insertPiece(Board b, ArrayList<Files> fileList) {
 		Connection con = getConnection();
 		int result = 0;
 		
-		int result1 = new WriterDao().insertThumbnailContent(con, b);
-		
-		if(result1 > 0){
-			int bid = new WriterDao().selectCurrval(con); //썸네일이 참조하는 게시글의 id를 찾기 위해 쿼리문을 또 짠다.
-			System.out.println("service bid : " + bid);
-			for(int i = 0; i < fileList.size(); i++){
-				fileList.get(i).setBid(bid);
-			}
-		}
-		
+		int result1 = new WriterDao().insertPiece(con, b);
 		int result2 = new WriterDao().insertAttachment(con, fileList);
 		
 		if(result1 > 0 && result2 > 0){
@@ -61,6 +52,6 @@ public class WriterService {
 		close(con);
 		
 		return result;
-	}*/
+	}
 
 }
