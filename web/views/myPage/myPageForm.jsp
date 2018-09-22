@@ -1396,7 +1396,6 @@
 	// 	* 회원 탈퇴 신청(행 삭제 x -> 탈퇴상태를 0->1로 변경)
 		function deleteMemberRequest(){
 			var pwdCheck = prompt("패스워드 확인", "");
-			/* alert(pwdCheck); */
 			
 			var userPwd = pwdCheck;
 			if(userPwd != null && userPwd != ""){
@@ -1409,28 +1408,37 @@
 							$('.heading .memberinfo-menu').html("회원 탈퇴 신청");
 							$('.memberInfoArea').css({"display":"none"});
 							$(".deleteMemberNotice").css({"display":"block"});
-							
-							$(".delMemChk").click(function(){
-		                		var result = $(this).val();
-		                		
-		                		if(result == "회원 탈퇴"){
-		                			/* $(".deleteMemberNotice").css({"display":"none"});
-		                			$('.heading .memberinfo-menu').html("회원 탈퇴 신청"); */
-									/* 탈퇴 상태로 변경 후 로그아웃 서블릿 호출 */
-									
-// 									진행중인 거래가 있는지 거래 완료됐으나 입금받지 못한 돈이 있는지 서블릿으로 체크 
-									location.href = "<%= request.getContextPath() %>/memberDelCheck.me";
-									
-									
-<%-- 									location.href = "<%= request.getContextPath() %>/deleteRequest.me"; --%>
-								}else{
-									location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
-								}
-							});
 						}else{
 							alert("패스워드가 일치하지 않습니다.");
 						}
-						
+					}
+				});
+
+				$(".delMemChk").click(function(){
+				// 	* 탈퇴 안내문에서 탈퇴/취소 버튼 선택에 따라 처리
+            		var result = $(this).val();
+            		
+            		if(result == "회원 탈퇴"){
+            			var agreeCheck = $("#agree").prop("checked");
+            			if(agreeCheck == true){							
+							$.ajax({
+								/* 미완료 거래 이력 있는지 체크 후 있으면 탈퇴 불가/없으면 탈퇴 상태로 변경 후 로그아웃 */
+								url : "<%= request.getContextPath() %>/memberDelCheck.me",
+								type : "post",
+								success : function(data){
+									if(data > 0){
+										alert("아직 작업이 완료되지 않은 거래 이력이 존재합니다.\n프로젝트가 완료 된 후에 탈퇴가 가능합니다.");
+										location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
+									}
+								}
+							});
+                		}else{
+                			alert('약관동의에 체크 해주세요.');
+                			return false;
+                		}
+					}else{
+						/* 회원탈퇴 안내문에서 취소 눌렀을 때 */
+						location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
 					}
 				});
 			}
