@@ -22,6 +22,7 @@ public class SelectSearchNoticeServlet extends HttpServlet {
         super();
     }
 
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//페이징 처리
 		int currentPage;
