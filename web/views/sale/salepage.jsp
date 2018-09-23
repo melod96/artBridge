@@ -134,9 +134,10 @@
 
 						<div class="ui action input">
 							<form style="display: inline-block;" action="<%= request.getContextPath() %>/searchkeyword.bo" method="get">
-								<input name="search" class="input-short form-inline" type="text" placeholder="텍스트를 입력하세요">
-								
-								<button type="submit" class="btn btn-default btn-sg form-inline">검색</button>
+								<div class="ui action input">
+									<input type="text" name="search" placeholder="텍스트를 입력하세요">
+									<button class="ui blue button" style = "font-size:13px;">Search</button>
+								</div>
 							</form>
 							<!-- option 태그 미완성 -->
 							<li class="left" style="margin-left: 8px">
@@ -147,12 +148,12 @@
 								<option value="3" name="3">거래완료율</option>
 								<option value="4"name="4">별점</option>
 							</select></li>
+
 							<%if(m != null){ %>
 							<ul class="right">
 								<div class="sBtn1" style="height: 42px; line-height: 42px;" onclick="">작품 등록 / 수정</div>
 							</ul>
 							<%} %>
-
 						</div>
 						<script>
 							function changeSelect(){
