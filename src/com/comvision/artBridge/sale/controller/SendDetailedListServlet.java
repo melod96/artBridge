@@ -36,10 +36,14 @@ public class SendDetailedListServlet extends HttpServlet {
 		int member_no = Integer.parseInt(request.getParameter("member_no"));
 		int board_no = Integer.parseInt(request.getParameter("board_no"));
 		int writer_no = Integer.parseInt(request.getParameter("writer_no"));
+		String option = request.getParameter("option");
+		int price = Integer.parseInt(request.getParameter("price"));
+		System.out.println(option);
+		System.out.println(price);
 		
 		String[] rsplit = req.split("@");
 		
-		int result = new SaleService().insertRequirements(rsplit, member_no, board_no, writer_no);
+		int result = new SaleService().insertRequirements(rsplit, member_no, board_no, writer_no,option,price);
 		String page = "";
 		
 		if(result >0){

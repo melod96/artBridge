@@ -173,7 +173,7 @@
 										for (int i = 0; i < oplist.size(); i++) {
 											HashMap<String, Object> hmap = oplist.get(i);
 									%>
-								<option value="<%=hmap.get("options_price")%>"><%=hmap.get("options_name")%>
+								<option  id = "selop" value="<%=hmap.get("options_price")%>"><%=hmap.get("options_name")%>
 									-
 									<%=hmap.get("options_price")%></option>
 								<%
@@ -226,13 +226,15 @@
 										for(var i = 0; i<count; i++){
 											req += $("#rid"+i).val() + "@";
 										}
+										var price = document.all.sel.value;
+										var option = $("#selop").text();
 										var member_no = $("#member_no").val();
 										var board_no = $("#board_no").val();
 										var writer_no = $("#writer_no").val();
 									
 										$.ajax({
 											url:"senddetailedlist.sp",
-											data:{req:req, member_no:member_no,writer_no:writer_no,board_no:board_no},
+											data:{req:req, member_no:member_no,writer_no:writer_no,board_no:board_no,price:price, option:option},
 											type:"post",
 											success:function(data){
 												alert("명세표를 성공적으로 전송하였습니다!");
@@ -298,13 +300,19 @@
 							<%if (m != null || glist != null) {
 											int i = 1;
 										for (Grade g : glist) {%>
-							<tr id = "<%=i%>">
+							<tr>
 								<th><%=i%></th>
 								<th><%=g.getGrade()%></th>
-								<%-- <th onclick = "DetailContent("+ <% $(this).closest('th').attr('id')%>+")"><%=g.getGrade_content()%></th> --%>
-								<th><%=g.getGrade_content()%></th>
+								<th data-toggle="collapse" data-target="#demo"><%=g.getGrade_content()%></th>
 								<th><%=g.getNick_name()%></th>
 								<th><%=g.getGrade_date()%></th>
+							</tr>
+							<tr>
+								<th>
+									<div id="demo" class="collapse">
+										<%=g.getGrade_content()%>
+									</div>
+								</th>
 							</tr>
 							<%
 								i++;
@@ -312,25 +320,9 @@
 									}else{
 										
 									}
-							Grade g = new Grade();
 							%>
 						</table>
 					</div>
-					<%-- <script>
-						function DetailContent(){
-							int j = 1;
-						
-							for(Grade g : glist){
-								if($("#"+j)+tr>th != null){
-									$("#"+j).append("<%= g.getGrade_content()%>");
-								}else{
-									$("#"+j).remove();
-								}
-								
-								j++;
-							}
-						}
-					</script> --%>
 					<!-- // 이 영역에서 작업하세요 -->
 				</div>
 			</div>

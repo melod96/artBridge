@@ -28,7 +28,7 @@
 	function add_row() {
 		$(function(){
 			$("<tr name='add_relate" + i + "''>"
-				+ "<td>추가 " + i + "</td>"
+				+ "<td>추가 " + (i + 1) + "</td>"
 				+ "<td><input type='text' name='new_rating_name" + i + "' class='form-control' /></td>"
 				+ "<td><input type='text' name='new_rating_slot" + i + "' class='form-control' /></td>"
 				+ "<td><input type='text' name='new_rating_commission" + i + "' class='form-control' /></td>"
@@ -53,10 +53,33 @@
 	});
 	
 	function change_row(btn){
+		var no = $(btn).val();
 		$(btn).hide();	
-		$(btn).parent().children("button[name=update_row]").show();
+		$("#update_row" + no).show();
 		$(btn).parent().parent().children().children("input").removeAttr("readonly");
 	}
+	
+	function update_rating(btn){
+		var no = $(btn).val();
+		var rating_name = $("input[name=rating_name" + no + "]").val();
+		var rating_slot = $("input[name=slot" + no + "]").val();
+		var rating_commission = $("input[name=commission" + no + "]").val();
+		$.ajax({
+			url : "updateRating.ad",
+			type : "post",
+			data : { no : no, rating_name : rating_name, rating_slot : rating_slot, rating_commission : rating_commission},
+			success : function(data){
+				console.log(data);
+				if(data > 0){
+					$("#update_row" + no).hide();
+					$("#change_row" + no).show();
+					$("#update_row" + no).parent().parent().children().children("input").prop("readonly", true);
+					alert("수정되었습니다.");
+				}
+			},
+		});
+	}
+	
 </script>
 </head>
 <body>
@@ -102,12 +125,12 @@
 		                        	<% if(list != null){ for(int i = 0; i < list.size(); i++){ %>
 		                            <tr>
 		                                <td><%= list.get(i).getRating_no() %></td>
-		                                <td><input type="text" name="rating_name<%= i %>" value="<%= list.get(i).getRating_name() %>" style="width:100px" readonly /></td>
-		                                <td><input type="text" name="slot<%= i %>" value="<%= list.get(i).getSlot() %>" style="width:100px" readonly /></td>
-		                                <td><input type="text" name="commision<%= i %>" value="<%= list.get(i).getCommission() %>" style="width:100px" readonly /></td>
+		                                <td><input type="text" class="form-control" name="rating_name<%= list.get(i).getRating_no() %>" value="<%= list.get(i).getRating_name() %>" style="width:120px" readonly /></td>
+		                                <td><input type="text" class="form-control" name="slot<%= list.get(i).getRating_no() %>" value="<%= list.get(i).getSlot() %>" style="width:120px" readonly /></td>
+		                                <td><input type="text" class="form-control" name="commission<%= list.get(i).getRating_no() %>" value="<%= list.get(i).getCommission() %>" style="width:120px" readonly /></td>
 		                                <td>
-		                                	<button type="button" class="btn btn-default btn-sm change_row" onclick="change_row(this);">수정</button>
-		                                	<button type="button" class="btn btn-default btn-sm update_row" name="update_row" onclick="update_rating();">수정</button>
+		                                	<button type="button" class="btn btn-default btn-sm change_row" id="change_row<%= list.get(i).getRating_no() %>" value="<%= list.get(i).getRating_no() %>" onclick="change_row(this);">수정</button>
+		                                	<button type="button" class="btn btn-default btn-sm update_row" id="update_row<%= list.get(i).getRating_no() %>" value="<%= list.get(i).getRating_no() %>" onclick="update_rating(this);">수정</button>
 		                                </td>
 		                            </tr>
 		                            <% } } %>

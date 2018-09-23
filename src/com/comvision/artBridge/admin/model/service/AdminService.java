@@ -55,7 +55,7 @@ public class AdminService {
 
 	//연관검색어 추가
 	public int insertRelate(Relate r) {
-Connection con = getConnection();
+		Connection con = getConnection();
 		
 		int result = new AdminDao().insertRelate(con, r);
 		
@@ -156,6 +156,42 @@ Connection con = getConnection();
 
 		return b;
 		
+	public int insertRating(ArrayList<Rating> insertList) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		for(Rating r : insertList){
+			result += new AdminDao().insertRating(con, r);
+		}
+
+		if(result == insertList.size()){
+			commit(con);
+			result = 1;
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+
+	public int updateRating(Rating r) {
+		Connection con = getConnection();
+		
+		int result = 0;
+		
+		result = new AdminDao().updateRating(con, r);
+		
+		if(result > 0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
 	}
 	
 }

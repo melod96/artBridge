@@ -112,12 +112,13 @@ public class SaleService {
 	}
 
 	//명세표 보내기
-	public int insertRequirements(String[] rsplit, int member_no, int board_no, int writer_no) {
+	public int insertRequirements(String[] rsplit, int member_no, int board_no, int writer_no, String option, int price) {
 		Connection con = getConnection();
 		int result = 0;
 		
 		int order = new SaleDao().insertOrder(con, member_no, board_no, writer_no);
 		int currval = new SaleDao().selectOrderCurrval(con);
+		int rootop = new SaleDao().insertRootOption(con,member_no,currval,option,price);
 		for(int i = 0; i<rsplit.length; i++){
 			int rinsert = new SaleDao().insertRequirements(con,member_no,currval ,rsplit[i]);			
 		}
@@ -132,15 +133,6 @@ public class SaleService {
 		return result;
 	}
 
-/*	public HashMap<String, Object> selectFile(ArrayList<Board> list) {
-		Connection con = getConnection();
-		
-		HashMap<String, Object> alist = new SaleDao().selectFileList(con, list);
-		
-		close(con);
-		
-		return alist;
-	}*/
 
 	public ArrayList<HashMap<String, Object>> selectFileAllList(int board_no) {
 		Connection con = getConnection();

@@ -3,12 +3,14 @@ package com.comvision.artBridge.admin.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.comvision.artBridge.admin.model.service.AdminService;
 import com.comvision.artBridge.admin.model.vo.Rating;
 
 /**
@@ -33,12 +35,7 @@ public class InsertRatingServlet extends HttpServlet {
 	
 		int insertNum = Integer.parseInt(request.getParameter("insertNum"));
 		
-		System.out.println(insertNum);
-		
-		String aa = request.getParameter("new_rating_name1");
-		System.out.println(aa);
-	
-		ArrayList<Rating> list = new ArrayList<Rating>();
+		ArrayList<Rating> insertList = new ArrayList<Rating>();
 		
 		for(int i = 0; i < insertNum; i++){
 			Rating r = new Rating();
@@ -52,11 +49,22 @@ public class InsertRatingServlet extends HttpServlet {
 				r.setCommission(Integer.parseInt(request.getParameter("new_rating_commission" + i)));
 			}
 			if(r.getRating_name().length() > 0 && r.getRating_name() != null){
-				list.add(r);
+				insertList.add(r);
 			}
 		}
 		
-		System.out.println(list);
+		int result = new AdminService().insertRating(insertList);
+		
+		String page = "";
+		if(result > 0){
+			page = "views/admin/ratingAdmin.jsp";
+			request.setAttribute("list", new AdminService().selectRating());
+		}else{
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "등급 조회 실패!");
+		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 		
 	}
 
