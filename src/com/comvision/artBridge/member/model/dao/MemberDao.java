@@ -357,8 +357,9 @@ private Properties prop = new Properties();
 			result = pstmt.executeUpdate();			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
 		}
-		
 		
 		return result;
 	}
@@ -380,9 +381,11 @@ private Properties prop = new Properties();
 			if(rset.next()){
 				result += 1;
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
 		}
 		
 		return result;
