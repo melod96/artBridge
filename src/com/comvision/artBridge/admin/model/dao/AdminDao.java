@@ -16,6 +16,7 @@ import java.util.Properties;
 import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.transaction.model.vo.Transaction;
 
 
 
@@ -287,7 +288,6 @@ private Properties prop = new Properties();
 				b.setBoard_title(rset.getString("board_title"));
 				
 				list.add(b);
-
 				
 			}
 		} catch (SQLException e) {
@@ -418,7 +418,7 @@ private Properties prop = new Properties();
 			close(rset);
 		}
 		return b;
-		
+	}
 		
 		
 	public int insertRating(Connection con, Rating r) {
@@ -467,7 +467,52 @@ private Properties prop = new Properties();
 		
 		return result;
 	}
+	//거래내역 관리 전체 출력
+		public ArrayList<Transaction> selectTrs(Connection con, int currentPage, int limit) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			ArrayList<Transaction> list = null;
+			
+			
+			String query = prop.getProperty("selectTrs");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				
+				int startRow = (currentPage -1) * limit +1;
+				int endRow= startRow +limit -1;
+				
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+				list = new ArrayList<Transaction>();
+				
+				while(rset.next()){
+					Transaction t= new Transaction();
+					
+					t.setOrders_no(rset.getInt("orders_no"));
+					t.setCusName(rset.getString("name"));
+					t.setCusId(rset.getString("id"));
+					t.setWrtNick(rset.getString("nick_name"));
+					t.setWrtId(rset.getString("id"));
+					t.setPay_status(rset.getInt("pay_status"));
+					t.setO_date(rset.getDate("o_start_date"));
+					t.setPayment(rset.getInt("payment"));
+					t.setBoard_title(rset.getString("board_title"));
 
+					list.add(t);
+				}
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(pstmt);
+				close(rset);
+			}
+			
+			return list;
+		}
 	
 }
-

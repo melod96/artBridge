@@ -15,6 +15,7 @@ import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.member.model.dao.MemberDao;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.transaction.model.vo.Transaction;
 
 public class AdminService {
 
@@ -193,5 +194,15 @@ public class AdminService {
 		
 		return result;
 	}
-	
+		//거래내역 관리 전체 출력
+	public ArrayList<Transaction> selectTrs(int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<Transaction> list = new AdminDao().selectTrs(con,currentPage, limit);
+		
+		close(con);
+		
+		return list;
+		
+	}
 }
