@@ -1,6 +1,8 @@
 package com.comvision.artBridge.member.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,12 +36,12 @@ public class DeleteMemberRequestServlet extends HttpServlet {
 		int result = new MemberService().deleteMemberRequest(mNo);
 		
 		if(result > 0){
-			response.sendRedirect(request.getContextPath() + "/logout.me");
+			//세션 정보 지워
+			request.getSession().invalidate();
 		}else{
 			request.setAttribute("msg", "회원 탈퇴 실패!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		
 	}
 
 	/**

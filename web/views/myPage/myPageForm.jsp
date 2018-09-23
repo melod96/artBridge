@@ -65,7 +65,7 @@
     .agree-ck label{font-size:18px; font-weight:bold; margin-left:5px;}
     
 /*  작가회원신청 팝업 */
-	.reqWriterFrom-title{ text-align:center; font-weight:bold; }
+	.reqWriterForm-title{ text-align:left; font-weight:bold; }
 	.reqWriterForm-Area-Style{ position:absolute; width:740px; background:white; padding-bottom:50px; left:50%; margin-left:-370px; }
 /*	작가회원신청 팝업 이미지 파일 삽입 영역 */
 	.insert-img-area{overflow:hidden; margin-bottom:10px; margin-top:5px;}
@@ -174,7 +174,9 @@
 				<li><a href="#" onclick="anotherHidden(this.id);" id="msg-menu">쪽지함</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="bookmark-menu">관심작가</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="memberinfo-menu">회원정보수정</a></li>
-				<li><a href="#" onclick="anotherHidden(this.id);" id="mywork-menu" style="background:#FF7373;">내작품관리</a></li>
+<%-- 				<% if(loginUser.getWriter_right() == 1){ %> --%>
+				<li><a href="#" onclick="anotherHidden(this.id);" id="mywork-menu"">내작품관리</a></li>
+<%-- 				<% } %> --%>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="qna-menu">이용문의</a></li>
 			</ul>
 		</div>
@@ -270,27 +272,30 @@
 						<h3>작 가 &nbsp; 회 원 &nbsp; 전 환 &nbsp; 신 청</h3>
 						<table class="form-table">
 							<tr>
-								<td width="15px" height="52px"></td>
-								<td width="70px" class="reqWriterFrom-title">* I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
-								<td width="2px">:</td>
-								<td colspan="4">crala</td>
-								<!-- <td class="reqWriterFrom-title" style="text-align:left;">* 닉 네 임</td>
-								<td>:</td>
-								<td>크랄라</td> -->
+								<td width="40px" height="52px"></td>
+								<td width="85px" class="reqWriterForm-title">* I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
+								<td width="2px" class="reqWriterForm-title">:</td>
+								<td width="210px"><%= loginUser.getId() %></td>
+								<td width="140px" class="reqWriterForm-title">* 닉네임 (활동명)</td>
+								<td width="2px" class="reqWriterForm-title">:</td>
+								<td><%= loginUser.getNick_name() %></td>
 							<tr>
 								<td height="52px"></td>
-								<td class="reqWriterFrom-title">* 은 행 명</td>
-								<td>:</td>
-								<td width="100px"><input type="text" style="width:50px;"/> 은행</td>
-								<td width="210px" class="reqWriterFrom-title" style="text-align:left;">* 계좌번호('-'없이 숫자만 입력)</td>
-								<td width="2px">:</td>
-								<td width="160px"><input type="text" style="width:160px;" value="110111121212"/></td>
+								<td class="reqWriterForm-title">* 은 행 명</td>
+								<td class="reqWriterForm-title">:</td>
+								<td colspan="6"><input type="text" style="width:50px;"/> 은행</td>
 							</tr>
 							<tr>
-								<td colspan="7" height="30px"></td>
+								<td height="52px"></td>
+								<td colspan="6">
+									<span class="reqWriterForm-title">* 계좌번호 ('-'없이 숫자만 입력)</span>
+									<span width="18.6px" class="reqWriterForm-title"> : </span>
+									<input type="text" style="width:250px; padding-left:5px;" value="110111121212"/>
+								</td>
 							</tr>
+							<tr><td colspan="7" height="20px"></td></tr>
 							<tr>
-								<td height="25px" colspan="7" style="padding-left:25px; font-size:15px; font-weight:bold;"> * 인증 파일을 첨부하세요</td>
+								<td height="25px" colspan="6" class="reqWriterForm-title" style="font-size:16px; padding-left:25px;"> * 인증 파일을 첨부하세요</td>
 							</tr>
 							<tr>
 								<td colspan="7" width="715px" style="padding-bottom:10px;">
@@ -339,12 +344,13 @@
 				
 <!-- 	   	* 마이페이지 탭 제목 -->
 			<div class="heading">
-				<h2 class="order-menu tit1">주문 관리</h2>
+				<h2 class="menuName tit1"></h2>
+				<!-- <h2 class="order-menu tit1">주문 관리</h2>
 				<h2 class="msg-menu tit1">쪽지함</h2>
 				<h2 class="bookmark-menu tit1">관심 작가</h2>
 				<h2 class="memberinfo-menu tit1">회원정보 수정</h2>
-				<h2 class="mywork-menu tit1" style="text-color:#FF7373;">내 작품 관리</h2>	<!-- ***수정사항 : 작가 페이지 -->
-				<h2 class="qna-menu tit1">이용문의</h2>
+				<h2 class="mywork-menu tit1" style="text-color:#FF7373;">내 작품 관리</h2>	***수정사항 : 작가 페이지
+				<h2 class="qna-menu tit1">이용 문의</h2> -->
 			</div>	<hr>
 <!-- 	   	//마이페이지 탭 제목 -->
 					
@@ -892,7 +898,7 @@
 <!--      		//4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원 인증 비밀번호 확인 창 -->
 
 <!--      		* 4-2. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원정보 수정 본 화면 -->					
-				<form id="memberInfoForm" onsubmit="return updateMember(this)" action="<%=request.getContextPath() %>/updateInfo.me" method="post" class="memberInfoArea" style="display:none;">
+				<form id="memberInfoForm" onsubmit="return updateMember(this)" action="<%= request.getContextPath() %>/updateInfo.me" method="post" class="memberInfoArea" style="display:none;">
 					<div class="memberInfoArea">
 						<table>
 							<tr>
@@ -920,7 +926,11 @@
 								<td width="300px"><label id="nnResult"></label></td>
 							</tr>
 							<tr>
+							  <% if(loginUser.getWriter_right() < 1){ %>
 								<td> &nbsp;&nbsp;&nbsp;연락처</td>
+							  <% }else{ %>
+								<td>* 연락처</td>
+							  <% } %>
 								<td width="200px" style="text-align:center;">
 									<input type="text" maxlength="3" value="<%= tel1 %>" id="tel1" name="tel1" style="width:28%; display: inline-block;" class="form-control textBox"/> -
 									<input type="text" maxlength="4" value="<%= tel2 %>" id="tel2" name="tel2" style="width:29.5%; display: inline-block;" class="form-control textBox"/> -
@@ -929,7 +939,11 @@
 								<td></td>
 							</tr>
 							<tr>
+							  <% if(loginUser.getWriter_right() < 1){ %>
 								<td> &nbsp;&nbsp;&nbsp;이메일</td>
+							  <% }else{ %>
+								<td>* 이메일</td>
+							  <% } %>
 								<td><input type="email" value="<%= loginUser.getEmail() %>" id="email" name="email" class="form-control input-short textBox"/></td>
 								<td></td>
 							</tr>
@@ -937,12 +951,14 @@
 						<br /><br /><br />
 						
 						<div class="btn-center btn-outer-style" style="width:50%;">
-		                      <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
-		                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">수정</button>
-		                      <button onclick="deleteMemberRequest();" class="btn btn-lg btn-default btn-plus-design" style="float:right;">회원 탈퇴</button>
+		                    <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
+		                    <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">수정</button>
+		                    <button onclick="deleteMemberRequest();" class="btn btn-lg btn-default btn-plus-design" style="float:right;">회원 탈퇴</button>
 		                </div>
 						<div class="btn-center btn-outer-style" style="width:50%;">
-							  <button onclick="reqWriterDisplayBlock();" id="reqWriterBtn" class="btn btn-primary btn-lg btn-plus-design" style="float:left; margin-left:10px;">작가 신청</button>
+						  <% if(loginUser.getWriter_right() < 1){ %>
+							<button onclick="reqWriterDisplayBlock();" id="reqWriterBtn" class="btn btn-primary btn-lg btn-plus-design" style="float:left; margin-left:10px;">작가 신청</button>
+						  <% }%>
 		                </div>
 	                </div>
                 </form>
@@ -1134,24 +1150,35 @@
 			//var thisMenu = event.srcElement.id;
 	 
 			$('.order-menu, .msg-menu, .bookmark-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
-			
 			$('.' + thisMenu).css({"display":"block"});
 	
 			$(':not(#' + thisMenu + ')').css({"color":"", "background":""});
 			$('#mywork-menu').css({"color":"white", "background":"#FF7373"});
+			$('#qna-menu').css({"color":"white", "background":"rgb(52, 70, 209)"});
 		
 			$('#' + thisMenu).css({"color":"black", "background":"white"});
 			
-			
 			if(thisMenu == "order-menu"){			//오더메뉴, 메시지 메뉴 둘 다 가능 할 듯 ( -list 선택자로  / filter선택자로)
+				$('.heading .menuName').html("주문 관리");
 				$('#stmt-Filter').val("전체 보기");
 				$('.transInfo-list').css({"display":""});
 			}
 			if(thisMenu == "msg-menu" || thisMenu == "qna-menu"){
 				$('.msg-Filter').val("전체 보기");
-				$('.msg-list').css({"display":""});	
+				$('.msg-list').css({"display":""});
+				
+				if(thisMenu == "msg-menu"){
+					$('.heading .menuName').html("쪽지함");
+				}else if(thisMenu == "qna-menu"){
+					$('.heading .menuName').html("이용 문의");
+				}
+			}			
+			if(thisMenu == "bookmark-menu"){
+				$('.heading .menuName').html("관심 작가");
 			}
 			if(thisMenu == "memberinfo-menu"){
+				$('.heading .menuName').html("회원정보 수정");
+				
 				$('#checkUserPwd').val("");
 				$('#pwdStatus').css({"display":"none"});
 				
@@ -1173,6 +1200,9 @@
 				$('#email').val('<%= loginUser.getEmail() %>');
 
 				//alert($('.memberInfoArea' + ' *').val());    해당 클래스의 하위 요소 초기화 시키기
+			}
+			if(thisMenu == "mywork-menu"){
+				$('.heading .menuName').html("내 작품 관리");
 			}
 		};
 	</script>
@@ -1261,9 +1291,6 @@
 				});
 			});
 		});
-		             			
-	
-		
 		
 		//별점 매기기
 		$( ".star_rating a" ).click(function() {
@@ -1279,8 +1306,9 @@
 	//	* 회원정보 수정 정보 저장 가능(정보 입력/변경)여부 판단 함수
 	 	var checkPwd = false;
 		var checkNick = false;
-		/* var checkPhone = false;		//작가 권한 일 때만 널 비허용
-		var checkEmail = false; */	
+		var checkPhone = true;
+		var checkEmail = true;
+
 		function updateMember(){
 			var updateUserPwd1 = $('#updateUserPwd1').val();
 			var updateUserPwd2 = $('#updateUserPwd2').val();
@@ -1290,11 +1318,52 @@
  				$("#pwdResult").text("패스워드를 입력하세요.");
 				return false;
 			}
+
+ 			var updateNickName = $('#updateNickName').val();
+ 			if(updateNickName == ""){
+				$('#nnResult').text("닉네임을 입력하세요.");
+				$('#nnResult').css({"color":"orangered"});
+				$('#nnResult').css({"display":""});
+				return false;
+ 			}
+ 			var nickNameCheckBtn = $('#nickNameCheckBtn').text();
+			var nickNameResult = $('#nnResult').text();
+ 			if(nickNameCheckBtn == "중복확인" && nickNameResult == ""){
+				$('#nnResult').text("닉네임 중복확인 버튼을 체크하세요.");
+				$('#nnResult').css({"color":"orangered"});
+				$('#nnResult').css({"display":""});
+				return false;
+			}
+ 			
+ 			if(<%= loginUser.getWriter_right() %> >= 1){ 				
+	 			var tel1 = $('#tel1').val();
+	 			var tel2 = $('#tel2').val();
+	 			var tel3 = $('#tel3').val();
+	 			var email = $('#email').val();
+	 			if(tel1 == "" || tel2 == "" || tel3 == "" || tel1 == "null" || tel2 == "null" || tel3 == "null"){
+	 				checkPhone = false;
+	 				alert("회원 정보를 모두 입력해주세요.");
+	 			} else{
+	 				checkPhone = true;
+	 			}
+	 			if(email == "" || email == "null"){
+	 				checkEmail = false;
+	 				alert("회원 정보를 모두 입력해주세요.");
+	 			} else{
+	 				checkEmail = true;
+	 			}
+ 			}
 			
 			if(checkPwd == false){
 				return false;
 			}
 			if(checkNick == false){
+				return false;
+			}
+			if(checkPhone == false){
+				return false;
+			}
+			if(checkEmail == false){
 				return false;
 			}
 			
@@ -1408,12 +1477,16 @@
 							$('.heading .memberinfo-menu').html("회원 탈퇴 신청");
 							$('.memberInfoArea').css({"display":"none"});
 							$(".deleteMemberNotice").css({"display":"block"});
+							
+							$("#memberinfo-menu").click(function(){								
+								location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
+							});
 						}else{
 							alert("패스워드가 일치하지 않습니다.");
 						}
 					}
 				});
-
+			
 				$(".delMemChk").click(function(){
 				// 	* 탈퇴 안내문에서 탈퇴/취소 버튼 선택에 따라 처리
             		var result = $(this).val();
@@ -1429,6 +1502,8 @@
 									if(data > 0){
 										alert("아직 작업이 완료되지 않은 거래 이력이 존재합니다.\n프로젝트가 완료 된 후에 탈퇴가 가능합니다.");
 										location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
+									}else{
+										location.href="/artBridge/views/main/main.jsp";
 									}
 								}
 							});
