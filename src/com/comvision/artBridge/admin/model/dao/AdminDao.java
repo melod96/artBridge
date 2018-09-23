@@ -236,6 +236,7 @@ private Properties prop = new Properties();
 		
 		String query = prop.getProperty("selectBoard");
 		
+		
 		try {
 			pstmt = con.prepareStatement(query);
 			
