@@ -403,54 +403,33 @@ public class SaleDao {
 		}
 		return result;
 	}
-
-	/*public HashMap<String, Object> selectFileList(Connection con, ArrayList<Board> list) {
+	
+	public int insertRootOption(Connection con, int member_no, int currval, String option, int price) {
 		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Files> flist = null;
-		HashMap<String, Object> filelist = null;
-		Board b= null;
-		Files f= null;
+		int result = 0;
 		
-		String query = prop.getProperty("selectFileList");
+		String query = prop.getProperty("insertRootOption");
 		
 		try {
 			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, currval);
+			pstmt.setInt(2, member_no);
+			pstmt.setString(3, option);
+			pstmt.setInt(4, price);
 			
-			filelist = new HashMap<String,Object>();
-			for(int i = 0; i<list.size(); i++){
-				pstmt.setInt(1, list.get(i).getBoard_no());
-				
-				rset = pstmt.executeQuery();
-				flist= new ArrayList<Files>();
-				
-				
-				while(rset.next()){
-					b = new Board();
-					f = new Files();
-					b.setBoard_no(rset.getInt("board_no"));
-					b.setBoard_title(rset.getString("board_title"));
-					b.setBoard_content(rset.getString("board_content"));
-					f.setFiles_root(rset.getString("files_root"));
-					b.setMember_no(rset.getInt("member_no"));
-					b.setNick_name(rset.getString("nick_name"));
-					
-					
-					
-					flist.add(f);
-				}
-				
-				filelist.put("board", b);
-				filelist.put("files", flist);
-			}
+			result = pstmt.executeUpdate();
+			
+			
+			
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			close(pstmt);
-			close(rset);
 		}
-		return filelist;
-	}*/
+		return result;
+	}
+
 
 	public ArrayList<HashMap<String, Object>> selectFileAllList(Connection con, int board_no) {
 		PreparedStatement pstmt = null;
@@ -554,6 +533,8 @@ public class SaleDao {
 		
 		return f;
 	}
+
+	
 
 	
 
