@@ -91,21 +91,21 @@ public class SearchKeywordListServlet extends HttpServlet {
 
 		//연관 검색어 출력
 		ArrayList<Relate> rlist = new BoardService().selectRelateList();
+		
 		//한 게시글 마다 해당하는 이미지 파일 불러오기
-		HashMap<String, Object> hmap = new BoardService().selectFileList(list);
-		Board b = null;
-		ArrayList<Files> filelist = null;
-		if(hmap != null){
-			b = (Board)hmap.get("board");
-			filelist = (ArrayList<Files>)hmap.get("files");
-		}
+				ArrayList<HashMap<String, Object>> alist = new ArrayList<HashMap<String,Object>>();
+				for(Board b : list){
+					ArrayList<HashMap<String, Object>> hlist = 	new SaleService().selectFileAllList(b.getBoard_no());
+					
+					alist.addAll(hlist);
+				}
 
 			String page = "";
 
-			if(list != null && filelist != null && pi !=null && rlist !=null && opmap !=null){
+			if(list != null && alist != null && pi !=null && rlist !=null && opmap !=null){
 				page = "views/sale/salepage.jsp";
 				request.setAttribute("list", list);
-				request.setAttribute("filelist", filelist);
+				request.setAttribute("alist", alist);
 				request.setAttribute("pi", pi);
 				request.setAttribute("rlist", rlist);
 				request.setAttribute("oplist", opmap);

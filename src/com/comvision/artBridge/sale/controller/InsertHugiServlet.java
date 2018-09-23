@@ -35,8 +35,10 @@ public class InsertHugiServlet extends HttpServlet {
 		String content = request.getParameter("content");
 		int board_no = Integer.parseInt(request.getParameter("board_no"));
 		int member_no = Integer.parseInt(request.getParameter("member_no"));
+		int grade = Integer.parseInt(request.getParameter("grade"));
+		System.out.println(grade);
 
-		int result = new SaleService().insertGrade(content, board_no, member_no);
+		int result = new SaleService().insertGrade(content, board_no, member_no,grade);
 		String page = null;
 		
 		if(result >0){

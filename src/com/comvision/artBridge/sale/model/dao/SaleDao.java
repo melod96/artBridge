@@ -261,7 +261,7 @@ public class SaleDao {
 	}
 	
 	//후기 등록
-	public int insertGrade(Connection con, String content, int board_no, int member_no) {
+	public int insertGrade(Connection con, String content, int board_no, int member_no, int grade) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -271,7 +271,7 @@ public class SaleDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, board_no);
 			pstmt.setInt(2, member_no);
-			pstmt.setInt(3, 2);
+			pstmt.setInt(3, grade);
 			pstmt.setString(4, content);
 			
 			result = pstmt.executeUpdate();
@@ -302,7 +302,7 @@ public class SaleDao {
 			
 			if(rset.next()){
 				g = new Grade();
-				g.setGrade(rset.getDouble("avg(g.grade)"));
+				g.setGrade(rset.getInt("avg(g.grade)"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

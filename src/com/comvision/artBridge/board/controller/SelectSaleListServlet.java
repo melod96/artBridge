@@ -94,12 +94,6 @@ public class SelectSaleListServlet extends HttpServlet {
 			
 			alist.addAll(hlist);
 		}
-		System.out.println(alist);
-		/*HashMap<String, Object> hlist = new SaleService().selectFile(list);
-		
-		Board b = (Board)hlist.get("board");
-		ArrayList<Files> fileList = (ArrayList<Files>)hlist.get("files");
-		System.out.println(hlist.size());*/
 		//연관 검색어 출력
 		ArrayList<Relate> rlist = new BoardService().selectRelateList();
 		String page = "";

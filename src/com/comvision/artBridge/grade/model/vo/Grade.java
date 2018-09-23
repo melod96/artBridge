@@ -7,7 +7,7 @@ public class Grade implements Serializable{
 	private int greade_no;
 	private int board_no;
 	private int member_no;
-	private double grade;
+	private int grade;
 	private String grade_content;
 	private Date grade_date;
 	private String nick_name;
@@ -16,7 +16,7 @@ public class Grade implements Serializable{
 		
 	}
 
-	public Grade(int greade_no, int board_no, int member_no, double grade, String grade_content, Date grade_date,
+	public Grade(int greade_no, int board_no, int member_no, int grade, String grade_content, Date grade_date,
 			String nick_name) {
 		super();
 		this.greade_no = greade_no;
@@ -68,7 +68,7 @@ public class Grade implements Serializable{
 		this.member_no = member_no;
 	}
 
-	public void setGrade(double grade) {
+	public void setGrade(int grade) {
 		this.grade = grade;
 	}
 

@@ -83,10 +83,10 @@ public class SaleService {
 	}
 	
 	//후기 등록
-	public int insertGrade(String content, int board_no, int member_no) {
+	public int insertGrade(String content, int board_no, int member_no, int grade) {
 		Connection con= getConnection();
 		
-		int result = new SaleDao().insertGrade(con, content, board_no, member_no);
+		int result = new SaleDao().insertGrade(con, content, board_no, member_no,grade);
 		
 		if(result >0){
 			commit(con);

@@ -163,7 +163,7 @@
 										url:"selectSaleList.bo"
 									});
 									
-								}else{
+								}else if(sel_val =="1"){
 									$.ajax({
 										url:"selectChangeList.sp",
 										data:{sel_val:sel_val},
@@ -175,8 +175,22 @@
 											console.log("서버 전송 실패");
 										}
 									});
+								$("#list_list").append($("#list_img"));	
+								}else if(sel_val =="2"){
+									$.ajax({
+										url:"selectChangeList.sp",
+										data:{sel_val:sel_val},
+										type:"get",
+										success:function(data){
+											console.log("서버 전송 성공");
+										},
+										error:function(status, msg){
+											console.log("서버 전송 실패");
+										}
+									});
+								$("#list_list").append($("#list_img"));	
 								}
-									
+								
 							}
 							
 						</script>
@@ -211,7 +225,6 @@
 								<!-- id:listTable 에 리스트가 나옵니다. -->
 							</table>
 						</div>
-						<!-- <img src="/artBridge/image/saletest/salepageimg.jpg" alt="" /> -->
 						<%
 							int i = 0;
 							for(Board b :list){
