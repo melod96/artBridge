@@ -18,9 +18,15 @@ ul.tab-menu li>a:hover {
 		<% switch(pageName){
 			case "mainAdmin" : %>
 			$("#mainAdmin").css({"background":"white", "color":"black"});
+		<% break;
+			case "commissionAdmin" :%>
+			$("#commissionAdmin").css({"background":"white", "color":"black"});
 		<% break; 
-			case "memberAdmin" :%>
+			case "memberAdmin" : %>
 			$("#memberAdmin").css({"background":"white", "color":"black"});
+		<% break;
+			case "ratingAdmin" : %>
+			$("#ratingAdmin").css({"background":"white", "color":"black"});
 		<% break;
 			default : %>
 			$("#mainAdmin").css({"background":"white", "color":"black"});
@@ -39,6 +45,7 @@ ul.tab-menu li>a:hover {
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMemberListClone.ad?pageName=memberAdmin'" id="memberAdmin">회원 관리</a></li>
 		<li><a href="/artBridge/views/admin/transactionAdmin.jsp">거래내역 관리</a></li>
 		<li><a href="/artBridge/views/admin/noticeInsertForm.jsp">공지사항</a></li>
+		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectRating.ad?pageName=ratingAdmin'" id="ratingAdmin">등급 관리</a></li>
 		</ul>
 	</div>
 </section>
