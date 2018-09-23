@@ -396,6 +396,31 @@ private Properties prop = new Properties();
 		return list;
 	}
 
+	public int updateMainDelete(Connection con, int bno) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int b = 0;
+		
+		String query = prop.getProperty("updateMainDelete");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, bno);
+			
+			b = pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return b;
+		
+		
+		
 	public int insertRating(Connection con, Rating r) {
 		PreparedStatement pstmt = null;
 		int result = 0;
