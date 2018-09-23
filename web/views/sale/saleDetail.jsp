@@ -27,6 +27,7 @@
 <head>
 <meta charset="UTF-8">
 <title>ArtBridge</title>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 <%@ include file="/views/common/head.jsp"%>
 <style type="text/css">
 .hugi {
@@ -127,6 +128,9 @@
 							%>
 						</div>
 						<div class="right">
+						<ul style = "float:right; margin:10px;">
+						<i class="far fa-heart fa-3x"></i>
+						</ul>
 							<img src="<%=prof.getFiles_root() %>" id="img">
 							<p align="center">
 								<a href=""><%=b.getNick_name()%></a>
