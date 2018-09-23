@@ -396,6 +396,53 @@ private Properties prop = new Properties();
 		return list;
 	}
 
+	public int insertRating(Connection con, Rating r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertRating");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, r.getRating_name());
+			pstmt.setInt(2, r.getSlot());
+			pstmt.setInt(3, r.getCommission());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int updateRating(Connection con, Rating r) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateRating");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, r.getRating_name());
+			pstmt.setInt(2, r.getSlot());
+			pstmt.setInt(3, r.getCommission());
+			pstmt.setInt(4, r.getRating_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
 	
 }
 
