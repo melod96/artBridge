@@ -17,7 +17,6 @@ import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.service.SaleService;
-import com.comvision.artBridge.sale.model.vo.Options;
 
 
 
@@ -89,11 +88,12 @@ public class SelectSaleListServlet extends HttpServlet {
 		}
 		
 		//한 게시글 마다 해당하는 이미지 파일 불러오기
-		HashMap<String, Object> hmap = new BoardService().selectFileList(list);
-		
-		Board b = (Board)hmap.get("board");
-		ArrayList<Files> filelist = (ArrayList<Files>)hmap.get("files");
-
+		ArrayList<HashMap<String, Object>> alist = new ArrayList<HashMap<String,Object>>();
+		for(Board b : list){
+			ArrayList<HashMap<String, Object>> hlist = 	new SaleService().selectFileAllList(b.getBoard_no());
+			
+			alist.addAll(hlist);
+		}
 		//연관 검색어 출력
 		ArrayList<Relate> rlist = new BoardService().selectRelateList();
 		String page = "";
@@ -101,10 +101,10 @@ public class SelectSaleListServlet extends HttpServlet {
 		if(list != null){
 			page = "views/sale/salepage.jsp";
 			request.setAttribute("list", list);
-			request.setAttribute("filelist", filelist);
 			request.setAttribute("pi", pi);
 			request.setAttribute("rlist", rlist);
 			request.setAttribute("oplist", opmap);
+			request.setAttribute("alist", alist);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 조회 실패");

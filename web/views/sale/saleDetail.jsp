@@ -19,6 +19,7 @@
 		glist = (ArrayList<Grade>)request.getAttribute("glist");
 	}
 	Grade avgGrade = (Grade)request.getAttribute("avgGrade");
+	Files prof = (Files)request.getAttribute("f");
 	
 %>
 <!DOCTYPE html>
@@ -126,7 +127,7 @@
 							%>
 						</div>
 						<div class="right">
-							<%-- <img src="<!-- /artBridge/image/saletest/salepageimg.jpg -->" id="img"> --%>
+							<img src="<%=prof.getFiles_root() %>" id="img">
 							<p align="center">
 								<a href=""><%=b.getNick_name()%></a>
 							</p>
@@ -202,10 +203,16 @@
 											style="font-size: 24px">원</font>
 									</div>
 								</ul>
+								<%if(m!=null){ %>
 								<ul style="margin-top: 10px;" align="center">
 									<button onclick="senddetailedlist()"
 										class="btn btn-primary btn-mg">명세표 보내기</button>
 								</ul>
+								<%}else{ %>
+								<ul style="margin-top: 10px;" align="center">
+									<button data-toggle="modal" data-target="#login-modal" class="btn btn-primary btn-mg">명세표 보내기</button>
+								</ul>
+								<%} %>
 							</div>
 							<script>
 									function changeSelect() {
@@ -245,23 +252,15 @@
 									</p>
 									<p>
 										<span>게시글 카테고리</span>
-										<%
-												for (Relate r : rlist) {
-											%>
+										<%for (Relate r : rlist) {%>
 										<span style="float: right;">#<%=r.getRelate_name()%>&nbsp;
 										</span>
-										<%
-												}
-											%>
+										<%}%>
 									</p>
 									<p>슬롯</p>
-									<%
-											for (int i = 0; i < ra.getSlot(); i++) {
-										%>
+									<%for (int i = 0; i < ra.getSlot(); i++) {%>
 									<input type="radio">
-									<%
-											}
-										%>
+									<%}%>
 								</ul>
 							</div>
 						</div>
@@ -296,14 +295,13 @@
 								<th>작성자</th>
 								<th>작성일</th>
 							</tr>
-							<%
-								if (m != null || glist != null) {
+							<%if (m != null || glist != null) {
 											int i = 1;
-										for (Grade g : glist) {
-							%>
-							<tr>
+										for (Grade g : glist) {%>
+							<tr id = "<%=i%>">
 								<th><%=i%></th>
 								<th><%=g.getGrade()%></th>
+								<%-- <th onclick = "DetailContent("+ <% $(this).closest('th').attr('id')%>+")"><%=g.getGrade_content()%></th> --%>
 								<th><%=g.getGrade_content()%></th>
 								<th><%=g.getNick_name()%></th>
 								<th><%=g.getGrade_date()%></th>
@@ -314,9 +312,25 @@
 									}else{
 										
 									}
+							Grade g = new Grade();
 							%>
 						</table>
 					</div>
+					<%-- <script>
+						function DetailContent(){
+							int j = 1;
+						
+							for(Grade g : glist){
+								if($("#"+j)+tr>th != null){
+									$("#"+j).append("<%= g.getGrade_content()%>");
+								}else{
+									$("#"+j).remove();
+								}
+								
+								j++;
+							}
+						}
+					</script> --%>
 					<!-- // 이 영역에서 작업하세요 -->
 				</div>
 			</div>
@@ -354,8 +368,7 @@
 							작가명 : <span><%=b.getNick_name()%></span>
 						</p>
 						<span>평점 : </span>
-						<div class="rateit" id="rateit10"></div>
-						<!-- <button onclick="alert($('#rateit10').rateit('value'))">Get value</button> -->
+						<span><input type="number" name = "grade" min="1" max="5" step="1" /></span>
 						<span id="score"></span>
 						<textarea id="editor" name="content"></textarea>
 						<script type="text/javascript">
@@ -374,28 +387,8 @@
 					</div>
 
 				</form>
-				<!-- <script>
-						function submitBtn(){
-							var member_no = $("#member_no").val();
-							var board_no = $("#board_no").val();
-							var content = $("#editor").val();
-						
-							$.ajax({
-								url:"hugi.sp",
-								data:{member_no:member_no, board_no:board_no, content:content},
-								type:"post",
-								success:function(data){
-									console.log("서버 전송 성공");
-								},
-								error:function(status, msg){
-									console.log("서버 전송 실패");
-								}
-							});
-						}
-					</script> -->
 			</div>
 		</div>
 	</div>
-	<!-- </div> -->
 </body>
 </html>

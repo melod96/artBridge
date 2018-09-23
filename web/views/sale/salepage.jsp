@@ -10,10 +10,6 @@
 	if((ArrayList<Board>)request.getAttribute("list") != null){
 		list = (ArrayList<Board>)request.getAttribute("list");
 	}
-	ArrayList<Files> filelist = null;
-	if((ArrayList<Files>)request.getAttribute("filelist") != null){
-		filelist =(ArrayList<Files>)request.getAttribute("filelist");
-	}
 	ArrayList<Relate> rlist = null;
 	if((ArrayList<Relate>)request.getAttribute("rlist") != null){
 		rlist = (ArrayList<Relate>)request.getAttribute("rlist");
@@ -25,6 +21,10 @@
 	ArrayList<HashMap<String,Object>> oplist = null;
 	if((ArrayList<HashMap<String,Object>>)request.getAttribute("oplist")!= null){
 		oplist = (ArrayList<HashMap<String,Object>>)request.getAttribute("oplist");
+	}
+	ArrayList<HashMap<String,Object>> alist = null;
+	if((ArrayList<HashMap<String,Object>>)request.getAttribute("alist")!= null){
+		alist = (ArrayList<HashMap<String,Object>>)request.getAttribute("alist");
 	}
 	int listCount = pi.getListCount();
 	int currentPage = pi.getCurrentPage();
@@ -163,7 +163,7 @@
 										url:"selectSaleList.bo"
 									});
 									
-								}else if(sel_val=="1"){
+								}else if(sel_val =="1"){
 									$.ajax({
 										url:"selectChangeList.sp",
 										data:{sel_val:sel_val},
@@ -175,7 +175,8 @@
 											console.log("서버 전송 실패");
 										}
 									});
-								}else if(sel_val=="2"){
+								$("#list_list").append($("#list_img"));	
+								}else if(sel_val =="2"){
 									$.ajax({
 										url:"selectChangeList.sp",
 										data:{sel_val:sel_val},
@@ -187,33 +188,11 @@
 											console.log("서버 전송 실패");
 										}
 									});
-								}else if(sel_val=="3"){
-									$.ajax({
-										url:"selectChangeList.sp",
-										data:{sel_val:sel_val},
-										type:"get",
-										success:function(data){
-											console.log("서버 전송 성공");
-										},
-										error:function(status, msg){
-											console.log("서버 전송 실패");
-										}
-									});
-								}else{
-									$.ajax({
-										url:"selectChangeList.sp",
-										data:{sel_val:sel_val},
-										type:"get",
-										success:function(data){
-											console.log("서버 전송 성공");
-										},
-										error:function(status, msg){
-											console.log("서버 전송 실패");
-										}
-									});
+								$("#list_list").append($("#list_img"));	
 								}
-									
+								
 							}
+							
 						</script>
 
 					</div>
@@ -246,7 +225,6 @@
 								<!-- id:listTable 에 리스트가 나옵니다. -->
 							</table>
 						</div>
-						<!-- <img src="/artBridge/image/saletest/salepageimg.jpg" alt="" /> -->
 						<%
 							int i = 0;
 							for(Board b :list){
@@ -258,15 +236,16 @@
 							<div class="list_img_box both left">
 								<ul>
 									<ol style="height: 145px;">
-											<%for(Files f : filelist){ %>
+											<%for(int j = 0; j<alist.size();j++){
+												HashMap<String,Object> hhmap = alist.get(j);
+												if(hhmap.get("board_no").equals(b.getBoard_no())){%>
 												<dl class="thumb3" style="margin: 5px; display:inline-block;">
-												<%-- <li style="background: url(<%= f.getFiles_root()%>) no-repeat center 15%"></li> --%>
 												<li style="display:inline-block;" id = "thumbnail">
 												<input type="hidden" value = "<%=b.getBoard_no() %>" />
-													<img src="<%=f.getFiles_root() %>" alt="" style = "width:162px; height:122px;"/>
+													<img src="<%=hhmap.get("files_root")%>" alt="" style = "width:162px; height:122px;"/>
 												</li>
 												</dl>
-											<%} %>
+											<%} }%>
 									</ol>
 									<ol style="height: 28px;">
 										<dl class="left ellip"

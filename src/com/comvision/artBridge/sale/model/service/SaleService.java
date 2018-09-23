@@ -49,15 +49,7 @@ public class SaleService {
 	}
 
 	//해당하는 판매글의 이미지 조회
-	public ArrayList<Files> selectFileList(int num) {
-		Connection con = getConnection();
-		
-		ArrayList<Files> flist = new SaleDao().selectFileList(con,num);
-		
-		close(con);
-		return flist;
-	}
-
+	
 	//해당하는 판매글의 연관검색어
 	public ArrayList<Relate> selectRelateList(int num) {
 		Connection con = getConnection();
@@ -91,10 +83,10 @@ public class SaleService {
 	}
 	
 	//후기 등록
-	public int insertGrade(String content, int board_no, int member_no) {
+	public int insertGrade(String content, int board_no, int member_no, int grade) {
 		Connection con= getConnection();
 		
-		int result = new SaleDao().insertGrade(con, content, board_no, member_no);
+		int result = new SaleDao().insertGrade(con, content, board_no, member_no,grade);
 		
 		if(result >0){
 			commit(con);
@@ -139,6 +131,50 @@ public class SaleService {
 		}
 		return result;
 	}
+
+/*	public HashMap<String, Object> selectFile(ArrayList<Board> list) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> alist = new SaleDao().selectFileList(con, list);
+		
+		close(con);
+		
+		return alist;
+	}*/
+
+	public ArrayList<HashMap<String, Object>> selectFileAllList(int board_no) {
+		Connection con = getConnection();
+		
+		ArrayList<HashMap<String, Object>> alist = new SaleDao().selectFileAllList(con, board_no);
+		
+		close(con);
+		
+		return alist;
+	}
+
+	public ArrayList<Files> selectFileList(int num) {
+		Connection con = getConnection();
+		
+		ArrayList<Files> alist = new SaleDao().selectFileList(con, num);
+		
+		close(con);
+		
+		return alist;
+	}
+
+	public Files selectProfile(int num) {
+		Connection con = getConnection();
+		
+		Files f = new SaleDao().selectProfile(con, num);
+		
+		close(con);
+		
+		return f;
+	}
+
+	
+
+
 
 
 	

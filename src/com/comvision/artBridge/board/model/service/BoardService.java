@@ -81,16 +81,6 @@ public class BoardService {
 		return list;
 	}
 
-	//판매글에 해당하는 이미지 출력
-	public HashMap<String, Object> selectFileList(ArrayList<Board> list) {
-		Connection con = getConnection();
-		
-		HashMap<String, Object> filelist = new BoardDao().selectFileList(con,list);
-		
-		close(con);
-		
-		return filelist;
-	}
 
 	//연관검색어 출력
 	public ArrayList<Relate> selectRelateList() {
