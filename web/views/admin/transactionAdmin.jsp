@@ -1,5 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.transaction.model.vo.*, com.comvision.artBridge.board.model.vo.*"%>
+	<%
+	ArrayList<Transaction> list = null; 
+	if((ArrayList<Transaction>)request.getAttribute("list") != null){
+		list = (ArrayList<Transaction>)request.getAttribute("list");
+	}
+	
+	int num = (int)request.getAttribute("num");
+	String value="";
+	
+		if(num == 0){
+			value = (String)request.getAttribute("value");
+			}
+		
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
+	int listCount = pi.getListCount();
+	int currentPage = pi.getCurrentPage();
+	int maxPage = pi.getMaxPage();
+	int startPage = pi.getStartPage();
+	int endPage = pi.getEndPage(); 
+	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -130,69 +150,94 @@ ul.tab-menu li>a:hover {
 							</tr>
 						</thead>
 						<tbody>
-
-
+							<%if(list != null){for(Transaction t : list){%>
 							<tr style="height: 50px;">
-								<td>12345</td>
-								<td>박소진</td>
-								<td>userId</td>
-								<td>소나나</td>
-								<td>userId2</td>
-								<td>결제대기</td>
-								<td>2018-09-10</td>
-								<td>20,000</td>
-								<td>소년, 소녀 위주 커미션</td>
+								<td><label><%= t.getOrders_no() %></label></td>
+								<td><label><%= t.getCusName() %></td>
+								<td><label><%= t.getCusId() %></td>
+								<td><label><%= t.getWrtNick() %></td>
+								<td><label><%= t.getWrtId() %></td>
+								<td><label><%= t.getPay_status() %></td>
+								<td><label><%= t.getO_date() %></td>
+								<td><label><%= t.getPayment() %></td>
+								<td><label><%= t.getBoard_title() %></td>
 							</tr>
-
-							<tr style="height: 50px;">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr style="height: 50px;">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr style="height: 50px;">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr style="height: 50px;">
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+				<% }} %> 
+						
 						</tbody>
 					</table>
+					
+					  <%
+	              	              	if (num == 0) {
+	              	              %>
+	              
+	              <!--페이징 search -->
+	              
+					<div class="paginate">
+						<a onclick="location.href='<%=request.getContextPath()%>/searchBoard.ad?currentPage=<%=currentPage%>&value=<%=value%>'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<% if(currentPage <=1){ %>
+							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
+						<%}else{ %>
+							<a onclick = "location.href='<%= request.getContextPath()%>/searchBoard.ad?currentPage=<%=currentPage -1%>&value=<%=value%>'" class="btn-prev" title="이전">
+							<em class="blind">목록에서 이전 페이지 이동</em></a>
+						<%} %>
+						<span class="paging-numbers">
+							<% for(int p = startPage; p <=endPage;p++){
+								if(p==currentPage){%>
+									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
+								<%}else{ %>
+									<a onclick= "location.href='<%= request.getContextPath()%>/searchBoard.ad?currentPage=<%=p%>&value=<%=value%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+								<%} %>
+							<%} %>
+						</span>
+						<% if(currentPage >= maxPage){ %>
+							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%}else{ %>
+							<a onclick = "location.href = '<%= request.getContextPath()%>/searchBoard.ad?currentPage=<%=currentPage +1%>&value=<%=value%>'" class="btn-next" title="다음">
+							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%} %>
+						
+						<a onclick = "location.href = '<%= request.getContextPath()%>/searchBoard.ad?currentPage=<%=maxPage%>&value=<%=value%>'" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+					</div>
+					
+	              <!--//페이징 search -->
+	              
+	              <%}else{ %>
+	              
+	              <!--페이징 normal -->
+	              
+					<div class="paginate">
+						<a onclick="location.href='<%=request.getContextPath()%>/selectCommision.ad?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<% if(currentPage <=1){ %>
+							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
+						<%}else{ %>
+							<a onclick = "location.href='<%= request.getContextPath()%>/selectCommision.ad?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<em class="blind">목록에서 이전 페이지 이동</em></a>
+						<%} %>
+						<span class="paging-numbers">
+							<% for(int p = startPage; p <=endPage;p++){
+								if(p==currentPage){%>
+									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
+								<%}else{ %>
+									<a onclick= "location.href='<%= request.getContextPath()%>/selectCommision.ad?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+								<%} %>
+							<%} %>
+						</span>
+						<% if(currentPage >= maxPage){ %>
+							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%}else{ %>
+							<a onclick = "location.href = '<%= request.getContextPath()%>/selectCommision.ad?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<%} %>
+						
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectCommision.ad?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+					</div>
+					
+	              <!--//페이징 normal -->
+	              
+				   <%} %>	              
 
 					<div class="paginate">
 						<a href="#" class="btn-first" title="처음"><em class="blind">목록에서

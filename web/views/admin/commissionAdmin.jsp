@@ -188,7 +188,7 @@ border-color:darkgray;
 
 				</div>
 				<div class="heading">
-					<h2>게시글 관리</h2>
+					<h2>판매글 관리</h2>
 				</div>
 				<hr>
 				<br>
@@ -244,7 +244,7 @@ location.href="<%= request.getContextPath() %>/searchBoard.ad?value=" + value;
 
 				<button type="submit" id="deleteBtn" name="deleteBtn"
 					class="btn btn-primary btn-sm"
-					style="padding: 5px 22px; float: right;" onclick="del2();">게시글
+					style="padding: 5px 22px; float: right;" onclick="del2();">판매글
 					삭제</button>
 				<br> <br>
 				<script>
@@ -279,7 +279,7 @@ location.href="<%= request.getContextPath() %>/searchBoard.ad?value=" + value;
 							<th scope="col">NO</th>
 							<th scope="col">작가명</th>
 							<th scope="col">작성일</th>
-							<th scope="col">게시글 제목</th>
+							<th scope="col">판매글 제목</th>
 
 						</tr>
 					</thead>

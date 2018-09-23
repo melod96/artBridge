@@ -21,6 +21,18 @@ ul.tab-menu li>a:hover {
 		<% break; 
 			case "memberAdmin" :%>
 			$("#memberAdmin").css({"background":"white", "color":"black"});
+			<% break; 
+			case "commissionAdmin" :%>
+			$("#commissionAdmin").css({"background":"white", "color":"black"});
+			<% break; 
+			case "customerAdmin" :%>
+			$("#customerAdmin").css({"background":"white", "color":"black"});
+			<% break; 
+			case "customerQna" :%>
+			$("#customerQna").css({"background":"white", "color":"black"});
+			<% break; 
+			case "transactionAdmin" :%>
+			$("#transactionAdmin").css({"background":"white", "color":"black"});
 		<% break;
 			default : %>
 			$("#mainAdmin").css({"background":"white", "color":"black"});
@@ -35,9 +47,9 @@ ul.tab-menu li>a:hover {
 		<ul class="tab-menu">
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMain.ad?pageName=mainAdmin'" id="mainAdmin">메인관리 </a></li>
 		<li><a onclick="location.href='<%= request.getContextPath() %>/selectCommision.ad?pageName=commissionAdmin'" id="commissionAdmin">커미션 관리</a></li>
-		<li><a href="/artBridge/views/admin/customerAdmin.jsp" >고객문의 관리</a></li>
+		<li><a href="/artBridge/views/admin/customerAdmin.jsp" id="customerAdmin">고객문의 관리</a></li>
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMemberListClone.ad?pageName=memberAdmin'" id="memberAdmin">회원 관리</a></li>
-		<li><a href="/artBridge/views/admin/transactionAdmin.jsp">거래내역 관리</a></li>
+		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectTrs.ad?pageName=transactionAdmin'" id="transactionAdmin">거래내역 관리</a></li>
 		<li><a href="/artBridge/views/admin/noticeInsertForm.jsp">공지사항</a></li>
 		</ul>
 	</div>
