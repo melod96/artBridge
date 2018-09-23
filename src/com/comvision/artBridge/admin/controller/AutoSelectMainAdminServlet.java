@@ -15,10 +15,6 @@ import com.google.gson.Gson;
 
 @WebServlet("/autoSelect.ad")
 public class AutoSelectMainAdminServlet extends HttpServlet {
-       
-
-
-
 
 	private static final long serialVersionUID = -3793722173191971334L;
 

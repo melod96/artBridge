@@ -223,34 +223,7 @@ ul.tab-menu li>a:hover {
 					<br>
 					<br>
 					
-					<script>
 					
-					
-						var i = 1;
-						function add(){
-							
-							//추가하기 함수
-							
-							function add() {
-												
-									var str = "";
-													
-								$("input[id='check']").each(function() {
-									if ($(this).prop("checked") == true) {
-										str += $(this).val() + "," ;
-									}
-								});
-								
-								if(str==""){
-									location.href = '<%= request.getContextPath()%>/selectMain.ad';
-									console.log('1');
-								}else{
-									location.href = '<%= request.getContextPath()%>/insertMain.ad?str='+str;
-									console.log('2');
-									}
-								};
-						}
-					</script>
 					
 					<h3 style="margin-left:25%;">메인 배너</h3>
 					<div class="addTable">
@@ -305,13 +278,63 @@ ul.tab-menu li>a:hover {
 		<!-- // Footer -->
 
 	</div>
+	
+	<script>
+		//add();
+		
+		function add(){
+			var str = "";
+			
+			$("input[id='check']").each(function(){
+				if($(this).prop("checked") == true){
+					str += $(this).val() + "," ; 
+				}
+			});
+			
+			if(str == ""){
+				location.href = '<%= request.getContextPath()%>/selectMain.ad';
+				console.log("1");
+			}else{
+				console.log("str 2 : "+ str);
+				location.href = '<%= request.getContextPath()%>/insertMainSale.ad?str='+str;
+				
+			}
+		}
+		
+	</script>
+	
+	<script>
+	
+		//del();
+		
+		function del(){
+					
+			var str2 = "";
+				
+			$("input[name='bdCk']").each(function() {
+				if ($(this).prop("checked") == true) {
+					str2 += $(this).val() + "," ;
+				}
+			});
+			
+			if(str2==""){
+				location.href = '<%= request.getContextPath()%>/selectMain.ad';
+				console.log('1');
+			}else{
+				location.href = '<%= request.getContextPath()%>/deleteMain.ad?str2='+str2;
+				console.log('2');
+				}
+			
+		};
+	
+	
+	</script>
 
 	<script>
 		//화면 로딩시 메인배너 테이블을 자동으로 로드
 		$(function() {
 
-			$
-					.ajax({
+			$.ajax({
 						//서블렛 주소
 						url : "autoSelect.ad",
 						//방식
@@ -325,7 +348,7 @@ ul.tab-menu li>a:hover {
 							//생성될 tr태그를 선언 (*닫기 태그는  하지 않아도 자동 생성 된다.)
 							var $tr = $("<tr>");
 							//tr태그 안의 td태그 선언
-							var $checkTd = $("<td><input type='checkbox'>");
+							var $checkTd = $("<td><input name='bdCk' type='checkbox' value='"+data[key].board_no+"'>");
 							var $noTd = $("<td colspan='5'>");
 							var $input = $("<input name='bdNo' type='text' readonly>").val(data[key].board_no);
 							

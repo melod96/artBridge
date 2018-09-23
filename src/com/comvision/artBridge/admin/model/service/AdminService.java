@@ -146,5 +146,16 @@ Connection con = getConnection();
 		
 		return list;
 	}
+
+	public int updateMainDelete(String bno) {
+		Connection con = getConnection();
+
+		int b = new AdminDao().updateMainDelete(con, Integer.parseInt(bno));
+
+		close(con);
+
+		return b;
+		
+	}
 	
 }
