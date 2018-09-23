@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.writer.model.dao.WriterDao;
 
 import static com.comvision.artBridge.common.JDBCTemplate.*;
@@ -52,6 +53,17 @@ public class WriterService {
 		close(con);
 		
 		return result;
+	}
+	
+	//연관검색어 노출용 메소드
+	public ArrayList<Relate> relateWord() {
+		Connection con = getConnection();
+		
+		ArrayList<Relate> relate = new WriterDao().relateWord(con);
+
+		close(con);
+		
+		return relate;
 	}
 
 }

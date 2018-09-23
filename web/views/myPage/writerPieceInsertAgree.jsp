@@ -75,7 +75,7 @@
                     	function agreeCk(){
                     		var agreeCk = $("#agree").prop("checked");
                     		if(agreeCk == true){
-                    			location.href="/artBridge/views/myPage/writerPieceInsertForm.jsp"
+                    			location.href="<%= request.getContextPath() %>/InsertPieceForm.wr"
                     		}else{
                     			alert('약관동의에 체크 해주세요.');
                     			return false;

@@ -198,13 +198,13 @@
                      
                           <div class="input-area">
                               <label for="nick">닉네임</label>
-                              <input id="" name="" class="form-control" type="text" value="<%= m.getNick_name() %>">
+                              <input name="" class="form-control" type="text" value="<%= m.getNick_name() %>">
                               
                               <label for="introtxt">소개글</label>
-                              <textarea id="" name="" class="form-control" rows="3"><%= m.getIntroduction() %></textarea> 
+                              <textarea name="" class="form-control" rows="3"><%= m.getIntroduction() %></textarea> 
                               
                               <label for="slot">슬롯 갯수 변경</label>
-                              <input id="" name="" class="form-control input-xshort" type="number" min="1" value="<%= slot %>"><br>
+                              <input name="" class="form-control input-xshort" type="number" min="1" value="<%= slot %>"><br>
                               
                               <label>커미션 접수 상태</label>
                               <div class="state">
@@ -218,8 +218,8 @@
 							  
 							  <script>
 								 function swichTg(ck){
-									  var test = $(ck).prop('checked');
-								  		if(test == true){
+									  var swichCk = $(ck).prop('checked');
+								  		if(swichCk == true){
 								  			$('.txt-on').css('color','#ff5722');
 								  			$('.txt-off').css('color','#afafaf');
 								  		}else{
@@ -274,9 +274,23 @@
                         <div class="piece-list">
                           <ul class="seting-area">
                               <!-- <li><input type="button" class="btn-lock" title="작품 보이기"><label class="hide">숨기기</label></li> -->
-                              <li><input type="button" class="btn-edit" title="작품 수정"><label class="hide">수정</label></li>
-                              <li><input type="button" class="btn-del" title="작품 삭제"><label class="hide">삭제</label></li>
+                              <li><input type="button" class="btn-edit" title="작품 수정" data-toggle="tooltip" data-placement="top" onclick="<%=request.getContextPath()%>/updatePieceForm.wr"><label class="hide">수정</label></li>
+                              <li><input type="button" class="btn-del" title="작품 삭제" data-toggle="tooltip" data-placement="top" onclick="pieceDel()"><label class="hide">삭제</label></li>
                           </ul>
+                          <script>
+                          $(function () {
+                        	  $('[data-toggle="tooltip"]').tooltip('show');
+                        	})
+                          	function pieceDel(){
+                          		var result = confirm("작품을 삭제 하시겠습니까?");
+                          		if(result){
+                          			location.href="<%=request.getContextPath()%>/deletePiece.wr";
+                          			//console.log('서블릿으로 보내서 삭제하기');
+                          		}else{
+                          			return false;	
+                          		}
+                          	}
+                          </script>
                           <div class="img-area">
                               <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
                               <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
@@ -296,7 +310,7 @@
                             </span>
                           </div>
                           <div class="info-area2">
-                              <span><%= b.getBoard_title() %></span>
+                              <span><a href="#"><%= b.getBoard_title() %></a></span>
                               <span class="price">7,000 ~</span>
                           </div>
                         </div>

@@ -69,8 +69,10 @@ public class InsertPieceServlet extends HttpServlet {
 			String file_size = multiRequest.getParameter("file_size");
 			int working_period = Integer.parseInt(multiRequest.getParameter("working_period"));
 			
-			//String option01 =  
-			//int price01=
+			//String[] option = multiRequest.getParameterValues("option");
+			//int[] price = Integer.parseInt(multiRequest.getParameterValues("price"));
+			String[] relate = multiRequest.getParameterValues("relate");
+			
 			
 			String contents = multiRequest.getParameter("contents");
 			
