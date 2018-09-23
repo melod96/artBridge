@@ -303,17 +303,18 @@
 							<tr>
 								<th><%=i%></th>
 								<th><%=g.getGrade()%></th>
-								<th data-toggle="collapse" data-target="#demo"><%=g.getGrade_content()%></th>
+								<th data-toggle="collapse" data-target=<%="#demo"+i %>><%=g.getGrade_content()%></th>
 								<th><%=g.getNick_name()%></th>
 								<th><%=g.getGrade_date()%></th>
 							</tr>
 							<tr>
 								<th>
-									<div id="demo" class="collapse">
+									<div id=<%="demo"+i %> class="collapse">
 										<%=g.getGrade_content()%>
 									</div>
 								</th>
 							</tr>
+							
 							<%
 								i++;
 										}
