@@ -13,6 +13,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.relate.model.vo.Relate;
 
@@ -355,6 +356,42 @@ private Properties prop = new Properties();
 			close(pstmt);
 			close(rset);
 		}
+		
+		return list;
+	}
+
+	public ArrayList<Rating> selectRatingList(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Rating> list = null;
+		Rating r = null;
+		
+		String query = prop.getProperty("selectRatingList");
+		
+		try {
+			stmt = con.createStatement();
+		
+			rset = stmt.executeQuery(query);
+			
+			list = new ArrayList<Rating>();
+			
+			while(rset.next()){
+				r = new Rating();
+				r.setRating_no(rset.getInt("rating_no"));
+				r.setRating_name(rset.getString("rating_name"));
+				r.setSlot(rset.getInt("slot"));
+				r.setCommission(rset.getInt("commission"));
+				
+				list.add(r);
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+			close(rset);
+		}
+		
 		
 		return list;
 	}

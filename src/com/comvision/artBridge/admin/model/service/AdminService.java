@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.comvision.artBridge.admin.model.dao.AdminDao;
+import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.member.model.dao.MemberDao;
@@ -128,16 +129,22 @@ Connection con = getConnection();
 	public ArrayList<Board> selectBoardList(int currentPage, int limit, String kind, String keyword) {
 		Connection con = getConnection();
 			
-			ArrayList<Board> list = new AdminDao().selectBoardList(con,currentPage, limit,kind,keyword);
-			
-			close(con);
-
-			
-			return list;
-
+		ArrayList<Board> list = new AdminDao().selectBoardList(con,currentPage, limit,kind,keyword);
 		
+		close(con);
 
+		return list;
 
 }
+
+	public ArrayList<Rating> selectRating() {
+		Connection con = getConnection();
+		
+		ArrayList<Rating> list = new AdminDao().selectRatingList(con);
+		
+		close(con);
+		
+		return list;
+	}
 	
 }
