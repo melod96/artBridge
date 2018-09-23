@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.relate.model.vo.Relate;
 
 import static com.comvision.artBridge.common.JDBCTemplate.*;
 
@@ -159,6 +160,39 @@ public class WriterDao {
 		}
 	
 		return result;
+	}
+	
+	//연관검색어 노출용 메소드
+	public ArrayList<Relate> relateWord(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Relate> relate = null;
+		Relate r = null;
+		
+		String query = prop.getProperty("selectRelate");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			relate = new ArrayList<Relate>();
+			
+			while(rset.next()){
+				r = new Relate();
+				r.setRelate_no(rset.getInt("relate_no"));
+				r.setRelate_name(rset.getString("relate_name"));
+
+				relate.add(r);
+				//System.out.println(b);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(rset);
+			close(stmt);
+		}
+		
+		return relate;
 	}
 
 }
