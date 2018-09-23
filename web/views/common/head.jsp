@@ -8,7 +8,7 @@
 <link href="/artBridge/css/froala_editor.pkgd.min.css" rel="stylesheet">
 <link href="/artBridge/css/custom.css" rel="stylesheet">
 <link href="/artBridge/css/rateit.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.css">
+<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.css"> -->
 <!-- #### JAVASCRIPT FILES #### -->
 <script src="/artBridge/js/jquery-1.11.0.min.js"></script>
 <script src="/artBridge/js/bootstrap.min.js"></script>
@@ -21,7 +21,7 @@
 <script src="/artBridge/js/froala_editor.pkgd.min.js"></script>
 <script src="/artBridge/js/custom.js"></script>
 <script src="/artBridge/js/jquery.rateit.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.0/dist/semantic.min.js"></script> -->
 
 <!-- #### AJAX FILES #### -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

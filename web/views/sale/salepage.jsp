@@ -131,7 +131,7 @@
 
 					<div id="listFocus" class="clear" style="height: 6px;">&nbsp;</div>
 					<div id="list_top" class="cf">
-
+					<div class="left">
 						<div class="ui action input">
 							<form style="display: inline-block;" action="<%= request.getContextPath() %>/searchkeyword.bo" method="get">
 								<div class="ui action input">
@@ -139,8 +139,19 @@
 									<button class="ui blue button" style = "font-size:13px;">Search</button>
 								</div>
 							</form>
+					</div>
+					</div>
+					<div class="right">
+							<%if(m != null){ %>
+							<ul>
+								<div class="sBtn1" style="height: 42px; line-height: 42px; margin-left:10px;" onclick="">작품 등록 / 수정</div>
+							</ul>
+							<%} %>
+							</div>
+					</div>
+					<div class="right">
 							<!-- option 태그 미완성 -->
-							<li class="left" style="margin-left: 8px">
+							<li class="right" style="margin-left: 8px">
 							<select	class="form-control input-xshort" onchange="changeSelect()" name = "sel">
 								<option value="0" name="0">전체</option>	
 								<option value="1"name="1">최저가</option>
@@ -148,13 +159,8 @@
 								<option value="3" name="3">거래완료율</option>
 								<option value="4"name="4">별점</option>
 							</select></li>
-
-							<%if(m != null){ %>
-							<ul class="right">
-								<div class="sBtn1" style="height: 42px; line-height: 42px;" onclick="">작품 등록 / 수정</div>
-							</ul>
-							<%} %>
-						</div>
+					</div>
+					
 						<script>
 							function changeSelect(){
 								var sel_val = document.all.sel.value;
@@ -196,11 +202,10 @@
 							
 						</script>
 
-					</div>
 					
 					<br>
 
-					<div id="tagList">
+					<div id="tagList" style = "margin-top:50px;">
 						<ul style="margin-bottom: 10px" id="hashtitle">
 							<i class="fa fa-tag" style="margin-top: -3px; font-size: 18px"></i>
 							<span class="fsize13">연관검색어</span>
