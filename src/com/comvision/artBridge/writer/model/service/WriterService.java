@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.relate.model.vo.RelateNumList;
 import com.comvision.artBridge.writer.model.dao.WriterDao;
 
 import static com.comvision.artBridge.common.JDBCTemplate.*;
@@ -65,5 +66,25 @@ public class WriterService {
 		
 		return relate;
 	}
+
+	//커미션 삭제용 메소드
+	public ArrayList<Board> deletePiece(int pieceNo, int currentPage, int limit) {
+		Connection con = getConnection();
+		ArrayList<Board> list = null;
+		int result = 0;
+		
+		if(result > 0){
+			commit(con);
+			list = new WriterDao().selectList(con, currentPage, limit);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return list;
+	}
+
+	
 
 }

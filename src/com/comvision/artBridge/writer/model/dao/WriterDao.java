@@ -41,6 +41,8 @@ public class WriterDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
+			//pstmt.setInt(1, board_no);
+			
 			int startRow = (currentPage -1) *limit +1;
 			int endRow= startRow +limit -1;
 			pstmt.setInt(1, startRow);
@@ -193,6 +195,29 @@ public class WriterDao {
 		}
 		
 		return relate;
+	}
+
+	//커미션 삭제용 메소드
+	public int deletePiece(Connection con, int pieceNo, int currentPage, int limit) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deletePiece");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, pieceNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
+		
 	}
 
 }
