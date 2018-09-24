@@ -21,6 +21,7 @@ import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.vo.Options;
 import com.comvision.artBridge.sale.model.vo.Orders;
+import com.comvision.artBridge.sale.model.vo.Requirements;
 
 public class SaleDao {
 	
@@ -564,42 +565,6 @@ public class SaleDao {
 		return result;
 	}
 
-	public ArrayList<Options> selectsaleOptionList(Connection con, int board_no, int customer_no) {
-		PreparedStatement pstmt= null;
-		ResultSet rset = null;
-		ArrayList<Options> olist = null;
-		Options o = null;
-		
-		String query = prop.getProperty("selectsaleOptionList");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, board_no);
-			pstmt.setInt(2, customer_no);
-			
-			rset = pstmt.executeQuery();
-			
-			olist = new ArrayList<Options>();
-			while(rset.next()){
-				o = new Options();
-				o.setOptions_no(rset.getInt("options_no"));
-				o.setBoard_no(rset.getInt("board_no"));
-				o.setMember_no(rset.getInt("member_no"));
-				o.setOptions_name(rset.getString("options_name"));
-				o.setOptions_price(rset.getInt("options_price"));
-				
-				olist.add(o);
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
-			close(pstmt);
-			close(rset);
-		}
-		return olist;
-	}
-
 	public Board selectBoard(Connection con, int board_no) {
 		PreparedStatement pstmt = null;
 		ResultSet rset =null;
@@ -630,6 +595,39 @@ public class SaleDao {
 			close(rset);
 		}
 		return b;
+	}
+
+	public ArrayList<Requirements> selectsaleRequirementsList(Connection con, int orders_no, int customer_no) {
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		ArrayList<Requirements> olist = null;
+		Requirements r = null;
+		
+		String query = prop.getProperty("selectsaleRequirementsList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, orders_no);
+			pstmt.setInt(2, customer_no);
+			
+			rset = pstmt.executeQuery();
+			
+			olist = new ArrayList<Requirements>();
+			while(rset.next()){
+				r = new Requirements();
+				r.setRequirements_content(rset.getString("REQURIEMENTS_CONTENT"));
+				r.setRequirement_price(rset.getInt("REQUIREMENT_PRICE"));
+				
+				olist.add(r);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return olist;
 	}
 
 	

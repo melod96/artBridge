@@ -175,16 +175,6 @@ public class SaleService {
 		return result;
 	}
 
-	//판매 옵션 리스트
-	public ArrayList<Options> selectsaleOptionList(int board_no, int customer_no) {
-		Connection con = getConnection();
-		
-		ArrayList<Options> olist = new SaleDao().selectsaleOptionList(con, board_no,customer_no);
-		
-		close(con);
-		return olist;
-	}
-
 	public Board selectBoard(int board_no) {
 		Connection con = getConnection();
 		
@@ -192,6 +182,17 @@ public class SaleService {
 		
 		close(con);
 		return b;
+	}
+
+	//판매 요구사항 리스트
+	public ArrayList<Requirements> selectsaleRequirementsList(int orders_no, int customer_no) {
+		Connection con = getConnection();
+		
+		ArrayList<Requirements> olist = new SaleDao().selectsaleRequirementsList(con, orders_no,customer_no);
+		
+		close(con);
+		return olist;
+
 	}
 
 	
