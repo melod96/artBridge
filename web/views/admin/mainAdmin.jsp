@@ -343,7 +343,7 @@ ul.tab-menu li>a:hover {
 						success : function(data) {
 							for(var key in data){
 							//데이터에 따라 생성될 행(tr)들이 추가될 table body의 class명 trtr을 명시하는 변수 선언 
-							$trtr = $(".trtr");
+							var $trtr = $(".trtr");
 
 							//생성될 tr태그를 선언 (*닫기 태그는  하지 않아도 자동 생성 된다.)
 							var $tr = $("<tr>");

@@ -39,7 +39,7 @@ public class SelectNoticeListServlet extends HttpServlet {
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
+	
 	
 		
 		

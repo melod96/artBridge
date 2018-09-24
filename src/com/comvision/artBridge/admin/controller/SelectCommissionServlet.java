@@ -19,10 +19,10 @@ import com.comvision.artBridge.relate.model.vo.Relate;
 
 @WebServlet("/selectCommision.ad")
 public class SelectCommissionServlet extends HttpServlet {
-	private static final long serialVersionUID = 1L;
        
+	private static final long serialVersionUID = 1L;
 
-    public SelectCommissionServlet() {
+	public SelectCommissionServlet() {
         super();
   
     }

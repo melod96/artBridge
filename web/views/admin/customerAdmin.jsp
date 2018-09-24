@@ -143,77 +143,34 @@ ul.tab-menu li>a:hover {
 
 							</tr>
 						</thead>
-						<tbody>
+						
+						<tbody class="tbody">
+						
+						
+						<%-- 	<%if(list != null){for(Message m : list){%>
+								<tr>
+									<td><input type="checkbox" name="msgNo" value=<%=m.get %>></td>
+									
+									
+								</tr>
+							<% }} %> --%>
 
-							<tr>
-								<td><input type="checkbox" name="chBox3"></td>
-								<td class="num3">1</td>
-								<td>답변완료</td>
-								<td>2018-09-11 11:00AM</td>
-								<td>양소나</td>
-								<td>작가</td>
-								<td><div style="float: left;">
-										&nbsp;&nbsp;<a href="customerQna.jsp"><u>문의 드립니다.</u></a>
-									</div></td>
-							</tr>
-
-							<tr>
-								<td><input type="checkbox" name="chBox3"></td>
-								<td class="num3">2</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td><input type="checkbox" name="chBox3"></td>
-								<td class="num3">3</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td><input type="checkbox" name="chBox3"></td>
-								<td class="num3">4</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
-
-							<tr>
-								<td><input type="checkbox" name="chBox3"></td>
-								<td class="num3">5</td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+								<tr>
+									<td><input type="checkbox" name="chBox3"></td>
+									<td class="num3">1</td>
+									<td>답변완료</td>
+									<td>2018-09-11 11:00AM</td>
+									<td>양소나</td>
+									<td>작가</td>
+									<td><div style="float: left;">
+											&nbsp;&nbsp;<a href="customerQna.jsp"><u>문의 드립니다.</u></a>
+										</div></td>
+								</tr>
 							
 						</tbody>
 					</table>
 
-					<div class="paginate">
-						<a href="#" class="btn-first" title="처음"><em class="blind">목록에서
-								처음 페이지 이동</em></a> <a href="#" class="btn-prev" title="이전"><em
-							class="blind">목록에서 이전 페이지 이동</em></a> <span class="paging-numbers">
-							<a href="#">1<span class="blind">페이지로 이동</span></a> <a href="#"
-							class="on">2<span class="blind">페이지로 이동</span></a> <a href="#">3<span
-								class="blind">페이지로 이동</span></a> <a href="#">4<span
-								class="blind">페이지로 이동</span></a> <a href="#">5<span
-								class="blind">페이지로 이동</span></a>
-						</span> <a href="#" class="btn-next" title="다음"><span class="spr"><em
-								class="blind">목록에서 다음 페이지 이동</em></span></a> <a href="#" class="btn-last"
-							title="끝"><span class="spr"><em class="blind">목록에서
-									끝 페이지 이동</em></span></a>
-					</div>
+					
 					<br> <br>
 				</div>
 			</div>
@@ -227,5 +184,82 @@ ul.tab-menu li>a:hover {
 
 
 	</div>
+	
+	<script>
+	//All select 자동 출력 구문
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//All Select 자동 출력 구문 -ajax
+	/*
+	$(function(){
+		$.ajax({
+			url : "autoSelectMSG.ad",
+			type : "get",
+			success : function(data){
+				for(var key in data){
+					var $tbody = $(".tbody");
+					var $tr = $("<tr>");
+						var $td1 = $("<td><input type='checkbox' name='chBox3'>");
+						var $td2 = $("<td class='msgNo' value='"+data[key].msg_no+"'>");
+						
+							var str ="";
+							if(data[key].ckeck_date == null){
+								str = "접수중";
+							}else{
+								str = "답변완료";
+							}
+						var $td3 = $("<td value='"+ str +"'>");
+						
+						var $td4 = $("<td value='"+ data[key].msg_date +"'>");
+						var $td5 = $("<td value='"+ data[key].mem_name +"'>");
+						
+							var str2 = "";
+							if(data[key].writer_right == 0){
+								str2 = "작가";
+							}else{
+								str2 = "일반";
+							}
+						var $td6 = $("<td value='"+ str2 +"'>");
+						
+						var $td7 = $("<td>");
+						var $td77 = $("<div style='float : left;'>&nbsp;&nbsp;");
+							var $td777 = $("<a href='customerQna.jsp'>");
+								var $td7777 = $("<u>"+data[key].msg_content);
+								
+						$tr.append($td1);
+						$tr.append($td2);
+						$tr.append($td3);
+						$tr.append($td4);
+						$tr.append($td5);
+						$tr.append($td6);
+							
+									$td777.append($td7777);
+								$td77.append($td777);
+							$td7.append($td77);
+						$tr.append($td7);
+						
+						$tbody.append($tr);
+						
+				}
+			},
+			error : fucntion(){
+				console.log("아따 에러여");
+			} 
+			
+		});
+	});
+	*/
+	
+	</script>
 </body>
 </html>
