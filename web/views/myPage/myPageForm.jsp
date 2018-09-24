@@ -74,7 +74,7 @@
     .insert-img-area li{/* float:left;  */display:inline-block; width:210px; margin-right:20px; }
     .insert-img-area li p{overflow:hidden; height:140px;}
     .insert-img-area img{width:100%;}
-	li strong{color:#e03939; font-weight:bold;}
+	strong{color:#e03939; font-weight:bold;}
 </style>
 
 <style>		/*  관심작가 탭 스타일 */
@@ -264,8 +264,8 @@
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
 <!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
-			<form action="">
-				<div id="reqWriterModal" class="w3-modal" onclick="reqWriterDisplayNone();"></div>
+			<form action="<%= request.getContextPath() %>/reqWriterRight.me" method="post" onsubmit="return reqWriterRight();">
+				<div id="reqWriterModal" class="w3-modal"></div>
 				<div id="reqWriterFormArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
 					<div class=reqWriterForm-Area-Style align="center">
@@ -275,7 +275,7 @@
 								<td width="40px" height="52px"></td>
 								<td width="85px" class="reqWriterForm-title">* I&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;D</td>
 								<td width="2px" class="reqWriterForm-title">:</td>
-								<td width="210px"><%= loginUser.getId() %></td>
+								<td width="180px"><%= loginUser.getId() %></td>
 								<td width="140px" class="reqWriterForm-title">* 닉네임 (활동명)</td>
 								<td width="2px" class="reqWriterForm-title">:</td>
 								<td><%= loginUser.getNick_name() %></td>
@@ -283,36 +283,34 @@
 								<td height="52px"></td>
 								<td class="reqWriterForm-title">* 은 행 명</td>
 								<td class="reqWriterForm-title">:</td>
-								<td colspan="6"><input type="text" style="width:50px;"/> 은행</td>
-							</tr>
-							<tr>
-								<td height="52px"></td>
-								<td colspan="6">
-									<span class="reqWriterForm-title">* 계좌번호 ('-'없이 숫자만 입력)</span>
-									<span width="18.6px" class="reqWriterForm-title"> : </span>
-									<input type="text" style="width:250px; padding-left:5px;" value="110111121212"/>
+								<td><input type="text" id="userBank" style="width:50px;"/> 은행</td>
+								<td colspan="3">
+									<span class="reqWriterForm-title">* 계좌번호 &nbsp;: &nbsp;</span>
+									<input type="text" id="userAccount" style="width:250px; padding-left:5px;" placeholder="'-'없이 숫자만 입력"/>
 								</td>
 							</tr>
 							<tr><td colspan="7" height="20px"></td></tr>
 							<tr>
-								<td height="25px" colspan="6" class="reqWriterForm-title" style="font-size:16px; padding-left:25px;"> * 인증 파일을 첨부하세요</td>
+								<td height="25px" colspan="7" class="reqWriterForm-title" style="font-size:16px; padding-left:25px;"> * 작가 등록을 위한 관리자 승인용 이미지 파일을 첨부하세요.
+									<strong style="font-size:14px;"> (신청 후에는 변경 불가)</strong>
+								</td>
 							</tr>
 							<tr>
 								<td colspan="7" width="715px" style="padding-bottom:10px;">
 	                                <ul class="insert-img-area" style="text-align:center;">
 	                                  <li>
-	                                      <input type="file"  id="file-btn1">
+	                                      <input type="file"  id="file-btn1" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
 	                                      <label for="file-btn1" class="btn btn-primary">이미지 파일 불러오기</label>
 	                                      <p><img class="img1" src="/artBridge/image/common/no_thumb.jpg" /></p>
 	                                  </li>
 	                                  <li>
-	                                      <input type="file"  id="file-btn2">
-	                                       <label for="file-btn2" class="btn btn-primary">이미지 파일 불러오기</label>
+	                                      <input type="file"  id="file-btn2" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
+	                                      <label for="file-btn2" class="btn btn-primary">이미지 파일 불러오기</label>
 	                                      <p><img class="img2" src="/artBridge/image/common/no_thumb.jpg"></p>
 	                                  </li>
 	                                  <li style="margin-right:0px;">
-	                                      <input type="file"  id="file-btn3">
-	                                       <label for="file-btn3" class="btn btn-primary">이미지 파일 불러오기</label>
+	                                      <input type="file"  id="file-btn3" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
+	                                      <label for="file-btn3" class="btn btn-primary">이미지 파일 불러오기</label>
 	                                      <p><img class="img3" src="/artBridge/image/common/no_thumb.jpg"></p>
 	                                  </li>
 	                                </ul>
@@ -325,8 +323,8 @@
 							<tr>
 								<td colspan="7">
 									<div class="btn-center reqWriterBtn">
-					                      <button class="btn btn-primary btn-lg btn-plus-design">신청</button>
-					                      <button class="btn btn-default btn-lg btn-plus-design">취소</button>
+					                      <button type="submit" class="btn btn-primary btn-lg btn-plus-design" >신청</button>
+					                      <button type="reset" class="btn btn-default btn-lg btn-plus-design" onclick="reqWriterDisplayNone();">취소</button>
 					                </div>
 								</td>
 							</tr>
@@ -898,7 +896,7 @@
 <!--      		//4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원 인증 비밀번호 확인 창 -->
 
 <!--      		* 4-2. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원정보 수정 본 화면 -->					
-				<form id="memberInfoForm" onsubmit="return updateMember(this)" action="<%= request.getContextPath() %>/updateInfo.me" method="post" class="memberInfoArea" style="display:none;">
+				<form id="memberInfoForm" onsubmit="return updateMember()" action="<%= request.getContextPath() %>/updateInfo.me" method="post" class="memberInfoArea" style="display:none;">
 					<div class="memberInfoArea">
 						<table>
 							<tr>
@@ -1016,10 +1014,10 @@
 <!-- 		//4. 마이페이지 탭 메뉴 - 회원정보수정 탭 -->
 
 <!-- 		* 5. 마이페이지 탭 메뉴 - 내작품관리 탭 -->
-			<form action="" method="get"class="mywork-menu tab-menu-content-form">
+			<form action="<%-- <%=request.getContextPath()%>/selectPieceList.wr --%>" method="get"class="mywork-menu tab-menu-content-form">
 				<div class="mywork-menu">	<!-- 소나 파일 include or 링크 연결하기 -->
-				
-				
+<%-- 					<%@ include file="/views/myPage/insertTest_writerPieceManagement.jsp" %> --%>
+<!-- 						해당 서블릿 리턴 주소 바꾸기 page = "/views/myPage/insertTest_writerPieceManagement.jsp"; -->
 				<br><br><br><br>	
 				</div>
 			</form>
@@ -1180,6 +1178,7 @@
 				$('.heading .menuName').html("회원정보 수정");
 				
 				$('#checkUserPwd').val("");
+				$("#checkUserPwd").focus();
 				$('#pwdStatus').css({"display":"none"});
 				
 				$('#pwdResult').css({"display":"none"});
@@ -1229,13 +1228,17 @@
 	    
 	// 	* 명세표 모달 띄우기
 	   	function stmtDisplayBlock(){
-			document.getElementById('stmtModalArea').style.display='block';
-			document.getElementById('stmtArea').style.display='block';
+	   		$('#stmtModalArea').css({"display":"block"});
+	   		$('#stmtArea').css({"display":"block"});
+			/* document.getElementById('stmtModalArea').style.display='block';
+			document.getElementById('stmtArea').style.display='block'; */
 	  	};							
 	// 	* 명세표 모달 닫기
 		function stmtDisplayNone(){
-			document.getElementById('stmtArea').style.display='none';
-			document.getElementById('stmtModalArea').style.display='none';
+			$('#stmtArea').css({"display":"none"});
+	   		$('#stmtModalArea').css({"display":"none"});
+			/* document.getElementById('stmtArea').style.display='none';
+			document.getElementById('stmtModalArea').style.display='none'; */
 		};
 	</script>
 <!-- //1. 주문관리 탭 스크립트 -->
@@ -1316,6 +1319,13 @@
 				$('#pwdResult').css({"color":"orangered"});
 				$('#pwdResult').css({"display":""});
  				$("#pwdResult").text("패스워드를 입력하세요.");
+ 				$("#pwdResult").text("패스워드를 입력하세요.");
+ 				if(updateUserPwd2 == ""){
+ 					$("#updateUserPwd2").focus();
+ 				}
+ 				if(updateUserPwd1 == ""){
+ 					$("#updateUserPwd1").focus();
+ 				}
 				return false;
 			}
 
@@ -1324,6 +1334,7 @@
 				$('#nnResult').text("닉네임을 입력하세요.");
 				$('#nnResult').css({"color":"orangered"});
 				$('#nnResult').css({"display":""});
+				$("#updateNickName").focus();
 				return false;
  			}
  			var nickNameCheckBtn = $('#nickNameCheckBtn').text();
@@ -1343,12 +1354,14 @@
 	 			if(tel1 == "" || tel2 == "" || tel3 == "" || tel1 == "null" || tel2 == "null" || tel3 == "null"){
 	 				checkPhone = false;
 	 				alert("회원 정보를 모두 입력해주세요.");
+	 				$("#tel1").focus();
 	 			} else{
 	 				checkPhone = true;
 	 			}
 	 			if(email == "" || email == "null"){
 	 				checkEmail = false;
 	 				alert("회원 정보를 모두 입력해주세요.");
+	 				$("#email").focus();
 	 			} else{
 	 				checkEmail = true;
 	 			}
@@ -1382,9 +1395,11 @@
 						if(data > 0){
 							$('#pwdCheckArea').css({"display":"none"});
 							$('.memberInfoArea').css({"display":"block"});
+							$("#updateUserPwd1").focus();
 						}else{
 							$('#pwdStatus').css({"display":""});
 							$('#pwdStatus').css({"color":"orangered"});
+							$("#checkUserPwd").focus();
 						}
 					}
 				});
@@ -1400,6 +1415,7 @@
 					$('#pwdResult').css({"color":"orangered"});
 					$('#pwdResult').css({"display":""});
 	 				$("#pwdResult").text("패스워드가 일치하지 않습니다.");
+	 				$("#updateUserPwd1").focus();
 					
 					checkPwd = false;			
 				}else{
@@ -1446,6 +1462,7 @@
 							$('#nnResult').text("이미 사용중인 닉네임입니다.");
 							$('#nnResult').css({"color":"orangered"});
 							$('#nnResult').css({"display":""});
+							$("#updateNickName").focus();
 							
 							checkNick = false;
 						}else{
@@ -1519,38 +1536,101 @@
 			}
 		};
 		
-		
 	// 	* 작가신청 양식 모달 띄우기
 	   	function reqWriterDisplayBlock(){
-			document.getElementById('reqWriterModal').style.display='block';
-			document.getElementById('reqWriterFormArea').style.display='block';
+	   		$('#reqWriterModal').css({"display":"block"});
+	   		$('#reqWriterFormArea').css({"display":"block"});
 	  	};							
 	// 	* 작가신청 양식 모달 닫기
 		function reqWriterDisplayNone(){
-			document.getElementById('reqWriterFormArea').style.display='none';
-			document.getElementById('reqWriterModal').style.display='none';
+			insertImgCnt1 = 0;	//사진 올린 갯수 카운트 리셋
+			insertImgCnt2 = 0;
+			insertImgCnt3 = 0;
+			insertImgTotalCnt = 0;
+			$('.form-table img').attr('src', '/artBridge/image/common/no_thumb.jpg');
+			$('#reqWriterFormArea').css({"display":"none"});
+	   		$('#reqWriterModal').css({"display":"none"});
 		};
 		
 	// 	* 작가신청 양식 모달 - 사진 삽입 테이블	
-		function readURL(input, type) {
+		var insertImgCnt1 = 0;
+		var insertImgCnt2 = 0;
+		var insertImgCnt3 = 0;
+		var insertImgTotalCnt = 0;
+
+		function readURL(input){
+			var type = $(input).attr('id');
+			
 	        if (input.files && input.files[0]) {
 	          var reader = new FileReader();
 	          reader.onload = function(e) {
 	            if(type == 'file-btn1'){
 	                $('.img1').attr('src', e.target.result);
+	                insertImgCnt1 = 1;
 	            }else if(type == 'file-btn2'){
 	                $('.img2').attr('src', e.target.result);
+	                insertImgCnt2 = 1;
 	            }else if(type == 'file-btn3'){
 	                $('.img3').attr('src', e.target.result);
+	                insertImgCnt3 = 1;
 	            }
+		        insertImgTotalCnt = insertImgCnt1 + insertImgCnt2 + insertImgCnt3;
 	          }
 	          reader.readAsDataURL(input.files[0]);
 	        }
-		}
-		$(".img-area input").change(function() {
-		  var type = $(this).attr('id');
-		  readURL(this, type);
-		});
+		};
+		
+	//	* 작가신청 양식 전송 버튼 함수 (정보 입력/변경)여부 판단
+	 	var checkBank = false;
+		var checkAccount = false;
+		/* var checkImgType1 = false;
+		var checkImgType2 = false;
+		var checkImgType3 = false; */
+		var checkImgTotalCnt = false;
+		
+		function reqWriterRight(){
+			var userBank = $('#userBank').val();
+			var userAccount = $('#userAccount').val();
+			if(userBank == ""){
+				checkBank = false;
+			}else{
+				checkBank = true;
+			}
+			if(userAccount == ""){
+				checkAccount = false;
+			}else{
+				checkAccount = true;
+			}
+			if(userBank == "" || userAccount == ""){
+				alert("입금 받을 은행 정보를 입력하세요.");
+			}
+			
+			if(checkBank == false){
+				return false;
+			}
+			if(checkAccount == false){
+				return false;
+			}
+			/* if(checkImgType1 == false){
+				return false;
+			}
+			if(checkImgType2 == false){
+				return false;
+			}
+			if(checkImgType3 == false){
+				return false;
+			} */
+			if(insertImgTotalCnt < 3){
+				alert(insertImgTotalCnt);
+				alert("이미지 파일 세 개 모두 첨부 해주세요.");
+				checkImgTotalCnt = false;
+				return false;
+			}else{
+				checkImgTotalCnt = true;
+			}
+			
+			return true;
+		};
 	</script>
 <!-- //4. 회원정보 수정 탭 스크립트 -->
 
