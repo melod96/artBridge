@@ -332,7 +332,8 @@
                                       <ul>
 	                                   	<% if(relate != null){
 				                    		for(Relate r : relate){ %>
-				                        <li><span class="btn btn-default" name="relate" vlaue="<%= r.getRelate_no() %>"><%= r.getRelate_name() %></span></li>
+				                        <li><span class="btn btn-default" name="relateNum" vlaue="<%= r.getRelate_no() %>"><%= r.getRelate_name() %></span></li>
+				                        <%-- <li><input type="checkbox" id="word1" name="relate" value="<%= r.getRelate_no() %>" ><label for="word1" class="btn btn-default"><%= r.getRelate_name() %></label></li> --%>
 				                        <% 	}
 				                    	} %>
                                       </ul>

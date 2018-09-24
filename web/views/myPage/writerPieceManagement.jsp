@@ -274,17 +274,14 @@
                         <div class="piece-list">
                           <ul class="seting-area">
                               <!-- <li><input type="button" class="btn-lock" title="작품 보이기"><label class="hide">숨기기</label></li> -->
-                              <li><input type="button" class="btn-edit" title="작품 수정" data-toggle="tooltip" data-placement="top" onclick="<%=request.getContextPath()%>/updatePieceForm.wr"><label class="hide">수정</label></li>
-                              <li><input type="button" class="btn-del" title="작품 삭제" data-toggle="tooltip" data-placement="top" onclick="pieceDel()"><label class="hide">삭제</label></li>
+                              <li><input type="button" class="btn-edit" title="작품 수정" onclick="<%=request.getContextPath()%>/updatePieceForm.wr"><label class="hide">수정</label></li>
+                              <li><input type="button" class="btn-del" title="작품 삭제" onclick="pieceDel()"><label class="hide">삭제</label></li>
                           </ul>
                           <script>
-                          $(function () {
-                        	  $('[data-toggle="tooltip"]').tooltip('show');
-                        	})
                           	function pieceDel(){
                           		var result = confirm("작품을 삭제 하시겠습니까?");
                           		if(result){
-                          			location.href="<%=request.getContextPath()%>/deletePiece.wr";
+                          			location.href="<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>";
                           			//console.log('서블릿으로 보내서 삭제하기');
                           		}else{
                           			return false;	
@@ -297,7 +294,7 @@
                               <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
                           </div>
                           <div class="info-area1">
-                              <span><%= m.getNick_name() %>작가</span>
+                              <span><%= m.getNick_name() %>작가<%=b.getBoard_no()%></span>
                               <span>신뢰도 : 100%</span>
                               <span>
                                 <p class="star_rating">

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.StringTokenizer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,6 +19,8 @@ import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.common.MyFileRenamePolicy;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
+import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.relate.model.vo.RelateNumList;
 import com.comvision.artBridge.writer.model.service.WriterService;
 import com.oreilly.servlet.MultipartRequest;
 
@@ -30,25 +33,17 @@ public class InsertPieceServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("서블릿으로 들어옴");
 		
 		if(ServletFileUpload.isMultipartContent(request)){
+			//썸네일 파일 첨부 저장용
 			int maxSize = 1024 * 1024 * 10;
 			
 			String root = request.getSession().getServletContext().getRealPath("/");
-			System.out.println(root);
-			
 			String savePath = root + "image/thumbnail_upload/";
-			System.out.println(savePath);
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
-			
-			//지정한 파일의 이름을 저장할 arrayList생성
 			ArrayList<String> saveFiles = new ArrayList<String>();
-			//원본 파일의 이름을 저장할 arrayList생성(다운받을때 파일명 원복)
 			ArrayList<String> originFiles = new ArrayList<String>();
-			
-			//파일의 이름을 반환한다.
 			Enumeration<String> filesName = multiRequest.getFileNames();
 			
 			while(filesName.hasMoreElements()){
@@ -56,24 +51,27 @@ public class InsertPieceServlet extends HttpServlet {
 				
 				saveFiles.add(multiRequest.getFilesystemName(name));
 				originFiles.add(multiRequest.getOriginalFileName(name));
-				
-				//역순으로 꺼내져온다
-				System.out.println("fileSystem name : " + multiRequest.getFilesystemName(name));
-				System.out.println("originFile name : " + multiRequest.getOriginalFileName(name));
 			}
 			
+			ArrayList<Files> fileList = new ArrayList<Files>();
+			
+			for(int i = originFiles.size() -1; i >= 0; i--){
+				Files at = new Files();
+				at.setFiles_root(savePath);
+				at.setFiles_title(originFiles.get(i));
+				at.setChange_title(saveFiles.get(i));
+				
+				fileList.add(at);
+			}
+		
+			
+			//Board테이블에 저장할 데이터 가져오기
 			int member_no = Integer.parseInt(multiRequest.getParameter("member_no"));
 			String title = multiRequest.getParameter("title");
 			int resolution = Integer.parseInt(multiRequest.getParameter("resolution"));
 			String file_type = multiRequest.getParameter("file_type");
 			String file_size = multiRequest.getParameter("file_size");
 			int working_period = Integer.parseInt(multiRequest.getParameter("working_period"));
-			
-			//String[] option = multiRequest.getParameterValues("option");
-			//int[] price = Integer.parseInt(multiRequest.getParameterValues("price"));
-			String[] relate = multiRequest.getParameterValues("relate");
-			
-			
 			String contents = multiRequest.getParameter("contents");
 			
 			//Board객체 생성
@@ -84,24 +82,18 @@ public class InsertPieceServlet extends HttpServlet {
 			b.setSubmit_file_type(file_type);
 			b.setSubmit_size(file_size);
 			b.setWorking_period(working_period);
-			
 			b.setBoard_content(contents);
-
-
-			//Attachment 객체 생성하여 ArrayList객체 생성
-			ArrayList<Files> fileList = new ArrayList<Files>();
 			
-			//반복문을 역으로 돌리는 이유는 파일리스트가 역순으로 들어오기 때문에 되돌려 주기 위해서 이다.
-			for(int i = originFiles.size() -1; i >= 0; i--){
-				Files at = new Files();
-				at.setFiles_root(savePath);
-				at.setFiles_title(originFiles.get(i));
-				at.setChange_title(saveFiles.get(i));
-				
-				fileList.add(at);
-			}
-		
-			//System.out.println(title + ", " + resolution + ", " + file_type + ", " + file_size + "," + working_period);
+			
+			//option테이블에 저장할 데이터 가져오기
+			//String[] option = multiRequest.getParameterValues("option");
+
+			
+			//R_N_LIST테이블에 저장할 데이터 가져오기
+			//int[] price = Integer.parseInt(multiRequest.getParameterValues("price"));
+			/*String relateNum = multiRequest.getParameter("relateNum");
+			
+			System.out.println(relateNum);*/
 			
 			
 			//service 전송
