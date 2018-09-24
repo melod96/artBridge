@@ -96,21 +96,21 @@ border-color:darkgray;
 					</div>
 					
 					<br>
-					<div id="searchWord">
-						<input type="text" name="scArea" style="width: 50%;" id="relate">
+					<div id="searchWord" action="<%=request.getContextPath()%>/insertRelate_ad" method="post" id="goForm">
+						<input type="text" name="scArea" style="width: 50%;" value="">
 						<button name="mainBtn" class="btn btn-primary btn-sm"
 							onclick="add();" id="insertRelate" oncilck="add();">검색어 추가</button>
 						<button name="mainBtn" class="btn btn-primary btn-sm"
 							onclick="del();">검색어 삭제</button>
 							
-							<script>
+							<!-- <script>
 								function add(){
 									$("#addText"){
 										
 									}
 								}
 							
-							</script>
+							</script> -->
 
 						<br> <br>
 					</div>
@@ -146,7 +146,7 @@ border-color:darkgray;
 					<br> <br>
 					<!--연관검색어 스크립트-->
 					<script>
-						var i = 1;
+					/* 	var i = 1;
 						function add() {
 
 							$(function() {
@@ -163,7 +163,26 @@ border-color:darkgray;
 								i++;
 
 							});
-						};
+						}; */
+						
+						function add(){
+							var str = "";
+							
+							$("input[name=scArea]").each(function(){
+								if($(this).prop("#relate") == true){
+									str += $(this).val(); 
+								}
+							});
+							
+							if(str == ""){
+								location.href = '<%= request.getContextPath()%>/selectCommision.ad';
+								console.log("1");
+							}else{
+								console.log("str 2 : "+ str);
+								location.href = '<%= request.getContextPath()%>/insertRelate.ad?str='+str;
+								
+							}
+						}
 
 						function del() {
 							$("input[name=chBox]").each(function() {
