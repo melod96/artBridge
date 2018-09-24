@@ -16,7 +16,7 @@ body{padding:none;}
 	IMP.init('imp37293980'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 	
 	IMP.request_pay({
-	    pg : 'danal', // version 1.1.0부터 지원.
+	    pg : 'html5_inicis', // version 1.1.0부터 지원.
 	    pay_method : 'card',
 	    merchant_uid : 'merchant_' + new Date().getTime(),
 	    name : '주문명:결제테스트',
