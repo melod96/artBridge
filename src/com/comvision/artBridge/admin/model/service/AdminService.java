@@ -154,8 +154,10 @@ public class AdminService {
 		int b = new AdminDao().updateMainDelete(con, Integer.parseInt(bno));
 
 		close(con);
-
+		
 		return b;
+		
+	}
 		
 	public int insertRating(ArrayList<Rating> insertList) {
 		Connection con = getConnection();
