@@ -1,5 +1,20 @@
+<%@page import="com.comvision.artBridge.board.model.vo.Board, java.util.*,com.comvision.artBridge.sale.model.vo.Requirements,com.comvision.artBridge.files.model.vo.Files"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<% 
+	Board b = null;
+	if((Board)request.getAttribute("b")!=null){
+		b = (Board)request.getAttribute("b");
+	}
+	ArrayList<Requirements> rlist = null;
+	if((ArrayList<Requirements>)request.getAttribute("rlist")!=null){
+		rlist = (ArrayList<Requirements>)request.getAttribute("rlist");
+	}
+	Files f= null;
+	if((Files)request.getAttribute("f")!= null){
+		f = (Files)request.getAttribute("f");
+	}
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,12 +26,19 @@
 .payment {
 	border: 1px solid lightgray;
 }
-.infotable{
+
+.infotable {
 	border: 1px solid lightgray;
 }
 
 .payment p {
 	margin: 15px;
+	margin-left:5px;
+	margin-right:5px;
+}
+.payment span{
+	margin-left:5px;
+	margin-right:5px;
 }
 
 .infotable th {
@@ -99,9 +121,8 @@
 						<tbody>
 							<tr>
 								<td width="234">
-									<div class="thumb" style="cursor: default;">
-										<li
-											style="background: url(image/goods_img2/1475.jpg) no-repeat center top;"></li>
+									<div class="thumb" style="cursor: default;" align = "center">
+										<img src="<%=f.getFiles_root() %>" alt=""  style = "width:162px; height:122px;"/>
 									</div>
 								</td>
 								<td width="403">
@@ -109,15 +130,13 @@
 										<tbody>
 											<tr>
 												<td>
-													<dl class="n_name">N 작가
-													</dl>
-													<dl class="goods_name">일러스트 성의껏 그려드려요!&nbsp;
-													</dl>
+													<dl class="n_name"><%= b.getNick_name() %> 작가</dl>
+													<dl class="goods_name"><%= b.getBoard_title() %>&nbsp;</dl>
 													<dl class="clear" style="height: 10px"></dl>
 
 													<dl class="left_right_li line_height cf">
-														<li style="width: 270px; float: left;">메인 옵션 : 상체</li>
-														<li class="lsp0">30,000원</li>
+														<li style="width: 270px; float: left;">메인 옵션 : <%=rlist.get(0).getRequirements_content() %></li>
+														<li class="lsp0"><%=rlist.get(0).getRequirement_price() %>원</li>
 													</dl>
 
 												</td>
@@ -133,15 +152,15 @@
 												<td>
 													<dl class="left_right_li cf">
 														<li class="lsp" style="float: left;">제출 파일 유형</li>
-														<li class="lsp0" style="float: right;">jpg</li>
+														<li class="lsp0" style="float: right;"><%=b.getSubmit_file_type() %></li>
 													</dl>
 													<dl class="left_right_li cf">
 														<li class="lsp" style="float: left;">해상도</li>
-														<li class="lsp0" style="float: right;">72dpi</li>
+														<li class="lsp0" style="float: right;"><%=b.getResolution() %>dpi</li>
 													</dl>
 													<dl class="left_right_li cf">
 														<li class="lsp" style="float: left;">사이즈</li>
-														<li class="lsp0" style="float: right;">1500px</li>
+														<li class="lsp0" style="float: right;"><%=b.getSubmit_size() %></li>
 													</dl>
 													<dl class="left_right_li cf">
 														<li class="lsp" style="float: left;">수정 횟수</li>
@@ -149,8 +168,8 @@
 													</dl>
 													<dl class="left_right_li cf" style="height: 0">
 														<li class="lsp" style="float: left;">작업 기간</li>
-														<li style="float: right;">시작일로부터 <font class="lsp0"
-															style="float: right;">7일</font></li>
+														<li style="float: right;">시작일로부터&nbsp; <font class="lsp0"
+															style="float: right;"> <%=b.getWorking_period() %>일</font></li>
 													</dl>
 												</td>
 											</tr>
@@ -163,47 +182,56 @@
 					<div class="datail" style="margin-top: 15px;">
 						<div class="info">
 							<table class="infotable">
-								<tr style = "border-bottom:1px solid lightgray;">
+								<tr style="border-bottom: 1px solid lightgray;">
 									<th style="font-size: 16px;">No</th>
 									<th style="font-size: 16px;">요구사항</th>
 									<th style="font-size: 16px;">가격</th>
 								</tr>
+								<% int i = 1; for(Requirements r : rlist){ %>
 								<tr>
-									<th>1</th>
-									<th>머리띠 추가</th>
-									<th>3000원</th>
+									<th><%=i %></th>
+									<th><%= r.getRequirements_content() %></th>
+									<th><%=r.getRequirement_price() %>원</th>
 								</tr>
+								<% i++;} %>
 							</table>
 							<h3 align="right">
 								<span>합계 : </span><span>00000원</span>
 							</h3>
 						</div>
 						<br>
-						<form action="">
-						<div class="payment">
-							<p>
-								<span>주문자</span><span><input type="text" value="이상혁"></span><span
-									style="float: right">입금은행 : 농협 351-0298-7776-43 예금주 :
-									(주)아트브릿지</span>
-							</p>
-							<p>
-								<span>이메일</span><span><input type="text" value="">
-									@ <input type="text" value=""></span> <span><select
-									class="form-inline input-xshort">
-										<option>직접입력</option>
-										<option>naver.com</option>
-										<option>hanmail.net</option>
-										<option>gmail.com</option>
-										<option>nate.com</option>
-										<option>hotmail.com</option>
-								</select><span> <span style="float: right">입금자명 <input
-											type="text" value="이상혁"></span>
-							</p>
-							<p>
-								<span>전화번호</span><span><input type="text"
-									value="01000000000"></span>
-							</p>
-						</div>
+						<form action="" method = "post">
+							<div class="payment">
+								<p>
+									<span>주문자</span><span><input type="text" value="이상혁"></span><span
+										style="float: right">입금은행 : 농협 351-0298-7776-43 예금주 :
+										(주)아트브릿지</span>
+								</p>
+								<p>
+									<span>이메일</span><span><input type="text">
+										@ <input type="text" id= "emailauto"></span>
+									<select class="form-inline input-xshort" onchange="emailautos()" name = "emaildrop" style = "height:28px;">
+											<option value= "">직접입력</option>
+											<option value= "naver.com">naver.com</option>
+											<option value= "hanmail.net">hanmail.net</option>
+											<option value= "gmail.com">gmail.com</option>
+											<option value= "nate.com">nate.com</option>
+											<option value= "hotmail.com">hotmail.com</option>
+									</select>
+					<script>
+						function emailautos(){
+							var email_val = document.all.emaildrop.value;
+							console.log(email_val);
+
+							document.getElementById("emailauto").value = email_val;
+						}
+					</script>
+									<span style="float: right"><span>입금자명</span><input type="text" id = "customername" ></span>
+								</p>
+								<p>
+									<span>전화번호</span><span><input type="text" id = "phone"></span>
+								</p>
+							</div>
 						</form>
 					</div>
 					<div class="btn-center">
@@ -212,8 +240,12 @@
 						<button type="submit" class="btn btn-default btn-lg">취소</button>
 					</div>
 					<script>
-						function paymentE(){
-							window.open("http://127.0.0.1:8001/artBridge/views/sale/paymentAPI.jsp","(주)아트브릿지 결제","width=700px,height=600px");
+						function paymentE() {
+							window
+									.open(
+											"http://127.0.0.1:8001/artBridge/views/sale/paymentAPI.jsp",
+											"(주)아트브릿지 결제",
+											"width=900px,height=700px");
 						}
 					</script>
 					<!-- // 이 영역에서 작업하세요 -->

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.sale.model.service.SaleService;
 import com.comvision.artBridge.sale.model.vo.Requirements;
 
@@ -51,16 +52,16 @@ public class PaymentPageServlet extends HttpServlet {
 //		ArrayList<Options> olist = new SaleService().selectsaleOptionList(board_no,customer_no);
 		//requirment
 		ArrayList<Requirements> rlist = new SaleService().selectsaleRequirementsList(orders_no, customer_no);
-		System.out.println("bno"+board_no);
-		System.out.println(rlist);
-		System.out.println(b);
+		//작가의 썸네일
+		Files f = new SaleService().selectProfile(board_no);
 		//판매글 번호도 필요해요
 		//member_no로 닉네임까지만 가져오기
 		String page = "";
-		if(b!=null && rlist != null){
+		if(b!=null && rlist != null && f != null){
 			page = "views/sale/paymentpage.jsp";
 			request.setAttribute("b", b);
 			request.setAttribute("rlist", rlist);
+			request.setAttribute("f", f);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 상세 조회 실패");
