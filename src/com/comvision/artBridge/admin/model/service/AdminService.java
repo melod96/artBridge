@@ -156,6 +156,7 @@ public class AdminService {
 		close(con);
 
 		return b;
+	}
 		
 	public int insertRating(ArrayList<Rating> insertList) {
 		Connection con = getConnection();

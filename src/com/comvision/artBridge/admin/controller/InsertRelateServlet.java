@@ -1,6 +1,8 @@
 package com.comvision.artBridge.admin.controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -32,12 +34,22 @@ public class InsertRelateServlet extends HttpServlet {
 		int result = new AdminService().insertRelate(r);
 		
 		String Page="";
+		
 		if(result > 0){
+			Page = "selectCommision.ad";
+			//request.setAttribute("list", new NoticeService().selectList());
+		}else{
+			Page = "/views/common/errorPage.jsp";
+			request.setAttribute("msg", "공지사항 등록 실패!");
+		}
+		RequestDispatcher view = request.getRequestDispatcher(Page);
+		view.forward(request, response);
+		/*if(result > 0){
 			response.sendRedirect("index.jsp");
 		}else{
 			request.setAttribute("msg", "연관검색어 추가 실패!");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}
+		}*/
 		
 		
 	}
