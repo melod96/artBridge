@@ -62,7 +62,7 @@ public class MessageDao {
 		ArrayList<Message> list = null;
 		
 		String query = prop.getProperty("selectList");
-		
+		System.out.println("dao실행1");
 		try {
 			pstmt = con.prepareStatement(query);
 			
@@ -75,10 +75,18 @@ public class MessageDao {
 			rset = pstmt.executeQuery();
 			
 			list = new ArrayList<Message>();
-			
+			System.out.println("dao실행2");
 			while(rset.next()){
 				Message m = new Message();
-				m.setMsg_no(rset.getInt("message_no"));
+				m.setMsg_no(rset.getInt("MESSAGE_NO"));
+				m.setMsg_title(rset.getString("MESSAGE_TITLE"));
+				m.setMsg_content(rset.getString("MESSAGE_CONTENT"));
+				m.setMsg_date(rset.getDate("MESSAGE_DATE"));
+				m.setDispatch_member_no(rset.getInt("DISPATCH_MEMBER_NO"));
+				m.setReceive_member_no(rset.getInt("RECEIVE_MEMBER_NO"));
+				m.setCheck_date(rset.getDate("CHECK_DATE"));
+				m.setMem_name(rset.getString("NAME"));
+				m.setWriter_right(rset.getInt("WRITER_RIGHT"));
 				
 				list.add(m);
 			}
