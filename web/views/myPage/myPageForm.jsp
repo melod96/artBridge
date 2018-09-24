@@ -9,13 +9,6 @@
 	<title>Art Bridge</title>
 
 	<%@ include file="/views/common/head.jsp" %>
-	
-	<!-- 결제api -->
-	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
-	<script>
-	var IMP = window.IMP; // 생략가능
-	IMP.init('imp37293980'); // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
-	</script>
 
 <!-- My Page 추가 -->
 <link rel="stylesheet" href="/artBridge/css/w3.css">

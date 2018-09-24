@@ -19,7 +19,8 @@ import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.grade.model.vo.Grade;
 import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
-import com.comvision.artBridge.sale.model.vo.Requirements;
+import com.comvision.artBridge.sale.model.vo.Options;
+import com.comvision.artBridge.sale.model.vo.Orders;
 
 public class SaleDao {
 	
@@ -532,6 +533,103 @@ public class SaleDao {
 		}
 		
 		return f;
+	}
+
+	public int selectBoard_no(Connection con, int orders_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("selectBoard_no");
+		
+		try {
+			pstmt= con.prepareStatement(query);
+			pstmt.setInt(1, orders_no);
+			
+			rset = pstmt.executeQuery();
+			
+			Orders o = new Orders();
+			if(rset.next()){				
+				o.setBoard_no(rset.getInt("board_no"));
+			}
+			result = o.getBoard_no();
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return result;
+	}
+
+	public ArrayList<Options> selectsaleOptionList(Connection con, int board_no, int customer_no) {
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		ArrayList<Options> olist = null;
+		Options o = null;
+		
+		String query = prop.getProperty("selectsaleOptionList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, board_no);
+			pstmt.setInt(2, customer_no);
+			
+			rset = pstmt.executeQuery();
+			
+			olist = new ArrayList<Options>();
+			while(rset.next()){
+				o = new Options();
+				o.setOptions_no(rset.getInt("options_no"));
+				o.setBoard_no(rset.getInt("board_no"));
+				o.setMember_no(rset.getInt("member_no"));
+				o.setOptions_name(rset.getString("options_name"));
+				o.setOptions_price(rset.getInt("options_price"));
+				
+				olist.add(o);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return olist;
+	}
+
+	public Board selectBoard(Connection con, int board_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset =null;
+		Board b = null;
+		
+		String query = prop.getProperty("selectBoard");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, board_no);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				b =new Board();
+				b.setBoard_title(rset.getString("board_title"));
+				b.setNick_name(rset.getString("nick_name"));
+				b.setResolution(rset.getInt("resolution"));
+				b.setSubmit_file_type(rset.getString("submit_file_type"));
+				b.setSubmit_size(rset.getString("submit_size"));
+				b.setWorking_period(rset.getInt("working_period"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return b;
 	}
 
 	

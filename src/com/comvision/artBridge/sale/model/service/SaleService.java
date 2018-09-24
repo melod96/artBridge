@@ -17,6 +17,7 @@ import com.comvision.artBridge.member.model.dao.MemberDao;
 import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.dao.SaleDao;
+import com.comvision.artBridge.sale.model.vo.Options;
 import com.comvision.artBridge.sale.model.vo.Requirements;
 
 public class SaleService {
@@ -47,8 +48,6 @@ public class SaleService {
 		
 		return b;
 	}
-
-	//해당하는 판매글의 이미지 조회
 	
 	//해당하는 판매글의 연관검색어
 	public ArrayList<Relate> selectRelateList(int num) {
@@ -133,7 +132,7 @@ public class SaleService {
 		return result;
 	}
 
-
+	//판매페이지 썸네일 조회
 	public ArrayList<HashMap<String, Object>> selectFileAllList(int board_no) {
 		Connection con = getConnection();
 		
@@ -144,6 +143,7 @@ public class SaleService {
 		return alist;
 	}
 
+	//해당하는 판매글의 이미지 조회
 	public ArrayList<Files> selectFileList(int num) {
 		Connection con = getConnection();
 		
@@ -154,6 +154,7 @@ public class SaleService {
 		return alist;
 	}
 
+	//작가 프로필 사진
 	public Files selectProfile(int num) {
 		Connection con = getConnection();
 		
@@ -162,6 +163,35 @@ public class SaleService {
 		close(con);
 		
 		return f;
+	}
+
+	//주문번호로 게시글 번호 받아오기
+	public int selectBoard_no(int orders_no) {
+		Connection con = getConnection();
+		
+		int result = new SaleDao().selectBoard_no(con,orders_no);
+		
+		close(con);
+		return result;
+	}
+
+	//판매 옵션 리스트
+	public ArrayList<Options> selectsaleOptionList(int board_no, int customer_no) {
+		Connection con = getConnection();
+		
+		ArrayList<Options> olist = new SaleDao().selectsaleOptionList(con, board_no,customer_no);
+		
+		close(con);
+		return olist;
+	}
+
+	public Board selectBoard(int board_no) {
+		Connection con = getConnection();
+		
+		Board b = new SaleDao().selectBoard(con,board_no);
+		
+		close(con);
+		return b;
 	}
 
 	
