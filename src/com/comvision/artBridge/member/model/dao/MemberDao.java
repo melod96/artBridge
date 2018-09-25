@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
 import static com.comvision.artBridge.common.JDBCTemplate.*;
 
@@ -239,7 +240,7 @@ private Properties prop = new Properties();
 		int result = 0;
 		
 		String query = prop.getProperty("updateMember");
-		//update member set password=?, nick_name=?, phone=?, email=? where id=?
+		
 		try {
 			pstmt = con.prepareStatement(query);
 			
@@ -247,7 +248,7 @@ private Properties prop = new Properties();
 			pstmt.setString(2, m.getNick_name());
 			pstmt.setString(3, m.getPhone());
 			pstmt.setString(4, m.getEmail());
-			pstmt.setString(5, m.getId());
+			pstmt.setInt(5, m.getMember_no());
 			
 			result = pstmt.executeUpdate();
 			
@@ -390,6 +391,73 @@ private Properties prop = new Properties();
 		
 		return result;
 	}
+	
+	public int request_writerRight(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		System.out.println("3. 작가 신청 양식 전송 memberTB 업뎃쿼리 DAO 입니다~");
+		String query = prop.getProperty("updateRequestWriterRight");
+		//update member set bank=?, account=? where mNo=?
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, m.getBank());
+			pstmt.setString(2, m.getAccount());
+			pstmt.setInt(3, m.getMember_no());
+			
+			result = pstmt.executeUpdate();
+			System.out.println("4. 작가 신청 양식 전송 memberTB 업뎃 쿼리 잘 작동 하나요? 몇 개 update 했습니까? : " + result);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		if(result == 1){
+			System.out.println("5. 결과가 1이니까 다시 서비스로 갈게용~~ : " + result);
+			return result;
+		}else{
+			result = 0;
+		}
+		
+		System.out.println("5. 결과가 1이 아니어도 다시 서비스로 갈게용~~ : " + result);
+		return result;
+	}
+
+	public int confirmImg_writerRight(Connection con, ArrayList<Files> fileList) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		System.out.println("7. 첨부파일 저장데이터 fileTB 인서트쿼리 DAO 입니다~");
+		String query = prop.getProperty("insertWriterRightConfirmImg");
+		//insert into files values (seq_files_no.nextval, ?, ?, ?, ?, ?, sysdate, default)
+		
+		try {
+			for(int i = 0; i < fileList.size(); i++){
+				System.out.println("8-1. 첨부파일 저장데이터 fileTB 인서트쿼리 작동 반복문 들어왔니?");
+				pstmt = con.prepareStatement(query);
+				
+				pstmt.setInt(1, fileList.get(i).getF_reference_no());
+				pstmt.setString(2, fileList.get(i).getFiles_title());
+				pstmt.setString(3, fileList.get(i).getChange_title());
+				pstmt.setInt(4, fileList.get(i).getFiles_type());
+				pstmt.setString(5, fileList.get(i).getFiles_root());
+				
+				result += pstmt.executeUpdate();
+				
+				System.out.println("8-2. 첨부파일 저장데이터 fileTB 인서트쿼리잘 작동 하나요? 몇 개 insert 했나요? : " + result);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		System.out.println("9. 첨부파일 저장  dao 처리 했으면 result 가지고 다시 service로 갑니당" + result);
+		
+		return result;
+	}
+
 
 
 }
