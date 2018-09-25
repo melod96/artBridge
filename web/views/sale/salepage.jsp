@@ -178,12 +178,11 @@
 					<script>
 							function changeSelect(){
 								var sel_val = document.all.sel.value;
-								
 								if(sel_val == "0"){
 									$.ajax({
 										url:"selectSaleList.bo"
 									});
-									
+									$("#list_list").append($("#list_img"));	
 								}else if(sel_val =="1"){
 									$.ajax({
 										url:"selectChangeList.sp",
@@ -196,8 +195,33 @@
 											console.log("서버 전송 실패");
 										}
 									});
-								$("#list_list").append($("#list_img"));	
+									$("#list_list").append($("#list_img"));	
 								}else if(sel_val =="2"){
+									$.ajax({
+										url:"selectChangeList.sp",
+										data:{sel_val:sel_val},
+										type:"get",
+										success:function(data){
+											console.log("서버 전송 성공");
+										},
+										error:function(status, msg){
+											console.log("서버 전송 실패");
+										}
+									});
+									$("#list_list").append($("#list_img"));	
+								}else if(sel_val =="3"){
+									$.ajax({
+										url:"selectChangeList.sp",
+										data:{sel_val:sel_val},
+										type:"get",
+										success:function(data){
+											console.log("서버 전송 성공");
+										},
+										error:function(status, msg){
+											console.log("서버 전송 실패");
+										}
+									});
+								}else{
 									$.ajax({
 										url:"selectChangeList.sp",
 										data:{sel_val:sel_val},
@@ -211,6 +235,7 @@
 									});
 								$("#list_list").append($("#list_img"));	
 								}
+								document.getElementById("list_img").innerHTML=document.getElementById("list_img").innerHTML;
 								
 							}
 							
@@ -253,7 +278,7 @@
 						%>
 
 					<div id="list_img" style="display: block;">
-						<div class="list_img_box both left">
+						<div class="list_img_box both left" id = "test">
 							<ul>
 								<ol style="height: 145px;">
 									<%for(int j = 0; j<alist.size();j++){

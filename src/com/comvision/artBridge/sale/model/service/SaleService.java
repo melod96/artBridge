@@ -195,6 +195,17 @@ public class SaleService {
 
 	}
 
+	//결제 로직
+	public int insertPayment(int customer_no, int orders_no, int totalPrice) {
+		Connection con = getConnection();
+		
+		int result = new SaleDao().insertPayment(con, customer_no, orders_no, totalPrice);
+		int currval = new SaleDao().selectPaymentCurrval(con);
+		int detailresult = new SaleDao().insertPaymentDetail(con, currval);
+		close(con);
+		return result;
+	}
+
 	
 
 

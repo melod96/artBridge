@@ -1,18 +1,23 @@
-<%@page import="com.comvision.artBridge.board.model.vo.Board, java.util.*,com.comvision.artBridge.sale.model.vo.Requirements,com.comvision.artBridge.files.model.vo.Files"%>
+<%@page
+	import="com.comvision.artBridge.board.model.vo.Board, java.util.*,com.comvision.artBridge.sale.model.vo.Requirements,com.comvision.artBridge.files.model.vo.Files"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<% 
+<%
+	Member m = null;
+	if(session.getAttribute("loginUser") != null){
+		m = (Member)session.getAttribute("loginUser");
+	}
 	Board b = null;
-	if((Board)request.getAttribute("b")!=null){
-		b = (Board)request.getAttribute("b");
+	if ((Board) request.getAttribute("b") != null) {
+		b = (Board) request.getAttribute("b");
 	}
 	ArrayList<Requirements> rlist = null;
-	if((ArrayList<Requirements>)request.getAttribute("rlist")!=null){
-		rlist = (ArrayList<Requirements>)request.getAttribute("rlist");
+	if ((ArrayList<Requirements>) request.getAttribute("rlist") != null) {
+		rlist = (ArrayList<Requirements>) request.getAttribute("rlist");
 	}
-	Files f= null;
-	if((Files)request.getAttribute("f")!= null){
-		f = (Files)request.getAttribute("f");
+	Files f = null;
+	if ((Files) request.getAttribute("f") != null) {
+		f = (Files) request.getAttribute("f");
 	}
 %>
 <!DOCTYPE html>
@@ -33,12 +38,13 @@
 
 .payment p {
 	margin: 15px;
-	margin-left:5px;
-	margin-right:5px;
+	margin-left: 5px;
+	margin-right: 5px;
 }
-.payment span{
-	margin-left:5px;
-	margin-right:5px;
+
+.payment span {
+	margin-left: 5px;
+	margin-right: 5px;
 }
 
 .infotable th {
@@ -121,8 +127,9 @@
 						<tbody>
 							<tr>
 								<td width="234">
-									<div class="thumb" style="cursor: default;" align = "center">
-										<img src="<%=f.getFiles_root() %>" alt=""  style = "width:162px; height:122px;"/>
+									<div class="thumb" style="cursor: default;" align="center">
+										<img src="<%=f.getFiles_root()%>" alt=""
+											style="width: 162px; height: 122px;" />
 									</div>
 								</td>
 								<td width="403">
@@ -130,13 +137,16 @@
 										<tbody>
 											<tr>
 												<td>
-													<dl class="n_name"><%= b.getNick_name() %> 작가</dl>
-													<dl class="goods_name"><%= b.getBoard_title() %>&nbsp;</dl>
+													<dl class="n_name"><%=b.getNick_name()%>
+														작가
+													</dl>
+													<dl class="goods_name"><%=b.getBoard_title()%>&nbsp;
+													</dl>
 													<dl class="clear" style="height: 10px"></dl>
 
 													<dl class="left_right_li line_height cf">
-														<li style="width: 270px; float: left;">메인 옵션 : <%=rlist.get(0).getRequirements_content() %></li>
-														<li class="lsp0"><%=rlist.get(0).getRequirement_price() %>원</li>
+														<li style="width: 270px; float: left;">메인 옵션 : <%=rlist.get(0).getRequirements_content()%></li>
+														<li class="lsp0"><%=rlist.get(0).getRequirement_price()%>원</li>
 													</dl>
 
 												</td>
@@ -152,15 +162,15 @@
 												<td>
 													<dl class="left_right_li cf">
 														<li class="lsp" style="float: left;">제출 파일 유형</li>
-														<li class="lsp0" style="float: right;"><%=b.getSubmit_file_type() %></li>
+														<li class="lsp0" style="float: right;"><%=b.getSubmit_file_type()%></li>
 													</dl>
 													<dl class="left_right_li cf">
 														<li class="lsp" style="float: left;">해상도</li>
-														<li class="lsp0" style="float: right;"><%=b.getResolution() %>dpi</li>
+														<li class="lsp0" style="float: right;"><%=b.getResolution()%>dpi</li>
 													</dl>
 													<dl class="left_right_li cf">
 														<li class="lsp" style="float: left;">사이즈</li>
-														<li class="lsp0" style="float: right;"><%=b.getSubmit_size() %></li>
+														<li class="lsp0" style="float: right;"><%=b.getSubmit_size()%></li>
 													</dl>
 													<dl class="left_right_li cf">
 														<li class="lsp" style="float: left;">수정 횟수</li>
@@ -168,8 +178,9 @@
 													</dl>
 													<dl class="left_right_li cf" style="height: 0">
 														<li class="lsp" style="float: left;">작업 기간</li>
-														<li style="float: right;">시작일로부터&nbsp; <font class="lsp0"
-															style="float: right;"> <%=b.getWorking_period() %>일</font></li>
+														<li style="float: right;">시작일로부터&nbsp; <font
+															class="lsp0" style="float: right;"> <%=b.getWorking_period()%>일
+														</font></li>
 													</dl>
 												</td>
 											</tr>
@@ -187,20 +198,28 @@
 									<th style="font-size: 16px;">요구사항</th>
 									<th style="font-size: 16px;">가격</th>
 								</tr>
-								<% int i = 1; for(Requirements r : rlist){ %>
+								<%
+									int i = 1;
+									for (Requirements r : rlist) {
+								%>
 								<tr>
-									<th><%=i %></th>
-									<th><%= r.getRequirements_content() %></th>
-									<th><%=r.getRequirement_price() %>원</th>
+									<th><%=i%></th>
+									<th><%=r.getRequirements_content()%></th>
+									<th><%=r.getRequirement_price()%>원</th>
 								</tr>
-								<% i++;} %>
+								<%
+									i++;
+									}
+								%>
 							</table>
 							<h3 align="right">
 								<span>합계 : </span><span>00000원</span>
 							</h3>
 						</div>
 						<br>
-						<form action="" method = "post">
+						<form action="<%=request.getContextPath()%>/paymentAPIinfo.pg" method="post">
+						<input type="hidden" value = "<%=m.getMember_no() %>" name = "customer_no" />
+						<input type="hidden" value = "10000" name = "total_Price" />
 							<div class="payment">
 								<p>
 									<span>주문자</span><span><input type="text" value="이상혁"></span><span
@@ -208,51 +227,77 @@
 										(주)아트브릿지</span>
 								</p>
 								<p>
-									<span>이메일</span><span><input type="text">
-										@ <input type="text" id= "emailauto"></span>
-									<select class="form-inline input-xshort" onchange="emailautos()" name = "emaildrop" style = "height:28px;">
-											<option value= "">직접입력</option>
-											<option value= "naver.com">naver.com</option>
-											<option value= "hanmail.net">hanmail.net</option>
-											<option value= "gmail.com">gmail.com</option>
-											<option value= "nate.com">nate.com</option>
-											<option value= "hotmail.com">hotmail.com</option>
+									<span>이메일</span><span><input type="text"> @ <input
+										type="text" id="emailauto"></span> <select
+										class="form-inline input-xshort" onchange="emailautos()"
+										name="emaildrop" style="height: 28px;">
+										<option value="">직접입력</option>
+										<option value="naver.com">naver.com</option>
+										<option value="hanmail.net">hanmail.net</option>
+										<option value="gmail.com">gmail.com</option>
+										<option value="nate.com">nate.com</option>
+										<option value="hotmail.com">hotmail.com</option>
 									</select>
-					<script>
-						function emailautos(){
-							var email_val = document.all.emaildrop.value;
-							console.log(email_val);
+									<script>
+										function emailautos() {
+											var email_val = document.all.emaildrop.value;
+											console.log(email_val);
 
-							document.getElementById("emailauto").value = email_val;
-						}
-					</script>
-									<span style="float: right"><span>입금자명</span><input type="text" id = "customername" ></span>
+											document
+													.getElementById("emailauto").value = email_val;
+										}
+									</script>
+									<span style="float: right"><span>입금자명</span><input
+										type="text" id="customername"></span>
 								</p>
 								<p>
-									<span>전화번호</span><span><input type="text" id = "phone"></span>
+									<span>전화번호</span><span><input type="text" id="phone"></span>
 								</p>
 							</div>
-						</form>
 					</div>
 					<div class="btn-center">
-						<button type="button" class="btn btn-primary btn-lg"
-							onclick="paymentE()">결제하기</button>
-						<button type="submit" class="btn btn-default btn-lg">취소</button>
+						<button type="submit" class="btn btn-primary btn-lg">결제하기</button>
+						<button class="btn btn-default btn-lg" data-toggle="modal"
+							data-target="#myModal">취소</button>
 					</div>
-					<script>
+						</form>
+					<!-- <script>
 						function paymentE() {
-							window
-									.open(
+							
+							window.open(
 											"http://127.0.0.1:8001/artBridge/views/sale/paymentAPI.jsp",
 											"(주)아트브릿지 결제",
 											"width=900px,height=700px");
 						}
-					</script>
+					</script> -->
 					<!-- // 이 영역에서 작업하세요 -->
 				</div>
 			</div>
 		</div>
 		<!-- // contents area -->
+		<!-- The Modal -->
+		<div class="modal" id="myModal">
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<!-- Modal Header -->
+					<div class="modal-header">
+						<h4 class="modal-title">주문 취소</h4>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+
+					<!-- Modal body -->
+					<div class="modal-body">주문을 취소하시겠습니까?</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<a href="/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu"><button type="button" class="btn btn-dark">네</button></a>
+						<button type="button" class="btn btn-danger" data-dismiss="modal">아니요</button>
+					</div>
+
+				</div>
+			</div>
+		</div>
 
 		<%@ include file="/views/common/footer.jsp"%>
 </body>
