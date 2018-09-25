@@ -10,21 +10,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.comvision.artBridge.admin.model.service.AdminServiceClone;
+import com.comvision.artBridge.admin.model.service.AdminService;
 import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.member.model.vo.Member;
 
 /**
  * Servlet implementation class SelectMemberListServlet
  */
-@WebServlet("/selectMemberListClone.ad")
-public class SelectMemberListServletClone extends HttpServlet {
+@WebServlet("/selectMemberList.ad")
+public class SelectMemberListServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectMemberListServletClone() {
+    public SelectMemberListServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,7 +47,7 @@ public class SelectMemberListServletClone extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 		
-		int listCount = new AdminServiceClone().getListCount();
+		int listCount = new AdminService().getListCount();
 		maxPage = (int)((double)listCount / limit + 0.99);
 		startPage = (((int)((double)currentPage / limit + 0.99)) - 1) * limit + 1;
 		
@@ -104,11 +104,11 @@ public class SelectMemberListServletClone extends HttpServlet {
 		
 		System.out.println("추가되는 Query : " + addQuery);
 
-		ArrayList<Member> list = new AdminServiceClone().selectList(currentPage, limit, addQuery);
+		ArrayList<Member> list = new AdminService().selectList(currentPage, limit, addQuery);
 		
 		String page = "";
 		if(list != null){
-			page = "views/admin/memberAdminClone.jsp";
+			page = "views/admin/memberAdmin.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 			request.setAttribute("searchCondition", searchCondition);

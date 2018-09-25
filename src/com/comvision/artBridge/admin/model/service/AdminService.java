@@ -10,10 +10,12 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.comvision.artBridge.admin.model.dao.AdminDao;
+import com.comvision.artBridge.admin.model.dao.AdminDaoClone;
 import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.member.model.dao.MemberDao;
+import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.transaction.model.vo.Transaction;
 
@@ -55,10 +57,10 @@ public class AdminService {
 	}
 
 	//연관검색어 추가
-	public int insertRelate(Relate r) {
+	public int insertRelate(String relate_name) {
 		Connection con = getConnection();
 		
-		int result = new AdminDao().insertRelate(con, r);
+		int result = new AdminDao().insertRelate(con, relate_name);
 		
 		if(result > 0){
 			commit(con);
@@ -69,6 +71,7 @@ public class AdminService {
 		close(con);
 		
 		return result;
+		
 	}
 
 	//추가된 연관검색어 모두 출력
@@ -207,4 +210,48 @@ public class AdminService {
 		return list;
 		
 	}
+	
+	//회원관리
+	public int getListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new AdminDao().getListCount(con);
+		
+		close(con);
+		
+		return listCount;
+	}
+	//회원관리
+	public ArrayList<Member> selectList(int currentPage, int limit, String addQuery) {
+		Connection con = getConnection();
+		
+		ArrayList<Member> list = new AdminDao().selectList(con, currentPage, limit, addQuery);
+		
+		close(con);
+		
+		return list;
+	}
+
+	//커미션관리 판매글 삭제
+	public int deleteCommission(String bno) {
+		Connection con = getConnection();
+
+		int b = new AdminDao().deleteCommission(con, Integer.parseInt(bno));
+
+		close(con);
+		
+		return b;
+	}
+
+	public ArrayList<Board> selectCommissionView() {
+		
+		Connection con = getConnection();
+		
+		ArrayList<Board> blist = new AdminDao().selectCommissionView(con);
+		
+		close(con);
+		return blist;
+	}
+
+
 }

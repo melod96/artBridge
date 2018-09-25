@@ -239,14 +239,6 @@ ul.tab-menu li>a:hover {
 								</tr>
 							</thead>
 							<tbody class="trtr">
-							<%-- <% if(blist!=null){for( Board b : blist){ %>
-								<tr id="banner">
-									<td><input type="checkbox" name=""></td>
-									<td colspan="5">
-									<input type="text" value="<%=b.getBoard_no()%>" readonly>
-									</td>
-								</tr>
-								<% }}else{ %> --%>
 								<tr>
 									<td><input type="checkbox" name=""></td>
 									<td colspan="5">

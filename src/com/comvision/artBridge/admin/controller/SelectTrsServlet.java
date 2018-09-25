@@ -70,7 +70,7 @@ public class SelectTrsServlet extends HttpServlet {
 		String page = "";
 		int num = 1;
 		if(list != null){
-			page = "views/transaction/transactionAdmin.jsp";
+			page = "views/admin/transactionAdmin.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 			request.setAttribute("pageName", request.getParameter("pageName"));

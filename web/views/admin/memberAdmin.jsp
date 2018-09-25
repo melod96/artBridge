@@ -21,7 +21,22 @@
 		endPage = pi.getEndPage();
 		limit = pi.getLimit();
 	}
-
+	String searchCondition = null;
+	if(request.getParameter("searchCondition") != null){
+		searchCondition = (String)request.getAttribute("searchCondition");
+	}
+	String searchWords = null;
+	if(request.getParameter("searchWords") != null){
+		searchWords = (String)request.getAttribute("searchWords");
+	}
+	String userDivision = null;
+	if(request.getParameter("userDivision") != null){
+		userDivision = (String)request.getAttribute("userDivision");
+	}
+	String writerGrade = null;
+	if(request.getParameter("writerGrade") != null){
+		writerGrade = (String)request.getAttribute("writerGrade");
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -34,7 +49,6 @@
 ul.tab-menu li>a:hover {
 	background: darkgray;
 }
-
 </style>
 </head>
 <body>
@@ -44,7 +58,9 @@ ul.tab-menu li>a:hover {
 		<%@ include file="/views/common/header.jsp"%>
 		<!-- // Header -->
 		
+		<!-- adminHeader -->
 		<%@ include file="/views/common/adminHeader.jsp"%>
+		<!-- //adminHeader -->
 
 		<!-- 주석 영역 -->
 		<div class="contents">
@@ -57,80 +73,126 @@ ul.tab-menu li>a:hover {
 					</div>
 					<hr>
 					<br>
-					<div>
-						<table class="tbl-type02">
-							<colgroup>
-								<col style="width: 20%;">
-								<col style="width: *;">
-							</colgroup>
-							<tbody>
-								<tr>
-									<td style="background: lightgray; width: 200px;">검색옵션</td>
-									<td><select class="form-control input-short">
-											<option>전체</option>
-											<option>이름</option>
-											<option>아이디</option>
-											<option>연락처</option>
-											<option>이메일</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td style="background: lightgray">검색어 입력</td>
-									<td><input type="text" style="width: 500px; float: left;">
-									</td>
-								</tr>
-								<tr>
-									<td style="background: lightgray">사용자 구분</td>
-									<td><select class="form-control input-short">
-											<option>전체</option>
-											<option>작가</option>
-											<option>일반사용자</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td style="background: lightgray">작가 신청</td>
-									<td><select class="form-control input-short">
-									<option>전체</option>
-											<option>승인</option>
-											<option>미승인</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td style="background: lightgray;">작가 등급</td>
-									<td><select class="form-control input-short"
-										style="float: left;">
-											<option>전체</option>
-											<option>신뢰작가</option>
-											<option>일반작가</option>
-											<option>신규작가</option>
-											<option>블랙작가</option>
-									</select>
-										<button type="submit" name="mainBtn"
-											class="btn btn-primary btn-md" style="float: right;">검색</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
+					<form action="<%= request.getContextPath() %>/selectMemberList.ad?pageName=memberAdmin&currentPage=1" method="post">
+						<div>
+							<table class="tbl-type02">
+								<colgroup>
+									<col style="width: 20%;">
+									<col style="width: *;">
+								</colgroup>
+								<tbody>
+									<tr>
+										<td style="background: lightgray; width: 200px;">검색옵션</td>
+										<td><select class="form-control input-short" id="searchCondition" name="searchCondition">
+												<option>전체</option>
+												<option value="name" id="name">이름</option>
+												<option value="id" id="id">아이디</option>
+												<option value="phone" id="phone">연락처</option>
+												<option value="email" id="email">이메일</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td style="background: lightgray">검색어 입력</td>
+										<td><input type="text" style="width: 500px; float: left;" id="searchWords" name="searchWords" value="">
+										</td>
+									</tr>
+									<tr>
+										<td style="background: lightgray">사용자 구분</td>
+										<td><select class="form-control input-short" id="userDivision" name="userDivision">
+												<option>전체</option>
+												<option value="writer" id="writer">작가</option>
+												<option value="nomal" id="nomal">일반사용자</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td style="background: lightgray;">작가 등급</td>
+										<td><select class="form-control input-short" style="float: left;" id="writerGrade" name="writerGrade">
+												<option id="0">전체</option>
+												<option value="1" id="1">신입작가</option>
+												<option value="2" id="2">일반작가</option>
+												<option value="3" id="3">인기작가</option>
+												<option value="4" id="4">블랙작가</option>
+										</select>
+										</td>
+									</tr>
+									<tr>
+										<td style="background: lightgray;">작가 승인</td>
+										<td><select class="form-control input-short" style="float: left;" id="writerGrade" name="writerGrade">
+												<option id="0">전체</option>
+												<option value="rec" id="rec">승인</option>
+												<option value="norec" id="norec">미승인</option>
+										</select>
+											<button type="submit" name="mainBtn"
+												class="btn btn-primary btn-md" style="float: right;">검색</button>
+									</tr>
+								</tbody>
+							</table>
+							<script>
+								$(function(){
+									<% if(searchCondition != null){ 
+										switch(searchCondition){ 
+										case "name" : %>
+										$("#name").prop("selected","selected");
+									<% break; case "id" : %>
+										$("#id").prop("selected","selected");
+									<% break; case "phone" : %>
+										$("#phone").prop("selected","selected");
+									<% break; case "email" : %>
+										$("#email").prop("selected","selected");
+									<% break;}
+										} %>
+										
+									<% if(searchWords != null){ %>
+										$("#searchWords").val("<%= searchWords %>");
+									<% } %>
+									
+									<% if(userDivision != null){ 
+										switch(userDivision){ 
+										case "writer" : %>
+										$("#writer").prop("selected","selected");
+									<% break; case "nomal" : %>
+										$("#nomal").prop("selected","selected");
+									<% break;}
+										} %>
+									
+									<% if(writerGrade != null){ 
+										switch(writerGrade){
+										case "0" : %>
+										$("#0").prop("selected","selected");
+									<% break; case "1" : %>
+										$("#1").prop("selected","selected");
+									<% break; case "2" : %>
+										$("#2").prop("selected","selected");
+									<% break; case "3" : %>
+										$("#3").prop("selected","selected");
+									<% break; case "4" : %>
+										$("#4").prop("selected","selected");
+									<% break;}
+										} %>
+									
+								});
+							</script>
+						</div>
+					</form>
 
 					<br> <br>
 
 					<button type="submit" class="btn btn-primary btn-md"
 						style="padding: 5px 22px; float: right;" onclick="del4();">계정삭제</button>
-					<button onclick=popupOpen(); type="submit" id="deleteBtn"
+					<button onclick="popupOpen();" type="submit" id="deleteBtn"
 						name="deleteBtn" class="btn btn-primary btn-sm"
 						style="padding: 5px 22px; float: right; margin-right: 5px;">정보수정</button>
 					<br>
 					<script>
       					function popupOpen() {
 
-       					var popUrl = "userPop.jsp"; //팝업창에 출력될 페이지 URL
+       					var popUrl = "/artBridge/views/admin/userPop.jsp"; //팝업창에 출력될 페이지 URL
 
                      
+				        var popupX = (window.screen.width / 2 ) - (580 / 2);
 					    // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
-				        var popupX = (window.screen.width / 2 ) - (580/2);
 					
-					    var popupY= (window.screen.height /2)-(300/2);
+					    var popupY= (window.screen.height / 2 ) - (300 / 2);
 					    // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
 					
 					    var popOption = "width=578, height=301, resizable=no, scrollbars=no, status=no, top="+popupY+", left=" + popupX 
@@ -181,11 +243,25 @@ ul.tab-menu li>a:hover {
 								<th scope="col">연락처</th>
 								<th scope="col">메일</th>
 								<th scope="col">가입일</th>
-
+								<th scope="col">작가요청</th>
 							</tr>
 						</thead>
 						<tbody>
-							<% if(list != null){for(Member m : list){ %>
+							<% if(list != null){for(Member m : list){
+								String wrt = "";
+								if(m.getWriter_right() == 0){
+									if(m.getWriter_request_no() > 0){
+										wrt = "미승인";
+									}
+									
+								/* switch(m.getWriter_right()){
+								case 0 : wrt = "미승인";break;
+								case 1 : wrt = "승인";break;
+								} */
+								
+								}
+								
+								%>
 								<tr>
 									<input type="hidden" value="<%= m.getMember_no() %>" />
 									<td><input type="checkbox" name="chBox4"></td>
@@ -212,58 +288,68 @@ ul.tab-menu li>a:hover {
 									<td><%= m.getPhone() %></td>
 									<td><%= m.getEmail() %></td>
 									<td><%= m.getEnroll_date() %></td>
+									<td style="font-weight:bold"><a style="color:orangered;"onclick="popupOpen2();"><%= wrt %></a></td>									
 								</tr>
+								
 							<% }} %>
+								<script>
+							
+							function popupOpen2() {
+
+       					var popUrl = "/artBridge/views/admin/writerPop.jsp"; //팝업창에 출력될 페이지 URL
+
+                     
+				        var popupX = (window.screen.width / 2 ) - (580 / 2);
+					    // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
+					
+					    var popupY= (window.screen.height / 2 ) - (300 / 2);
+					    // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
+					
+					    var popOption = "width=578, height=301, resizable=no, scrollbars=no, status=no, top="+popupY+", left=" + popupX 
+					    //팝업창 옵션(optoin)
+					    window.open(popUrl,"", popOption);
+					
+					    }
+							</script>
 
 						</tbody>
 					</table>
-
-					<div class="paginate">
-						<a href="#" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a>
-						<a href="#" class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
-						<span class="paging-numbers">
-							<a href="#">1<span class="blind">페이지로 이동</span></a> 
-							<a href="#" class="on">2<span class="blind">페이지로 이동</span></a> 
-							<a href="#">3<span class="blind">페이지로 이동</span></a> 
-							<a href="#">4<span class="blind">페이지로 이동</span></a> 
-							<a href="#">5<span class="blind">페이지로 이동</span></a>
-						</span> <a href="#" class="btn-next" title="다음">
-						<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> 
-						<a href="#" class="btn-last" title="끝">
-						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
-					</div>
 					
 					<!-- 페이징 -->
 	
-					<div class="pagingArea" align="center">
-					<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=1'"><<</button>
+					<div class="paginate" align="center">
+					<a class="btn-first" title="처음" onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?pageName=memberAdmin&currentPage=1'"><em class="blind">목록에서 처음 페이지 이동</em></a>
 					<% if(currentPage <= 1){ %>
-						<button disabled><</button>
+						<a class="btn-prev" title="이전" disabled><em class="blind">목록에서 이전 페이지 이동</em></a>
 					<% }else{ %>
-						<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?cuttentPage=<%= currentPage - 1 %>'"><</button>
+						<a class="btn-prev" title="이전" onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?pageName=memberAdmin&cuttentPage=<%= currentPage - 1 %>'"><em class="blind">목록에서 이전 페이지 이동</em></a>
 					<% } %>
 					
+					<span class="paging-numbers">
 					<% 
 						for(int p = startPage; p <= endPage; p++){ 
 							if(p == currentPage){
 					%>
-								<button disabled><%= p %></button>
+								<a class="on" disabled><%= p %><span class="blind">페이지로 이동</span></a>
 					<% 		}else{ %>
-								<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= p %>'"><%= p %></button>
+								<a onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?pageName=memberAdmin&currentPage=<%= p %>'"><%= p %><span class="blind">페이지로 이동</span></a>
 					<% 		
 							}
 						}		
 					%>
+					</span>
 					
 					<% if(currentPage >= maxPage){ %>
-						<button disabled>></button>
+						<a class="btn-next" title="다음" disabled><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 					<% }else{ %>
-						<button onclick="location.href'<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= currentPage + 1 %>'">></button>
+						<a class="btn-next" title="다음" onclick="location.href'<%= request.getContextPath() %>/selectMemberList.ad?pageName=memberAdmin&currentPage=<%= currentPage + 1 %>'"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 					<% } %>
 					
-					<button onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?currentPage=<%= maxPage %>'">>></button>
+					<a class="btn-last" title="끝" onclick="location.href='<%= request.getContextPath() %>/selectMemberList.ad?pageName=memberAdmin&currentPage=<%= maxPage %>'"><span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
-
+					
+					<!-- //페이징 -->
+					
 					<br> <br>
 				</div>
 			</div>

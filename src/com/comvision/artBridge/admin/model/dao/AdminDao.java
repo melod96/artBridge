@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.transaction.model.vo.Transaction;
 
@@ -116,7 +117,7 @@ private Properties prop = new Properties();
 	}
 
 	//연관검색어insert
-	public int insertRelate(Connection con, Relate r) {
+	public int insertRelate(Connection con, String relate_name) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -124,8 +125,8 @@ private Properties prop = new Properties();
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, r.getRelate_no());
-			pstmt.setString(2, r.getRelate_name());
+			//pstmt.setInt(1, r.getRelate_no());
+			pstmt.setString(1, relate_name);
 			
 			result = pstmt.executeUpdate();
 			
@@ -513,6 +514,146 @@ private Properties prop = new Properties();
 			}
 			
 			return list;
+		}
+		
+		//회원관리
+		public int getListCount(Connection con) {
+			Statement stmt = null;
+			ResultSet rset = null;
+			
+			String query = prop.getProperty("memberListCount");
+			
+			int listCount = 0;
+			
+			try {
+				stmt = con.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()){
+					listCount = rset.getInt(1);
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(stmt);
+				close(rset);
+			}
+			
+			return listCount;
+		}
+		//회원관리
+		public ArrayList<Member> selectList(Connection con, int currentPage, int limit, String addQuery) {
+			Statement stmt = null;
+			ResultSet rset = null;
+			ArrayList<Member> list = null;
+			Member m = null;
+			
+			String query = prop.getProperty("selectMemberList");
+			
+			try {
+				stmt = con.createStatement();
+				
+				query += " " + addQuery;
+				
+				query += ") ";
+				
+				int startRow = (currentPage - 1) * limit + 1;
+				int endRow = startRow + limit - 1;
+				String rnumQuery = "where rnum between " + startRow + " and " + endRow + " order by member_no desc";
+				
+				query += rnumQuery;
+				
+				System.out.println("최종 실행되는 Query : " + query);
+				
+				rset = stmt.executeQuery(query);
+				
+				list = new ArrayList<Member>();
+				
+				while(rset.next()){
+					
+					m = new Member();
+					
+					m.setMember_no(rset.getInt("member_no"));
+					m.setId(rset.getString("id"));
+					m.setName(rset.getString("name"));
+					m.setPhone(rset.getString("phone"));
+					m.setEmail(rset.getString("email"));
+					m.setEnroll_date(rset.getDate("enroll_date"));
+					m.setWriter_right(rset.getInt("writer_right"));
+					m.setRating_name(rset.getString("rating_name"));
+					m.setWriter_request_no(rset.getInt("writer_request_no"));
+
+					
+					list.add(m);
+					
+				}
+			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(stmt);
+				close(rset);
+			}
+			
+			return list;
+		}
+
+		public int deleteCommission(Connection con, int bno) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			int b = 0;
+			
+			String query = prop.getProperty("DeleteCommission");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, bno);
+				
+				b = pstmt.executeUpdate();
+
+			} catch (SQLException e) {
+				
+				e.printStackTrace();
+			}finally{
+				close(pstmt);
+				close(rset);
+			}
+			return b;
+	
+		}
+
+		//커미션관리 판매글 뷰
+		public ArrayList<Board> selectCommissionView(Connection con) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			ArrayList<Board> blist = null;
+			
+			String query = prop.getProperty("selectCommissionView");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				
+				rset = pstmt.executeQuery();
+				
+				blist = new ArrayList<Board>();
+				
+				while(rset.next()){
+					Board b = new Board();
+					
+					
+					b.setBoard_no(rset.getInt("board_no"));
+					
+					blist.add(b);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(pstmt);
+				close(rset);
+			}
+			
+			return blist;
 		}
 	
 }

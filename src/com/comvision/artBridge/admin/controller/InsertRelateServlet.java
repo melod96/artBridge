@@ -1,6 +1,7 @@
 package com.comvision.artBridge.admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,24 +25,27 @@ public class InsertRelateServlet extends HttpServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int relate_no = Integer.parseInt(request.getParameter("relate_no"));
+		//int relate_no = Integer.parseInt(request.getParameter("relate_no"));
 		String relate_name = request.getParameter("relate_name");
+		System.out.println(relate_name);
 		
-		Relate r = new Relate();
-		r.setRelate_no(relate_no);
+	/*	Relate r = new Relate();
+		//r.setRelate_no(relate_no);
 		r.setRelate_name(relate_name);
+		*/
 		
-		int result = new AdminService().insertRelate(r);
+	//	int result = new AdminService().insertRelate(r);
+		
+		
+		int result = new AdminService().insertRelate(relate_name);
+		
 		
 		String Page="";
 		
-		if(result > 0){
-			Page = "selectCommision.ad";
-			//request.setAttribute("list", new NoticeService().selectList());
-		}else{
-			Page = "/views/common/errorPage.jsp";
-			request.setAttribute("msg", "공지사항 등록 실패!");
-		}
+		Page = "selectCommision.ad";
+
+		
+		
 		RequestDispatcher view = request.getRequestDispatcher(Page);
 		view.forward(request, response);
 		/*if(result > 0){
