@@ -23,7 +23,7 @@ public class TransactionService {
 	public Transaction selectTransOne(int mNo, int orderNo) {
 		Connection con = getConnection();
 		
-		Transaction t = new TransactionDao().selectTransOne(con, mNo, orderNo);		
+		Transaction t = new TransactionDao().selectTransStmt(con, mNo, orderNo);		
 		
 		close(con);
 		

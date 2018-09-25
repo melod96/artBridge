@@ -278,7 +278,7 @@
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
 <!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
-			<form action="" method="post" onsubmit="return reqWriterRight();">
+			<form action="" method="post" id="callReqWriterRightServlet" onsubmit="return reqWriterRight();" encType="multipart/form-data">
 				<div id="reqWriterModal" class="w3-modal"></div>
 				<div id="reqWriterFormArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
@@ -1013,29 +1013,6 @@
 		                      <input type="button" value="회원 탈퇴" class="delMemChk btn btn-lg btn-default btn-cancel" style="padding:10px 35px; margin-right:15px;">
 		                      <input type="button" value="취소" id="trst" class="delMemChk btn btn-lg btn-primary">
 		                </div>
-<!-- 		                <script>
-		                $(function(){
-		                
-		                		
-		                	$(".delMemChk").click(function(){
-		                		alert($(this).val());
-		                	});
-		                
-		                })
-		                
-		                /* function delMemChk(){
-		                	var test = $(this).val();
-		                	alert("dfjdkosl");
-		                	alert(result);
-							if(result == "delMem"){
-								alert("진짜 탈퇴한다");
-								
-							}else if(result == "cancelDel"){
-								alert("취소하냐");
-								
-							}
-						}; */
-						</script> -->
 	                </div>
 				</form>
 <!--      		//4-3. 마이페이지 탭 바디 - 회원정보수정 탭 / 회원 탈퇴 안내 화면 -->
@@ -1376,7 +1353,6 @@
 				$('#pwdResult').css({"color":"orangered"});
 				$('#pwdResult').css({"display":""});
  				$("#pwdResult").text("패스워드를 입력하세요.");
- 				$("#pwdResult").text("패스워드를 입력하세요.");
  				if(updateUserPwd2 == ""){
  					$("#updateUserPwd2").focus();
  				}
@@ -1567,7 +1543,11 @@
             		
             		if(result == "회원 탈퇴"){
             			var agreeCheck = $("#agree").prop("checked");
-            			if(agreeCheck == true){							
+            			if(agreeCheck == true){	
+            				var checkAgain = confirm("탈퇴처리를 진행합니다.");
+            				if(checkAgain == false){
+								location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";            					
+            				}
 							$.ajax({
 								/* 미완료 거래 이력 있는지 체크 후 있으면 탈퇴 불가/없으면 탈퇴 상태로 변경 후 로그아웃 */
 								url : "<%= request.getContextPath() %>/memberDelCheck.me",
@@ -1686,20 +1666,26 @@
 			}else{
 				checkImgTotalCnt = true;
 			}
-			
 			var submit = confirm("신청 양식을 제출 하시겠습니까?");
 			if(submit == true){
 				alert("submit 트루니?");
+<%-- 				$("#callReqWriterRightServlet").attr("action", "<%= request.getContextPath() %>/reqWriterRight.me"); --%>
 				$.ajax({
 					url : "<%= request.getContextPath() %>/reqWriterRight.me",
 					type : "post",
 					success : function(data){
+						alert("데이터? : " + data);
 						if(data >= 4){
+							alert("넘어온 데이터 : " + data);
 							alert("작가 신청 양식이 정상적으로 전송 되었습니다.");
+							reqWriterDisplayNone();
+							$('#reqWriterBtn').attr('disabled', false);
+							
 							/* location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu"; */
 						}else{
+							alert(data);
 							alert("작가 신청 양식 전송이 실패 하였습니다.");
-							/* location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu"; */
+							location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
 						}
 					alert("에이작스 되니?");
 					}
@@ -1711,7 +1697,7 @@
 				return false;
 			}
 			
- 			location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
+//  			location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
 		};
 	</script>
 <!-- //4. 회원정보 수정 탭 스크립트 -->
