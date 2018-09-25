@@ -123,56 +123,35 @@ ul.tab-menu li>a:hover {
 						</form>
 					</div>
 					
-					<script>
-					
-					<%-- $(function(){
-						//Date
-						$("#period").click(function() {
-								$("input[name='date']").val();
-							});
+						<%int no = 0; int yes =0; int result = 0;
+						
+						if(mlist != null){for(Message m : mlist){
 							
-						
-						
-						
-						//검색어
-						<% if(searchWords != null){ %>
-							$("#searchWords").val("<%= searchWords %>");
-						<% } %>
-						
-						
-						
-						
-						
-					});
-					 --%>
-					
-					
-					
-					
-					
-					</script>
-					
-					
-
+								if(m.getCheck_date() == null){
+									no++;
+								}else{
+									yes++;
+								}
+								
+						} result = no + yes;
+						}
+								%>
 					<br> <br>
 					<div>
 						<p style="font-weight: bold; float: left;">총 접수건수 :
-						<p style="color: red; float: left; font-weight: bold">N</p>
+						<p style="color: red; float: left; font-weight: bold"><%=result %></p>
 						<p style="float: left;">건/</p>
 
 						<p style="font-weight: bold; float: left;">미 답변건수 :
-						<p style="color: red; float: left; font-weight: bold">N</p>
+						<p style="color: red; float: left; font-weight: bold"><%=no %></p>
 						<p style="float: left;">건/</p>
 
 						<p style="font-weight: bold; float: left;">답변완료 :
-						<p style="color: red; float: left; font-weight: bold">N</p>
+						<p style="color: red; float: left; font-weight: bold"><%=yes %></p>
 						<p style="float: left;">건</p>
 
 					</div>
-					<button type="submit" id="deleteBtn" name="deleteBtn"
-						class="btn btn-primary btn-sm"
-						style="padding: 5px 22px; float: right;" onclick="del3();">문의
-						삭제</button>
+					
 					<br> <br>
 					<script>
 						function del3() {
@@ -218,31 +197,39 @@ ul.tab-menu li>a:hover {
 						<tbody class="tbody">
 						
 						
-						<%if(mlist != null){for(Message m : mlist){%>
+						<%
+						if(mlist != null){for(Message m : mlist){
+									String writer = "";			
+									
+								if(m.getWriter_right() == 0){
+									writer = "일반";
+								}else{
+									writer = "작가";
+								}
+								
+								String date = "";
+								if(m.getCheck_date() == null){
+									date = "미답변";
+								}else{
+									date = "답변 완료";
+								}
+								
+						
+								%>
+								
 								<tr>
 									<td><input type="checkbox" name="msgNo" value=<%=m.getMsg_no() %>></td>
 									<td class="num3"><%=m.getMsg_no() %></td>
-									<td>수정 필요</td>
+									<td><%=date %></td>
 									<td><%=m.getMsg_date() %></td>
 									<td><%=m.getMem_name() %></td>
-									<td>수정 필요</td>
+									<td><%=writer%></td>	
 									<td><div style="float: left;">
-											&nbsp;&nbsp;<a href="customerQna.jsp"><u><%=m.getMsg_content()%></u></a>
+											&nbsp;&nbsp;<a onclick = "location.href='<%= request.getContextPath() %>/selectDetail.msg?msg_no=<%=m.getMsg_no() %>'" id="customerQna"><%=m.getMsg_title() %></a>
 										</div></td>
 								</tr>
 							<% }} %>
 
-								<tr>
-									<td><input type="checkbox" name="chBox3"></td>
-									<td class="num3">1</td>
-									<td>답변완료</td>
-									<td>2018-09-11 11:00AM</td>
-									<td>양소나</td>
-									<td>작가</td>
-									<td><div style="float: left;">
-											&nbsp;&nbsp;<a href="customerQna.jsp"><u>문의 드립니다.</u></a>
-										</div></td>
-								</tr>
 							
 						</tbody>
 					</table>
