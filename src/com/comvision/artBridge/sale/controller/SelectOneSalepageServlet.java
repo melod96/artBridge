@@ -64,6 +64,12 @@ public class SelectOneSalepageServlet extends HttpServlet {
 		//평균 별점
 		Grade avgGrade = new SaleService().avgGrade(num);
 		
+		//작가지정슬롯수
+		int slot = new SaleService().selectSlot(b.getMember_no());
+		
+		//작가의 주문수
+		int orderCount = new SaleService().selectOrderCount(b.getMember_no());
+		
 		String page = null;
 		
 		if(b!=null){
@@ -74,6 +80,8 @@ public class SelectOneSalepageServlet extends HttpServlet {
 			request.setAttribute("rlist", rlist);
 			request.setAttribute("r", r);
 			request.setAttribute("f", f);
+			request.setAttribute("slot", slot);
+			request.setAttribute("orderCount", orderCount);
 			if(glist != null){
 				request.setAttribute("glist", glist);
 			}

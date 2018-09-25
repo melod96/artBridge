@@ -222,13 +222,13 @@
 						<input type="hidden" value = "10000" name = "total_Price" />
 							<div class="payment">
 								<p>
-									<span>주문자</span><span><input type="text" value="이상혁"></span><span
+									<span>주문자</span><span><input type="text" value="<%=m.getNick_name()%>"></span><span
 										style="float: right">입금은행 : 농협 351-0298-7776-43 예금주 :
 										(주)아트브릿지</span>
 								</p>
 								<p>
-									<span>이메일</span><span><input type="text"> @ <input
-										type="text" id="emailauto"></span> <select
+									<span>이메일</span><span><input type="text" name="email1"> @ <input
+										type="text" id="emailauto"  name="email2"></span> <select
 										class="form-inline input-xshort" onchange="emailautos()"
 										name="emaildrop" style="height: 28px;">
 										<option value="">직접입력</option>
@@ -248,10 +248,10 @@
 										}
 									</script>
 									<span style="float: right"><span>입금자명</span><input
-										type="text" id="customername"></span>
+										type="text" name="bank_name"></span>
 								</p>
 								<p>
-									<span>전화번호</span><span><input type="text" id="phone"></span>
+									<span>전화번호</span><span><input type="text" name="phone"></span>
 								</p>
 							</div>
 					</div>
@@ -291,7 +291,7 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<a href="/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu"><button type="button" class="btn btn-dark">네</button></a>
+						<button type="button" class="btn btn-dark" onclick = "location.href='/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu'">네</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">아니요</button>
 					</div>
 
