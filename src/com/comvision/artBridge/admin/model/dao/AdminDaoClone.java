@@ -75,6 +75,7 @@ public class AdminDaoClone {
 			
 			int startRow = (currentPage - 1) * limit + 1;
 			int endRow = startRow + limit - 1;
+			
 			String rnumQuery = "where rnum between " + startRow + " and " + endRow + " order by member_no desc";
 			
 			query += rnumQuery;

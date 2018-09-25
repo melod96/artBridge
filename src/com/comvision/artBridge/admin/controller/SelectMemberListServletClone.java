@@ -72,7 +72,7 @@ public class SelectMemberListServletClone extends HttpServlet {
 			if(searchCondition != null){
 				switch(searchCondition){
 				case "name" : addQuery += "and m.name like '%' || '" + searchWords + "' || '%' "; break;
-				case "id" : addQuery += "and id m.like '%' || '" + searchWords + "' || '%'"; break; 
+				case "id" : addQuery += "and m.id like '%' || '" + searchWords + "' || '%'"; break; 
 				case "phone" : addQuery += "and m.phone like '%' || '" + searchWords + "' || '%' "; break; 
 				case "email" : addQuery += "and m.email like '%' || '" + searchWords + "' || '%' "; break;
 				}

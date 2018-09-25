@@ -55,27 +55,35 @@ public class MessageDao {
 		return listCount;
 	}
 
-	public ArrayList<Message> selectList(Connection con, int currentPage, int limit) {
+	public ArrayList<Message> selectList(Connection con, int currentPage, int limit, String addQuery) {
 		
-		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<Message> list = null;
 		
-		String query = prop.getProperty("selectList");
+		String query = prop.getProperty("selectListTest");
 		System.out.println("dao실행1");
 		try {
-			pstmt = con.prepareStatement(query);
+			stmt = con.createStatement();
+			
+			query += " " + addQuery;
+			
+			query += ") ";
 			
 			int startRow = (currentPage -1) *limit +1;
 			int endRow= startRow +limit -1;
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			String rnumQuery = "where rnum between " + startRow + " and " + endRow ;
 			
-			rset = pstmt.executeQuery();
+			query += rnumQuery;
+			
+			System.out.println("최종 실행되는 Query : " + query);
+			
+			rset = stmt.executeQuery(query);
 			
 			list = new ArrayList<Message>();
-			System.out.println("dao실행2");
+			
+			
 			while(rset.next()){
 				Message m = new Message();
 				m.setMsg_no(rset.getInt("MESSAGE_NO"));
@@ -93,7 +101,7 @@ public class MessageDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			close(pstmt);
+			close(stmt);
 			close(rset);
 		}
 		
