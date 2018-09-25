@@ -314,6 +314,61 @@ public class SaleDao {
 		}
 		return g;
 	}
+	public int selectSlot(Connection con, int member_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("selectSlot");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, member_no);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result = rset.getInt("writer_slot");
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return result;
+	}
+	
+	public int selectOrderCount(Connection con, int member_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("selectOrderCount");
+		
+		try {
+			pstmt=  con.prepareStatement(query);
+			pstmt.setInt(1, member_no);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result = rset.getInt("count(*)");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return result;
+	}
 
 	public int insertOrder(Connection con, int member_no, int board_no, int writer_no) {
 		PreparedStatement pstmt =  null;
@@ -699,6 +754,10 @@ public class SaleDao {
 		}
 		return result;
 	}
+
+	
+
+	
 
 	
 

@@ -20,7 +20,9 @@
 	}
 	Grade avgGrade = (Grade)request.getAttribute("avgGrade");
 	Files prof = (Files)request.getAttribute("f");
-	
+	int slot = (int)request.getAttribute("slot");
+	int orderCount = (int)request.getAttribute("orderCount");
+	int orderpos = slot-orderCount;
 %>
 <!DOCTYPE html>
 <html>
@@ -264,9 +266,12 @@
 										<%}%>
 									</p>
 									<p>슬롯</p>
-									<%for (int i = 0; i < ra.getSlot(); i++) {%>
-									<input type="radio">
-									<%}%>
+									<%for(int i = 0; i<orderCount;i++){ %>
+										<input type="radio" readonly checked = "checked" />
+									<%} %>
+									<%for(int i =0;i<orderpos;i++){ %>
+										<input type="radio" disabled="false"/>
+									<%} %>
 								</ul>
 							</div>
 						</div>
@@ -285,11 +290,11 @@
 				<div style="height: 30px"></div>
 				<p align="center">모든 이미지는 저작권이 있는 이미지 입니다. 무단 도용 및 복제를 금합니다.</p>
 				<div class="hugiheader">
-					<div style="display: inline-block;">
-						<h4>이용후기</h4>
+					<div>
+						<h4 style= "display:inline-block;">이용후기</h4>
 						<%if(m != null){ %>
 						<button type="button" class="btn btn-md" data-toggle="modal"
-							data-target="#hugiModal">후기 작성</button>
+							data-target="#hugiModal" style="float:right">후기 작성</button>
 						<%} %>
 					</div>
 					<div class="hugi">
@@ -307,7 +312,7 @@
 							<tr>
 								<th><%=i%></th>
 								<th><%=g.getGrade()%></th>
-								<th data-toggle="collapse" data-target=<%="#demo"+i %>><%=g.getGrade_content()%></th>
+								<th data-toggle="collapse" data-target=<%="#demo"+i %> style= "cursor:pointer"><%=g.getGrade_content()%></th>
 								<th><%=g.getNick_name()%></th>
 								<th><%=g.getGrade_date()%></th>
 							</tr>

@@ -109,6 +109,24 @@ public class SaleService {
 		}
 		return avgGrade;
 	}
+	
+	//작가지정 슬롯수
+	public int selectSlot(int member_no) {
+		Connection con = getConnection();
+		
+		int slot = new SaleDao().selectSlot(con,member_no);
+		close(con);
+		return slot;
+	}
+	//작가 주문수
+	public int selectOrderCount(int member_no) {
+		Connection con = getConnection();
+		
+		int orderCount = new SaleDao().selectOrderCount(con, member_no);
+		
+		close(con);
+		return orderCount;
+	}
 
 	//명세표 보내기
 	public int insertRequirements(String[] rsplit, int member_no, int board_no, int writer_no, String option, int price) {
@@ -205,6 +223,10 @@ public class SaleService {
 		close(con);
 		return result;
 	}
+
+	
+
+	
 
 	
 

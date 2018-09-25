@@ -153,11 +153,11 @@
 							</div>
 						</div>
 						<div class="right">
-							<%if(m != null){ %>
+							<%if(m!=null && m.getWriter_right() == 1){ %>
 							<ul>
 								<div class="sBtn1"
 									style="height: 42px; line-height: 42px; margin-left: 10px;"
-									onclick="">작품 등록 / 수정</div>
+									onclick="location.href='<%=request.getContextPath()%>/selectPieceList.wr?memberNo=<%=m.getMember_no()%>'">작품 등록 / 수정</div>
 							</ul>
 							<%} %>
 						</div>
