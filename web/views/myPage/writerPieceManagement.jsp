@@ -10,6 +10,7 @@
 	if(request.getAttribute("list") != null){
 		list = (ArrayList<Board>)request.getAttribute("list");
 	}
+	
 	PageInfo pi = null;
 	int listCount = 0;
 	int currentPage = 0;
@@ -34,6 +35,10 @@
 	if(m.getWriter_slot() > 0){
 		slot = m.getWriter_slot();
 	}
+	
+	ArrayList<Files> fileList = (ArrayList<Files>)request.getAttribute("fileList");
+	Files profileImg = fileList.get(0);
+		
 	
 	
 %>
@@ -175,7 +180,7 @@
 					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=msg-menu">쪽지함</a></li>
 					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=bookmark-menu">관심작가</a></li>
 					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu">회원정보수정</a></li>
-					<li><a href="<%=request.getContextPath()%>/selectPieceList.wr" style="background:#fff; color:#000;">내작품관리</a></li>
+					<li><a href="<%=request.getContextPath()%>/selectPieceList.wr?memberNo=<%=m.getMember_no()%>" style="background:#fff; color:#000;">내작품관리</a></li>
 					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=qna-menu">이용문의</a></li>
 				</ul>
 			</div>
@@ -187,19 +192,21 @@
                 <div class="col-md-12">
 
                     <!-- 프로필 작성 영역 -->
-                    <form action="<%=request.getContextPath()%>/updateProfile.wr" method="post">
+                    <form action="<%=request.getContextPath()%>/updateProfile.wr" method="post" encType="multipart/form-data">
                       <div class="frofile-box">
                           <div class="img-area">
                               <div class="img-in">
-                                <img id="img-change" src="/artBridge/image/common/img_profile.png" alt="default frofile image">
+                                <img id="img-change" src="src="<%=request.getContextPath()%>/image/profile/<%=profileImg.getChange_title()%>" alt="default frofile image">
+                                <!-- <img id="img-change" src="/artBridge/image/common/img_profile.png" alt="default frofile image"> -->
                               </div>
                               <div class="file-btn">
-                                <input type="file" id="sel-img" value="이미지 선택">
+                                <input type="file" id="sel-img" name="profileImg" value="이미지 선택">
                                 <label for="sel-img" class="btn btn-warning">이미지 선택</label>
                               </div>
                           </div>
                      
                           <div class="input-area">
+                          	  <input type="hidden" name="memberNo" value="<%=m.getMember_no()%>">
                               <label for="nick">닉네임</label>
                               <input id="nick" name="nick" class="form-control" type="text" value="<%= m.getNick_name() %>">
                               
@@ -213,7 +220,7 @@
                               <div class="state">
 	                              <span class="txt-off" title="접수불가">OFF</span>
 	                              <label class="switch">
-								  	 <input type="checkbox" name="reception_status" onclick="swichTg(this)">
+								  	 <input type="checkbox" name="reception_status" onclick="swichTg(this)" value="<%= m.getReception_status() %>">
 								 	 <span class="slider round"></span>
 								  </label>
 	                              <span class="txt-on" title="접수중">ON</span>

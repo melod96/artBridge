@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.relate.model.vo.RelateNumList;
 import com.comvision.artBridge.writer.model.dao.WriterDao;
@@ -84,6 +85,26 @@ public class WriterService {
 		close(con);
 		
 		return list;
+	}
+
+	//프로필 저장용 메소드
+	public int updateProfile(Member m, ArrayList<Files> fileList) {
+		Connection con = getConnection();
+		int result = 0;
+		
+		int result1 = new WriterDao().updateProfile(con, m);
+		int result2 = new WriterDao().updateProfileImg(con, fileList ,m);
+
+		if(result1 > 0 && result2 > 0){
+			commit(con);
+			result = 1;
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
 	}
 	
 

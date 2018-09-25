@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,6 +16,7 @@ import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
 import com.comvision.artBridge.common.MyFileRenamePolicy;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.member.model.service.MemberService;
 import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.writer.model.service.WriterService;
 import com.oreilly.servlet.MultipartRequest;
@@ -28,9 +30,6 @@ public class UpdateProfileServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-
 		
 		if(ServletFileUpload.isMultipartContent(request)){
 			//썸네일 파일 첨부 저장용
@@ -64,59 +63,60 @@ public class UpdateProfileServlet extends HttpServlet {
 		
 
 			//member테이블에 저장할 데이터 가져오기
-			/*String nick = multiRequest.getParameter("nick");
+			int memberNo = Integer.parseInt(multiRequest.getParameter("memberNo"));
+			String nick_name = multiRequest.getParameter("nick");
 			String introduction = multiRequest.getParameter("introtxt");
 			int writer_slot = Integer.parseInt(multiRequest.getParameter("slot"));
 			String[] reception_status = multiRequest.getParameterValues("reception_status");
-			
-			System.out.println(nick);
-			System.out.println(introduction);
-			System.out.println(writer_slot);
-			System.out.println(reception_status);*/
+			String reception_status1 = "";
 
-		}
-		
-		//member테이블에 저장할 데이터 가져오기
-		String nick_name = request.getParameter("nick");
-		String introduction = request.getParameter("introtxt");
-		int writer_slot = Integer.parseInt(request.getParameter("slot"));
-		String[] reception_status = request.getParameterValues("reception_status");
-		
-		System.out.println(nick_name);
-		System.out.println(introduction);
-		System.out.println(writer_slot);
-		System.out.println(reception_status);
-
-		
-		//member객체 생성
-		Member m = new Member();
-		m.setNick_name(nick_name);
-		m.setIntroduction(introduction);
-		m.setWriter_slot(writer_slot);
-		//m.setReception_status(reception_status);
-		
-		
-		//service 전송
-		/*int result = new WriterService().insertPiece(m, fileList);
-		
-		System.out.println("결과 : " + result);
-		
-		if(result > 0){
-			response.sendRedirect(request.getContextPath() + "/selectPieceList.wr?memberNo=" + memberNo);
-		}else{
-			//실패시 서버에 저장된 파일 삭제
-			for(int i = 0; i <saveFiles.size(); i++){
-				//파일 시스템에 저장된 이름으로 파일 객체 생성함
-				File failedFile = new File(savePath + saveFiles.get(i));
-				
-				failedFile.delete();
+			if(multiRequest.getParameterValues("reception_status") == null){
+				reception_status1 = "0";
+				//System.out.println("if문 : " + reception_status1);
+			}else{
+				reception_status1 = "1";
+				//System.out.println("된다");
 			}
 			
-			//에러페이지로 메시지 전달
-			request.setAttribute("msg", "사진 게시판 등록 실패");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
-		}*/
-		
+			int reception_status2 = Integer.parseInt(reception_status1);
+			
+			/*System.out.println(nick_name);
+			System.out.println(introduction);
+			System.out.println(writer_slot);
+			System.out.println(reception_status2);*/
+			
+			//member객체 생성
+			Member m = new Member();
+			m.setMember_no(memberNo);
+			m.setNick_name(nick_name);
+			m.setIntroduction(introduction);
+			m.setWriter_slot(writer_slot);
+			m.setReception_status(reception_status2);
+			
+			//service 전송
+			int result = new WriterService().updateProfile(m, fileList);
+			
+			System.out.println("결과 : " + result);
+			
+			if(result > 0){
+				Member loginUser = new MemberService().loginCheck(((Member)(request.getSession().getAttribute("loginUser"))).getId(), ((Member)(request.getSession().getAttribute("loginUser"))).getPassword());
+				request.getSession().setAttribute("loginUser", loginUser);
+				request.setAttribute("fileList", fileList);
+				response.sendRedirect(request.getContextPath() + "/selectPieceList.wr?memberNo=" + memberNo);
+			}else{
+				//실패시 서버에 저장된 파일 삭제
+				for(int i = 0; i <saveFiles.size(); i++){
+					//파일 시스템에 저장된 이름으로 파일 객체 생성함
+					File failedFile = new File(savePath + saveFiles.get(i));
+					
+					failedFile.delete();
+				}
+				
+				//에러페이지로 메시지 전달
+				request.setAttribute("msg", "프로필 저장 실패");
+				request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			}
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

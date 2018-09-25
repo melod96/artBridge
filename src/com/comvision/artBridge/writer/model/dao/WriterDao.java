@@ -12,6 +12,7 @@ import java.util.Properties;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.relate.model.vo.Relate;
 
 import static com.comvision.artBridge.common.JDBCTemplate.*;
@@ -215,6 +216,59 @@ public class WriterDao {
 		}finally{
 			close(pstmt);
 		}
+		return result;
+	}
+
+	//프로필 저장용 메소드
+	public int updateProfile(Connection con, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateProfile");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, m.getNick_name());
+			pstmt.setString(2, m.getIntroduction());
+			pstmt.setInt(3, m.getWriter_slot());
+			//pstmt.setInt(3, m.setReception_status(););
+			pstmt.setInt(4, m.getMember_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	//프로필 이미지 저장용 메소드
+	public int updateProfileImg(Connection con, ArrayList<Files> fileList, Member m) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateProfileImg");
+		
+		try {
+			for(int i = 0; i < fileList.size(); i++){
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, m.getMember_no());
+				pstmt.setString(2, fileList.get(i).getFiles_title());
+				pstmt.setString(3, fileList.get(i).getChange_title());
+				pstmt.setString(4, fileList.get(i).getFiles_root());
+				
+				result += pstmt.executeUpdate();
+				System.out.println("여기서 결과 : " + result);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
 		return result;
 	}
 
