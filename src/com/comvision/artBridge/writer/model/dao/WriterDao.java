@@ -31,7 +31,7 @@ public class WriterDao {
 	}
 
 	//작가 작품관리 리스트 출력
-	public ArrayList<Board> selectList(Connection con, int currentPage, int limit) {
+	public ArrayList<Board> selectList(Connection con, int currentPage, int limit, int memberNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Board> list = null;
@@ -41,12 +41,12 @@ public class WriterDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			//pstmt.setInt(1, board_no);
+			pstmt.setInt(1, memberNo);
 			
 			int startRow = (currentPage -1) *limit +1;
 			int endRow= startRow +limit -1;
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
@@ -59,7 +59,7 @@ public class WriterDao {
 				b.setBoard_title(rset.getString("board_title"));
 				b.setBoard_content(rset.getString("board_content"));
 				b.setBoard_date(rset.getDate("board_date"));
-				b.setMember_no(rset.getInt("member_no"));
+				//b.setMember_no(rset.getInt("member_no"));
 				//b.setModify_date(rset.getDate("modify_date"));
 				b.setBoard_status(rset.getInt("board_status"));
 				b.setBoard_count(rset.getInt("board_count"));
@@ -198,7 +198,7 @@ public class WriterDao {
 	}
 
 	//커미션 삭제용 메소드
-	public int deletePiece(Connection con, int pieceNo, int currentPage, int limit) {
+	public int deletePiece(Connection con, int pieceNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -215,9 +215,7 @@ public class WriterDao {
 		}finally{
 			close(pstmt);
 		}
-		
 		return result;
-		
 	}
 
 }

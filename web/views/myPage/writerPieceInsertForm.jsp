@@ -166,7 +166,7 @@
                 <div class="col-md-12">
                     
                     <form action="<%=request.getContextPath()%>/insertPiece.wr" method="post" encType="multipart/form-data">
-                   	 	<input type="hidden" name="member_no" value="<%= m.getMember_no() %>">
+                   	 	<input type="hidden" name="memberNo" value="<%= m.getMember_no() %>">
                         <div class="heading">
                             <h2 class="tit1">내 작품 등록</h2>
                           </div>
@@ -347,7 +347,7 @@
                       <textarea id="editor" name="contents"></textarea>
                       <!-- // 에디터 영역 -->
                       <div class="btn-center">
-                          <button type="reset" class="btn btn-default btn-lg" onclick="location.href='/artBridge/selectPieceList.wr'">취소</button>
+                          <button type="reset" class="btn btn-default btn-lg" onclick="location.href='/artBridge/selectPieceList.wr?memberNo=<%=loginUser.getMember_no()%>'">취소</button>
                           <button type="submit" class="btn btn-primary btn-lg">저장</button>
                       </div>
                     </form>
