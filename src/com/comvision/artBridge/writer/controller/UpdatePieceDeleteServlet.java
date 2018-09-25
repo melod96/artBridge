@@ -23,6 +23,7 @@ public class UpdatePieceDeleteServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		//페이징 처리
 		int currentPage;
 		int limit;		
@@ -49,11 +50,15 @@ public class UpdatePieceDeleteServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 		
+		//해당 작가의 작품만을 보여주기위해 회원 번호를 가져옴
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		//System.out.println(memberNo);
+		
 		//삭제할 게시물의 고유 넘버를 가져옴
 		int pieceNo = Integer.parseInt(request.getParameter("pieceNo"));
-		System.out.println(pieceNo); //jsp에서 name으로 보낸 보드넘버값이랑 여기 서블릿에서 받는 값이랑 다름..왜 다른지 모르겟음
+		//System.out.println(pieceNo);
 		
-		ArrayList<Board> list = new WriterService().deletePiece(pieceNo, currentPage, limit);
+		ArrayList<Board> list = new WriterService().deletePiece(pieceNo, currentPage, limit, memberNo);
 		
 		String page = "";
 		if(list != null){

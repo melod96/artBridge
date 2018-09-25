@@ -2,7 +2,8 @@
     pageEncoding="UTF-8" 
     import="java.util.*,
     		com.comvision.artBridge.member.model.vo.Member, 
-    		com.comvision.artBridge.board.model.vo.*"
+    		com.comvision.artBridge.board.model.vo.*,
+    		com.comvision.artBridge.files.model.vo.*"
 %>
 <% 
 	ArrayList<Board> list = null;
@@ -33,7 +34,6 @@
 	if(m.getWriter_slot() > 0){
 		slot = m.getWriter_slot();
 	}
-	
 	
 	
 %>
@@ -91,6 +91,9 @@
    .bord-wrap .info-area2{overflow:hidden; margin-top:10px;}
    .bord-wrap .info-area2 span{float:left;}
    .bord-wrap .info-area2 .price{float:right; font-size:20px; font-weight:bold;}
+   .bord-wrap .info-area2 .tit_txt a{color:#333;}
+   .bord-wrap .info-area2 .tit_txt:hover{border-bottom:1px solid #3f51b5;}
+   .bord-wrap .info-area2 .tit_txt:hover a{color:#3f51b5;}
 
    .heading{margin: 30px 0 10px 0 !important;}
    div.btn-right.add-some button{bottom:0; top:auto;}
@@ -184,7 +187,7 @@
                 <div class="col-md-12">
 
                     <!-- 프로필 작성 영역 -->
-                    <form action="<%=request.getContextPath()%>/insertProfile.wr" method="post">
+                    <form action="<%=request.getContextPath()%>/updateProfile.wr" method="post">
                       <div class="frofile-box">
                           <div class="img-area">
                               <div class="img-in">
@@ -198,31 +201,35 @@
                      
                           <div class="input-area">
                               <label for="nick">닉네임</label>
-                              <input name="" class="form-control" type="text" value="<%= m.getNick_name() %>">
+                              <input id="nick" name="nick" class="form-control" type="text" value="<%= m.getNick_name() %>">
                               
                               <label for="introtxt">소개글</label>
-                              <textarea name="" class="form-control" rows="3"><%= m.getIntroduction() %></textarea> 
+                              <textarea id="introtxt" name="introtxt" class="form-control" rows="3"><%= m.getIntroduction() %></textarea> 
                               
                               <label for="slot">슬롯 갯수 변경</label>
-                              <input name="" class="form-control input-xshort" type="number" min="1" value="<%= slot %>"><br>
+                              <input id="slot" name="slot" class="form-control input-xshort" type="number" min="1" value="<%= slot %>"><br>
                               
                               <label>커미션 접수 상태</label>
                               <div class="state">
-	                              <span class="txt-off" value="" title="접수불가">OFF</span>
+	                              <span class="txt-off" title="접수불가">OFF</span>
 	                              <label class="switch">
-								  	 <input type="checkbox" checked onclick="swichTg(this)">
+								  	 <input type="checkbox" name="reception_status" onclick="swichTg(this)">
 								 	 <span class="slider round"></span>
 								  </label>
-	                              <span class="txt-on" value="" title="접수중">ON</span>
+	                              <span class="txt-on" title="접수중">ON</span>
                               </div>
-							  
 							  <script>
-								 function swichTg(ck){
+								 $(function(){
+									 swichTg();
+								  })
+								  function swichTg(ck){
 									  var swichCk = $(ck).prop('checked');
 								  		if(swichCk == true){
+								  			$(".switch input").attr('value','1')
 								  			$('.txt-on').css('color','#ff5722');
 								  			$('.txt-off').css('color','#afafaf');
 								  		}else{
+								  			$(".switch input").attr('value','0')
 								  			$('.txt-on').css('color','#afafaf');
 								  			$('.txt-off').css('color','#ff5722');
 								  		}
@@ -236,30 +243,21 @@
                           
                           <div class="state-area">
                               <ul>
-                                <li>작품리스트 <span>0개</span></li>
-                                <li>평점 
-                                  <span>
-                                    <p class="star_rating">
-                                      <a href="#" class="on">★</a>
-                                      <a href="#" class="on">★</a>
-                                      <a href="#" class="on">★</a>
-                                      <a href="#">★</a>
-                                      <a href="#">★</a>
-                                    </p> 0.0점</span>
-                                </li>
-                                <li>진행중인 의뢰 <span>0건</span></li>
+                                <li>작품리스트 <span><%= list.size() %> 개</span></li>
+                                <li>평점 <span><div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div> &nbsp;0.0 점 </span></li>
+                                <li>진행중인 의뢰 <span>0 건</span></li>
                                 <li>슬롯 갯수 <span><%= slot %> 개</span></li>
-                                <li>입금 예정 금액 <span>0원</span></li>
+                                <li>입금 예정 금액 <span>0 원</span></li>
                               </ul>
                           </div>
                       </div>
                       <div class="btn-center" style="margin-top:30px;">
                         <button type="submit" class="btn btn-primary pro-save">프로필 저장</button>
                       </div>
-                    </form>
-                    <!-- //프로필 작성 영역 -->
-
-                    <!-- 내 작품 관리 영역 -->
+	                 </form>
+	                 <!-- //프로필 작성 영역 -->
+	
+                    <!-- 내 작품 관리 영역 -->	
                     <div class="btn-right add-some">
                         <div class="heading">
                           <h2 class="tit1">내 작품 관리</h2>
@@ -274,40 +272,41 @@
                         <div class="piece-list">
                           <ul class="seting-area">
                               <!-- <li><input type="button" class="btn-lock" title="작품 보이기"><label class="hide">숨기기</label></li> -->
-                              <li><input type="button" class="btn-edit" title="작품 수정" onclick="<%=request.getContextPath()%>/updatePieceForm.wr"><label class="hide">수정</label></li>
-                              <li><input type="button" class="btn-del" title="작품 삭제" onclick="pieceDel()"><label class="hide">삭제</label></li>
+                              <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='<%=request.getContextPath()%>/updatePieceForm.wr'"><label class="hide">수정</label></li>
+                              <li><input type="button" class="btn-del" title="작품 삭제" onclick="location.href='<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>'"><label class="hide">삭제</label></li>
                           </ul>
                           <script>
-                          	function pieceDel(){
-                          		var result = confirm("작품을 삭제 하시겠습니까?");
-                          		if(result){
+                        	//서블릿으로 보내서 삭제하기 --> 보드 넘버가 마지막 게시글만 출력됨...
+                          	<%-- function pieceDel(){
+                          		if(result == true){
                           			location.href="<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>";
-                          			//console.log('서블릿으로 보내서 삭제하기');
                           		}else{
                           			return false;	
                           		}
-                          	}
+                          	} --%>
                           </script>
                           <div class="img-area">
+                              <!-- <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span> -->
                               <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
                               <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
                               <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
                           </div>
                           <div class="info-area1">
-                              <span><%= m.getNick_name() %>작가<%=b.getBoard_no()%></span>
+                              <span><%= m.getNick_name() %>작가</span>
                               <span>신뢰도 : 100%</span>
                               <span>
-                                <p class="star_rating">
+                              	<div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
+                                <!-- <p class="star_rating">
                                   <a href="#" class="on">★</a>
                                   <a href="#" class="on">★</a>
                                   <a href="#" class="on">★</a>
                                   <a href="#">★</a>
                                   <a href="#">★</a>
-                              </p>
+                             	 </p> -->
                             </span>
                           </div>
                           <div class="info-area2">
-                              <span><a href="#"><%= b.getBoard_title() %></a></span>
+                              <span class="tit_txt"><a href="#"><%= b.getBoard_title() %></a></span>
                               <span class="price">7,000 ~</span>
                           </div>
                         </div>
@@ -318,7 +317,8 @@
                         <% } %>
                     </div>
                     <!-- // 내 작품 관리 영역 -->
-
+					
+					
                     <!-- 페이징 영역 -->
                     <div class="paginate">
 						<a onclick="location.href='<%=request.getContextPath()%>/selectPieceList.wr?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 

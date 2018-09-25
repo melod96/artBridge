@@ -66,7 +66,7 @@ public class InsertPieceServlet extends HttpServlet {
 		
 			
 			//Board테이블에 저장할 데이터 가져오기
-			int member_no = Integer.parseInt(multiRequest.getParameter("member_no"));
+			int memberNo = Integer.parseInt(multiRequest.getParameter("memberNo"));
 			String title = multiRequest.getParameter("title");
 			int resolution = Integer.parseInt(multiRequest.getParameter("resolution"));
 			String file_type = multiRequest.getParameter("file_type");
@@ -76,7 +76,7 @@ public class InsertPieceServlet extends HttpServlet {
 			
 			//Board객체 생성
 			Board b = new Board();
-			b.setMember_no(member_no);
+			b.setMember_no(memberNo);
 			b.setBoard_title(title);
 			b.setResolution(resolution);
 			b.setSubmit_file_type(file_type);
@@ -102,7 +102,7 @@ public class InsertPieceServlet extends HttpServlet {
 			System.out.println("결과 : " + result);
 			
 			if(result > 0){
-				response.sendRedirect(request.getContextPath() + "/selectPieceList.wr");
+				response.sendRedirect(request.getContextPath() + "/selectPieceList.wr?memberNo=" + memberNo);
 			}else{
 				//실패시 서버에 저장된 파일 삭제
 				for(int i = 0; i <saveFiles.size(); i++){
