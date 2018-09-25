@@ -1,6 +1,7 @@
 package com.comvision.artBridge.message.controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -17,13 +18,42 @@ import com.comvision.artBridge.message.model.vo.Message;
 @WebServlet("/selectList.msg")
 public class SelectMSGListServlet extends HttpServlet {
 	
-	private static final long serialVersionUID = -1497114813907971397L;
+	private static final long serialVersionUID = 1L;
 
 	public SelectMSGListServlet() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String date1 = null;
+		String date2 = null;
+		Date date11 = null;
+		
+		String addQuery ="";
+		
+		if(request.getParameter("date1") != null && request.getParameter("date2") != null){
+		date1 = request.getParameter("date1");
+		date2 = request.getParameter("date2");
+		
+		addQuery += "and message_date between '" +date1+"' and '"+date2 + "' ";
+		
+		}
+		
+		String searchSelect1 = request.getParameter("searchSelect1");
+		
+		String searchSelect2 = request.getParameter("searchSelect2");
+		
+		String searchWords = request.getParameter("searchWords");
+		
+		
+		System.out.println(date1);
+		System.out.println(date2);
+		System.out.println(searchSelect1);
+		System.out.println(searchSelect2);
+		System.out.println(searchWords);
+		
+		
 		int num = 1;
 		// 페이징 처리
 		int currentPage;
@@ -54,9 +84,8 @@ public class SelectMSGListServlet extends HttpServlet {
 		
 		
 		//메세지 리스트 출력
-		ArrayList<Message> mlist = new MessageService().SelectList(currentPage, limit);
+		ArrayList<Message> mlist = new MessageService().SelectList(currentPage, limit, addQuery);
 		
-		System.out.println(mlist);
 		String page = "";
 		
 		if(mlist != null){

@@ -54,52 +54,105 @@ ul.tab-menu li>a:hover {
 					<hr>
 
 					<br>
+					 <script>
+							//radio : '전체'클릭시 date박스 비활성화.
+						$(function() {
+							$("#whole").click(function() {
+									$("input[name='date1']").attr("disabled",true);
+									$("input[name='date2']").attr("disabled",true);
+								});
+							$("#period").click(function() {
+								$("input[name='date1']").attr("disabled",false);
+								$("input[name='date2']").attr("disabled",false);
+							});
 
+						});
+					</script> 
 					<div>
-						<table class="tbl-type02">
+						<form action="<%= request.getContextPath() %>/selectList.msg?pageName=customerAdmin&currentPage=1" method="post">
+							<table class="tbl-type02">
 
-							<tbody>
+								<tbody>
 
-								<tr>
-									<td style="background: lightgray; width: 200px;">접수일</td>
-									<td style="text-align: left;">&nbsp; <input type="radio"
-										name="date" value="W" id="whole"> <label for="whole">전체</label>
-										<input type="radio" name="date" value="P" id="period" checked>
-										<label for="period">기간</label>&nbsp;&nbsp; <input type="date"
-										name="date"> <label style="font-weight: bold">&nbsp;~&nbsp;</label>
-										<input type="date" name="date">
+									<tr>
+										<td style="background: lightgray; width: 200px;">접수일</td>
+										<td style="text-align: left;">&nbsp; 
+										
+										<input type="radio"	name="dateRadio" value="W" id="whole" checked>
+										<label for="whole">전체</label>
+										
+										<input type="radio" name="dateRadio" value="P" id="period">
+										<label for="period">기간</label>&nbsp;&nbsp;
+											<input type="date" id="date1" name="date1" disabled="disabled">
+												<label style="font-weight: bold">&nbsp;~&nbsp;</label>
+											<input type="date" id="date2" name="date2" disabled="disabled" >
 
 
-									</td>
-								</tr>
+										</td>
+									</tr>
 
-								<tr>
-									<td style="background: lightgray">답변상태</td>
-									<td><select class="form-control input-short">
-											<option>전체</option>
-											<option>접수</option>
-											<option>답변완료</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td style="background: lightgray">검색옵션</td>
-									<td><select class="form-control input-short">
-											<option>전체</option>
-											<option>이름</option>
-											<option>제목</option>
-									</select></td>
-								</tr>
-								<tr>
-									<td style="background: lightgray;">검색어 입력</td>
-									<td><input id="" name="" class="form-control input-mid"
-										type="text" placeholder="검색어를 입력하세요" style="float: left;">
-										<button type="submit" name="mainBtn"
-											class="btn btn-primary btn-md" style="float: right;">검색</button>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+
+
+
+									<tr>
+										<td style="background: lightgray">답변상태</td>
+										<td><select class="form-control input-short" id="searchSelect1" name="searchSelect1">
+												<option value="se1Option1" id="se1Option1">전체</option>
+												<option value="se1Option2" id="se1Option2">접수</option>
+												<option value="se1Option3" id="se1Option3">답변완료</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td style="background: lightgray">검색옵션</td>
+										<td><select class="form-control input-short" id="searchSelect2" name="searchSelect2">
+												<option value="se2Option1" id="se2Option1">전체</option>
+												<option value="se2Option2" id="se2Option2">이름</option>
+												<option value="se2Option3" id="se2Option3">제목</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td style="background: lightgray;">검색어 입력</td>
+										<td><input id="" name="searchWords" class="form-control input-mid"
+											type="text" placeholder="검색어를 입력하세요" style="float: left;">
+											<button type="submit" id="searchBtn1"  id="searchWords" name="searchWords" value=""
+												class="btn btn-primary btn-md" style="float: right;"
+												onclick="search();">검색</button></td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
 					</div>
+					
+					<script>
+					
+					<%-- $(function(){
+						//Date
+						$("#period").click(function() {
+								$("input[name='date']").val();
+							});
+							
+						
+						
+						
+						//검색어
+						<% if(searchWords != null){ %>
+							$("#searchWords").val("<%= searchWords %>");
+						<% } %>
+						
+						
+						
+						
+						
+					});
+					 --%>
+					
+					
+					
+					
+					
+					</script>
+					
+					
 
 					<br> <br>
 					<div>
