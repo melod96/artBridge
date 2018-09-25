@@ -31,7 +31,7 @@ public class SelectMSGListServlet extends HttpServlet {
 		Date date11 = null;
 		
 		String addQuery ="";
-		
+		//날짜로 검색.
 		if(request.getParameter("date1") != null && request.getParameter("date2") != null){
 		date1 = request.getParameter("date1");
 		date2 = request.getParameter("date2");
@@ -40,18 +40,42 @@ public class SelectMSGListServlet extends HttpServlet {
 		
 		}
 		
-		String searchSelect1 = request.getParameter("searchSelect1");
+		//옵션 1 : 답변상태
+		String searchSelect1 = null;
+		if(request.getParameter("searchSelect1") != null){
+			searchSelect1 = request.getParameter("searchSelect1");
+			
+			switch(searchSelect1){
+			case "se1Option1" : break;
+			case "se1Option2" : addQuery += "and check_date is null "; break;
+			case "se1Option3" : addQuery += "and check_date is not null "; break;
+			}
+		}
 		
-		String searchSelect2 = request.getParameter("searchSelect2");
+		//옵션 2 : 이름 or 제목
 		
-		String searchWords = request.getParameter("searchWords");
+		String searchWords = null;
+		String searchSelect2 = null;
 		
+		if (request.getParameter("searchWords") != "") {
+			searchWords = request.getParameter("searchWords");
+			System.out.println(searchWords);
+			if (request.getParameter("searchSelect2") != null) {
+				searchSelect2 = request.getParameter("searchSelect2");
+				switch (searchSelect2) {
+				case "se2Option1": addQuery += "and (name || message_title ) like '%" + searchWords + "	%' ";
+					break;
+				case "se2Option2":
+					addQuery += "and name like '%" + searchWords + "%' ";
+					break;
+				case "se2Option3":
+					addQuery += "and message_title like '%" + searchWords + "%' ";
+					break;
+				}
+
+			}
+		}
 		
-		System.out.println(date1);
-		System.out.println(date2);
-		System.out.println(searchSelect1);
-		System.out.println(searchSelect2);
-		System.out.println(searchWords);
 		
 		
 		int num = 1;
