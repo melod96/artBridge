@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="java.util.ArrayList, com.comvision.artBridge.member.model.vo.Member, com.comvision.artBridge.board.model.vo.PageInfo"%>
 <%
 	ArrayList<Member> list = null;
@@ -320,4 +320,4 @@ ul.tab-menu li>a:hover {
 
 	</div>
 </body>
-</html>
+</html> --%>

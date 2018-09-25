@@ -96,36 +96,24 @@ border-color:darkgray;
 					</div>
 					
 					<br>
-					<div id="searchWord" action="<%=request.getContextPath()%>/insertRelate_ad" method="post" id="goForm">
-						<input type="text" name="scArea" style="width: 50%;" value="">
+					
+					 <form action="<%=request.getContextPath()%>/insertRelate.ad" method="post" >
+					<div id="searchWord">
+						<input type="text" name="relate_name" style="width: 50%;" id="relate">
 						<button name="mainBtn" class="btn btn-primary btn-sm"
-							onclick="add();" id="insertRelate" oncilck="add();">검색어 추가</button>
-						<button name="mainBtn" class="btn btn-primary btn-sm"
-							onclick="del();">검색어 삭제</button>
-							
-							<!-- <script>
-								function add(){
-									$("#addText"){
-										
-									}
-								}
-							
-							</script> -->
-
+							onclick="add();" id="insertRelate" >검색어 추가</button>
+				
 						<br> <br>
 					</div>
-
 					<div style="overflow-Y : scroll; height:280px;">
 						<table class="tbl-type02" >
 							<colgroup>
-								<col style="width: 10%;">
 								<col style="width: 10%;">
 								<col style="width: *;">
 
 							</colgroup>
 							<thead>
 								<tr>
-									<th scope="col">선택</th>
 									<th scope="col">번호</th>
 									<th scope="col" colspan="3">검색어</th>
 
@@ -134,7 +122,6 @@ border-color:darkgray;
 							<tbody class="addsh2">
 							<%if(list != null){for(Relate r : list){%>
 								<tr>
-									<td><input type="checkbox" id="check" name="check" value=<%=r.getRelate_no() %>></td>
 									<td><label><%= r.getRelate_no() %></label></td>
 									<td><label><%= r.getRelate_name() %></label></td>
 								</tr>								
@@ -144,66 +131,8 @@ border-color:darkgray;
 					</div>
 
 					<br> <br>
-					<!--연관검색어 스크립트-->
-					<script>
-					/* 	var i = 1;
-						function add() {
-
-							$(function() {
-								var addsc = $("input[name=scArea]").val();
-
-								$(
-										"<tr><td><input type="+"checkbox "+"name="+"chBox"+"></td>"
-												+ "<td class="+"num"+">" + i
-												+ "</td><td class="+"addsh"+">"
-												+ addsc + "</td></tr>")
-										.appendTo($(".addsh2"));
-								$("input[name=scArea]").val("");
-
-								i++;
-
-							});
-						}; */
-						
-						function add(){
-							var str = "";
-							
-							$("input[name=scArea]").each(function(){
-								if($(this).prop("#relate") == true){
-									str += $(this).val(); 
-								}
-							});
-							
-							if(str == ""){
-								location.href = '<%= request.getContextPath()%>/selectCommision.ad';
-								console.log("1");
-							}else{
-								console.log("str 2 : "+ str);
-								location.href = '<%= request.getContextPath()%>/insertRelate.ad?str='+str;
-								
-							}
-						}
-
-						function del() {
-							$("input[name=chBox]").each(function() {
-								if ($(this).prop("checked") == true) {
-									$(this).parent().parent().remove();
-									i--;
-								}
-							});
-
-						 	var j = 1;
-							$(".num").each(function() {
-								$(this).text(j);
-								j++;
-							});
-
-						} 
-										
-					</script>
-
-					<button type="submit" id="addBtn" name="mainBtn"
-						class="btn btn-primary btn-md" style="padding: 10px 22px;">저장</button>
+				
+						</form>
 
 				</div>
 				<div class="heading">
@@ -263,26 +192,33 @@ location.href="<%= request.getContextPath() %>/searchBoard.ad?value=" + value;
 
 				<button type="submit" id="deleteBtn" name="deleteBtn"
 					class="btn btn-primary btn-sm"
-					style="padding: 5px 22px; float: right;" onclick="del2();">게시글
+					style="padding: 5px 22px; float: right;" onclick="del();">게시글
 					삭제</button>
 				<br> <br>
 				<script>
-					function del2() {
-						$("input[name=chBox2]").each(function() {
-							if ($(this).prop("checked") == true) {
-								$(this).parent().parent().remove();
-
-							}
-						});
-
-						var k = 1;
-						$(".num2").each(function() {
-							$(this).text(k);
-							k++;
-						});
-
-					}
+				function del(){
+					
+					var str2 = "";
+						
+					$("input[name='bdCk']").each(function() {
+						if ($(this).prop("checked") == true) {
+							str2 += $(this).val() + "," ;
+						}
+					});
+					
+					if(str2==""){
+						location.href = '<%= request.getContextPath()%>/selectCommision.ad';
+						console.log('1');
+					}else{
+						location.href = '<%= request.getContextPath()%>/deleteCommission.ad?str2='+str2;
+						console.log('2');
+						}
+					
+				};
 				</script>
+				
+				
+				
 
 				<table class="tbl-type02">
 					<colgroup>
@@ -304,7 +240,7 @@ location.href="<%= request.getContextPath() %>/searchBoard.ad?value=" + value;
 					</thead>
 					<tbody>
 
-						<tr>
+						<tr class="trtr">
 						<%if(list2 != null){for(Board b : list2){%>
 							<td><input type="checkbox" name="chBox2" value="<%=b.getBoard_no() %>"></td>
 							<td class="num2"><label><%=b.getBoard_no() %></label></td>

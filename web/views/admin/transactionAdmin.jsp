@@ -32,6 +32,7 @@ ul.tab-menu li>a:hover {
 	background: darkgray;
 }
 
+
 </style>
 </head>
 <body>
@@ -126,12 +127,13 @@ ul.tab-menu li>a:hover {
 					<table class="tbl-type02">
 						<colgroup>
 							<col style="width: 7%;">
-							<col style="width: 8.5%;">
+							<col style="width: 8%;">
 							<col style="width: 10%;">
 							<col style="width: 10%;">
 							<col style="width: 10%;">
 							<col style="width: 12%;">
 							<col style="width: 12%;">
+							<col style="width: 10%;">
 							<col style="width: 10%;">
 							<col style="width: *;">
 						</colgroup>
@@ -146,21 +148,31 @@ ul.tab-menu li>a:hover {
 								<th scope="col">접수일</th>
 								<th scope="col">결제금액</th>
 								<th scope="col">게시글</th>
-
+								<th scope="col">환불</th>
 							</tr>
 						</thead>
 						<tbody>
-							<%if(list != null){for(Transaction t : list){%>
+							<%if(list != null){for(Transaction t : list){
+								String trs = "";
+								switch(t.getPay_status()){
+								case 1 : trs = "대기";break;
+								case 2 : trs = "환불";break;
+								case 3 : trs = "지급";break;
+								}
+							%>
 							<tr style="height: 50px;">
 								<td><label><%= t.getOrders_no() %></label></td>
-								<td><label><%= t.getCusName() %></td>
-								<td><label><%= t.getCusId() %></td>
-								<td><label><%= t.getWrtNick() %></td>
-								<td><label><%= t.getWrtId() %></td>
-								<td><label><%= t.getPay_status() %></td>
-								<td><label><%= t.getO_date() %></td>
-								<td><label><%= t.getPayment() %></td>
-								<td><label><%= t.getBoard_title() %></td>
+								<td><label><%= t.getCusName() %></label></td>
+								<td><label><%= t.getCusId() %></label></td>
+								<td><label><%= t.getWrtNick() %></label></td>
+								<td><label><%= t.getWrtId() %></label></td>
+								<td><label><%= trs %></label></td>
+								<td><label><%= t.getO_date() %></label></td>
+								<td><label><%= t.getPayment() %></label></td>
+								<td><label><%= t.getBoard_title() %></label></td>
+								<td><button type="submit" name="refundBtn"
+											class="btn btn-success btn-sm">환불하기</button>
+								</td>
 							</tr>
 				<% }} %> 
 						
@@ -239,22 +251,7 @@ ul.tab-menu li>a:hover {
 	              
 				   <%} %>	              
 
-					<div class="paginate">
-						<a href="#" class="btn-first" title="처음"><em class="blind">목록에서
-								처음 페이지 이동</em></a> <a href="#" class="btn-prev" title="이전"><em
-							class="blind">목록에서 이전 페이지 이동</em></a> <span class="paging-numbers">
-							<a href="#">1<span class="blind">페이지로 이동</span></a> <a href="#"
-							class="on">2<span class="blind">페이지로 이동</span></a> <a href="#">3<span
-								class="blind">페이지로 이동</span></a> <a href="#">4<span
-								class="blind">페이지로 이동</span></a> <a href="#">5<span
-								class="blind">페이지로 이동</span></a>
-						</span> <a href="#" class="btn-next" title="다음"><span class="spr"><em
-								class="blind">목록에서 다음 페이지 이동</em></span></a> <a href="#" class="btn-last"
-							title="끝"><span class="spr"><em class="blind">목록에서
-									끝 페이지 이동</em></span></a>
-					</div>
-
-
+			
 					<br> <br>
 				</div>
 			</div>
