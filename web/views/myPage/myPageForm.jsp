@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>  
+    pageEncoding="UTF-8" %>
+<%@ page import="java.util.*, com.comvision.artBridge.transaction.model.vo.Transaction,
+				 com.comvision.artBridge.board.model.vo.*, com.comvision.artBridge.message.model.vo.Message,
+				 com.comvision.artBridge.sale.model.vo.*, com.comvision.artBridge.message.model.vo.Message" %>  
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -142,6 +145,16 @@
         <%@ include file="/views/common/header.jsp" %>
         <!-- // Header -->
 
+<% 
+	ArrayList<Transaction> transList = null;
+	if((ArrayList<Transaction>)request.getAttribute("transList") != null){
+		transList = (ArrayList<Transaction>)request.getAttribute("transList");
+	}
+	Transaction t = null;
+	if(session.getAttribute("userTransaction") != null){
+		t = (Transaction)request.getAttribute("userTransaction");
+	}
+%>
 <% /* 4. 회원정보 수정 변수 코드 */
  	String phone = ((Member)(session.getAttribute("loginUser"))).getPhone();
 //	String phone = ((Member)(request.getSession().getAttribute("loginUser"))).getPhone();
@@ -162,6 +175,7 @@
 		}
 	}
 %>
+
 
         <!-- 주석 영역 -->
         
@@ -188,57 +202,57 @@
 		<div class="contents"><!-- contents 필수 사용 -->
 
 <!--      	* 1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
-			<form action="">
+			<form action="" method="post">
 				<div id="stmtModalArea" class="w3-modal" onclick="stmtDisplayNone();"></div>
 				<div id="stmtArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
 					<div class=stmtModal-Area-Style align="center">
 						<h3>명 &nbsp; 세 &nbsp; 서</h3>
-						<table class="form-table">
-							<tr>
-								<td width="15px"></td>
-								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td>
-								<td colspan="3">귀여운 캐릭터 그려드려요</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td class="stmt-title">신 청 일  : </td>
-								<td colspan="3">2018-09-00</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td class="stmt-title">구 매 자  : </td>
-								<td width="230px">소나나</td>
-								<td width="80px" class="stmt-title">판 매 자  : </td>
-								<td width="150px">crala</td>
-							</tr>
-							<tr>
-								<td></td>
-								<td class="stmt-title">옵 션 명  : </td>
-								<td colspan="3">인물화</td>
-							</tr>
-							<tr>
-								<td colspan="5" height="30px"></td>
-							</tr>
-							<tr>
-							<td colspan="5" width="540px">
-								<table border="1" >
-									<tr class="form-inner-table-title" style="font-weight:bold; text-align:center;" height="25px">
-										<td width="35px">No</td>
-										<td width="380px">요 구 사 항</td>
-										<td width="87px">금 액</td>
-									</tr>
-									<tr height="23px">
-										<td align="center">1</td>
-										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~</td>
-										<td align="right">작가기입 원</td>
-									</tr>
-									<tr>
-										<td align="center">2</td>
-										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~ 귀염뽀짝하게 해주시면 더 좋아요~!</td>
-										<td align="right">45,454원</td>
-									</tr>
-								</table>
+<!-- 						<table class="form-table"> -->
+<!-- 							<tr> -->
+<!-- 								<td width="15px"></td> -->
+<!-- 								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td> -->
+<%-- 								<td colspan="3"><%= t.getBoard_title() %></td> --%>
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td></td> -->
+<!-- 								<td class="stmt-title">신 청 일  : </td> -->
+<%-- 								<td colspan="3"><%= t.getO_date() %></td> --%>
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td></td> -->
+<!-- 								<td class="stmt-title">구 매 자  : </td> -->
+<%-- 								<td width="230px"><%= t.getCusId() %></td> --%>
+<!-- 								<td width="80px" class="stmt-title">판 매 자  : </td> -->
+<%-- 								<td width="150px"><%= t.getWrtNick() %></td> --%>
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td></td> -->
+<!-- 								<td class="stmt-title">옵 션 명  : </td> -->
+<!-- 								<td colspan="3">인물화</td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 								<td colspan="5" height="30px"></td> -->
+<!-- 							</tr> -->
+<!-- 							<tr> -->
+<!-- 							<td colspan="5" width="540px"> -->
+<!-- 								<table border="1" > -->
+<!-- 									<tr class="form-inner-table-title" style="font-weight:bold; text-align:center;" height="25px"> -->
+<!-- 										<td width="35px">No</td> -->
+<!-- 										<td width="380px">요 구 사 항</td> -->
+<!-- 										<td width="87px">금 액</td> -->
+<!-- 									</tr> -->
+<!-- 									<tr height="23px"> -->
+<!-- 										<td align="center">1</td> -->
+<!-- 										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~</td> -->
+<!-- 										<td align="right">작가기입 원</td> -->
+<!-- 									</tr> -->
+<!-- 									<tr> -->
+<!-- 										<td align="center">2</td> -->
+<!-- 										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~ 귀염뽀짝하게 해주시면 더 좋아요~!</td> -->
+<!-- 										<td align="right">45,454원</td> -->
+<!-- 									</tr> -->
+<!-- 								</table> -->
 								<br>
 								<table align="right">
 									<tr >
@@ -264,7 +278,7 @@
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
 <!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
-			<form action="<%= request.getContextPath() %>/reqWriterRight.me" method="post" onsubmit="return reqWriterRight();">
+			<form action="" method="post" onsubmit="return reqWriterRight();">
 				<div id="reqWriterModal" class="w3-modal"></div>
 				<div id="reqWriterFormArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
@@ -283,10 +297,10 @@
 								<td height="52px"></td>
 								<td class="reqWriterForm-title">* 은 행 명</td>
 								<td class="reqWriterForm-title">:</td>
-								<td><input type="text" id="userBank" style="width:50px;"/> 은행</td>
+								<td><input type="text" id="userBank" name="userBank" style="width:50px;"/> 은행</td>
 								<td colspan="3">
 									<span class="reqWriterForm-title">* 계좌번호 &nbsp;: &nbsp;</span>
-									<input type="text" id="userAccount" style="width:250px; padding-left:5px;" placeholder="'-'없이 숫자만 입력"/>
+									<input type="text" id="userAccount" name="userAccount" style="width:250px; padding-left:5px;" placeholder="'-'없이 숫자만 입력"/>
 								</td>
 							</tr>
 							<tr><td colspan="7" height="20px"></td></tr>
@@ -403,17 +417,32 @@
 <!-- 							<td>2018-00-00</td> -->
 <!-- 						</tr> -->
 <%-- 						 <% } %>  --%>
-							 	 
-							<tr id="" class="seller-list transInfo-list">
-								<td>판매</td>
-								<td><a onclick="stmtDisplayBlock();" class="btn">18083001</a></td>
-								<td>소나나</td>
-								<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td>
-								<td>컨펌 1단계</td>
-								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-								<td>2018-00-00</td>
-								<td>2018-00-00</td>
-							</tr>
+							
+<%-- 							<% for(Transaction t : transList){ %>  --%>
+<%-- 							  <% if(role.equals("seller")){ %>	  --%>
+<!-- 								<tr id="" class="seller-list transInfo-list"> -->
+<!-- 									<td>판매</td> -->
+<%-- 									<td><a onclick="stmtDisplayBlock();" id="orderNo" class="btn"><%= t.getOrders_no() %></a></td> --%>
+<%-- 									<td><%= t.getCusId() %></td> --%>
+<%-- 									<td class="txt-fl"><a href="#"><%= t.getBoard_title() %></a></td> --%>
+<%-- 									<td><%= t.getPay_status() %></td> --%>
+<!-- 									<td><img src='/artBridge/image/common/mypage/msg.png'></td> -->
+<%-- 									<td><%= t.getO_date() %></td> --%>
+<!-- 									<td>2018-00-00</td> -->
+<!-- 								</tr> -->
+<%-- 							  <% } else{ %> --%>
+								<tr id="" class="buyer-list transInfo-list">
+									<td>구매</td>
+									<td><a onclick="stmtDisplayBlock();" class="btn">18083001</a></td>
+									<td>소나나</td>
+									<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td>
+									<td>컨펌 1단계</td>
+									<td><img src='/artBridge/image/common/mypage/msg.png'></td>
+									<td>2018-00-00</td>
+									<td>2018-00-00</td>
+								</tr>
+<%-- 							  <% } %> --%>
+<%-- 							<% } %> --%>
 							<tr id="" class="buyer-list transInfo-list">
 								<td>구매</td>
 								<td><a onclick="stmtDisplayBlock();" class="btn">18083001</a></td>
@@ -954,9 +983,13 @@
 		                    <button onclick="deleteMemberRequest();" class="btn btn-lg btn-default btn-plus-design" style="float:right;">회원 탈퇴</button>
 		                </div>
 						<div class="btn-center btn-outer-style" style="width:50%;">
-						  <% if(loginUser.getWriter_right() < 1){ %>
-							<button onclick="reqWriterDisplayBlock();" id="reqWriterBtn" class="btn btn-primary btn-lg btn-plus-design" style="float:left; margin-left:10px;">작가 신청</button>
-						  <% }%>
+						  <% if(loginUser.getWriter_right() < 1){
+							  if(loginUser.getBank() == "" || loginUser.getBank() == null){ %>
+								<button onclick="reqWriterDisplayBlock();" id="reqWriterBtn" class="btn btn-primary btn-lg btn-plus-design" style="float:left; margin-left:10px;">작가 신청</button>
+						  	<% }else if(loginUser.getBank() != null){ %>
+								<button onclick="reqWriterDisplayBlock();" id="reqWriterBtn" class="btn btn-primary btn-lg btn-plus-design" disabled style="float:left; margin-left:10px;">승인 대기</button>						  	
+						  	<% }
+							} %>
 		                </div>
 	                </div>
                 </form>
@@ -1130,7 +1163,11 @@
 	<script>
 	//	* 페이지 호출
 		$(function(){
-			var pageName = '<%= (String)request.getParameter("pageName") %>';	
+// 			select orders_no from orders where member_no = ? or writer_no = ?
+<%-- 			location.href="<%= request.getContextPath() %>/selectTransList.ts"; --%>
+					
+			
+			var pageName = '<%= (String)request.getParameter("pageName") %>';
 	
 			$('.order-menu, .bookmark-menu, .msg-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
 			
@@ -1230,8 +1267,28 @@
 	   	function stmtDisplayBlock(){
 	   		$('#stmtModalArea').css({"display":"block"});
 	   		$('#stmtArea').css({"display":"block"});
-			/* document.getElementById('stmtModalArea').style.display='block';
-			document.getElementById('stmtArea').style.display='block'; */
+	   		
+	   		var orderNo = $('#orderNo').val();
+			if(orderNo != null && orderNo != ""){
+				$.ajax({
+					url : "<%= request.getContextPath() %>/selectTransOne.ts",
+					type : "post",
+					data : {orderNo : orderNo},
+					success : function(data){
+						if(data > 0){
+							$('#pwdCheckArea').css({"display":"none"});
+							$('.memberInfoArea').css({"display":"block"});
+							$("#updateUserPwd1").focus();
+						}else{
+							$('#pwdStatus').css({"display":""});
+							$('#pwdStatus').css({"color":"orangered"});
+							$("#checkUserPwd").focus();
+						}
+					}
+				});
+			}
+   		
+	   		
 	  	};							
 	// 	* 명세표 모달 닫기
 		function stmtDisplayNone(){
@@ -1588,7 +1645,7 @@
 		var checkImgType3 = false; */
 		var checkImgTotalCnt = false;
 		
-		function reqWriterRight(){
+		function reqWriterRight(){			
 			var userBank = $('#userBank').val();
 			var userAccount = $('#userAccount').val();
 			if(userBank == ""){
@@ -1603,6 +1660,7 @@
 			}
 			if(userBank == "" || userAccount == ""){
 				alert("입금 받을 은행 정보를 입력하세요.");
+				return false;
 			}
 			
 			if(checkBank == false){
@@ -1629,7 +1687,31 @@
 				checkImgTotalCnt = true;
 			}
 			
-			return true;
+			var submit = confirm("신청 양식을 제출 하시겠습니까?");
+			if(submit == true){
+				alert("submit 트루니?");
+				$.ajax({
+					url : "<%= request.getContextPath() %>/reqWriterRight.me",
+					type : "post",
+					success : function(data){
+						if(data >= 4){
+							alert("작가 신청 양식이 정상적으로 전송 되었습니다.");
+							/* location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu"; */
+						}else{
+							alert("작가 신청 양식 전송이 실패 하였습니다.");
+							/* location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu"; */
+						}
+					alert("에이작스 되니?");
+					}
+				});
+				alert("에이작스 뒤에 링크 가야되는딩");
+				
+				/* return true; */
+			}else{
+				return false;
+			}
+			
+ 			location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
 		};
 	</script>
 <!-- //4. 회원정보 수정 탭 스크립트 -->

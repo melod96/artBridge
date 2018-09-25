@@ -1,5 +1,6 @@
 package com.comvision.artBridge.member.model.service;
 
+import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.dao.MemberDao;
 import com.comvision.artBridge.member.model.vo.Member;
 
@@ -150,5 +151,23 @@ public class MemberService {
 		return result;
 	}
 	
+	public int request_writerRight(Member m, ArrayList<Files> fileList) {
+		Connection con = getConnection();
+		System.out.println("2. 작가 신청 양식 전송 서비스입니다. 들어오네요~");
+		int result = 0;
+		int result1 = new MemberDao().request_writerRight(con, m);
+		System.out.println("6. memberTB없뎃 쿼리 dao에서 실행하고 다시 service로 왔어용~ 이번엔 첨부파일을 저장해볼까요~?");
+		int result2 = new MemberDao().confirmImg_writerRight(con, fileList);
+		
+		if(result1 > 0 && result2 >= 3){
+			result = result1 + result2;
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		close(con);
+		
+		return result;
+	}
 	
 }
