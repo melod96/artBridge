@@ -32,15 +32,20 @@ public class PaymentAPIinfoServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int customer_no = Integer.parseInt(request.getParameter("customer_no"));
 		int totalPrice = Integer.parseInt(request.getParameter("total_Price"));
-		String customer_name = request.getParameter("customer_name");
 		String email1 = request.getParameter("email1");
 		String email2 = request.getParameter("email2");
 		String customer_email = email1+"@"+email2;
 		String customer_phone = request.getParameter("phone");
 		String bank_name = request.getParameter("bank_name");
+		System.out.println(customer_no);;
+		System.out.println(totalPrice);
+		System.out.println(customer_email);
+		System.out.println(customer_phone);
+		System.out.println(bank_name);
 		
 		//주문 번호
-		int orders_no = Integer.parseInt(request.getParameter("orders_no"));
+//		int orders_no = Integer.parseInt(request.getParameter("orders_no"));
+		int orders_no = 21;
 		
 		String page = "";
 		

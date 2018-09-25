@@ -2,6 +2,7 @@ package com.comvision.artBridge.sale.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,6 +35,16 @@ public class PaymentEndingServlet extends HttpServlet {
 		int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
 		
 		int result = new SaleService().insertPayment(customer_no, orders_no, totalPrice);
+		
+		String page= "";
+		if(result>0){
+			page = "views/myPage/myPageForm.jsp?pageName=order-menu";
+		}else{
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "게시판 상세 조회 실패");
+		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	/**
