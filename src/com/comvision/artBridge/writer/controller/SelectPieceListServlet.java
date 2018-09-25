@@ -49,9 +49,13 @@ public class SelectPieceListServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 		
+		//해당 작가의 작품만을 보여주기위해 회원 번호를 가져옴
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		//System.out.println(memberNo);
+		
 		//작가 작품관리 리스트
-		ArrayList<Board> list = new WriterService().selectList(currentPage, limit);
-		System.out.println(list);
+		ArrayList<Board> list = new WriterService().selectList(currentPage, limit, memberNo);
+		//System.out.println(list);
 		
 		String page = "";
 		if(list != null){

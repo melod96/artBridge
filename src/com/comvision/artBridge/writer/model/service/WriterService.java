@@ -15,10 +15,10 @@ import static com.comvision.artBridge.common.JDBCTemplate.*;
 public class WriterService {
 
 	//작가 작품관리 리스트 출력
-	public ArrayList<Board> selectList(int currentPage, int limit) {
+	public ArrayList<Board> selectList(int currentPage, int limit, int memberNo) {
 		Connection con = getConnection();
 		
-		ArrayList<Board> list = new WriterDao().selectList(con, currentPage, limit);
+		ArrayList<Board> list = new WriterDao().selectList(con, currentPage, limit, memberNo);
 
 		close(con);
 		
@@ -68,23 +68,23 @@ public class WriterService {
 	}
 
 	//커미션 삭제용 메소드
-	public ArrayList<Board> deletePiece(int pieceNo, int currentPage, int limit) {
+	public ArrayList<Board> deletePiece(int pieceNo, int currentPage, int limit, int memberNo) {
 		Connection con = getConnection();
 		ArrayList<Board> list = null;
 		int result = 0;
 		
-		if(result > 0){
+		int b = new WriterDao().deletePiece(con, pieceNo);
+
+		if(b > 0){
+			list = new WriterDao().selectList(con, currentPage, limit, memberNo);
 			commit(con);
-			list = new WriterDao().selectList(con, currentPage, limit);
 		}else{
 			rollback(con);
 		}
-		
 		close(con);
 		
 		return list;
 	}
-
 	
 
 }

@@ -23,7 +23,7 @@ public class MessageService {
 	}
 
 	public ArrayList<Message> SelectList(int currentPage, int limit) {
-		
+		System.out.println("서비스 진입");
 		Connection con = getConnection();
 		
 		ArrayList<Message> list = new MessageDao().selectList(con,currentPage, limit);

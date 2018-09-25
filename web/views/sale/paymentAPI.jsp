@@ -1,5 +1,15 @@
+<%@page import="jdk.management.resource.internal.TotalResourceContext"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%
+	int totalPrice = (int)request.getAttribute("totalPrice");
+	String customer_email = (String)request.getAttribute("customer_email");
+	String customer_phone = (String)request.getAttribute("customer_phone");
+	String bank_name = (String)request.getAttribute("bank_name");
+	int customer_no = (int)request.getAttribute("customer_no");
+	int orders_no = (int)request.getAttribute("orders_no");
+	
+%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,6 +20,8 @@ body{padding:none;}
 </style>
 </head>
 <body>
+<input type="hidden" value = "<%= customer_no %>" name="customer_no" />
+<input type="hidden" value = "<%= orders_no %>" name = "orders_no" />
 <!-- 결제api -->
 	<script>
 	var IMP = window.IMP; // 생략가능
@@ -19,12 +31,12 @@ body{padding:none;}
 	    pg : 'html5_inicis', // version 1.1.0부터 지원.
 	    pay_method : 'card',
 	    merchant_uid : 'merchant_' + new Date().getTime(),
-	    name : '주문명:결제테스트',
-	    amount : 14000,
-	    buyer_email : 'iamport@siot.do',
-	    buyer_name : '구매자이름',
-	    buyer_tel : '010-1234-5678',
-	    buyer_addr : '서울특별시 강남구 삼성동',
+	    name : '아트브릿지',
+	    amount : <%=totalPrice%>,
+	    buyer_email : '<%=customer_email%>',
+	    buyer_name : '<%=bank_name%>',
+	    buyer_tel : '<%=customer_phone%>',
+	    buyer_addr : '서울특별시 강남구 역삼동',
 	    buyer_postcode : '123-456',
 	    m_redirect_url : 'http://127.0.0.1:8001/artBridge/paymentending.pg'
 	}, function(rsp) {
@@ -38,7 +50,7 @@ body{padding:none;}
 				url:"paymentending.pg",
 				type:"post",
 				headers: { "Content-Type": "application/json" },
-				data:{imp_uid:rsp.imp_uid,merchant_uid:rsp.merchant_uid},
+				data:{customer_no:customer_no,orders_no:orders_no,totalPrice:totalPrice},
 				success:function(data){
 					console.log("서버 전송 성공");
 				},

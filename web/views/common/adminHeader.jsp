@@ -47,8 +47,8 @@ ul.tab-menu li>a:hover {
 		<ul class="tab-menu">
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMain.ad?pageName=mainAdmin'" id="mainAdmin">메인관리 </a></li>
 		<li><a onclick="location.href='<%= request.getContextPath() %>/selectCommision.ad?pageName=commissionAdmin'" id="commissionAdmin">커미션 관리</a></li>
-		<li><a href="/artBridge/views/admin/customerAdmin.jsp" id="customerAdmin">고객문의 관리</a></li>
-		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMemberList.ad?pageName=memberAdmin'" id="memberAdmin">회원 관리</a></li>
+		<li><a onclick="location.href='<%= request.getContextPath() %>/selectList.msg?pageName=customerAdmin'" id="customerAdmin">고객문의 관리</a></li>
+		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMemberListClone.ad?pageName=memberAdmin'" id="memberAdmin">회원 관리</a></li>
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectTrs.ad?pageName=transactionAdmin'" id="transactionAdmin">거래내역 관리</a></li>
 		<li><a href="/artBridge/views/admin/noticeInsertForm.jsp">공지사항</a></li>
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectRating.ad?pageName=ratingAdmin'" id="ratingAdmin">등급 관리</a></li>
