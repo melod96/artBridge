@@ -630,6 +630,76 @@ public class SaleDao {
 		return olist;
 	}
 
+	public int insertPayment(Connection con, int customer_no, int orders_no, int totalPrice) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertPayment");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, orders_no);
+			pstmt.setInt(2, customer_no);
+			pstmt.setInt(3, totalPrice);
+			
+			result = pstmt.executeUpdate();
+		
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		
+		return result;
+	}
+
+	public int selectPaymentCurrval(Connection con) {
+		Statement stmt = null;
+		ResultSet rset= null;
+		int result = 0;
+		
+		String query = prop.getProperty("selectPaymentCurrval");
+		
+		try {
+			stmt = con.createStatement();
+			
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()){
+				result = rset.getInt("currval");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(stmt);
+			close(rset);
+		}
+		return result;
+	}
+
+	public int insertPaymentDetail(Connection con, int currval) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertPaymentDetail");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, currval);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
 	
 
 	
