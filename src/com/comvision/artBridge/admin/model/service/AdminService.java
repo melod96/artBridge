@@ -253,5 +253,25 @@ public class AdminService {
 		return blist;
 	}
 
+	public int[] selectMemberCounts() {
+		Connection con = getConnection();
+		
+		int[] memberCounts = new AdminDao().selectMemberCounts(con);
+		
+		close(con);
+
+		return memberCounts;
+	}
+
+	public int[] selectOrderCounts(String[] times) {
+		Connection con = getConnection();
+		
+		int[] orderCounts = new AdminDao().selectOrderCounts(con, times);
+		
+		close(con);
+		
+		return orderCounts;
+	}
+
 
 }
