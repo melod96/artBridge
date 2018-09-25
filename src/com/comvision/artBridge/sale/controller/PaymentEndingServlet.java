@@ -33,6 +33,14 @@ public class PaymentEndingServlet extends HttpServlet {
 		int customer_no = Integer.parseInt(request.getParameter("customer_no"));
 		int orders_no = Integer.parseInt(request.getParameter("orders_no"));
 		int totalPrice = Integer.parseInt(request.getParameter("totalPrice"));
+//		int imp_uid = Integer.parseInt(request.getParameter("imp_uid"));
+//		int merchant_uid = Integer.parseInt(request.getParameter("merchant_uid"));
+		
+		System.out.println(customer_no);
+		System.out.println(orders_no);
+		System.out.println(totalPrice);
+//		System.out.println(imp_uid);
+//		System.out.println(merchant_uid);
 		
 		int result = new SaleService().insertPayment(customer_no, orders_no, totalPrice);
 		
