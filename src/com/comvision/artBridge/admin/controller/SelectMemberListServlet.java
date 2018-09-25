@@ -65,6 +65,7 @@ public class SelectMemberListServlet extends HttpServlet {
 		String searchWords = request.getParameter("searchWords");
 		String userDivision = request.getParameter("userDivision");
 		String writerGrade = request.getParameter("writerGrade");
+		String writerRec = request.getParameter("writerRec");
 		
 		String addQuery = "";
 		
@@ -72,7 +73,7 @@ public class SelectMemberListServlet extends HttpServlet {
 			if(searchCondition != null){
 				switch(searchCondition){
 				case "name" : addQuery += "and m.name like '%' || '" + searchWords + "' || '%' "; break;
-				case "id" : addQuery += "and id m.like '%' || '" + searchWords + "' || '%'"; break; 
+				case "id" : addQuery += "and m.id like '%' || '" + searchWords + "' || '%'"; break; 
 				case "phone" : addQuery += "and m.phone like '%' || '" + searchWords + "' || '%' "; break; 
 				case "email" : addQuery += "and m.email like '%' || '" + searchWords + "' || '%' "; break;
 				}
@@ -100,6 +101,13 @@ public class SelectMemberListServlet extends HttpServlet {
 				case "4" : addQuery += "and m.rating_no = 4 "; break;
 				}
 			}
+
+			if(writerRec != null){
+				switch(writerRec){
+				case "rec" : addQuery += "and m.writer_right = 1 "; writerRec = "rec"; break;
+				case "norec" : addQuery += "and m.writer_right = 0 "; writerRec = "norec"; break;
+				}
+			}
 		}
 		
 		System.out.println("추가되는 Query : " + addQuery);
@@ -115,6 +123,7 @@ public class SelectMemberListServlet extends HttpServlet {
 			request.setAttribute("searchWords", searchWords);
 			request.setAttribute("userDivision", userDivision);
 			request.setAttribute("writerGrade", writerGrade);
+			request.setAttribute("writerRec", writerRec);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "회원 조회 실패");

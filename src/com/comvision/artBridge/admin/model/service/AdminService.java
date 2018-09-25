@@ -10,7 +10,6 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.comvision.artBridge.admin.model.dao.AdminDao;
-import com.comvision.artBridge.admin.model.dao.AdminDaoClone;
 import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;

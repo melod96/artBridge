@@ -200,7 +200,7 @@ location.href="<%= request.getContextPath() %>/searchBoard.ad?value=" + value;
 					
 					var str2 = "";
 						
-					$("input[name='bdCk']").each(function() {
+					$("input[name='chBox2']").each(function() {
 						if ($(this).prop("checked") == true) {
 							str2 += $(this).val() + "," ;
 						}
