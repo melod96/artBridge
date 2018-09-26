@@ -637,12 +637,10 @@ private Properties prop = new Properties();
 				
 				query += " " + addQuery;
 				
-				query += ") ";
-				
 				int startRow = (currentPage -1) *limit +1;
 				int endRow= startRow +limit -1;
 				
-				String rnumQuery = "where rnum between " + startRow + " and " + endRow ;
+				String rnumQuery = " ORDER BY O.ORDERS_NO DESC)) where rnum between " + startRow + " and " + endRow ;
 				
 				query += rnumQuery;
 				

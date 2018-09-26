@@ -16,6 +16,7 @@ public class Transaction implements Serializable{
 	private String board_title; //판매글명
 	private Date od_startDate;	//작업 시작일   -
 	private Date od_endDate;	//작업 종료일   -
+	private int orders_activity; //주문활동 1.조율 2.1단계 작업시작 등등
 
 	public Transaction(){}
 

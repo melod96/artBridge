@@ -253,7 +253,7 @@ ul.tab-menu li>a:hover {
 								<td><label><%= t.getPayment() %></label></td>
 								<td><label><%= t.getBoard_title() %></label></td>
 								<td><button type="submit" name="refundBtn"
-											class="btn btn-success btn-sm">환불하기</button>
+											class="btn btn-success btn-sm"  data-toggle="modal" data-target="#myModal">환불하기</button>
 								</td>
 							</tr>
 				<% }} %> 
@@ -344,7 +344,51 @@ ul.tab-menu li>a:hover {
 		<!-- Footer -->
 		<%@ include file="/views/common/footer.jsp"%>
 		<!-- // Footer -->
+		
 
 	</div>
+	<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">환불</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <!-- <table border="1">
+        <tr>
+        	<th>번호</th>
+								<th>평점</th>
+								<th>내용</th>
+								<th>작성자</th>
+								<th>작성일</th>
+        </tr>
+        	<tr>
+        		<th>이야아야밥</th>
+        		<th>ㄲ로로로로</th>
+        		<th>이야아야밥</th>
+        		<th>ㄲ로로로로</th>
+        		<th>이야아야밥</th>
+        	</tr>
+        	
+        </table> -->
+        환불 하시겠습니까?
+        <img src = "/artBridge/web/image/sale/illtest2.jpg" style="width:auto; height:140px;">
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+      </div>
+
+    </div>
+  </div>
+</div>
 </body>
 </html>
