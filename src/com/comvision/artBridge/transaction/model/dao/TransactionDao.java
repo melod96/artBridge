@@ -27,52 +27,8 @@ public class TransactionDao {
 		}
 	}
 
-	public ArrayList<Transaction> selectBeforeSubList(Connection con, int currentPage, int limit, int mNo) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Transaction> transList = new ArrayList<Transaction>();
-		
-		String query = prop.getProperty("selectBeforeSubList");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			
-			pstmt.setInt(1, mNo);
-			pstmt.setInt(2, mNo);
-			pstmt.setInt(3, mNo);
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()){
-				Transaction t = new Transaction();
-				
-				t.setDivRole_no(rset.getInt("divRole_no"));
-				t.setOrders_no(rset.getInt("orders_no"));
-				t.setCusName(rset.getString("cus_name"));
-				t.setCusId(rset.getString("cus_id"));
-				t.setWrtNick(rset.getString("wrt_nick"));
-				t.setWrtId(rset.getString("wrt_id"));
-				t.setO_date(rset.getDate("o_start_date"));
-				t.setBoard_title(rset.getString("board_title"));
-				t.setPay_status(rset.getInt(0));
-				t.setPayment(rset.getInt(null));
-				t.setOd_startDate(rset.getDate(null));
-				t.setOd_endDate(rset.getDate(null));				
-				
-				transList.add(t);
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close(rset);
-			close(pstmt);
-		}
-		
-		return transList;
-	}
 	
-	public ArrayList<Transaction> selectAfterSubList(Connection con, int currentPage, int limit, int mNo) {
+	public ArrayList<Transaction> selectAfterSubList(Connection con, int mNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Transaction> transList = new ArrayList<Transaction>();
@@ -91,18 +47,18 @@ public class TransactionDao {
 			while(rset.next()){
 				Transaction t = new Transaction();
 				
+				t.setBoard_title(rset.getString("board_title"));
 				t.setDivRole_no(rset.getInt("divRole_no"));
 				t.setOrders_no(rset.getInt("orders_no"));
 				t.setCusName(rset.getString("cus_name"));
 				t.setCusId(rset.getString("cus_id"));
 				t.setWrtNick(rset.getString("wrt_nick"));
 				t.setWrtId(rset.getString("wrt_id"));
-				t.setO_date(rset.getDate("o_start_date"));
-				t.setBoard_title(rset.getString("board_title"));
-				t.setPay_status(rset.getInt("pay_status"));
+				t.setO_date(rset.getDate("o_date"));
+				/*t.setPay_status(rset.getInt("pay_status"));
 				t.setPayment(rset.getInt("payment"));	//쿼리에 아직 처리 안 돼있음
 				t.setOd_startDate(rset.getDate("od_start_date"));
-				t.setOd_endDate(rset.getDate("od_end_date"));				
+				t.setOd_endDate(rset.getDate("od_end_date"));	*/			
 				
 				transList.add(t);
 			}

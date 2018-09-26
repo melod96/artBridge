@@ -36,7 +36,7 @@ public class SelectTransactionList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// 페이징 처리
-		int currentPage;
+		/*int currentPage;
 		int limit;
 		int maxPage;
 		int startPage;
@@ -49,7 +49,7 @@ public class SelectTransactionList extends HttpServlet {
 		if (request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		int listCount = new TransactionService().getListCount();
+//		int listCount = new TransactionService().getListCount();
 
 		maxPage = (int) ((double) listCount / limit + 0.9);
 
@@ -61,16 +61,20 @@ public class SelectTransactionList extends HttpServlet {
 			endPage = maxPage;
 		}
 		
-		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);*/
 		
 		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
+		System.out.println(mNo);
 		
-		ArrayList<Transaction> transList = new TransactionService().selectTransList(currentPage, limit, mNo);
+		ArrayList<Transaction> transList = new TransactionService().selectTransList(mNo);
+		System.out.println(transList);
 
 		String page = "";
 		if(transList != null){
-			request.getSession().setAttribute("transList", transList);
-			request.setAttribute("pi", pi);
+			page= "views/myPage/myPageForm.jsp";
+//			request.getSession().setAttribute("transList", transList);
+			request.setAttribute("transList", transList);
+//			request.setAttribute("pi", pi);
 			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
@@ -79,9 +83,9 @@ public class SelectTransactionList extends HttpServlet {
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "리스트를 불러올 수 없습니다");
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
 		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 		
 	}
 
