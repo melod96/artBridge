@@ -2,6 +2,7 @@ package com.comvision.artBridge.transaction.controller;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -36,12 +37,18 @@ public class SelectOneTransactionStatement extends HttpServlet {
 		
 		Transaction t = new TransactionService().selectTransOne(mNo, orderNo);
 		
+		String page = "";
 		if(t != null){
 			response.getWriter().print(t);
+			/*HttpSession session = request.getSession();
+			session.setAttribute("t", t);*/
 		}else{
-			String page = "views/common/errorPage.jsp";
+			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg",  "명세표 상세 조회 실패!");
 		}
+
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 		
 	}
 

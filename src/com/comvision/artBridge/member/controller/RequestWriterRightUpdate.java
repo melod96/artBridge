@@ -38,7 +38,7 @@ public class RequestWriterRightUpdate extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("오냐");
+		System.out.println("오니");
 		System.out.println(ServletFileUpload.isMultipartContent(request));
 		if(ServletFileUpload.isMultipartContent(request)){
 			int maxSize = 1024 * 1024 * 50;
