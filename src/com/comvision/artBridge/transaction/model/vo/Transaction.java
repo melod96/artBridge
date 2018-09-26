@@ -131,6 +131,8 @@ public class Transaction implements Serializable{
 	public void setOd_endDate(Date od_endDate) {
 		this.od_endDate = od_endDate;
 	}
+	
+
 
 	@Override
 	public String toString() {

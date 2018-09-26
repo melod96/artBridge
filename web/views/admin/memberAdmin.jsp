@@ -5,6 +5,7 @@
 	if(request.getAttribute("list") != null){
 		list = (ArrayList<Member>)request.getAttribute("list");
 	}
+	
 	PageInfo pi = null;
 	int listCount = 0;
 	int currentPage = 0;
@@ -45,6 +46,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Art Bridge</title>
@@ -53,8 +55,9 @@
 ul.tab-menu li>a:hover {
 	background: darkgray;
 }
-
 .reqWriterForm-Area-Style{ position:absolute; width:740px; background:white; padding-bottom:50px; left:50%; margin-left:-370px; }
+
+
 </style>
 </head>
 <body>
@@ -307,62 +310,16 @@ ul.tab-menu li>a:hover {
 									<td><%= m.getPhone() %></td>
 									<td><%= m.getEmail() %></td>
 									<td><%= m.getEnroll_date() %></td>
-									<td style="font-weight:bold"><a style="color:orangered;"onclick="popupOpen2();"><%= wrt %></a></td>
+									<td style="font-weight:bold">
+										 <a style="color:orangered;"onclick="popupOpen2();"><%= wrt %></a> 
+									</td>
 									<td><button type="submit" id="deleteBtn"
 						name="deleteBtn" class="btn btn-dark btn-sm"
 						style="padding: 5px 22px;" data-toggle="modal" data-target="#myModal">정보수정</button></td>									
 								</tr>
 								
 							<% }} %>
-					<!-- Button to Open the Modal -->
-
-<!-- The Modal -->
-<div  id="myModal" class="modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Modal Heading</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-		<div>
-		안녕하세요
-		</div>
-		
-      </div>
-
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<script>
-// 	* 작가신청 양식 모달 띄우기
-	   	function reqWriterDisplayBlock(){
-	   		$('#reqWriterModal').css({"display":"block"});
-	   		$('#reqWriterFormArea').css({"display":"block"});
-	  	};
-	  	
-	  	
-	// 	* 작가신청 양식 모달 닫기
-		function reqWriterDisplayNone(){
-			insertImgCnt1 = 0;	//사진 올린 갯수 카운트 리셋
-			insertImgCnt2 = 0;
-			insertImgCnt3 = 0;
-			insertImgTotalCnt = 0;
-			$('.form-table img').attr('src', '/artBridge/image/common/no_thumb.jpg');
-			$('#reqWriterFormArea').css({"display":"none"});
-	   		$('#reqWriterModal').css({"display":"none"});
-		};
+					
 		</script>
 								<script>
 							

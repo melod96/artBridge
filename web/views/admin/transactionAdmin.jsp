@@ -6,6 +6,7 @@
 		list = (ArrayList<Transaction>)request.getAttribute("list");
 	}
 	
+
 	int num = (int)request.getAttribute("num");
 	String value="";
 	
@@ -57,8 +58,92 @@ ul.tab-menu li>a:hover {
 					<hr>
 
 					<br>
+					
+					<script>
+							//radio : '전체'클릭시 date박스 비활성화.
+						$(function() {
+							$("#whole").click(function() {
+									$("input[name='date1']").attr("disabled",true);
+									$("input[name='date2']").attr("disabled",true);
+								});
+							$("#period").click(function() {
+								$("input[name='date1']").attr("disabled",false);
+								$("input[name='date2']").attr("disabled",false);
+							});
 
-					<div>
+						});
+					</script> 
+					
+						<div>
+						<form action="<%= request.getContextPath() %>/searchTrs.ad?pageName=transaction&currentPage=1" method="post">
+							<table class="tbl-type02">
+
+								<tbody>
+
+									<tr>
+										<td style="background: lightgray; width: 200px;">접수일</td>
+										<td style="text-align: left;">&nbsp; 
+										
+										<input type="radio"	name="dateRadio" value="W" id="whole" checked>
+										<label for="whole">전체</label>
+										
+										<input type="radio" name="dateRadio" value="P" id="period">
+										<label for="period">기간</label>&nbsp;&nbsp;
+											<input type="date" id="date1" name="date1" disabled="disabled">
+												<label style="font-weight: bold">&nbsp;~&nbsp;</label>
+											<input type="date" id="date2" name="date2" disabled="disabled" >
+
+
+										</td>
+									</tr>
+
+
+
+
+				<!-- 					<tr>
+										<td style="background: lightgray">답변상태</td>
+										<td><select class="form-control input-short" id="searchSelect1" name="searchSelect1">
+												<option value="se1Option1" id="se1Option1">전체</option>
+												<option value="se1Option2" id="se1Option2">접수</option>
+												<option value="se1Option3" id="se1Option3">답변완료</option>
+										</select></td>
+									</tr> -->
+									<tr>
+										<td style="background: lightgray">검색옵션</td>
+										<td><select class="form-control input-short" id="searchSelect2" name="searchSelect2">
+												<option value="se2Option1" id="se2Option1">전체</option>
+												<option value="se2Option2" id="se2Option2">이름</option>
+												<option value="se2Option3" id="se2Option3">닉네임</option>
+												<option value="se2Option4" id="se2Option4">ID</option>
+										</select></td>
+									</tr>
+									<tr>
+										<td style="background: lightgray;">검색어 입력</td>
+										<td><input id="" name="searchWords" class="form-control input-mid"
+											type="text" placeholder="검색어를 입력하세요" style="float: left;">
+											<button type="submit" id="searchBtn1"  id="searchWords" name="searchWords" value=""
+												class="btn btn-primary btn-md" style="float: right;"
+												onclick="search();">검색</button></td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</div>
+				
+						<%int no = 0; int yes =0; int result = 0;
+						
+						if(list != null){for(Transaction t : list){
+							
+								if(t.getO_date() == null){
+									no++;
+								}else{
+									yes++;
+								}
+								
+						} result = no + yes;
+						}
+								%>
+					<!-- <div>
 						<table class="tbl-type02">
 							<tbody>
 
@@ -96,7 +181,7 @@ ul.tab-menu li>a:hover {
 
 							</tbody>
 						</table>
-					</div>
+					</div> -->
 
 					<br> <br>
 					<div>

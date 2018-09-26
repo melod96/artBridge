@@ -15,6 +15,8 @@ import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.member.model.dao.MemberDao;
 import com.comvision.artBridge.member.model.vo.Member;
+import com.comvision.artBridge.message.model.dao.MessageDao;
+import com.comvision.artBridge.message.model.vo.Message;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.transaction.model.vo.Transaction;
 
@@ -250,6 +252,30 @@ public class AdminService {
 		
 		close(con);
 		return blist;
+	}
+
+/*	public int getListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new MessageDao().getListCount(con);
+		
+		close(con);
+		
+		return listCount;
+	}*/
+	
+	
+	//transaction 서치
+	public ArrayList<Transaction> searchTrs(int currentPage, int limit, String addQuery) {
+		
+		System.out.println("서비스 진입");
+		Connection con = getConnection();
+		
+		ArrayList<Transaction> list = new AdminDao().searchTrs(con,currentPage, limit,addQuery);
+		
+		close(con);
+		
+		return list;
 	}
 
 
