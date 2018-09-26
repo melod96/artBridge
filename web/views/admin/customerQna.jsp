@@ -128,7 +128,7 @@ div#editor {
 								<tr>
 									<td style="background: lightgray; height: 300px;">내용</td>
 									<td>
-										<div
+										<div  class="cont-area"
 											style="width: 100%; height: 295px; overflow-Y: scroll; color: darkgray;">
 											<%=m.getMsg_content() %></div>
 									</td>
@@ -141,6 +141,9 @@ div#editor {
 										<script>
 											$(function() {
 												$('#edit').froalaEditor()
+											});
+											$(function() {
+												$('#edit2').froalaEditor()
 											});
 										</script>
 

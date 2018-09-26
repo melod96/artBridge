@@ -161,9 +161,44 @@
 				
 					<!-- class="carousel-inner" : 없으면 이미지 3장이 모두 세로로 배치된다. 
              -->
+				<!--메인 best ajax-->
+				<script>
+				
+					<%-- $(function() {
 
+						$.ajax({
+							url : "bestLoad",
+							type : "get",
+							success : function(data) {
+								for(var key in data){
+								
+								var $carousel = $(".carousel-inner");
+								
+								var $div = $("<div class='item'>");
+								var $img = $("<img src='/artBridge/image/mainContent/slide/" + data[key].change_title + " alt='Second slide'>");
+								console.log(key);
+								/* var $img2 = $("<img src='/artBridge/image/mainContent/slide/" + data[key].change_title + " alt='Second slide'>");
+								var $img2 = $("<img src='/artBridge/image/mainContent/slide/" + data[key].change_title + " alt='Second slide'>");
+								var $img2 = $("<img src='/artBridge/image/mainContent/slide/" + data[key].change_title + " alt='Second slide'>");
+								var $img2 = $("<img src='/artBridge/image/mainContent/slide/" + data[key].change_title + " alt='Second slide'>"); */
+								<img id='mainBest' src='/artBridge/image/mainContent/slide/<%=data[key].change_title%>'>
+								
+								$div.append($img);
+								$carousel.append($div);
+								
+								}
+								
+							},
+							error : function() {
+								console.log("에러");
+							}
+
+						});
+					}); --%>
+				</script>
+				
 					<div class="item active">
-					
+						<%-- <img id="img-change" src="<%=request.getContextPath()%>/image/profile/<%=profileImg.getChange_title()%>"> --%>
 						<img src="/artBridge/image/mainContent/slide/member01.png" alt="First slide">
 						<!-- 캡션 넣고 싶을 때 아래 4줄 추가하면 된다. 캡션은 자동 중앙 정렬된다. -->
 						<!--  <div class="carousel-caption">
@@ -171,40 +206,10 @@
                         <p>캡션 내부에는 HTML 태그 사용 가능합니다.</p>
                      </div>  -->
 					</div>
-
-
-
-					<div class="item">
-						<img src="/artBridge/image/mainContent/slide/member02.png" alt="Second slide">
-					</div>
-
-
-
-					<div class="item">
-						<img src="/artBridge/image/mainContent/slide/member03.png" alt="Third slide">
-					</div>
-
-
-					<div class="item">
-						<img src="/artBridge/image/mainContent/slide/member04.png" alt="fourth slide">
-					</div>
-
-
-
-					<div class="item">
-						<img src="/artBridge/image/mainContent/slide/member05.png" alt="fifth slide">
-					</div>
-
-
-
-					<div class="item">
-						<img src="/artBridge/image/mainContent/slide/member06.png" alt="sixth slide">
-					</div>
-
-
+					
 
 				</div>
-
+				
 
 
 				<!-- Controls -->

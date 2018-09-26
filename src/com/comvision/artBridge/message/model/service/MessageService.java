@@ -74,11 +74,11 @@ public class MessageService {
 		return result;
 	}
 
-	public int insertMSGTo(String title, String content, String msgNo) {
+	public int insertMSGTo(String title, String content, String mem_no) {
 		
 		Connection con = getConnection();
 		
-		int result = new MessageDao().insertMSGTo(con, title, content, msgNo);
+		int result = new MessageDao().insertMSGTo(con, title, content, mem_no);
 		
 		if(result > 0){
 			commit(con);

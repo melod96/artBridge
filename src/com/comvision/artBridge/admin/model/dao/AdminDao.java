@@ -26,7 +26,7 @@ import com.comvision.artBridge.transaction.model.vo.Transaction;
 
 public class AdminDao {
 	
-private Properties prop = new Properties();
+	private Properties prop = new Properties();
 	
 	public AdminDao(){
 		String fileName= AdminDao.class.getResource("/sql/admin/admin-query.properties").getPath();
