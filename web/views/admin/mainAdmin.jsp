@@ -239,12 +239,7 @@ ul.tab-menu li>a:hover {
 								</tr>
 							</thead>
 							<tbody class="trtr">
-								<tr>
-									<td><input type="checkbox" name=""></td>
-									<td colspan="5">
-									<input type="text" value="작품번호" readonly>
-									</td>
-								</tr>
+
 								<%-- <%} %> --%>
 							</tbody>
 						</table>

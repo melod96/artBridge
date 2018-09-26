@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.admin.model.service.AdminService;
-import com.comvision.artBridge.admin.model.vo.PageInfo;
+import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.message.model.service.MessageService;
 import com.comvision.artBridge.message.model.vo.Message;
 import com.comvision.artBridge.transaction.model.vo.Transaction;
@@ -66,7 +66,7 @@ public class SearchTrsServlet extends HttpServlet {
 			if (request.getParameter("searchSelect2") != null) {
 				searchSelect2 = request.getParameter("searchSelect2");
 				switch (searchSelect2) {
-				case "se2Option1": addQuery += "and (name || nick_name || id ) like '%" + searchWords + "	%' ";
+				case "se2Option1": addQuery += "and name like '%" + searchWords + "%' or nick_name like '%" + searchWords + "%' or id like '%" + searchWords + "%' ";
 					break;
 				case "se2Option2":
 					addQuery += "and name like '%" + searchWords + "%' ";
@@ -114,13 +114,13 @@ public class SearchTrsServlet extends HttpServlet {
 		
 		
 		//거래내역 리스트 출력
-		ArrayList<Transaction> tlist = new AdminService().searchTrs(currentPage, limit, addQuery);
+		ArrayList<Transaction> list = new AdminService().searchTrs(currentPage, limit, addQuery);
 		
 		String page = "";
 		
-		if(tlist != null){
+		if(list != null){
 			page = "views/admin/transactionAdmin.jsp";
-			request.setAttribute("tlist", tlist);
+			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 			request.setAttribute("num", num);
 		}else{

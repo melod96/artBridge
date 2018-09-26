@@ -245,15 +245,14 @@ ul.tab-menu li>a:hover {
 
 					<table class="tbl-type02">
 						<colgroup>
-							<col style="width: 4%;">
-							<col style="width: 4%;">
+							<col style="width: 5%;">
 							<col style="width: 7%;">
 							<col style="width: 8%;">
-							<col style="width: 10%;">
-							<col style="width: 10%;">
-							<col style="width: 13%;">
-							<col style="width: 13%">
-							<col style="width: 10%">
+							<col style="width: 8%;">
+							<col style="width: 12%;">
+							<col style="width: 12%;">
+							<col style="width: 15%;">
+							<col style="width: 15%">
 							<col style="width: 10%">
 							<col style="width: *;">
 							
@@ -270,7 +269,6 @@ ul.tab-menu li>a:hover {
 								<th scope="col">메일</th>
 								<th scope="col">가입일</th>
 								<th scope="col">작가요청</th>
-								<th scope="col">정보수정</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -312,10 +310,7 @@ ul.tab-menu li>a:hover {
 									<td><%= m.getEnroll_date() %></td>
 									<td style="font-weight:bold">
 										 <a style="color:orangered;"onclick="popupOpen2();"><%= wrt %></a> 
-									</td>
-									<td><button type="submit" id="deleteBtn"
-						name="deleteBtn" class="btn btn-dark btn-sm"
-						style="padding: 5px 22px;" data-toggle="modal" data-target="#myModal">정보수정</button></td>									
+									</td>								
 								</tr>
 								
 							<% }} %>

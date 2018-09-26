@@ -37,6 +37,12 @@ ul.tab-menu li>a:hover {
 			case "statsAdmin" : %>
 			$("#statsAdmin").css({"background":"white", "color":"black"});
 			<% break;
+			case "ratingAdmin" : %>
+			$("#ratingAdmin").css({"background":"white", "color":"black"});
+			<% break;
+			case "noticeList" : %>
+			$("#noticeList").css({"background":"white", "color":"black"});
+			<% break;
 			default : %>
 			$("#mainAdmin").css({"background":"white", "color":"black"});
 		<% break;
@@ -53,7 +59,9 @@ ul.tab-menu li>a:hover {
 		<li><a onclick="location.href='<%= request.getContextPath() %>/selectList.msg?pageName=customerAdmin'" id="customerAdmin">고객문의 관리</a></li>
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMemberList.ad?pageName=memberAdmin'" id="memberAdmin">회원 관리</a></li>
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectTrs.ad?pageName=transactionAdmin'" id="transactionAdmin">거래내역 관리</a></li>
-		<li><a href="/artBridge/views/admin/noticeInsertForm.jsp">공지사항</a></li>
+		
+		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectNoticeList.no?pageName=noticeList'" id="noticeList">공지사항</a></li>
+		
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectRating.ad?pageName=ratingAdmin'" id="ratingAdmin">등급 관리</a></li>
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectStatsList.ad?pageName=statsAdmin'" id="statsAdmin">통계 관리</a></li>
 		</ul>
