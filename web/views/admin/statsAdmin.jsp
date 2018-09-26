@@ -30,9 +30,9 @@
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
           ['Member', 'Status'],
-          ['일반', <%= memberCounts[2] %>],
-          ['휴면', <%= memberCounts[0] %>],
-          ['탈퇴', <%= memberCounts[1] %>]
+          ['일반', <%= memberCounts[0] %>],
+          ['휴면', <%= memberCounts[1] %>],
+          ['탈퇴', <%= memberCounts[2] %>]
         ]);
 
         var options = {

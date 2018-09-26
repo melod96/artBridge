@@ -670,6 +670,13 @@ private Properties prop = new Properties();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally{
+				close(stmt);
+				close(rset);
+			}
+			
+			return list;
+		}
+			
 		public int[] selectMemberCounts(Connection con) {
 			Statement stmt = null;
 			ResultSet rset = null;
@@ -696,7 +703,7 @@ private Properties prop = new Properties();
 			}
 			
 			
-			return list;
+	
 			return memberCounts;
 		}
 

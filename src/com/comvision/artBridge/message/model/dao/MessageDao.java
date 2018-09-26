@@ -124,7 +124,7 @@ public class MessageDao {
 			
 			if(rset.next()){
 				m = new Message();
-				
+				m.setMem_no(rset.getInt("member_no"));
 				m.setMsg_no(rset.getInt("message_no"));
 				m.setWriter_right(rset.getInt("WRITER_RIGHT"));
 				m.setMem_name(rset.getString("name"));

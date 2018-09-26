@@ -222,6 +222,7 @@ public class AdminService {
 		
 		return listCount;
 	}
+	
 	//회원관리
 	public ArrayList<Member> selectList(int currentPage, int limit, String addQuery) {
 		Connection con = getConnection();
@@ -276,6 +277,7 @@ public class AdminService {
 		close(con);
 		
 		return list;
+	}
 	public int[] selectMemberCounts() {
 		Connection con = getConnection();
 		
