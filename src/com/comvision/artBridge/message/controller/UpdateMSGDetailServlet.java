@@ -63,7 +63,8 @@ public class UpdateMSGDetailServlet extends HttpServlet {
 		int result = new MessageService().updateMSG(msgNo, option);
 		
 		//답변을 새로운 메세지로 인서트
-		int result2 = new MessageService().insertMSGTo(title, content, msgNo);
+		String mem_no = request.getParameter("mem_no");
+		int result2 = new MessageService().insertMSGTo(title, content, mem_no);
 		
 		String page = "";
 		if(result > 0 && result2 > 0){

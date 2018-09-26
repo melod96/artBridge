@@ -90,6 +90,7 @@ div#editor {
 									<td style="background: lightgray">고객명</td>
 									<td>
 										<input type="hidden" name="msgNo" value=<%=m.getMsg_no() %>>
+										<input type="hidden" name="mem_no" value=<%=m.getMem_no() %>>
 										<div style="float: left; font-size: 1em; color: darkgray;"><%=m.getMem_name() %></div>
 									</td>
 								</tr>
