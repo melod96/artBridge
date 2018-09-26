@@ -37,9 +37,9 @@ public class PaymentPageServlet extends HttpServlet {
 		
 		//해당 주문 번호 받아오기
 		//orders_no = 1일때
-		int orders_no= 21;
-		int customer_no= 5;
-		int writer_no = 11;
+		int orders_no= 4;
+		int customer_no= 1;
+		int writer_no = 2;
 //		int orders_no = Integer.parseInt(request.getParameter("orders_no"));
 //		int writer_no = Integer.parseInt(request.getParameter("writer_no"));
 //		int customer_no = Integer.parseInt(request.getParameter("member_no"));
