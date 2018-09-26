@@ -31,15 +31,15 @@
 		m = (Member)session.getAttribute("loginUser");
 	}
 	
+	Board b = new Board();
+	
 	int slot = 0;
 	if(m.getWriter_slot() > 0){
 		slot = m.getWriter_slot();
 	}
 	
-	ArrayList<Files> fileList = (ArrayList<Files>)request.getAttribute("fileList");
-	Files profileImg = fileList.get(0);
-		
-	
+	ArrayList<Files> fileListResult = (ArrayList<Files>)request.getAttribute("fileListResult");
+	Files profileImg = fileListResult.get(0);
 	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -51,7 +51,7 @@
 <%@ include file="/views/common/head.jsp" %>
 <style type="text/css">
    .frofile-box{overflow:hidden; position:relative; border:1px solid #9e9e9e; padding:30px; font-size:16px; width:1110px;}
-   .img-in{overflow:hidden; width:150px; height:150px; /*border:1px solid #ddd;*/ border-radius:50%;}
+   .img-in{overflow:hidden; width:150px; height:150px; border:1px solid #ddd; border-radius:50%; background:url("/artBridge/image/common/img_profile.png") 50% no-repeat; background-size:100%;}
    .img-in img{width:100%;}
    .img-area{float:left; text-align:center;}
    .img-area .file-btn{margin-top:15px;}
@@ -196,7 +196,7 @@
                       <div class="frofile-box">
                           <div class="img-area">
                               <div class="img-in">
-                                <img id="img-change" src="src="<%=request.getContextPath()%>/image/profile/<%=profileImg.getChange_title()%>" alt="default frofile image">
+                                <img id="img-change" src="<%=request.getContextPath()%>/image/profile/<%=profileImg.getChange_title()%>">
                                 <!-- <img id="img-change" src="/artBridge/image/common/img_profile.png" alt="default frofile image"> -->
                               </div>
                               <div class="file-btn">
@@ -261,23 +261,24 @@
                       <div class="btn-center" style="margin-top:30px;">
                         <button type="submit" class="btn btn-primary pro-save">프로필 저장</button>
                       </div>
-	                 </form>
-	                 <!-- //프로필 작성 영역 -->
-	
-                    <!-- 내 작품 관리 영역 -->	
+					</form>
+	                <!-- //프로필 작성 영역 -->
+	                
+                   	<!-- 내 작품 관리 영역 -->	
                     <div class="btn-right add-some">
                         <div class="heading">
                           <h2 class="tit1">내 작품 관리</h2>
                         </div>
-                       <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/myPage/writerPieceInsertAgree.jsp'">커미션 작품등록</button>
+                       <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/myPage/writerPieceInsertAgree.jsp?boardNo=<%=b.getBoard_no()%>'">커미션 작품등록</button>
                    </div>
                     <div class="bord-wrap">
                     	<% if(list != null){
                   			int no = listCount - (currentPage - 1) * 10;
                     		for(int i = 0; i < list.size(); i++){
-                    		Board b = list.get(i);%>
+                    		b = list.get(i);%>
                         <div class="piece-list">
                           <ul class="seting-area">
+                          	  <%-- <input type="hidden" name="boardNo" value="<%=b.getBoard_no()%>"> --%>
                               <!-- <li><input type="button" class="btn-lock" title="작품 보이기"><label class="hide">숨기기</label></li> -->
                               <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='<%=request.getContextPath()%>/updatePieceForm.wr'"><label class="hide">수정</label></li>
                               <li><input type="button" class="btn-del" title="작품 삭제" onclick="location.href='<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>'"><label class="hide">삭제</label></li>
@@ -300,7 +301,7 @@
                           </div>
                           <div class="info-area1">
                               <span><%= m.getNick_name() %>작가</span>
-                              <span>신뢰도 : 100%</span>
+                              <!-- <span>신뢰도 : 100%</span> -->
                               <span>
                               	<div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
                                 <!-- <p class="star_rating">
@@ -324,7 +325,7 @@
                         <% } %>
                     </div>
                     <!-- // 내 작품 관리 영역 -->
-					
+				
 					
                     <!-- 페이징 영역 -->
                     <div class="paginate">

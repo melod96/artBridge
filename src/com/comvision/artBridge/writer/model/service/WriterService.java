@@ -3,6 +3,7 @@ package com.comvision.artBridge.writer.model.service;
 
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
@@ -38,12 +39,29 @@ public class WriterService {
 	}
 
 	//작가 작품등록 메소드
-	public int insertPiece(Board b, ArrayList<Files> fileList) {
+	public int insertPiece(Board b, ArrayList<Files> fileList, String[] relateCk) {
 		Connection con = getConnection();
 		int result = 0;
+		int result2 = 0;
+		int result3 = 0;
 		
 		int result1 = new WriterDao().insertPiece(con, b);
-		int result2 = new WriterDao().insertAttachment(con, fileList);
+		//Board boardNo = new WriterDao().boardNoCk(con,b);
+		//System.out.println("되니?" + boardNo.getBoard_no());
+		
+		int currval = new WriterDao().selectBoardCurrval(con);
+		
+		for(int i = 0; i < relateCk.length; i++){
+			result3 += new WriterDao().relateNumList(con, relateCk[i], currval);
+			System.out.println("연관검색어 되나?:" + result3);
+		}
+		
+		for(int i = 0; i < fileList.size(); i++){
+			result2 += new WriterDao().insertAttachment(con, fileList.get(i), currval, i + 2);
+		}
+		
+		
+		/*int result2 = new WriterDao().insertAttachment(con, fileList, currval);*/
 		
 		if(result1 > 0 && result2 > 0){
 			commit(con);
@@ -93,9 +111,11 @@ public class WriterService {
 		int result = 0;
 		
 		int result1 = new WriterDao().updateProfile(con, m);
-		int result2 = new WriterDao().updateProfileImg(con, fileList ,m);
+		if(fileList != null){
+			int result2 = new WriterDao().updateProfileImg(con, fileList ,m);
+		}
 
-		if(result1 > 0 && result2 > 0){
+		if(result1 > 0){
 			commit(con);
 			result = 1;
 		}else{
@@ -105,6 +125,19 @@ public class WriterService {
 		close(con);
 		
 		return result;
+	}
+
+	//프로필 사진 노출용 메소드
+	public ArrayList<Files> selectProfileImg(int memberNo) {
+		Connection con = getConnection();
+		
+		ArrayList<Files> selectProfileImg = null;
+		
+		selectProfileImg = new WriterDao().selectProfileImg(con, memberNo);
+		
+		close(con);
+		
+		return selectProfileImg;
 	}
 	
 

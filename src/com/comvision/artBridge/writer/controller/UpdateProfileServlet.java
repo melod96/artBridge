@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -95,20 +96,17 @@ public class UpdateProfileServlet extends HttpServlet {
 			
 			//service 전송
 			int result = new WriterService().updateProfile(m, fileList);
-			
 			System.out.println("결과 : " + result);
-			
+			int j = 0;
 			if(result > 0){
 				Member loginUser = new MemberService().loginCheck(((Member)(request.getSession().getAttribute("loginUser"))).getId(), ((Member)(request.getSession().getAttribute("loginUser"))).getPassword());
 				request.getSession().setAttribute("loginUser", loginUser);
-				request.setAttribute("fileList", fileList);
 				response.sendRedirect(request.getContextPath() + "/selectPieceList.wr?memberNo=" + memberNo);
 			}else{
 				//실패시 서버에 저장된 파일 삭제
 				for(int i = 0; i <saveFiles.size(); i++){
 					//파일 시스템에 저장된 이름으로 파일 객체 생성함
 					File failedFile = new File(savePath + saveFiles.get(i));
-					
 					failedFile.delete();
 				}
 				

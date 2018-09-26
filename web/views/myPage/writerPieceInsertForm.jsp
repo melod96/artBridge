@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.relate.model.vo.Relate, com.comvision.artBridge.member.model.vo.Member"%>
+    pageEncoding="UTF-8" import="java.util.*, 
+    com.comvision.artBridge.relate.model.vo.Relate, 
+    com.comvision.artBridge.member.model.vo.Member,
+    com.comvision.artBridge.board.model.vo.Board"%>
 <% //Relate r = (Relate)request.getAttribute("r"); 
 	
 	ArrayList<Relate> relate = (ArrayList<Relate>)request.getAttribute("relate");
@@ -8,6 +11,8 @@
 	if(session.getAttribute("loginUser") != null){
 		m = (Member)session.getAttribute("loginUser");
 	}
+	
+	Board b = new Board();
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -41,10 +46,10 @@
     .option-tbl table{/*width:680px;*/ margin-top:15px;}
     .option-tbl table td{padding:12px;}
 
-    /* .relate-word input[disabled]{background:#f5f5f5; color:#000;} */
+    .relate-word input[disabled]{background:#f5f5f5; color:#000;}
     .relate-word p{margin:10px 0 20px; color:#353535; font-weight:bold;}
     .relate-word li{display:inline-block; margin:0 5px 10px 0;}
-    /* .relate-word label{margin-left:-15px;} */
+    .relate-word label{margin-left:-15px;}
     .relate-word .btn-default{background:#f5f5f5;}
     
     /* .fr-box.fr-basic .fr-element{height:600px !important;} */
@@ -73,40 +78,8 @@
       });
     });
     
-    
-    //옵션 추가 삭제
-    /* $(function(){
-       $("#opt-add").click(function(){
-           $(".option-tbl tbody tr:last-child").clone(true).appendTo('.option-tbl tbody').find('input').val("");
-       });
-		
-       $(".option-tbl input").click(function(){
-         var act = $(this).prop('checked');
-         if(act){
-           $(this).attr('checked', true);
-         }else{
-           $(this).attr('checked', false);
-         };
-       });
-
-       $("#opt-del").click(function(){
-         var test = $(".option-tbl tbody tr");
-         
-         for(var i = 0; i < test.length; i++){
-           console.log(i);
-
-           if(i > 0){
-             $(".option-tbl input[checked]").parent().parent().remove();
-           }else{
-         	 
-           }
-         }
-       });
-   }); */
-    
-
     //연관검색어
-    /* $(function(){
+    $(function(){
         $(".relate-word input[type=checkbox]").click(function(){
           $(".relate-word #in-test").attr('value','');
           $(".relate-word input[type=checkbox]").each(function(){
@@ -119,10 +92,10 @@
              };
         });
      });
-    }); */
+    });
     
   	//연관검색어
-    $(function(){
+    /* $(function(){
         $(".relate-word span.btn").click(function(){
         	$(this).each(function(){
         		if($(this).hasClass("on") == false){
@@ -132,7 +105,7 @@
         		}
         	});
      	});
-    });
+    }); */
     
     //에티터 API
     $(function() { $('#editor').froalaEditor() });
@@ -167,6 +140,7 @@
                     
                     <form action="<%=request.getContextPath()%>/insertPiece.wr" method="post" encType="multipart/form-data">
                    	 	<input type="hidden" name="memberNo" value="<%= m.getMember_no() %>">
+                   	 	<input type="hidden" name="boardNo" value="<%= b.getBoard_no() %>">
                         <div class="heading">
                             <h2 class="tit1">내 작품 등록</h2>
                           </div>
@@ -311,11 +285,11 @@
 	                                      		
 	                                      		for(var i = 0; i < input1.length; i++){
 	                                      			input1.eq(i).each(function(){
-	                                      				$(this).attr('name', 'potion');
+	                                      				$(this).attr('name', 'potion' + (i + 1));
 	                                      			});
 	                                      			
 	                                      			input2.eq(i).each(function(){
-	                                      				$(this).attr('name', 'price');
+	                                      				$(this).attr('name', 'price' + (i + 1));
 	                                      			});
 	                                      		}
                                       		}
@@ -332,11 +306,27 @@
                                       <ul>
 	                                   	<% if(relate != null){
 				                    		for(Relate r : relate){ %>
-				                        <li><span class="btn btn-default" name="relateNum" vlaue="<%= r.getRelate_no() %>"><%= r.getRelate_name() %></span></li>
-				                        <%-- <li><input type="checkbox" id="word1" name="relate" value="<%= r.getRelate_no() %>" ><label for="word1" class="btn btn-default"><%= r.getRelate_name() %></label></li> --%>
+				                        <li><input type="checkbox" name="relateCk" value="<%= r.getRelate_no() %>" ><label class="btn btn-default"><%= r.getRelate_name() %></label></li>
 				                        <% 	}
 				                    	} %>
                                       </ul>
+                                      <script>
+                                    	//연관검색어 input label연결
+                                    	$(function(){
+                                    		var relateInput = $(".relate-word input[type=checkbox]");
+                                    		var relateLabel = $(".relate-word label");
+                                    		
+                                    		for(var i = 0; i < relateInput.length; i++){
+                                    			relateInput.eq(i).each(function(){
+                                    				$(this).attr('id', 'word' + (i + 1));
+                                    			});
+                                    			
+                                    			relateLabel.eq(i).each(function(){
+                                    				$(this).attr('for', 'word' + (i + 1));
+                                    			});
+                                    		}
+                                    	});
+                                      </script>
                                     </div>
                                   </td>
                               </tr>
