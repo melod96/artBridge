@@ -178,6 +178,7 @@
 					<script>
 							function changeSelect(){
 								var sel_val = document.all.sel.value;
+								
 								if(sel_val == "0"){
 									$.ajax({
 										url:"selectSaleList.bo"

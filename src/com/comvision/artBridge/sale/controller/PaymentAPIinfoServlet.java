@@ -40,7 +40,7 @@ public class PaymentAPIinfoServlet extends HttpServlet {
 		
 		//주문 번호
 //		int orders_no = Integer.parseInt(request.getParameter("orders_no"));
-		int orders_no = 21;
+		int orders_no = 4;
 		
 		String page = "";
 		
