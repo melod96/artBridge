@@ -15,7 +15,7 @@ import com.comvision.artBridge.board.model.service.BoardService;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
 
-@WebServlet("/DeleteCommissionServlet.ad")
+@WebServlet("/deleteCommission.ad")
 public class DeleteCommissionServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -63,14 +63,18 @@ public class DeleteCommissionServlet extends HttpServlet {
 
 		String str2 = request.getParameter("str2");
 		String[] arr = str2.split(",");
+		System.out.println(str2);
+		System.out.println(arr);
 
 		for (int i = 0; i < arr.length; i++) {
 			int b = new AdminService().deleteCommission(arr[i]);
 		}
 
 		String page1 = "";
+		
+		page1 = "selectCommision.ad";
 
-		if (list != null) {
+		/*if (list != null) {
 			page1 = "views/admin/commissionAdmin.jsp";
 			request.setAttribute("num", num);
 			request.setAttribute("list", list);
@@ -79,7 +83,7 @@ public class DeleteCommissionServlet extends HttpServlet {
 		} else {
 			page1 = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "실패실패!");
-		}
+		}*/
 		RequestDispatcher view = request.getRequestDispatcher(page1);
 		view.forward(request, response);
 	

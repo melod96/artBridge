@@ -217,6 +217,7 @@ ul.tab-menu li>a:hover {
 						
 								%>
 								
+								
 								<tr>
 									<td><input type="checkbox" name="msgNo" value=<%=m.getMsg_no() %>></td>
 									<td class="num3"><%=m.getMsg_no() %></td>
