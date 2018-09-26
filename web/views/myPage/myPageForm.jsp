@@ -147,13 +147,17 @@
 
 <% 
 	ArrayList<Transaction> transList = null;
-	if(session.getAttribute("transList") != null){
+	/* if(session.getAttribute("transList") != null){
+		transList = (ArrayList<Transaction>)request.getAttribute("transList");
+	} */
+	if(request.getAttribute("transList")!= null){
 		transList = (ArrayList<Transaction>)request.getAttribute("transList");
 	}
-	Transaction t = null;
+	System.out.println(transList);
+	/* Transaction t = null;
 	if(request.getAttribute("t") != null){
 		t = (Transaction)request.getAttribute("t");
-	}
+	} */
 	
 	PageInfo pi = null;
 	int listCount = 0;
@@ -200,7 +204,7 @@
 		<div class="container">
 			<h2>마이 페이지</h2>
 			<ul class="tab-menu">
-				<li><a href="#" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li>
+				<li><a href="<%= request.getContextPath() %>/selectTransList.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="msg-menu">쪽지함</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="bookmark-menu">관심작가</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="memberinfo-menu">회원정보수정</a></li>
@@ -218,18 +222,18 @@
 		<div class="contents"><!-- contents 필수 사용 -->
 
 <!--      	* 1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
-			<form action="" method="post">
+			<%-- <form action="" method="post">
 				<div id="stmtModalArea" class="w3-modal" onclick="stmtDisplayNone();"></div>
 				<div id="stmtArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
 					<div class=stmtModal-Area-Style align="center">
 						<h3>명 &nbsp; 세 &nbsp; 서</h3>
 						<table class="form-table">
-							<%-- <tr>
+							<tr>
 								<td width="15px"></td>
 								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td>
 								<td colspan="3"><%= t.getBoard_title() %></td>
-							</tr> --%>
+							</tr>
 							<tr>
 								<td></td>
 								<td class="stmt-title">신 청 일  : </td>
@@ -290,7 +294,7 @@
 						</table>
 					</div>
 				</div>
-			</form>
+			</form> --%>
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
 <!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
@@ -434,7 +438,7 @@
 <!-- 						</tr> -->
 <%-- 						 <% } %>  --%>
 							
-							<% for(Transaction ts : transList){ 
+							<% if(transList != null){for(Transaction ts : transList){ 
 							  if(ts.getDivRole_no() == 0){ %>	 
 								<tr id="" class="seller-list transInfo-list">
 									<td>판매</td>
@@ -458,7 +462,7 @@
 									<td><%= ts.getOd_endDate() %></td>
 								</tr>
 							  <% } %>
-							<% } %>
+							<% }} %>
 							
 						</tbody>
 					</table>
