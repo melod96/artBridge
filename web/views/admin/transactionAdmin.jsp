@@ -97,9 +97,6 @@ ul.tab-menu li>a:hover {
 										</td>
 									</tr>
 
-
-
-
 				<!-- 					<tr>
 										<td style="background: lightgray">답변상태</td>
 										<td><select class="form-control input-short" id="searchSelect1" name="searchSelect1">
