@@ -59,8 +59,10 @@
                             </tbody>
                         </table>
                         <br>
+                        
                          <!-- 에디터 영역 -->
                           <textarea id="editor" name="content"></textarea>
+                          
                           <script type="text/javascript">
 						    //에티터 API
 						    $(function() { 
@@ -73,6 +75,7 @@
                           <button type="submit" class="btn btn-primary btn-lg" >저장</button>
                         </div>
                     </form>
+                    
                     <script>
 	                   	function formCheck(frm){
 	                   		var title = $("#title");

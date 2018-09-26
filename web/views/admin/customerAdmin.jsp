@@ -200,21 +200,26 @@ ul.tab-menu li>a:hover {
 						<%
 						if(mlist != null){for(Message m : mlist){
 									String writer = "";			
-									
-								if(m.getWriter_right() == 0){
-									writer = "일반";
+								if(m.getMem_name() == "관리자"){	
+									writer = "관리자";
 								}else{
-									writer = "작가";
+									if(m.getWriter_right() == 0){
+										writer = "일반";
+									}else if(m.getWriter_right() == 1){
+										writer = "작가";
+									}
 								}
-								
 								String date = "";
-								if(m.getCheck_date() == null){
-									date = "미답변";
+								if(m.getMem_name() == "관리자"){
+									date = "관리자 답변";
 								}else{
-									date = "답변 완료";
+									if(m.getCheck_date() == null){
+										date = "미답변";
+									}else{
+										date = "답변 완료";
+									}
 								}
 								
-						
 								%>
 								
 								<tr>

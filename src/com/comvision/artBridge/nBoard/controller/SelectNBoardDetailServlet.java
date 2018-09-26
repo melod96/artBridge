@@ -28,6 +28,7 @@ public class SelectNBoardDetailServlet extends HttpServlet {
 		
 		Notice n = new NBoardService().selectOne(num);
 		
+		
 		String page = "";
 		if(n != null){
 			page = "views/notice/noticeBoardDetail.jsp";
