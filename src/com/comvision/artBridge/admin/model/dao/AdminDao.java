@@ -655,5 +655,69 @@ private Properties prop = new Properties();
 			
 			return blist;
 		}
+
+		public int[] selectMemberCounts(Connection con) {
+			Statement stmt = null;
+			ResultSet rset = null;
+			int[] memberCounts = new int[3];
+			
+			String query = prop.getProperty("selectMemberCounts");
+			
+			try {
+				stmt = con.createStatement();
+			
+				rset = stmt.executeQuery(query);
+				
+				int i = 0;
+				while(rset.next()){
+					memberCounts[i] = rset.getInt(1);
+					i++;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(stmt);
+				close(rset);
+			}
+			
+			return memberCounts;
+		}
+
+		public int[] selectOrderCounts(Connection con, String[] times) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			int[] orderCounts = new int[4];
+			
+			String query = prop.getProperty("selectOrderCounts");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, times[1]);
+				pstmt.setString(2, times[0]);
+				pstmt.setString(3, times[2]);
+				pstmt.setString(4, times[1]);
+				pstmt.setString(5, times[3]);
+				pstmt.setString(6, times[2]);
+				pstmt.setString(7, times[4]);
+				pstmt.setString(8, times[3]);
+				
+				rset = pstmt.executeQuery();
+				
+				int i = 0;
+				while(rset.next()){
+					orderCounts[i] = rset.getInt(1);
+					i++;
+				}
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+				close(rset);
+			}
+			
+			return orderCounts;
+		}
 	
 }
