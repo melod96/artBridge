@@ -200,7 +200,7 @@ ul.tab-menu li>a:hover {
 						<%
 						if(mlist != null){for(Message m : mlist){
 									String writer = "";			
-								if(m.getMem_name() == "관리자"){	
+								if(m.getMem_name().equals("관리자")){	
 									writer = "관리자";
 								}else{
 									if(m.getWriter_right() == 0){
@@ -210,8 +210,8 @@ ul.tab-menu li>a:hover {
 									}
 								}
 								String date = "";
-								if(m.getMem_name() == "관리자"){
-									date = "관리자 답변";
+								if(m.getMem_name().equals("관리자")){
+									date = "<관리자 답변>";
 								}else{
 									if(m.getCheck_date() == null){
 										date = "미답변";

@@ -68,7 +68,7 @@ public class UpdateMSGDetailServlet extends HttpServlet {
 		
 		String page = "";
 		if(result > 0 && result2 > 0){
-			page = "/views/message/selectList.msg?pageName=customerAdmin";
+			page = "/selectList.msg?pageName=customerAdmin";
 			
 		}else{
 			page = "/views/common/errorPage.jsp";

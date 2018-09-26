@@ -166,7 +166,7 @@ public class MessageDao {
 		
 	}
 
-	public int insertMSGTo(Connection con, String title, String content, String msgNo) {
+	public int insertMSGTo(Connection con, String title, String content, String mem_no) {
 		
 		int result = 0;
 		PreparedStatement pstmt = null;
@@ -178,7 +178,7 @@ public class MessageDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, title);
 			pstmt.setString(2, content);
-			pstmt.setInt(3, Integer.parseInt(msgNo));
+			pstmt.setInt(3, Integer.parseInt(mem_no));
 			
 			result = pstmt.executeUpdate();
 			
