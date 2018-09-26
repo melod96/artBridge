@@ -23,6 +23,7 @@ public class UpdatePieceDeleteServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		
 		//페이징 처리
 		int currentPage;
@@ -38,7 +39,7 @@ public class UpdatePieceDeleteServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
-		int listCount = new WriterService().getListCount();
+		int listCount = new WriterService().getListCount(memberNo);
 
 		maxPage = (int)((double)listCount/limit + 0.9);
 		startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
@@ -51,7 +52,7 @@ public class UpdatePieceDeleteServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 		
 		//해당 작가의 작품만을 보여주기위해 회원 번호를 가져옴
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		//int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		//System.out.println(memberNo);
 		
 		//삭제할 게시물의 고유 넘버를 가져옴

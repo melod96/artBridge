@@ -15,12 +15,15 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.http.fileupload.servlet.ServletFileUpload;
 
+import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.common.MyFileRenamePolicy;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.relate.model.vo.RelateNumList;
+import com.comvision.artBridge.sale.model.vo.Options;
 import com.comvision.artBridge.writer.model.service.WriterService;
 import com.oreilly.servlet.MultipartRequest;
 
@@ -35,6 +38,35 @@ public class InsertPieceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(ServletFileUpload.isMultipartContent(request)){
+			int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+			
+			//페이징 처리
+			int currentPage;
+			int limit;		
+			int maxPage; 	
+			int startPage;	
+			int endPage; 	
+
+			currentPage = 1;
+			limit = 10;
+
+			if(request.getParameter("currentPage")!= null){
+				currentPage = Integer.parseInt(request.getParameter("currentPage"));
+			}
+
+			int listCount = new WriterService().getListCount(memberNo);
+
+			maxPage = (int)((double)listCount/limit + 0.9);
+			startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
+			
+			endPage = startPage + limit -1;
+			if(maxPage<endPage){
+				endPage = maxPage;
+			}
+
+			PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
+			
+			
 			//썸네일 파일 첨부 저장용
 			int maxSize = 1024 * 1024 * 10;
 			
@@ -66,7 +98,7 @@ public class InsertPieceServlet extends HttpServlet {
 		
 			
 			//Board테이블에 저장할 데이터 가져오기
-			int memberNo = Integer.parseInt(multiRequest.getParameter("memberNo"));
+			//int memberNo = Integer.parseInt(multiRequest.getParameter("memberNo"));
 			String title = multiRequest.getParameter("title");
 			int resolution = Integer.parseInt(multiRequest.getParameter("resolution"));
 			String file_type = multiRequest.getParameter("file_type");
@@ -85,19 +117,34 @@ public class InsertPieceServlet extends HttpServlet {
 			b.setBoard_content(contents);
 			
 			
-			//option테이블에 저장할 데이터 가져오기
-			//int[] price = Integer.parseInt(multiRequest.getParameterValues("price"));
-
+			//options테이블에 저장할 데이터 가져오기
+			int optionstNum = Integer.parseInt(request.getParameter("insertNum"));
+			
+			ArrayList<Options> optionsList = new ArrayList<Options>();
+			
+			for(int i = 0; i < optionstNum; i++){
+				Options o = new Options();
+				if(request.getParameter("option" + i) != null){
+					o.setOptions_name(request.getParameter("option" + i));
+				}
+				if(request.getParameter("price" + i) != null && request.getParameter("price" + i) != ""){
+					o.setOptions_price(Integer.parseInt(request.getParameter("price" + i)));
+				}
+				if(o.getOptions_name() != null){
+					optionsList.add(o);
+				}
+			}
 			
 			//연관검색어 R_N_LIST테이블에 저장할 데이터 가져오기
 			String[] relateCk = multiRequest.getParameterValues("relateCk");
 			
 			//service 전송
-			int result = new WriterService().insertPiece(b, fileList, relateCk);
+			int result = new WriterService().insertPiece(b, fileList, relateCk, optionsList);
 			
 			System.out.println("결과 : " + result);
 			
 			if(result > 0){
+				request.setAttribute("list", new WriterService().selectList(currentPage, limit, memberNo));
 				response.sendRedirect(request.getContextPath() + "/selectPieceList.wr?memberNo=" + memberNo);
 			}else{
 				//실패시 서버에 저장된 파일 삭제

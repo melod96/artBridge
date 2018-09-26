@@ -3,7 +3,8 @@
     import="java.util.*,
     		com.comvision.artBridge.member.model.vo.Member, 
     		com.comvision.artBridge.board.model.vo.*,
-    		com.comvision.artBridge.files.model.vo.*"
+    		com.comvision.artBridge.files.model.vo.*,
+    		com.comvision.artBridge.grade.model.vo.*"
 %>
 <% 
 	ArrayList<Board> list = null;
@@ -40,6 +41,11 @@
 	
 	ArrayList<Files> fileListResult = (ArrayList<Files>)request.getAttribute("fileListResult");
 	Files profileImg = fileListResult.get(0);
+	
+	int writerAvg = 0;
+	if(request.getAttribute("writerAvg") != null){
+		writerAvg = (int)request.getAttribute("writerAvg");
+	}
 	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -91,8 +97,8 @@
    .bord-wrap .img-area .tmb img{width:100%;}
 
    .bord-wrap .info-area1{overflow:hidden; margin-top:20px;}
-   .bord-wrap .info-area1 span{float:left; width:30%;}
-   .bord-wrap .info-area1 span:first-child{width:40%;}
+   .bord-wrap .info-area1 span{float:left; width:30%; text-align:right;}
+   .bord-wrap .info-area1 span:first-child{width:70%; text-align:left;}
    .bord-wrap .info-area2{overflow:hidden; margin-top:10px;}
    .bord-wrap .info-area2 span{float:left;}
    .bord-wrap .info-area2 .price{float:right; font-size:20px; font-weight:bold;}
@@ -250,8 +256,8 @@
                           
                           <div class="state-area">
                               <ul>
-                                <li>작품리스트 <span><%= list.size() %> 개</span></li>
-                                <li>평점 <span><div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div> &nbsp;0.0 점 </span></li>
+                                <li>작품리스트 <span><%= listCount %> 개</span></li>
+                                <li>평점 <span><div class="rateit" data-rateit-value="<%= writerAvg %>" data-rateit-ispreset="true" data-rateit-readonly="true"></div>&nbsp; <%= writerAvg %> 점 </span></li>
                                 <li>진행중인 의뢰 <span>0 건</span></li>
                                 <li>슬롯 갯수 <span><%= slot %> 개</span></li>
                                 <li>입금 예정 금액 <span>0 원</span></li>
@@ -320,7 +326,7 @@
                         </div>
                         <% 	no--;
 	                        }
-	                    } else { %>
+	                    } else if(list == null) { %>
                         <div class="piece-list default">첫 작품을 등록해주세요.</div>
                         <% } %>
                     </div>
@@ -329,11 +335,11 @@
 					
                     <!-- 페이징 영역 -->
                     <div class="paginate">
-						<a onclick="location.href='<%=request.getContextPath()%>/selectPieceList.wr?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<a onclick="location.href='<%=request.getContextPath()%>/selectPieceList.wr?currentPage=1&memberNo=<%=m.getMember_no()%>'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
 						<% if(currentPage <=1){ %>
 							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
 						<%}else{ %>
-							<a onclick = "location.href='<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<a onclick = "location.href='<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=currentPage -1%>&memberNo=<%=m.getMember_no()%>'" class="btn-prev" title="이전">
 							<em class="blind">목록에서 이전 페이지 이동</em></a>
 						<%} %>
 						<span class="paging-numbers">
@@ -341,18 +347,18 @@
 								if(p==currentPage){%>
 									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
 								<%}else{ %>
-									<a onclick= "location.href='<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+									<a onclick= "location.href='<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=p%>&memberNo=<%=m.getMember_no()%>'"><%= p %><span class="blind">페이지로 이동</span></a>
 								<%} %>
 							<%} %>
 						</span>
 						<% if(currentPage >= maxPage){ %>
 							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 						<%}else{ %>
-							<a onclick = "location.href = '<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+							<a onclick = "location.href = '<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=currentPage +1%>&memberNo=<%=m.getMember_no()%>'" class="btn-next" title="다음">
 							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 						<%} %>
 						
-						<a onclick = "location.href = '<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectPieceList.wr?currentPage=<%=maxPage%>&memberNo=<%=m.getMember_no()%>'" class="btn-last" title="끝">
 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
                    <!-- // 페이징 영역 -->

@@ -7,9 +7,11 @@ import java.util.HashMap;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.grade.model.vo.Grade;
 import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.relate.model.vo.RelateNumList;
+import com.comvision.artBridge.sale.model.vo.Options;
 import com.comvision.artBridge.writer.model.dao.WriterDao;
 
 import static com.comvision.artBridge.common.JDBCTemplate.*;
@@ -28,10 +30,10 @@ public class WriterService {
 	}
 
 	//페이징처리
-	public int getListCount() {
+	public int getListCount(int memberNo) {
 		Connection con = getConnection();
 		
-		int listCount = new WriterDao().getListCount(con);
+		int listCount = new WriterDao().getListCount(con, memberNo);
 		
 		close(con);
 		
@@ -39,31 +41,30 @@ public class WriterService {
 	}
 
 	//작가 작품등록 메소드
-	public int insertPiece(Board b, ArrayList<Files> fileList, String[] relateCk) {
+	public int insertPiece(Board b, ArrayList<Files> fileList, String[] relateCk, ArrayList<Options> optionsList) {
 		Connection con = getConnection();
-		int result = 0;
-		int result2 = 0;
-		int result3 = 0;
+		int result = 0;  //제목 등 데이터 저장용
+		int result2 = 0; //썸네일 파일 저장용
+		int result3 = 0; //옵션 및 가격 저장용
+		int result4 = 0; //연관검색어 저장용
 		
 		int result1 = new WriterDao().insertPiece(con, b);
-		//Board boardNo = new WriterDao().boardNoCk(con,b);
-		//System.out.println("되니?" + boardNo.getBoard_no());
 		
 		int currval = new WriterDao().selectBoardCurrval(con);
-		
-		for(int i = 0; i < relateCk.length; i++){
-			result3 += new WriterDao().relateNumList(con, relateCk[i], currval);
-			System.out.println("연관검색어 되나?:" + result3);
-		}
 		
 		for(int i = 0; i < fileList.size(); i++){
 			result2 += new WriterDao().insertAttachment(con, fileList.get(i), currval, i + 2);
 		}
 		
+		for(int i = 0; i < optionsList.size(); i++){
+			result3 += new WriterDao().insertOptions(con, optionsList.get(i), currval);
+		}
 		
-		/*int result2 = new WriterDao().insertAttachment(con, fileList, currval);*/
+		for(int i = 0; i < relateCk.length; i++){
+			result4 += new WriterDao().relateNumList(con, relateCk[i], currval);
+		}
 		
-		if(result1 > 0 && result2 > 0){
+		if(result1 > 0 && result2 == fileList.size() && result3 == optionsList.size() && result4 == relateCk.length){
 			commit(con);
 			result = 1;
 		}else{
@@ -138,6 +139,32 @@ public class WriterService {
 		close(con);
 		
 		return selectProfileImg;
+	}
+
+	//썸네일 사진 노출용 메소드
+	public ArrayList<Files> selectThumbImg(int memberNo) {
+		Connection con = getConnection();
+		
+		ArrayList<Files> selectThumbImg = null;
+		
+		selectThumbImg = new WriterDao().selectThumbImg(con, memberNo);
+		
+		close(con);
+		
+		return selectThumbImg;
+	}
+
+	//작가 별점 노출용 메소드
+	public int selectWriterAvg(int memberNo) {
+		Connection con = getConnection();
+		
+		int selectWriterAvg = 0;
+		
+		selectWriterAvg = new WriterDao().selectWriterAvg(con, memberNo);
+		
+		close(con);
+		
+		return selectWriterAvg;
 	}
 	
 

@@ -2,6 +2,7 @@ package com.comvision.artBridge.writer.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.grade.model.vo.Grade;
 import com.comvision.artBridge.writer.model.service.WriterService;
 
 @WebServlet("/selectPieceList.wr")
@@ -24,6 +26,9 @@ public class SelectPieceListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//해당 작가의 작품만을 보여주기위해 회원 번호를 가져옴
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+
 		//페이징 처리
 		int currentPage;
 		int limit;		
@@ -38,7 +43,7 @@ public class SelectPieceListServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
-		int listCount = new WriterService().getListCount();
+		int listCount = new WriterService().getListCount(memberNo);
 
 		maxPage = (int)((double)listCount/limit + 0.9);
 		startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
@@ -50,29 +55,25 @@ public class SelectPieceListServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 		
-		//해당 작가의 작품만을 보여주기위해 회원 번호를 가져옴
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		//System.out.println(memberNo);
 		
 		//작가 작품관리 리스트
 		ArrayList<Board> list = new WriterService().selectList(currentPage, limit, memberNo);
-		//System.out.println(list);
-		
 		
 		//프로필 사진 노출
 		ArrayList<Files> fileListResult = new WriterService().selectProfileImg(memberNo);
 
 		//썸네일 사진 노출
-		String boardNo = request.getParameter("boardNo");
-		//ArrayList<Files> thumbListResult = new WriterService().selectThumbImg(boardNo);
-		System.out.println(boardNo);
+		//ArrayList<Files> thumbListResult = new WriterService().selectThumbImg(memberNo);
+		//HashMap<String, Object> hmap = new WriterService().selectThumbnailMap(memberNo);
 		
-		System.out.println(fileListResult.get(0));
-		
+		//작가 별점 노출
+		int writerAvg = new WriterService().selectWriterAvg(memberNo);
+
 		String page = "";
 		if(list != null){
 			page = "/views/myPage/writerPieceManagement.jsp";
 			request.setAttribute("fileListResult", fileListResult);
+			request.setAttribute("writerAvg", writerAvg);
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 		}else{

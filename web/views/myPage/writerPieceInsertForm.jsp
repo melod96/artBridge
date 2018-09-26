@@ -138,7 +138,7 @@
             <div class="container">
                 <div class="col-md-12">
                     
-                    <form action="<%=request.getContextPath()%>/insertPiece.wr" method="post" encType="multipart/form-data">
+                    <form name="frmSubmit" encType="multipart/form-data">
                    	 	<input type="hidden" name="memberNo" value="<%= m.getMember_no() %>">
                    	 	<input type="hidden" name="boardNo" value="<%= b.getBoard_no() %>">
                         <div class="heading">
@@ -241,6 +241,8 @@
                                           </tbody>
                                       </table>
                                       <script>
+                                      		var num = 3;
+                                      
 	                                      	$(function(){
 	                                      		optionCk();
 	                                      		optionAdd();
@@ -285,14 +287,25 @@
 	                                      		
 	                                      		for(var i = 0; i < input1.length; i++){
 	                                      			input1.eq(i).each(function(){
-	                                      				$(this).attr('name', 'potion' + (i + 1));
+	                                      				$(this).attr('name', 'option' + (i + 1));
 	                                      			});
 	                                      			
 	                                      			input2.eq(i).each(function(){
 	                                      				$(this).attr('name', 'price' + (i + 1));
 	                                      			});
 	                                      		}
+	                                      		
+	                                      		num++;
                                       		}
+                                      		
+                                     		$(function(){
+                                     			var theForm = document.frmSubmit;
+                                     			$("#addBtn").click(function(){
+                                     				theForm.method = "post";
+                                     				theForm.action = "<%=request.getContextPath()%>/insertPiece.wr?insertNum=" + num;
+                                     				theForm.submit();
+                                     			});
+                                     		});
                                       </script>
                                     </div>
                                     <!-- // 옵션및금액 테이블 -->
@@ -338,7 +351,7 @@
                       <!-- // 에디터 영역 -->
                       <div class="btn-center">
                           <button type="reset" class="btn btn-default btn-lg" onclick="location.href='/artBridge/selectPieceList.wr?memberNo=<%=loginUser.getMember_no()%>'">취소</button>
-                          <button type="submit" class="btn btn-primary btn-lg">저장</button>
+                          <button type="button" id="addBtn" class="btn btn-primary btn-lg">저장</button>
                       </div>
                     </form>
                 </div>
