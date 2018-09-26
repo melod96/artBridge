@@ -15,6 +15,7 @@ import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.sale.model.vo.Options;
 
 import static com.comvision.artBridge.common.JDBCTemplate.*;
 
@@ -81,8 +82,8 @@ public class WriterDao {
 	}
 
 	//페이징처리
-	public int getListCount(Connection con) {
-		Statement stmt= null;
+	public int getListCount(Connection con, int memberNo) {
+		PreparedStatement pstmt= null;
 		ResultSet rset = null;
 		
 		String query = prop.getProperty("listCount");
@@ -90,8 +91,10 @@ public class WriterDao {
 		int listCount = 0;
 		
 		try {
-			stmt = con.createStatement();
-			rset = stmt.executeQuery(query);
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
 			
 			if(rset.next()){
 				listCount = rset.getInt(1);
@@ -99,7 +102,7 @@ public class WriterDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			close(stmt);
+			close(pstmt);
 			close(rset);
 		}
 		
@@ -132,37 +135,6 @@ public class WriterDao {
 		}
 		return result;
 	}
-	
-	//썸네일 저장시 해당 게시글 번호 도출 -->필요없음
-	/*public Board boardNoCk(Connection con, Board b) {
-		PreparedStatement pstmt = null;
-		Board boardNo = null;
-		ResultSet rset = null;
-		String query = prop.getProperty("boardNoCk");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			
-			pstmt.setInt(1, b.getMember_no());
-			
-			rset = pstmt.executeQuery();
-			
-			while(rset.next()){
-				boardNo = new Board();
-				boardNo.setBoard_no(rset.getInt("board_no"));
-			}
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally{
-			close(pstmt);
-			close(rset);
-			
-		}
-		
-		return boardNo;
-	}*/
 
 	//첨부파일 저장용 메소드
 	public int insertAttachment(Connection con, Files files, int currval, int i) {
@@ -326,7 +298,7 @@ public class WriterDao {
 				f.setFiles_secession(rset.getInt("files_secession"));
 				
 				selectProfileImg.add(f);
-				System.out.println(selectProfileImg);
+				//System.out.println(selectProfileImg);
 			}
 			
 		} catch (SQLException e) {
@@ -339,12 +311,55 @@ public class WriterDao {
 		return selectProfileImg;
 	}
 
+	//썸네일 사진 노출용 메소드
+	public ArrayList<Files> selectThumbImg(Connection con, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Files> selectThumbImg = null;
+		Files f = null;
+		
+		String query = prop.getProperty("selectPieceListThumb");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			//pstmt.setInt(2, boardNo);
+			
+			rset = pstmt.executeQuery();
+			
+			selectThumbImg = new ArrayList<Files>();
+			
+			while(rset.next()){
+				f = new Files();
+				f.setFiles_no(rset.getInt("files_no"));
+				//f.setF_reference_no(rset.getInt("f_reference_no"));
+				f.setFiles_title(rset.getString("files_title"));
+				f.setChange_title(rset.getString("change_title"));
+				f.setFiles_type(rset.getInt("files_type"));
+				f.setFiles_root(rset.getString("files_root"));
+				f.setFiles_date(rset.getDate("files_date"));
+				f.setFiles_secession(rset.getInt("files_secession"));
+				
+				selectThumbImg.add(f);
+				//System.out.println(selectThumbImg);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return selectThumbImg;
+	}
+		
 	//작품 등록시 연관검색어 등록 메소드
 	public int relateNumList(Connection con, String relateCk, int currval) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
-		String query = prop.getProperty("InsertRelate");
+		String query = prop.getProperty("insertRelate");
 		
 		try {
 			pstmt = con.prepareStatement(query);
@@ -361,8 +376,31 @@ public class WriterDao {
 		
 		return result;
 	}
+	
+	//작품 등록시 옵션 및 가격 저장용 메소드
+	public int insertOptions(Connection con, Options options, int currval) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertOptions");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, currval);
+			pstmt.setInt(2, options.getMember_no());
+			pstmt.setString(3, options.getOptions_name());
+			pstmt.setInt(4, options.getOptions_price());
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
 
-	//board currval
+	//board currval(보드테이블의 고유 넘버를 가져오기 위함)
 	public int selectBoardCurrval(Connection con) {
 		Statement stmt = null;
 		ResultSet rset = null;
@@ -385,6 +423,33 @@ public class WriterDao {
 			close(rset);
 		}
 		
+		return result;
+	}
+
+	//작가 별점 노출용 메소드
+	public int selectWriterAvg(Connection con, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("selectWriterAvg");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+
 		return result;
 	}
 
