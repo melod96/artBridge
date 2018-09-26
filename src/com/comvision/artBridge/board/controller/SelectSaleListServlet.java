@@ -98,7 +98,7 @@ public class SelectSaleListServlet extends HttpServlet {
 		ArrayList<Relate> rlist = new BoardService().selectRelateList();
 		String page = "";
 
-		if(list != null){
+		if(list.size()> 0){
 			page = "views/sale/salepage.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
