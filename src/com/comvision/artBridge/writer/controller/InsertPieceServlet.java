@@ -86,18 +86,14 @@ public class InsertPieceServlet extends HttpServlet {
 			
 			
 			//option테이블에 저장할 데이터 가져오기
-			//String[] option = multiRequest.getParameterValues("option");
+			//int[] price = Integer.parseInt(multiRequest.getParameterValues("price"));
 
 			
-			//R_N_LIST테이블에 저장할 데이터 가져오기
-			//int[] price = Integer.parseInt(multiRequest.getParameterValues("price"));
-			/*String relateNum = multiRequest.getParameter("relateNum");
-			
-			System.out.println(relateNum);*/
-			
+			//연관검색어 R_N_LIST테이블에 저장할 데이터 가져오기
+			String[] relateCk = multiRequest.getParameterValues("relateCk");
 			
 			//service 전송
-			int result = new WriterService().insertPiece(b, fileList);
+			int result = new WriterService().insertPiece(b, fileList, relateCk);
 			
 			System.out.println("결과 : " + result);
 			
