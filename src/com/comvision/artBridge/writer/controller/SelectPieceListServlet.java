@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
+import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.writer.model.service.WriterService;
 
 @WebServlet("/selectPieceList.wr")
@@ -57,9 +58,21 @@ public class SelectPieceListServlet extends HttpServlet {
 		ArrayList<Board> list = new WriterService().selectList(currentPage, limit, memberNo);
 		//System.out.println(list);
 		
+		
+		//프로필 사진 노출
+		ArrayList<Files> fileListResult = new WriterService().selectProfileImg(memberNo);
+
+		//썸네일 사진 노출
+		String boardNo = request.getParameter("boardNo");
+		//ArrayList<Files> thumbListResult = new WriterService().selectThumbImg(boardNo);
+		System.out.println(boardNo);
+		
+		System.out.println(fileListResult.get(0));
+		
 		String page = "";
 		if(list != null){
 			page = "/views/myPage/writerPieceManagement.jsp";
+			request.setAttribute("fileListResult", fileListResult);
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 		}else{

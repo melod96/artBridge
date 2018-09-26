@@ -34,6 +34,9 @@ ul.tab-menu li>a:hover {
 			case "transactionAdmin" : %>
 			$("#transactionAdmin").css({"background":"white", "color":"black"});
 			<% break;
+			case "statsAdmin" : %>
+			$("#statsAdmin").css({"background":"white", "color":"black"});
+			<% break;
 			default : %>
 			$("#mainAdmin").css({"background":"white", "color":"black"});
 		<% break;
@@ -52,6 +55,7 @@ ul.tab-menu li>a:hover {
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectTrs.ad?pageName=transactionAdmin'" id="transactionAdmin">거래내역 관리</a></li>
 		<li><a href="/artBridge/views/admin/noticeInsertForm.jsp">공지사항</a></li>
 		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectRating.ad?pageName=ratingAdmin'" id="ratingAdmin">등급 관리</a></li>
+		<li><a onclick = "location.href='<%= request.getContextPath() %>/selectStatsList.ad?pageName=statsAdmin'" id="statsAdmin">통계 관리</a></li>
 		</ul>
 	</div>
 </section>

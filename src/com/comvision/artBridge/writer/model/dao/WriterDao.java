@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.comvision.artBridge.board.model.vo.Board;
@@ -131,30 +132,54 @@ public class WriterDao {
 		}
 		return result;
 	}
+	
+	//썸네일 저장시 해당 게시글 번호 도출 -->필요없음
+	/*public Board boardNoCk(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		Board boardNo = null;
+		ResultSet rset = null;
+		String query = prop.getProperty("boardNoCk");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, b.getMember_no());
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				boardNo = new Board();
+				boardNo.setBoard_no(rset.getInt("board_no"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+			close(rset);
+			
+		}
+		
+		return boardNo;
+	}*/
 
 	//첨부파일 저장용 메소드
-	public int insertAttachment(Connection con, ArrayList<Files> fileList) {
+	public int insertAttachment(Connection con, Files files, int currval, int i) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
 		String query = prop.getProperty("insertThumb");
 		
 		try {
-			for(int i = 0; i < fileList.size(); i++){
-				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, fileList.get(i).getF_reference_no());
-				System.out.println("1 : "  +  fileList.get(i).getF_reference_no());
-				pstmt.setString(2, fileList.get(i).getFiles_title());
-				System.out.println("2 : "  +  fileList.get(i).getFiles_title());
-				pstmt.setString(3, fileList.get(i).getChange_title());
-				System.out.println("3 : "  +  fileList.get(i).getChange_title());
-				pstmt.setInt(4, fileList.get(i).getFiles_type());
-				System.out.println("4 : "  +  fileList.get(i).getFiles_type());
-				pstmt.setString(5, fileList.get(i).getFiles_root());
-				System.out.println("5 : "  +  fileList.get(i).getFiles_root());
-				
-				result += pstmt.executeUpdate();
-			}
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, currval);
+			pstmt.setString(2, files.getFiles_title());
+			pstmt.setString(3, files.getChange_title());
+			pstmt.setInt(4, i);
+			pstmt.setString(5, files.getFiles_root());
+			
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -271,5 +296,98 @@ public class WriterDao {
 		
 		return result;
 	}
+
+	//프로필 사진 노출용 메소드
+	public ArrayList<Files> selectProfileImg(Connection con, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Files> selectProfileImg = null;
+		Files f = null;
+		
+		String query = prop.getProperty("selectProfileImg");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			selectProfileImg = new ArrayList<Files>();
+			
+			while(rset.next()){
+				f = new Files();
+				f.setFiles_no(rset.getInt("files_no"));
+				//f.setF_reference_no(rset.getInt("f_reference_no"));
+				f.setFiles_title(rset.getString("files_title"));
+				f.setChange_title(rset.getString("change_title"));
+				f.setFiles_type(rset.getInt("files_type"));
+				f.setFiles_root(rset.getString("files_root"));
+				f.setFiles_date(rset.getDate("files_date"));
+				f.setFiles_secession(rset.getInt("files_secession"));
+				
+				selectProfileImg.add(f);
+				System.out.println(selectProfileImg);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return selectProfileImg;
+	}
+
+	//작품 등록시 연관검색어 등록 메소드
+	public int relateNumList(Connection con, String relateCk, int currval) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("InsertRelate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, currval);
+			pstmt.setString(2, relateCk);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	//board currval
+	public int selectBoardCurrval(Connection con) {
+		Statement stmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("selectBoardCurrval");
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			while(rset.next()){
+				result = rset.getInt("currval");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(stmt);
+			close(rset);
+		}
+		
+		return result;
+	}
+
+	
 
 }
