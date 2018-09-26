@@ -14,6 +14,7 @@ import com.comvision.artBridge.admin.model.service.AdminService;
 import com.comvision.artBridge.board.model.service.BoardService;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
+import com.comvision.artBridge.relate.model.vo.Relate;
 
 
 @WebServlet("/searchBoard.ad")
@@ -73,11 +74,13 @@ public class SearchBoardServlet extends HttpServlet {
 				
 				
 				//판매글 출력
+				ArrayList<Relate> list = new AdminService().selectRelate();
 				ArrayList<Board> blist = new AdminService().selectBoardList(currentPage, limit, kind, keyword);
 				
 				String page = "";
 				if(blist != null){
 					page = "views/admin/commissionAdmin.jsp";
+					request.setAttribute("list", list);
 					request.setAttribute("blist", blist);
 					request.setAttribute("pi", pi);
 					request.setAttribute("num", num);

@@ -37,6 +37,10 @@
 	if(request.getParameter("writerGrade") != null){
 		writerGrade = (String)request.getAttribute("writerGrade");
 	}
+	String writerRec = null;
+	if(request.getParameter("writerRec") != null){
+		writerRec = (String)request.getAttribute("writerRec");
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -49,6 +53,8 @@
 ul.tab-menu li>a:hover {
 	background: darkgray;
 }
+
+.reqWriterForm-Area-Style{ position:absolute; width:740px; background:white; padding-bottom:50px; left:50%; margin-left:-370px; }
 </style>
 </head>
 <body>
@@ -117,8 +123,8 @@ ul.tab-menu li>a:hover {
 									</tr>
 									<tr>
 										<td style="background: lightgray;">작가 승인</td>
-										<td><select class="form-control input-short" style="float: left;" id="writerGrade" name="writerGrade">
-												<option id="0">전체</option>
+										<td><select class="form-control input-short" style="float: left;" id="writerRec" name="writerRec">
+												<option>전체</option>
 												<option value="rec" id="rec">승인</option>
 												<option value="norec" id="norec">미승인</option>
 										</select>
@@ -169,6 +175,15 @@ ul.tab-menu li>a:hover {
 										$("#4").prop("selected","selected");
 									<% break;}
 										} %>
+										
+										<% if(writerRec != null){ 
+											switch(writerRec){
+											case "rec" : %>
+											$("#rec").prop("selected","selected");
+										<% break; case "norec" : %>
+											$("#norec").prop("selected","selected");
+										<% break;}
+											} %>
 									
 								});
 							</script>
@@ -177,14 +192,19 @@ ul.tab-menu li>a:hover {
 
 					<br> <br>
 
-					<button type="submit" class="btn btn-primary btn-md"
+					<button type="submit" class="btn btn-danger btn-md"
 						style="padding: 5px 22px; float: right;" onclick="del4();">계정삭제</button>
-					<button onclick="popupOpen();" type="submit" id="deleteBtn"
-						name="deleteBtn" class="btn btn-primary btn-sm"
-						style="padding: 5px 22px; float: right; margin-right: 5px;">정보수정</button>
+			
 					<br>
+					
+					
+					
+					
+					
+					
+					
 					<script>
-      					function popupOpen() {
+      				/* 	 function popupOpen() {
 
        					var popUrl = "/artBridge/views/admin/userPop.jsp"; //팝업창에 출력될 페이지 URL
 
@@ -199,7 +219,7 @@ ul.tab-menu li>a:hover {
 					    //팝업창 옵션(optoin)
 					    window.open(popUrl,"", popOption);
 					
-					    }
+					    }  */
 					    //=================del4 함수 부분======================
 					
 						function del4(){
@@ -222,15 +242,18 @@ ul.tab-menu li>a:hover {
 
 					<table class="tbl-type02">
 						<colgroup>
-							<col style="width: 5%;">
-							<col style="width: 5%;">
+							<col style="width: 4%;">
+							<col style="width: 4%;">
 							<col style="width: 7%;">
+							<col style="width: 8%;">
 							<col style="width: 10%;">
 							<col style="width: 10%;">
-							<col style="width: 12%;">
-							<col style="width: 15%;">
-							<col style="width: *;">
+							<col style="width: 13%;">
 							<col style="width: 13%">
+							<col style="width: 10%">
+							<col style="width: 10%">
+							<col style="width: *;">
+							
 						</colgroup>
 						<thead>
 							<tr>
@@ -244,6 +267,7 @@ ul.tab-menu li>a:hover {
 								<th scope="col">메일</th>
 								<th scope="col">가입일</th>
 								<th scope="col">작가요청</th>
+								<th scope="col">정보수정</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -253,11 +277,6 @@ ul.tab-menu li>a:hover {
 									if(m.getWriter_request_no() > 0){
 										wrt = "미승인";
 									}
-									
-								/* switch(m.getWriter_right()){
-								case 0 : wrt = "미승인";break;
-								case 1 : wrt = "승인";break;
-								} */
 								
 								}
 								
@@ -288,13 +307,66 @@ ul.tab-menu li>a:hover {
 									<td><%= m.getPhone() %></td>
 									<td><%= m.getEmail() %></td>
 									<td><%= m.getEnroll_date() %></td>
-									<td style="font-weight:bold"><a style="color:orangered;"onclick="popupOpen2();"><%= wrt %></a></td>									
+									<td style="font-weight:bold"><a style="color:orangered;"onclick="popupOpen2();"><%= wrt %></a></td>
+									<td><button type="submit" id="deleteBtn"
+						name="deleteBtn" class="btn btn-dark btn-sm"
+						style="padding: 5px 22px;" data-toggle="modal" data-target="#myModal">정보수정</button></td>									
 								</tr>
 								
 							<% }} %>
+					<!-- Button to Open the Modal -->
+
+<!-- The Modal -->
+<div  id="myModal" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+		<div>
+		안녕하세요
+		</div>
+		
+      </div>
+
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// 	* 작가신청 양식 모달 띄우기
+	   	function reqWriterDisplayBlock(){
+	   		$('#reqWriterModal').css({"display":"block"});
+	   		$('#reqWriterFormArea').css({"display":"block"});
+	  	};
+	  	
+	  	
+	// 	* 작가신청 양식 모달 닫기
+		function reqWriterDisplayNone(){
+			insertImgCnt1 = 0;	//사진 올린 갯수 카운트 리셋
+			insertImgCnt2 = 0;
+			insertImgCnt3 = 0;
+			insertImgTotalCnt = 0;
+			$('.form-table img').attr('src', '/artBridge/image/common/no_thumb.jpg');
+			$('#reqWriterFormArea').css({"display":"none"});
+	   		$('#reqWriterModal').css({"display":"none"});
+		};
+		</script>
 								<script>
 							
-							function popupOpen2() {
+						/* 	 function popupOpen2() {
 
        					var popUrl = "/artBridge/views/admin/writerPop.jsp"; //팝업창에 출력될 페이지 URL
 
@@ -309,7 +381,7 @@ ul.tab-menu li>a:hover {
 					    //팝업창 옵션(optoin)
 					    window.open(popUrl,"", popOption);
 					
-					    }
+					    }  */
 							</script>
 
 						</tbody>
