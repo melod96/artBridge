@@ -110,4 +110,87 @@ public class MessageDao {
 		
 	}
 
+	public Message SelectOneMSG(Connection con, int msg_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Message m = null;
+		String query = prop.getProperty("selectMSGDetail");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, msg_no);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				m = new Message();
+				
+				m.setMsg_no(rset.getInt("message_no"));
+				m.setWriter_right(rset.getInt("WRITER_RIGHT"));
+				m.setMem_name(rset.getString("name"));
+				m.setMsg_content(rset.getString("MESSAGE_CONTENT"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		
+		return m;
+		
+		
+	}
+
+	public int updateMSG(Connection con, String msgNo, String option) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("updateMSGDetail");
+		
+		try {
+			System.out.println("updateMsg 쿼리 : "+query);
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, Integer.parseInt(msgNo));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+		
+	}
+
+	public int insertMSGTo(Connection con, String title, String content, String msgNo) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("insertMSGTo");
+		
+//		MESSAGE_TITLE, MESSAGE_CONTENT, RECEIVE_MEMBER_NO(MEMBER_NO)
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, Integer.parseInt(msgNo));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+		
+	}
+
 }
