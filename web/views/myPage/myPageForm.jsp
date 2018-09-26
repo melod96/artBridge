@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
 <%@ page import="java.util.*, com.comvision.artBridge.transaction.model.vo.Transaction,
-				 com.comvision.artBridge.board.model.vo.*, com.comvision.artBridge.message.model.vo.Message,
+				 com.comvision.artBridge.board.model.vo.*, com.comvision.artBridge.files.model.vo.*,
 				 com.comvision.artBridge.sale.model.vo.*, com.comvision.artBridge.message.model.vo.Message" %>  
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -147,14 +147,30 @@
 
 <% 
 	ArrayList<Transaction> transList = null;
-	if((ArrayList<Transaction>)request.getAttribute("transList") != null){
+	if(session.getAttribute("transList") != null){
 		transList = (ArrayList<Transaction>)request.getAttribute("transList");
 	}
 	Transaction t = null;
-	if(session.getAttribute("userTransaction") != null){
-		t = (Transaction)request.getAttribute("userTransaction");
+	if(request.getAttribute("t") != null){
+		t = (Transaction)request.getAttribute("t");
+	}
+	
+	PageInfo pi = null;
+	int listCount = 0;
+	int currentPage = 0;
+	int maxPage = 0;
+	int startPage = 0;
+	int endPage = 0;
+	if(request.getAttribute("pi") != null){
+		pi = (PageInfo)request.getAttribute("pi");
+		listCount = pi.getListCount();
+		currentPage = pi.getCurrentPage();
+		maxPage = pi.getMaxPage();
+		startPage = pi.getStartPage();
+		endPage = pi.getEndPage();
 	}
 %>
+
 <% /* 4. 회원정보 수정 변수 코드 */
  	String phone = ((Member)(session.getAttribute("loginUser"))).getPhone();
 //	String phone = ((Member)(request.getSession().getAttribute("loginUser"))).getPhone();
@@ -208,51 +224,51 @@
 					<!-- 모달 요소 넣기 -->
 					<div class=stmtModal-Area-Style align="center">
 						<h3>명 &nbsp; 세 &nbsp; 서</h3>
-<!-- 						<table class="form-table"> -->
-<!-- 							<tr> -->
-<!-- 								<td width="15px"></td> -->
-<!-- 								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td> -->
-<%-- 								<td colspan="3"><%= t.getBoard_title() %></td> --%>
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td></td> -->
-<!-- 								<td class="stmt-title">신 청 일  : </td> -->
-<%-- 								<td colspan="3"><%= t.getO_date() %></td> --%>
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td></td> -->
-<!-- 								<td class="stmt-title">구 매 자  : </td> -->
-<%-- 								<td width="230px"><%= t.getCusId() %></td> --%>
-<!-- 								<td width="80px" class="stmt-title">판 매 자  : </td> -->
-<%-- 								<td width="150px"><%= t.getWrtNick() %></td> --%>
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td></td> -->
-<!-- 								<td class="stmt-title">옵 션 명  : </td> -->
-<!-- 								<td colspan="3">인물화</td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 								<td colspan="5" height="30px"></td> -->
-<!-- 							</tr> -->
-<!-- 							<tr> -->
-<!-- 							<td colspan="5" width="540px"> -->
-<!-- 								<table border="1" > -->
-<!-- 									<tr class="form-inner-table-title" style="font-weight:bold; text-align:center;" height="25px"> -->
-<!-- 										<td width="35px">No</td> -->
-<!-- 										<td width="380px">요 구 사 항</td> -->
-<!-- 										<td width="87px">금 액</td> -->
-<!-- 									</tr> -->
-<!-- 									<tr height="23px"> -->
-<!-- 										<td align="center">1</td> -->
-<!-- 										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~</td> -->
-<!-- 										<td align="right">작가기입 원</td> -->
-<!-- 									</tr> -->
-<!-- 									<tr> -->
-<!-- 										<td align="center">2</td> -->
-<!-- 										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~ 귀염뽀짝하게 해주시면 더 좋아요~!</td> -->
-<!-- 										<td align="right">45,454원</td> -->
-<!-- 									</tr> -->
-<!-- 								</table> -->
+						<table class="form-table">
+							<%-- <tr>
+								<td width="15px"></td>
+								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td>
+								<td colspan="3"><%= t.getBoard_title() %></td>
+							</tr> --%>
+							<tr>
+								<td></td>
+								<td class="stmt-title">신 청 일  : </td>
+								<td colspan="3"><%= t.getO_date() %></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="stmt-title">구 매 자  : </td>
+								<td width="230px"><%= t.getCusId() %></td>
+								<td width="80px" class="stmt-title">판 매 자  : </td>
+								<td width="150px"><%= t.getWrtNick() %></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="stmt-title">옵 션 명  : </td>
+								<td colspan="3">인물화</td>
+							</tr>
+							<tr>
+								<td colspan="5" height="30px"></td>
+							</tr>
+							<tr>
+							<td colspan="5" width="540px">
+								<table border="1" >
+									<tr class="form-inner-table-title" style="font-weight:bold; text-align:center;" height="25px">
+										<td width="35px">No</td>
+										<td width="380px">요 구 사 항</td>
+										<td width="87px">금 액</td>
+									</tr>
+									<tr height="23px">
+										<td align="center">1</td>
+										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~</td>
+										<td align="right">작가기입 원</td>
+									</tr>
+									<tr>
+										<td align="center">2</td>
+										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~ 귀염뽀짝하게 해주시면 더 좋아요~!</td>
+										<td align="right">45,454원</td>
+									</tr>
+								</table>
 								<br>
 								<table align="right">
 									<tr >
@@ -313,17 +329,17 @@
 								<td colspan="7" width="715px" style="padding-bottom:10px;">
 	                                <ul class="insert-img-area" style="text-align:center;">
 	                                  <li>
-	                                      <input type="file"  id="file-btn1" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
+	                                      <input type="file" id="file-btn1" name="confirmImg_writerRight" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
 	                                      <label for="file-btn1" class="btn btn-primary">이미지 파일 불러오기</label>
 	                                      <p><img class="img1" src="/artBridge/image/common/no_thumb.jpg" /></p>
 	                                  </li>
 	                                  <li>
-	                                      <input type="file"  id="file-btn2" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
+	                                      <input type="file" id="file-btn2" name="confirmImg_writerRight" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
 	                                      <label for="file-btn2" class="btn btn-primary">이미지 파일 불러오기</label>
 	                                      <p><img class="img2" src="/artBridge/image/common/no_thumb.jpg"></p>
 	                                  </li>
 	                                  <li style="margin-right:0px;">
-	                                      <input type="file"  id="file-btn3" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
+	                                      <input type="file" id="file-btn3" name="confirmImg_writerRight" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
 	                                      <label for="file-btn3" class="btn btn-primary">이미지 파일 불러오기</label>
 	                                      <p><img class="img3" src="/artBridge/image/common/no_thumb.jpg"></p>
 	                                  </li>
@@ -418,41 +434,32 @@
 <!-- 						</tr> -->
 <%-- 						 <% } %>  --%>
 							
-<%-- 							<% for(Transaction t : transList){ %>  --%>
-<%-- 							  <% if(role.equals("seller")){ %>	  --%>
-<!-- 								<tr id="" class="seller-list transInfo-list"> -->
-<!-- 									<td>판매</td> -->
-<%-- 									<td><a onclick="stmtDisplayBlock();" id="orderNo" class="btn"><%= t.getOrders_no() %></a></td> --%>
-<%-- 									<td><%= t.getCusId() %></td> --%>
-<%-- 									<td class="txt-fl"><a href="#"><%= t.getBoard_title() %></a></td> --%>
-<%-- 									<td><%= t.getPay_status() %></td> --%>
-<!-- 									<td><img src='/artBridge/image/common/mypage/msg.png'></td> -->
-<%-- 									<td><%= t.getO_date() %></td> --%>
-<!-- 									<td>2018-00-00</td> -->
-<!-- 								</tr> -->
-<%-- 							  <% } else{ %> --%>
+							<% for(Transaction ts : transList){ 
+							  if(ts.getDivRole_no() == 0){ %>	 
+								<tr id="" class="seller-list transInfo-list">
+									<td>판매</td>
+									<td><a onclick="stmtDisplayBlock();" id="orderNo" class="btn"><%= ts.getOrders_no() %></a></td>
+									<td><%= ts.getCusId() %></td>
+									<td class="txt-fl"><a href="#"><%= ts.getBoard_title() %></a></td>
+									<td><%= ts.getPay_status() %></td>
+									<td><img src='/artBridge/image/common/mypage/msg.png'></td>
+									<td><%= ts.getOd_startDate() %></td>
+									<td><%= ts.getOd_endDate() %></td>
+								</tr>
+							  <% } else{ %>
 								<tr id="" class="buyer-list transInfo-list">
 									<td>구매</td>
-									<td><a onclick="stmtDisplayBlock();" class="btn">18083001</a></td>
-									<td>소나나</td>
-									<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td>
-									<td>컨펌 1단계</td>
+									<td><a onclick="stmtDisplayBlock();" id="orderNo" class="btn"><%= ts.getOrders_no() %></a></td>
+									<td><%= ts.getWrtNick() %></td>
+									<td class="txt-fl"><a href="#"><%= ts.getBoard_title() %></a></td>
+									<td><%= ts.getPay_status() %></td>
 									<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-									<td>2018-00-00</td>
-									<td>2018-00-00</td>
+									<td><%= ts.getOd_startDate() %></td>
+									<td><%= ts.getOd_endDate() %></td>
 								</tr>
-<%-- 							  <% } %> --%>
-<%-- 							<% } %> --%>
-							<tr id="" class="buyer-list transInfo-list">
-								<td>구매</td>
-								<td><a onclick="stmtDisplayBlock();" class="btn">18083001</a></td>
-								<td>소나나</td>
-								<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td>
-								<td>컨펌 1단계</td>
-								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-								<td>2018-00-00</td>
-								<td>2018-00-00</td>
-							</tr>
+							  <% } %>
+							<% } %>
+							
 						</tbody>
 					</table>
 	
@@ -476,10 +483,36 @@
 							title="끝"><span class="spr"><em class="blind">목록에서
 									끝 페이지 이동</em></span></a>
 					</div>
-	
-					<br>
-					<hr>
-					<br> -->
+					                    <!-- 페이징 영역 -->
+                    <div class="paginate">
+						<a onclick="location.href='<%= request.getContextPath() %>/selectTransList.ts?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<% if(currentPage <=1){ %>
+							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
+						<% }else{ %>
+							<a onclick = "location.href='<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<em class="blind">목록에서 이전 페이지 이동</em></a>
+						<% } %>
+						<span class="paging-numbers">
+							<% for(int p = startPage; p <= endPage; p++){
+								if(p == currentPage){ %>
+									<a disabled class="on"><%= p %><span class="blind">페이지로 이동</span></a>
+								<% }else{ %>
+									<a onclick= "location.href='<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%= p %>'"><%= p %><span class="blind">페이지로 이동</span></a>
+								<% } %>
+							<% } %>
+						</span>
+						<% if(currentPage >= maxPage){ %>
+							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<% }else{ %>
+							<a onclick = "location.href = '<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%= currentPage +1 %>'" class="btn-next" title="다음">
+							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
+						<% } %>
+						
+						<a onclick = "location.href = '<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%= maxPage %>'" class="btn-last" title="끝">
+						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
+					</div>
+                   <!-- // 페이징 영역 -->
+
 				<br><br><br><br>
 				</div>
 			</form>
@@ -1007,7 +1040,7 @@
 						</div>
 						<div class="agree-ck">
 							<input type="checkbox" id="agree"/>
-							<label>위의 내용을 모두 확인하였고, 동의합니다.</label>
+							<label for="agree">위의 내용을 모두 확인하였고, 동의합니다.</label>
 						</div>
 						<div class="btn-center">
 		                      <input type="button" value="회원 탈퇴" class="delMemChk btn btn-lg btn-default btn-cancel" style="padding:10px 35px; margin-right:15px;">
@@ -1141,11 +1174,9 @@
 	//	* 페이지 호출
 		$(function(){
 // 			select orders_no from orders where member_no = ? or writer_no = ?
-<%-- 			location.href="<%= request.getContextPath() %>/selectTransList.ts"; --%>
-					
-			
 			var pageName = '<%= (String)request.getParameter("pageName") %>';
-	
+<%-- 			location.href="<%= request.getContextPath() %>/selectTransList.ts"; --%>
+
 			$('.order-menu, .bookmark-menu, .msg-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
 			
 			if(pageName != null){
@@ -1160,6 +1191,20 @@
 	//	* 탭 선택 함수
 		function anotherHidden(thisMenu){	
 			//var thisMenu = event.srcElement.id;
+			
+			var servletUrl;
+			switch(thisMenu){
+			case 'order-menu' : servletUrl = "<%= request.getContextPath() %>/selectTransList.ts"
+			}
+			$.ajax({
+					url : servletUrl,
+					type : "post",
+					success : function(data){
+						
+						}
+					}
+				});
+			
 	 
 			$('.order-menu, .msg-menu, .bookmark-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
 			$('.' + thisMenu).css({"display":"block"});
@@ -1251,21 +1296,15 @@
 					url : "<%= request.getContextPath() %>/selectTransOne.ts",
 					type : "post",
 					data : {orderNo : orderNo},
-					success : function(data){
-						if(data > 0){
-							$('#pwdCheckArea').css({"display":"none"});
-							$('.memberInfoArea').css({"display":"block"});
-							$("#updateUserPwd1").focus();
-						}else{
-							$('#pwdStatus').css({"display":""});
-							$('#pwdStatus').css({"color":"orangered"});
-							$("#checkUserPwd").focus();
-						}
-					}
+					success : function(){
+						
+						
+					},
+					error:function(request,status,error){
+			        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			        }
 				});
-			}
-   		
-	   		
+			}  		
 	  	};							
 	// 	* 명세표 모달 닫기
 		function stmtDisplayNone(){
@@ -1666,6 +1705,7 @@
 			}else{
 				checkImgTotalCnt = true;
 			}
+			
 			var submit = confirm("신청 양식을 제출 하시겠습니까?");
 			if(submit == true){
 				alert("submit 트루니?");
@@ -1687,8 +1727,10 @@
 							alert("작가 신청 양식 전송이 실패 하였습니다.");
 							location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
 						}
-					alert("에이작스 되니?");
-					}
+					},
+					error:function(request,status,error){
+			        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			        }
 				});
 				alert("에이작스 뒤에 링크 가야되는딩");
 				
