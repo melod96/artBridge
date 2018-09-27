@@ -32,7 +32,7 @@
 				<div class="navbar-collapse collapse" id="navigation">
 					<ul class="nav navbar-nav navbar-right">
 						
-						<li style="cursor:pointer;"><a onclick = "location.href='<%= request.getContextPath() %>/selectSaleList.bo'" class="dropdown-toggle">일러스트 </a></li>
+						<li style="cursor:pointer;"><a onclick = "location.href='<%= request.getContextPath() %>/selectSaleList.bo'" >일러스트 </a></li>
 
 						<li class="dropdown"><a href="#" class="dropdown-toggle">이용안내</a>
 							<ul class="dropdown-menu">
@@ -44,7 +44,6 @@
 							<ul class="dropdown-menu">
 								<li><a href="/artBridge/views/faq/faq_requester.jsp">자주하는 질문</a></li>
 								<li><a href="/artBridge/views/notice/noticeBoard.jsp">공지사항</a></li>
-								<li><a href="#">광고상품 안내</a></li>
 							</ul></li>
 
 						<!-- 비로그인시 노출 -->
@@ -71,7 +70,7 @@
 						<li class="dropdown"><a href="#" class="join dropdown-toggle"><%= loginUser.getNick_name() %>님</a>
 							<ul class="dropdown-menu">
 								<% if(loginUser.getAdmin_right() == 1){ %>
-								<li><a href="/artBridge/views/admin/noticeList.jsp">관리자</a></li>
+								<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMain.ad?pageName=mainAdmin'" id="mainAdmin">관리자</a></li>
 								<% } %>
 								<li><a href="<%= request.getContextPath() %>/logout.me">로그아웃</a></li>
 							</ul></li>

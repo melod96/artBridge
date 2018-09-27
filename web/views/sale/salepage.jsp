@@ -15,8 +15,19 @@
 		rlist = (ArrayList<Relate>)request.getAttribute("rlist");
 	}
 	PageInfo pi = null;
+	int listCount = 0;
+	int currentPage = 0;
+	int maxPage = 0;
+	int startPage = 0;
+	int endPage = 0;
 	if((PageInfo)request.getAttribute("pi")!= null){
 		pi = (PageInfo)request.getAttribute("pi");
+		listCount = pi.getListCount();
+		currentPage = pi.getCurrentPage();
+		maxPage = pi.getMaxPage();
+		startPage = pi.getStartPage();
+		endPage = pi.getEndPage();
+		
 	}
 	ArrayList<HashMap<String,Object>> oplist = null;
 	if((ArrayList<HashMap<String,Object>>)request.getAttribute("oplist")!= null){
@@ -26,11 +37,6 @@
 	if((ArrayList<HashMap<String,Object>>)request.getAttribute("alist")!= null){
 		alist = (ArrayList<HashMap<String,Object>>)request.getAttribute("alist");
 	}
-	int listCount = pi.getListCount();
-	int currentPage = pi.getCurrentPage();
-	int maxPage = pi.getMaxPage();
-	int startPage = pi.getStartPage();
-	int endPage = pi.getEndPage();
 	%>
 <!DOCTYPE html>
 <html>
