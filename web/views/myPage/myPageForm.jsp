@@ -157,7 +157,7 @@
 	/* Transaction t = null;
 	if(request.getAttribute("t") != null){
 		t = (Transaction)request.getAttribute("t");
-	} */
+	}
 	
 	PageInfo pi = null;
 	int listCount = 0;
@@ -222,7 +222,8 @@
 		<div class="contents"><!-- contents 필수 사용 -->
 
 <!--      	* 1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
-			<%-- <form action="" method="post">
+<%if(t!=null){ %>
+			<form action="" method="post">
 				<div id="stmtModalArea" class="w3-modal" onclick="stmtDisplayNone();"></div>
 				<div id="stmtArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
@@ -232,7 +233,7 @@
 							<tr>
 								<td width="15px"></td>
 								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td>
-								<td colspan="3"><%= t.getBoard_title() %></td>
+								<td colspan="3"></td>
 							</tr>
 							<tr>
 								<td></td>
@@ -294,7 +295,8 @@
 						</table>
 					</div>
 				</div>
-			</form> --%>
+			</form>
+			<%} %>
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
 <!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
@@ -1300,16 +1302,18 @@
 	    });
 	    
 	// 	* 명세표 모달 띄우기
-	   	function stmtDisplayBlock(){
+	   	function stmtDisplayBlock(t){
 	   		$('#stmtModalArea').css({"display":"block"});
 	   		$('#stmtArea').css({"display":"block"});
 	   		
-	   		var orderNo = $('#orderNo').val();
-			if(orderNo != null && orderNo != ""){
+	   		//var orderNoo = $('#orderNo').val();
+	   		var orderNoo = t
+	   		console.log(orderNoo);
+			if(orderNoo != null && orderNoo != ""){
 				$.ajax({
 					url : "<%= request.getContextPath() %>/selectTransOne.ts",
 					type : "post",
-					data : {orderNo : orderNo},
+					data : {orderNoo : orderNoo},
 					success : function(){
 						
 						

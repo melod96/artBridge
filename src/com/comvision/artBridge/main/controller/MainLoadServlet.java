@@ -50,6 +50,7 @@ public class MainLoadServlet extends HttpServlet {
 		ArrayList<Notice> noticeList = new MainService().searchNoticeList();
 		
 		
+		
 		String page ="";
 		
 		

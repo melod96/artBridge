@@ -195,10 +195,7 @@ ul.tab-menu li>a:hover {
 
 					<br> <br>
 
-					<button type="submit" class="btn btn-danger btn-md"
-						style="padding: 5px 22px; float: right;" onclick="del4();">계정삭제</button>
-			
-					<br>
+	
 					
 					
 					
@@ -245,7 +242,7 @@ ul.tab-menu li>a:hover {
 
 					<table class="tbl-type02">
 						<colgroup>
-							<col style="width: 5%;">
+							<!-- <col style="width: 5%;"> -->
 							<col style="width: 7%;">
 							<col style="width: 8%;">
 							<col style="width: 8%;">
@@ -259,7 +256,7 @@ ul.tab-menu li>a:hover {
 						</colgroup>
 						<thead>
 							<tr>
-								<th scope="col">선택</th>
+						<!-- 		<th scope="col">선택</th> -->
 								<th scope="col">NO</th>
 								<th scope="col">구분</th>
 								<th scope="col">등급</th>
@@ -283,8 +280,8 @@ ul.tab-menu li>a:hover {
 								
 								%>
 								<tr>
-									<input type="hidden" value="<%= m.getMember_no() %>" />
-									<td><input type="checkbox" name="chBox4"></td>
+									<%-- <input type="hidden" value="<%= m.getMember_no() %>" /> --%>
+									
 									<td><%= m.getMember_no() %></td>
 									<% 	String right = null;
 										if(m.getWriter_right() != 0){
@@ -307,35 +304,15 @@ ul.tab-menu li>a:hover {
 									<td><%= m.getId() %></td>
 									<td><%= m.getPhone() %></td>
 									<td><%= m.getEmail() %></td>
-									<td><%= m.getEnroll_date() %></td>
+									<td><%= m.getEnroll_date() %></td> 
 									<td style="font-weight:bold">
-										 <a style="color:orangered;"onclick="popupOpen2();"><%= wrt %></a> 
+										 <a style="color:orangered;" onclick="<%= request.getContextPath() %>/selectPostulat.ad?member_no=" + <%= m.getMember_no() %>><%= wrt %></a> 
 									</td>								
 								</tr>
 								
 							<% }} %>
 					
-		</script>
-								<script>
-							
-						/* 	 function popupOpen2() {
-
-       					var popUrl = "/artBridge/views/admin/writerPop.jsp"; //팝업창에 출력될 페이지 URL
-
-                     
-				        var popupX = (window.screen.width / 2 ) - (580 / 2);
-					    // 만들 팝업창 좌우 크기의 1/2 만큼 보정값으로 빼주었음
-					
-					    var popupY= (window.screen.height / 2 ) - (300 / 2);
-					    // 만들 팝업창 상하 크기의 1/2 만큼 보정값으로 빼주었음
-					
-					    var popOption = "width=578, height=301, resizable=no, scrollbars=no, status=no, top="+popupY+", left=" + popupX 
-					    //팝업창 옵션(optoin)
-					    window.open(popUrl,"", popOption);
-					
-					    }  */
-							</script>
-
+	
 						</tbody>
 					</table>
 					
