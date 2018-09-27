@@ -38,7 +38,7 @@ public class InsertPieceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(ServletFileUpload.isMultipartContent(request)){
-			int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+			/*int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 			
 			//페이징 처리
 			int currentPage;
@@ -64,7 +64,7 @@ public class InsertPieceServlet extends HttpServlet {
 				endPage = maxPage;
 			}
 
-			PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
+			PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);*/
 			
 			
 			//썸네일 파일 첨부 저장용
@@ -98,7 +98,7 @@ public class InsertPieceServlet extends HttpServlet {
 		
 			
 			//Board테이블에 저장할 데이터 가져오기
-			//int memberNo = Integer.parseInt(multiRequest.getParameter("memberNo"));
+			int memberNo = Integer.parseInt(multiRequest.getParameter("memberNo"));
 			String title = multiRequest.getParameter("title");
 			int resolution = Integer.parseInt(multiRequest.getParameter("resolution"));
 			String file_type = multiRequest.getParameter("file_type");
@@ -144,7 +144,7 @@ public class InsertPieceServlet extends HttpServlet {
 			System.out.println("결과 : " + result);
 			
 			if(result > 0){
-				request.setAttribute("list", new WriterService().selectList(currentPage, limit, memberNo));
+				//request.setAttribute("list", new WriterService().selectList(currentPage, limit, memberNo));
 				response.sendRedirect(request.getContextPath() + "/selectPieceList.wr?memberNo=" + memberNo);
 			}else{
 				//실패시 서버에 저장된 파일 삭제

@@ -60,11 +60,14 @@ public class SelectPieceListServlet extends HttpServlet {
 		ArrayList<Board> list = new WriterService().selectList(currentPage, limit, memberNo);
 		
 		//프로필 사진 노출
-		ArrayList<Files> fileListResult = new WriterService().selectProfileImg(memberNo);
+		ArrayList<Files> profileFile = new WriterService().selectProfileImg(memberNo);
 
-		//썸네일 사진 노출
-		//ArrayList<Files> thumbListResult = new WriterService().selectThumbImg(memberNo);
-		//HashMap<String, Object> hmap = new WriterService().selectThumbnailMap(memberNo);
+		//작품리스트 노출(썸네일 포함)
+		/*HashMap<String, Object> hmap = new WriterService().selectThumbImg(currentPage, limit, memberNo);
+		
+		System.out.println(hmap);
+		Board board = (Board)hmap.get("board");
+		ArrayList<Files> list = (ArrayList<Files>)hmap.get("files"); */
 		
 		//작가 별점 노출
 		int writerAvg = new WriterService().selectWriterAvg(memberNo);
@@ -72,7 +75,7 @@ public class SelectPieceListServlet extends HttpServlet {
 		String page = "";
 		if(list != null){
 			page = "/views/myPage/writerPieceManagement.jsp";
-			request.setAttribute("fileListResult", fileListResult);
+			request.setAttribute("profileFile", profileFile);
 			request.setAttribute("writerAvg", writerAvg);
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
