@@ -32,10 +32,10 @@ public class SelectOneTransactionStatement extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int orderNo = Integer.parseInt(request.getParameter("orderNo"));
+		int orderNoo = Integer.parseInt(request.getParameter("orderNoo"));
 		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
 		
-		Transaction t = new TransactionService().selectTransOne(mNo, orderNo);
+		Transaction t = new TransactionService().selectTransOne(mNo, orderNoo);
 		
 		String page = "";
 		if(t != null){
