@@ -14,6 +14,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
+import com.comvision.artBridge.admin.model.vo.Notice;
 import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.member.model.vo.Member;
@@ -740,5 +741,44 @@ public class AdminDao {
 			
 			return orderCounts;
 		}
+
+		//작가 신청 승인
+		public Member selectPostulat(Connection con, String num) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			Member m = null;
+			
+			String query = prop.getProperty("selectPostulat");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, Integer.parseInt(num));
+				
+				rset = pstmt.executeQuery();
+				
+				if(rset.next()){
+					m = new Member();
+					
+					m.setMember_no(rset.getInt("member_no"));
+					m.setWriter_request_no(rset.getInt("writer_request_no"));
+					m.setId(rset.getString("id"));
+					m.setNick_name(rset.getString("nick_name"));
+					m.setBank(rset.getString("bank"));
+					m.setAccount(rset.getString("account"));
+					m.setFiles_no(rset.getInt("files_no"));
+
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(rset);
+				close(pstmt);
+			}
+			
+			return m;
+		}
+
 	
+
 }

@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.comvision.artBridge.admin.model.dao.AdminDao;
+import com.comvision.artBridge.admin.model.vo.Notice;
 import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
@@ -17,6 +18,7 @@ import com.comvision.artBridge.member.model.dao.MemberDao;
 import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.message.model.dao.MessageDao;
 import com.comvision.artBridge.message.model.vo.Message;
+import com.comvision.artBridge.nBoard.model.dao.NBoardDao;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.transaction.model.vo.Transaction;
 
@@ -296,6 +298,19 @@ public class AdminService {
 		close(con);
 		
 		return orderCounts;
+	}
+
+	//작가 신청 페이지
+	public Member selectPostulat(String num) {
+		Connection con = getConnection();
+		
+		Member m = new AdminDao().selectPostulat(con, num);
+		
+		close(con);
+		
+		return m;
+		
+		
 	}
 
 
