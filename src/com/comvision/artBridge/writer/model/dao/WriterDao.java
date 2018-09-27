@@ -225,11 +225,11 @@ public class WriterDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, m.getNick_name());
-			pstmt.setString(2, m.getIntroduction());
-			pstmt.setInt(3, m.getWriter_slot());
-			pstmt.setInt(4, m.getReception_status());
-			pstmt.setInt(5, m.getMember_no());
+			//pstmt.setString(1, m.getNick_name());
+			pstmt.setString(1, m.getIntroduction());
+			pstmt.setInt(2, m.getWriter_slot());
+			pstmt.setInt(3, m.getReception_status());
+			pstmt.setInt(4, m.getMember_no());
 			
 			result = pstmt.executeUpdate();
 			
@@ -290,12 +290,11 @@ public class WriterDao {
 				f = new Files();
 				f.setFiles_no(rset.getInt("files_no"));
 				//f.setF_reference_no(rset.getInt("f_reference_no"));
-				f.setFiles_title(rset.getString("files_title"));
+				//f.setFiles_title(rset.getString("files_title"));
 				f.setChange_title(rset.getString("change_title"));
-				f.setFiles_type(rset.getInt("files_type"));
+				//f.setFiles_type(rset.getInt("files_type"));
 				f.setFiles_root(rset.getString("files_root"));
 				f.setFiles_date(rset.getDate("files_date"));
-				f.setFiles_secession(rset.getInt("files_secession"));
 				
 				selectProfileImg.add(f);
 				//System.out.println(selectProfileImg);
@@ -309,71 +308,6 @@ public class WriterDao {
 		}
 		
 		return selectProfileImg;
-	}
-
-	//작품리스트 노출(썸네일 포함)
-	public HashMap<String, Object> selectThumbImg(Connection con, int currentPage, int limit, int memberNo) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		HashMap<String, Object> hmap = null;
-		Board b = null;
-		Files f = null;
-		ArrayList<Files> selectThumbImg = null;
-		
-		String query = prop.getProperty("selectPieceListThumb");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, memberNo);
-			
-			int startRow = (currentPage -1) *limit +1;
-			int endRow= startRow +limit -1;
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
-			
-			rset = pstmt.executeQuery();
-			
-			selectThumbImg = new ArrayList<Files>();
-			
-			while(rset.next()){
-				b = new Board();
-				b.setBoard_no(rset.getInt("board_no"));
-				b.setBoard_type(rset.getInt("board_type"));
-				b.setBoard_title(rset.getString("board_title"));
-				b.setBoard_content(rset.getString("board_content"));
-				b.setBoard_date(rset.getDate("board_date"));
-				//b.setMember_no(rset.getInt("member_no"));
-				//b.setModify_date(rset.getDate("modify_date"));
-				b.setBoard_status(rset.getInt("board_status"));
-				b.setBoard_count(rset.getInt("board_count"));
-				b.setMain_view(rset.getInt("main_view"));
-				
-				
-				f = new Files();
-				f.setFiles_no(rset.getInt("files_no"));
-				//f.setF_reference_no(rset.getInt("f_reference_no"));
-				f.setFiles_title(rset.getString("files_title"));
-				f.setChange_title(rset.getString("change_title"));
-				f.setFiles_type(rset.getInt("files_type"));
-				f.setFiles_root(rset.getString("files_root"));
-				f.setFiles_date(rset.getDate("files_date"));
-				f.setFiles_secession(rset.getInt("files_secession"));
-				
-				selectThumbImg.add(f);
-				//System.out.println(selectThumbImg);
-			}
-			hmap = new HashMap<String, Object>();
-			hmap.put("board", b);
-			hmap.put("file", selectThumbImg);
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally{
-			close(pstmt);
-			close(rset);
-		}
-		
-		return hmap;
 	}
 		
 	//작품 등록시 연관검색어 등록 메소드
@@ -475,6 +409,126 @@ public class WriterDao {
 		return result;
 	}
 
-	
+	/*public ArrayList<HashMap<String, Files>> selectThumbImg(Connection con, int currentPage, int limit, int memberNo) {
+		
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Files>> list = null;
+		HashMap<String, Object> hmap = null;
+		Board b = null;
+		Files f = null;
+		
+		String query = prop.getProperty("selectPieceListThumb");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<HashMap<String, Files>>();
+			
+			while(rset.next()){
+				hmap = new HashMap<String, Object>();
+				b = new Board();
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setBoard_type(rset.getInt("board_type"));
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				b.setBoard_date(rset.getDate("board_date"));
+				//b.setMember_no(rset.getInt("member_no"));
+				//b.setModify_date(rset.getDate("modify_date"));
+				b.setBoard_status(rset.getInt("board_status"));
+				b.setBoard_count(rset.getInt("board_count"));
+				b.setMain_view(rset.getInt("main_view"));
+				
+				
+				f = new Files();
+				f.setFiles_no(rset.getInt("files_no"));
+				//f.setF_reference_no(rset.getInt("f_reference_no"));
+				f.setFiles_title(rset.getString("files_title"));
+				f.setChange_title(rset.getString("change_title"));
+				f.setFiles_type(rset.getInt("files_type"));
+				f.setFiles_root(rset.getString("files_root"));
+				f.setFiles_date(rset.getDate("files_date"));
+				f.setFiles_secession(rset.getInt("files_secession"));
+				
+				//selectThumbImg.add(f);
+				//System.out.println(selectThumbImg);
+			}
+		
+		}
+		return list;
+	}*/
+
+	/*//작품리스트 노출(썸네일 포함)
+	public HashMap<String, Object> selectThumbImg(Connection con, int currentPage, int limit, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = null;
+		Board b = null;
+		Files f = null;
+		ArrayList<Files> selectThumbImg = null;
+		
+		String query = prop.getProperty("selectPieceListThumb");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			selectThumbImg = new ArrayList<Files>();
+			
+			while(rset.next()){
+				b = new Board();
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setBoard_type(rset.getInt("board_type"));
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				b.setBoard_date(rset.getDate("board_date"));
+				//b.setMember_no(rset.getInt("member_no"));
+				//b.setModify_date(rset.getDate("modify_date"));
+				b.setBoard_status(rset.getInt("board_status"));
+				b.setBoard_count(rset.getInt("board_count"));
+				b.setMain_view(rset.getInt("main_view"));
+				
+				
+				f = new Files();
+				f.setFiles_no(rset.getInt("files_no"));
+				//f.setF_reference_no(rset.getInt("f_reference_no"));
+				f.setFiles_title(rset.getString("files_title"));
+				f.setChange_title(rset.getString("change_title"));
+				f.setFiles_type(rset.getInt("files_type"));
+				f.setFiles_root(rset.getString("files_root"));
+				f.setFiles_date(rset.getDate("files_date"));
+				f.setFiles_secession(rset.getInt("files_secession"));
+				
+				selectThumbImg.add(f);
+				//System.out.println(selectThumbImg);
+			}
+			hmap = new HashMap<String, Object>();
+			hmap.put("board", b);
+			hmap.put("file", selectThumbImg);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return hmap;
+	}*/
 
 }
