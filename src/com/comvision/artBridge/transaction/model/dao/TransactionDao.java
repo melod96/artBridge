@@ -78,9 +78,30 @@ public class TransactionDao {
 		ResultSet rset = null;
 		Transaction t = null;
 		
-		String query = prop.getProperty("");
+		String query = prop.getProperty("selectTransStmt");
 		
-		//여기도 아직 미완성 ㅠㅠ
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, mNo);
+			pstmt.setInt(2, orderNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				t = new Transaction();
+				t.setOrders_no(rset.getInt("orders_no"));
+				t.setO_date(rset.getDate("o_start_date"));
+				t.setCusName(rset.getString("cusnick"));
+				t.setWrtNick(rset.getString("wrinick"));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
 		
 		return t;
 	}

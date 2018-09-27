@@ -19,7 +19,7 @@ import com.google.gson.Gson;
 /**
  * Servlet implementation class SelectTransactionList
  */
-@WebServlet("/selectTransList.ts")
+@WebServlet("/selectTransListlhm.ts")
 public class SelectTransactionList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -68,11 +68,13 @@ public class SelectTransactionList extends HttpServlet {
 		
 		ArrayList<Transaction> transList = new TransactionService().selectTransList(mNo);
 		System.out.println(transList);
+		
 
 		String page = "";
 		if(transList != null){
-			page= "views/myPage/myPageForm.jsp";
+			//page= "views/myPage/myPageForm.jsp";
 //			request.getSession().setAttribute("transList", transList);
+			page= "views/myPage/mypagelhm.jsp";
 			request.setAttribute("transList", transList);
 //			request.setAttribute("pi", pi);
 			
