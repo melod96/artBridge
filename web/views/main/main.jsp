@@ -56,11 +56,15 @@
 	.faqtt{padding-left:30px;}
 	
 	
-	.container{}
+	.container{width:1100px;}
 	#carousel-example-generic{width:1110px;}
 	.item{margin-right:auto;margin-left:auto;width:1110px;height:480px;}	
 	body{background-image:url("/artBridge/image/mainContent/slide/back02.png");background-size:contain;/* background-size:100% 100%;background-repeat: no-repeat */}
-	.item img{margin-top:80px;}
+	.item img{margin-top:0px;margin-bottom:40px;margin-right:auto;margin-left:auto;
+	width: auto; height: auto;
+    max-width: 1110px;
+    max-height: 480px;}
+    .bestH{margin-top:0px;margin-bottom:0px;}
 	
 	
 	.carousel-inner{margin-top:0px;}
@@ -82,13 +86,19 @@
 			cursor: pointer; 
 			overflow: hidden; 
 			width:330px; height: 371px; 
+			padding:0px;
 			
 			
 		}
+		.img {width: 300px; height: 371px;margin-right:auto;margin-left:auto;}
 		.box img {
-			width: 330px; display: block; 
-			height:350px;
-			position: absolute; 
+			margin-right:auto;margin-left:auto;	
+			display: block; 
+			width: 300px; 
+			height: 371px;
+			/* max-width:300px;
+			max-height:330px; */
+			/* position: absolute;  */
 			z-index: 10;
 			transform: translatey(0px)
 			z-index: 30;
@@ -143,6 +153,8 @@
 		.popArea{align:center; width:1075px;margin-left:50px;width:210px;height:50px;border:1px solid black ;margin-top:160px;
 				margin-bottom:-50px;}
 		#popA{margin-top:10px;}
+		
+		.bestArtist{ width:1200px; height: 600px;border:1px solid darkgray;margin-left:auto;margin-right:auto;margin-top:50px;}
 </style>
 	
 </head>
@@ -161,7 +173,7 @@
 
         <!-- // Main Carousel -->
 	
-		<div class="container">
+		<div class="container" width:1130px;>
 				
 			<div id="carousel-example-generic" class="carousel slide">
 				<!--
@@ -181,7 +193,7 @@
 					<li data-target="#carousel-example-generic" data-slide-to="4"></li>
 					<li data-target="#carousel-example-generic" data-slide-to="5"></li>
 				</ol>
-				<h2 style="margin-left:25px;">Best 작품 추천</h2>
+				<h2 class="bestH" style="margin-left:25px;">Best 작품 추천</h2>
 				<!-- 
                 위의 data-slide-to가 0 2 2이면 두번째 동그라미 클릭해도 3번째 이미지가 나온다. 
                 0 2 5이면 세번째 동그라미 클릭해도 아무 반응이 없다. 
@@ -247,16 +259,15 @@
 
 <!--인기 작가 영역-->
 <section name="bbox">
-
+<div class="bestArtist">
+		<h3>인기작가추천</h3>
 
 <div class="box-wrap">
-		<h3>인기<br>작가<br>추천</h3>
 	<% if((ArrayList<Files>)request.getAttribute("bestWriterList") != null){
 		for(Files bf : bestWriterList){
 		
 	%>
-				<div  class="box">
-				
+			<div  class="box">
 				<div class="img"><img src="/artBridge/image/profile/<%=bf.getChange_title()%>" alt=""></div>
 				<div class="info">
 					<h3><%=bf.getMem_name() %></h3>
@@ -268,6 +279,7 @@
 	<%}} %>
 		
 	</div>	
+	</div>
 </section>
 
 
@@ -284,15 +296,12 @@
 			%>
 			<div class="box">
 
-				<div class="img">
-					<img src="/artBridge/image/<%=nl.getChange_title()%>"
-						alt="">
-				</div>
+				<div class="img"><img src="/artBridge/image/thumbnail_upload/<%=nl.getChange_title()%>"	alt="">	</div>
 				<div class="info">
-					<h3><%=nl.getBoard_title()%></h3>
-					<p class="goBoard">
-						작가 글로 이동<input type="hidden" value=<%=nl.getBoard_no()%>>
-					</p>
+						<h3><%=nl.getBoard_title()%></h3>
+						<p class="goBoard">
+							작가 글로 이동<input type="hidden" value=<%=nl.getBoard_no()%>>
+						</p>
 					<!-- 스크립트로 goProfile click 시 location.href로 작가 프로필로 연결 해당 사진의 member_no까지 전달-->
 				</div>
 			</div>

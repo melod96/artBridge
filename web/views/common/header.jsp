@@ -51,7 +51,7 @@
 						<li><a href="#" data-toggle="modal"
 							data-target="#login-modal" class="login"><span class="hidden-xs text-uppercase">로그인</span></a>
 						</li>
-						<li><a href="../member/joinForm.jsp" class="join">회원가입</a></li>
+						<li><a href="/artBridge/views/member/joinForm.jsp" class="join">회원가입</a></li>
 						<!-- // 비로그인시 노출 -->
 						<% }else{ %>
 						<!-- 로그인시 노출 -->
