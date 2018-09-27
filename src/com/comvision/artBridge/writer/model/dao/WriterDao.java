@@ -228,8 +228,8 @@ public class WriterDao {
 			pstmt.setString(1, m.getNick_name());
 			pstmt.setString(2, m.getIntroduction());
 			pstmt.setInt(3, m.getWriter_slot());
-			//pstmt.setInt(3, m.setReception_status(););
-			pstmt.setInt(4, m.getMember_no());
+			pstmt.setInt(4, m.getReception_status());
+			pstmt.setInt(5, m.getMember_no());
 			
 			result = pstmt.executeUpdate();
 			
@@ -311,25 +311,44 @@ public class WriterDao {
 		return selectProfileImg;
 	}
 
-	//썸네일 사진 노출용 메소드
-	public ArrayList<Files> selectThumbImg(Connection con, int memberNo) {
+	//작품리스트 노출(썸네일 포함)
+	public HashMap<String, Object> selectThumbImg(Connection con, int currentPage, int limit, int memberNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		ArrayList<Files> selectThumbImg = null;
+		HashMap<String, Object> hmap = null;
+		Board b = null;
 		Files f = null;
+		ArrayList<Files> selectThumbImg = null;
 		
 		String query = prop.getProperty("selectPieceListThumb");
 		
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, memberNo);
-			//pstmt.setInt(2, boardNo);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
 			selectThumbImg = new ArrayList<Files>();
 			
 			while(rset.next()){
+				b = new Board();
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setBoard_type(rset.getInt("board_type"));
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				b.setBoard_date(rset.getDate("board_date"));
+				//b.setMember_no(rset.getInt("member_no"));
+				//b.setModify_date(rset.getDate("modify_date"));
+				b.setBoard_status(rset.getInt("board_status"));
+				b.setBoard_count(rset.getInt("board_count"));
+				b.setMain_view(rset.getInt("main_view"));
+				
+				
 				f = new Files();
 				f.setFiles_no(rset.getInt("files_no"));
 				//f.setF_reference_no(rset.getInt("f_reference_no"));
@@ -343,6 +362,9 @@ public class WriterDao {
 				selectThumbImg.add(f);
 				//System.out.println(selectThumbImg);
 			}
+			hmap = new HashMap<String, Object>();
+			hmap.put("board", b);
+			hmap.put("file", selectThumbImg);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -351,7 +373,7 @@ public class WriterDao {
 			close(rset);
 		}
 		
-		return selectThumbImg;
+		return hmap;
 	}
 		
 	//작품 등록시 연관검색어 등록 메소드

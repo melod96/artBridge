@@ -298,6 +298,7 @@
 	                                      		num++;
                                       		}
                                       		
+                                      		//저장버튼 클릭시
                                      		$(function(){
                                      			var theForm = document.frmSubmit;
                                      			$("#addBtn").click(function(){

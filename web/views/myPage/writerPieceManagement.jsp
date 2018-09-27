@@ -12,6 +12,7 @@
 		list = (ArrayList<Board>)request.getAttribute("list");
 	}
 	
+	//페이징
 	PageInfo pi = null;
 	int listCount = 0;
 	int currentPage = 0;
@@ -32,16 +33,26 @@
 		m = (Member)session.getAttribute("loginUser");
 	}
 	
+	//썸네일 이미지
 	Board b = new Board();
+	/* Board b = (Board)request.getAttribute("b");
+	ArrayList<Files> list = (ArrayList<Files>)request.getAttribute("list");
+	Files titleImg = list.get(0);
+	Files detailImg1 = list.get(1);
+	Files detailImg2 = list.get(2);
+	Files detailImg3 = list.get(3); */
 	
+	//프로필 이미지
+	ArrayList<Files> profileFile = (ArrayList<Files>)request.getAttribute("profileFile");
+	Files profileImg = profileFile.get(0);
+	
+	//작가 슬롯갯수
 	int slot = 0;
 	if(m.getWriter_slot() > 0){
 		slot = m.getWriter_slot();
 	}
-	
-	ArrayList<Files> fileListResult = (ArrayList<Files>)request.getAttribute("fileListResult");
-	Files profileImg = fileListResult.get(0);
-	
+
+	//작가 평점
 	int writerAvg = 0;
 	if(request.getAttribute("writerAvg") != null){
 		writerAvg = (int)request.getAttribute("writerAvg");
@@ -226,24 +237,32 @@
                               <div class="state">
 	                              <span class="txt-off" title="접수불가">OFF</span>
 	                              <label class="switch">
-								  	 <input type="checkbox" name="reception_status" onclick="swichTg(this)" value="<%= m.getReception_status() %>">
+								  	 <input type="checkbox" name="reception_status" onclick="swichTg(this)" >
 								 	 <span class="slider round"></span>
 								  </label>
 	                              <span class="txt-on" title="접수중">ON</span>
                               </div>
 							  <script>
 								 $(function(){
-									 swichTg();
-								  })
+									 var swichVal = <%= m.getReception_status() %>;
+									 //console.log(swichVal);
+									 if(swichVal == 1){
+										$(".switch input").prop('checked', true);
+										$('.txt-on').css('color','#ff5722');
+									 }else{
+										 $(".switch input").prop('checked', false);
+										 $('.txt-off').css('color','#ff5722');
+									 }
+								 });
 								  function swichTg(ck){
 									  var swichCk = $(ck).prop('checked');
 								  		if(swichCk == true){
 								  			$(".switch input").attr('value','1')
 								  			$('.txt-on').css('color','#ff5722');
-								  			$('.txt-off').css('color','#afafaf');
+								  			$('.txt-off').css('color','none');
 								  		}else{
 								  			$(".switch input").attr('value','0')
-								  			$('.txt-on').css('color','#afafaf');
+								  			$('.txt-on').css('color','none');
 								  			$('.txt-off').css('color','#ff5722');
 								  		}
 								  }

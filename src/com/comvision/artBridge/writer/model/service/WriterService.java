@@ -141,17 +141,23 @@ public class WriterService {
 		return selectProfileImg;
 	}
 
-	//썸네일 사진 노출용 메소드
-	public ArrayList<Files> selectThumbImg(int memberNo) {
+	//작품리스트 노출(썸네일 포함)
+	public HashMap<String, Object> selectThumbImg(int currentPage, int limit, int memberNo) {
 		Connection con = getConnection();
 		
-		ArrayList<Files> selectThumbImg = null;
+		HashMap<String, Object> hmap = null;
 		
-		selectThumbImg = new WriterDao().selectThumbImg(con, memberNo);
+		hmap = new WriterDao().selectThumbImg(con, currentPage, limit, memberNo);
+		
+		if(hmap != null){
+			commit(con);
+		}else{
+			rollback(con);
+		}
 		
 		close(con);
 		
-		return selectThumbImg;
+		return hmap;
 	}
 
 	//작가 별점 노출용 메소드
