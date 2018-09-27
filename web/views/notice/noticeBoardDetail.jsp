@@ -24,7 +24,7 @@
         <!-- 주석 영역 -->
         <section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
             <div class="container">
-                <h2>서브페이지 타이틀</h2>
+                <h2>공지사항</h2>
             </div>
         </section>
 
@@ -34,7 +34,7 @@
                 <div class="col-md-12">
                     
                     <div class="heading">
-                      <h2 class="tit1">공지사항</h2>
+                      <h2 class="tit1">공지사항 상세보기</h2>
                     </div>
                     <table class="tbl-type01">
                         <colgroup>

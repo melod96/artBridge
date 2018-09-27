@@ -1,5 +1,33 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.files.model.vo.*, com.comvision.artBridge.admin.model.vo.*"%>
+    
+    
+<%
+	ArrayList<Files> slidelist = null;
+	ArrayList<Files> bestWriterList = null;
+	ArrayList<Files> newList = null;
+	ArrayList<Notice> noticeList = null;
+	
+	if((ArrayList<Files>)request.getAttribute("slidelist") != null){
+		slidelist = (ArrayList<Files>)request.getAttribute("slidelist");
+	}
+	
+	if((ArrayList<Files>)request.getAttribute("bestWriterList") != null){
+		bestWriterList= (ArrayList<Files>)request.getAttribute("bestWriterList");
+	}
+		
+	if((ArrayList<Files>)request.getAttribute("newList") != null){
+		newList= (ArrayList<Files>)request.getAttribute("newList");
+	}
+
+	if((ArrayList<Notice>)request.getAttribute("noticeList") != null){
+		noticeList= (ArrayList<Notice>)request.getAttribute("noticeList");
+	}
+
+
+
+%>
+    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -31,7 +59,7 @@
 	.container{}
 	#carousel-example-generic{width:1110px;}
 	.item{margin-right:auto;margin-left:auto;width:1110px;height:480px;}	
-	body{background-image:url("/artBridge/image/mainContent/slide/7.png");background-size:contain;/* background-size:100% 100%;background-repeat: no-repeat */}
+	body{background-image:url("/artBridge/image/mainContent/slide/back02.png");background-size:contain;/* background-size:100% 100%;background-repeat: no-repeat */}
 	.item img{margin-top:80px;}
 	
 	
@@ -119,6 +147,9 @@
 	
 </head>
 <body>
+
+
+
     <div id="all">
        
         <!-- Header -->
@@ -126,12 +157,12 @@
         <!-- // Header -->
 
 <br><br><br><br>
-             
+              
 
         <!-- // Main Carousel -->
-
+	
 		<div class="container">
-			
+				
 			<div id="carousel-example-generic" class="carousel slide">
 				<!--
             id="carousel-example-generic" 없으면 다음 페이지로 안넘어간다.
@@ -150,6 +181,7 @@
 					<li data-target="#carousel-example-generic" data-slide-to="4"></li>
 					<li data-target="#carousel-example-generic" data-slide-to="5"></li>
 				</ol>
+				<h2 style="margin-left:25px;">Best 작품 추천</h2>
 				<!-- 
                 위의 data-slide-to가 0 2 2이면 두번째 동그라미 클릭해도 3번째 이미지가 나온다. 
                 0 2 5이면 세번째 동그라미 클릭해도 아무 반응이 없다. 
@@ -162,43 +194,9 @@
 					<!-- class="carousel-inner" : 없으면 이미지 3장이 모두 세로로 배치된다. 
              -->
 				<!--메인 best ajax-->
-				<script>
-				
-					<%-- $(function() {
-
-						$.ajax({
-							url : "bestLoad",
-							type : "get",
-							success : function(data) {
-								for(var key in data){
-								
-								var $carousel = $(".carousel-inner");
-								
-								var $div = $("<div class='item'>");
-								var $img = $("<img src='/artBridge/image/mainContent/slide/" + data[key].change_title + " alt='Second slide'>");
-								console.log(key);
-								/* var $img2 = $("<img src='/artBridge/image/mainContent/slide/" + data[key].change_title + " alt='Second slide'>");
-								var $img2 = $("<img src='/artBridge/image/mainContent/slide/" + data[key].change_title + " alt='Second slide'>");
-								var $img2 = $("<img src='/artBridge/image/mainContent/slide/" + data[key].change_title + " alt='Second slide'>");
-								var $img2 = $("<img src='/artBridge/image/mainContent/slide/" + data[key].change_title + " alt='Second slide'>"); */
-								<img id='mainBest' src='/artBridge/image/mainContent/slide/<%=data[key].change_title%>'>
-								
-								$div.append($img);
-								$carousel.append($div);
-								
-								}
-								
-							},
-							error : function() {
-								console.log("에러");
-							}
-
-						});
-					}); --%>
-				</script>
 				
 					<div class="item active">
-						<%-- <img id="img-change" src="<%=request.getContextPath()%>/image/profile/<%=profileImg.getChange_title()%>"> --%>
+					
 						<img src="/artBridge/image/mainContent/slide/member01.png" alt="First slide">
 						<!-- 캡션 넣고 싶을 때 아래 4줄 추가하면 된다. 캡션은 자동 중앙 정렬된다. -->
 						<!--  <div class="carousel-caption">
@@ -206,6 +204,17 @@
                         <p>캡션 내부에는 HTML 태그 사용 가능합니다.</p>
                      </div>  -->
 					</div>
+					
+					<%if((ArrayList<Files>)request.getAttribute("slidelist") != null){
+						for(Files f : slidelist){
+					%>
+					
+					<div class="item">
+						<img src="/artBridge/image/mainContent/slide/<%=f.getChange_title() %>" alt="second slide">
+					</div>
+					
+					<%} }%>
+					
 					
 
 				</div>
@@ -221,15 +230,15 @@
 			</div>
 		</div>
 
-		<script>
+		<!-- <script>
 			/* 자동으로 5초의 지연시간이 설정되어 있는데 아래와 같이 바꿀수 있다. 
 			아래 코드 쓰려면 위 코드 지워야 한다.  */
-			/* 
+			 
 			$('.carousel').carousel({
 			    interval: 1000
 			}); 
-			 */
-		</script>
+			 
+		</script> -->
 
 
 
@@ -241,32 +250,23 @@
 
 
 <div class="box-wrap">
+		<h3>인기<br>작가<br>추천</h3>
+	<% if((ArrayList<Files>)request.getAttribute("bestWriterList") != null){
+		for(Files bf : bestWriterList){
 		
+	%>
+				<div  class="box">
+				
+				<div class="img"><img src="/artBridge/image/profile/<%=bf.getChange_title()%>" alt=""></div>
+				<div class="info">
+					<h3><%=bf.getMem_name() %></h3>
+					<p class="goProfile">작가프로필로 이동<input type="hidden" value=<%=bf.getMem_no()%>></p>
+					<!-- 스크립트로 goProfile click 시 location.href로 작가 프로필로 연결 해당 사진의 member_no까지 전달-->
+				</div>
+			</div>
 	
-		<div  class="box">
-			
-			<div class="img"><img src="/artBridge/image/mainContent/artist/5.png" alt=""></div>
-			<div class="info">
-				<h3>래기쓰</h3>
-				<p>작가프로필로 이동</p>
-			</div>
-		</div>
+	<%}} %>
 		
-		<div class="box">
-			<div class="img"><img src="/artBridge/image/mainContent/artist/6.png" alt=""></div>
-			<div class="info">
-				<h3>뽀짝쓰</h3>
-				<p >작가프로필로 이동</p>
-			</div>
-		</div>
-		
-		<div  class="box">
-			<div class="img"><img src="https://tistory4.daumcdn.net/tistory/2141493/skin/images/simg06.png" alt=""></div>
-			<div class="info">
-				<h3>뽀시쓰</h3>
-				<p>작가프로필로 이동</p>
-			</div>
-		</div>
 	</div>	
 </section>
 
@@ -278,29 +278,27 @@
 <!--최신 글 영역-->
 <section name="bbox">
 <div class="box-wrap">
-		<div class="box">
-			<div class="img"><img src="/artBridge/image/mainContent/sale/2.png" alt=""></div>
-			<div class="info">
-				<h3>Title</h3>
-				<p >작가 글로 이동</p>
+	<h3>최<br>신글</h3>
+			<%if((ArrayList<Files>)request.getAttribute("newList") != null){
+				for (Files nl : newList) {
+			%>
+			<div class="box">
+
+				<div class="img">
+					<img src="/artBridge/image/<%=nl.getChange_title()%>"
+						alt="">
+				</div>
+				<div class="info">
+					<h3><%=nl.getBoard_title()%></h3>
+					<p class="goBoard">
+						작가 글로 이동<input type="hidden" value=<%=nl.getBoard_no()%>>
+					</p>
+					<!-- 스크립트로 goProfile click 시 location.href로 작가 프로필로 연결 해당 사진의 member_no까지 전달-->
+				</div>
 			</div>
-		</div>
-		
-		<div class="box">
-			<div class="img"><img src="/artBridge/image/mainContent/sale/3.png" alt=""></div>
-			<div class="info">
-				<h3>Title</h3>
-				<p >작가 글로 이동</p>
-			</div>
-		</div>
-		
-		<div class="box">
-			<div class="img"><img src="/artBridge/image/mainContent/sale/4.png" alt=""></div>
-			<div class="info">
-				<h3>Title</h3>
-				<p >작가 글로 이동</p>
-			</div>
-		</div>
+
+			<%}} %>
+
 	</div>	
 </section>
 
@@ -321,61 +319,27 @@
                   <div class="noticeArea">
                       <h5>아트브릿지 공지사항<a class="noticeMore" style="float:right;font-size:0.8em;margin-top:auto;margin-bottom:auto;margin-right:15px;color:#F2F2F2;">more</a></h5>
                       <ul class="notice1">
-                      
-                      
-                     	 <li>
-							<input type="hidden" value="공지글 번호">
-							<span class="ntTitle">
-									<a>공지글 제목ㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱ</a></span><span class="ntDate">공지글 작성일
-							</span>
-						</li>
 						
-						 <li>
-							<input type="hidden" value="공지글 번호">
-							<span class="ntTitle">
-									<a>공지글 제목ㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱ</a></span><span class="ntDate">공지글 작성일
-							</span>
-						</li>
+
+						<%if((ArrayList<Notice>)request.getAttribute("noticeList") != null){
+                      		for (Notice ntl : noticeList) {
+                     	 %>
 						
-						 <li>
-							<input type="hidden" value="공지글 번호">
-							<span class="ntTitle">
-									<a>공지글 제목ㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱ</a></span><span class="ntDate">공지글 작성일
-							</span>
-						</li>
-						
-						 <li>
-							<input type="hidden" value="공지글 번호">
-							<span class="ntTitle">
-									<a>공지글 제목ㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱ</a></span><span class="ntDate">공지글 작성일
-							</span>
-						</li>
-						
-						 <li>
-							<input type="hidden" value="공지글 번호">
-							<span class="ntTitle">
-									<a>공지글 제목ㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱㄱ</a></span><span class="ntDate">공지글 작성일
-							</span>
-						</li>
-						
-						
-						
-						
-					  <%-- <% for(int i = 0 ; i < 5 ; i++){%>
 						<li>
-							<input type="hidden" value="<%=list.get(i).getMb_no()%>">
+							<input type="hidden" value=<%=ntl.getnNo() %>>
 							<span class="ntTitle">
-									<a><%=list.get(i).getBd_title()%> </a></span><span class="ntDate"><%=list.get(i).getBd_date()%>
+									<a class="ntTitleTag"><%=ntl.getnTitle() %><input type="hidden" value="<%=ntl.getnNo()%>"></a></span><span class="ntDate"><%=ntl.getnDate()%>
 							</span>
 						</li>
 						
-						
-						<%} %> --%>
-						 
+						<%
+							}}
+						%>
+
 						
 						
 					  </ul>
-                  </div> <!--onclick="location.href=''" -->
+                  </div>
 
 			<!--/공지사항-->
 			
@@ -419,6 +383,19 @@
 	
 					});
 				});
+	   		 
+	   		 $(function(){
+	 			
+					$(".ntTitleTag").mouseenter(function(){
+						$(this).css({ "cursor":"pointer"});
+					}).click(function(){
+						var num = $(this).children().val();
+					
+						location.href = "/artBridge/selectDetail.nb?num="+num;
+		
+						});
+					});
+	   		 
 	</script>
 
 
