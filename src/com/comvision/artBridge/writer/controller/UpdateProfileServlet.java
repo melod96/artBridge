@@ -38,6 +38,7 @@ public class UpdateProfileServlet extends HttpServlet {
 			
 			String root = request.getSession().getServletContext().getRealPath("/");
 			String savePath = root + "image/profile/";
+			System.out.println(savePath);
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
 			ArrayList<String> saveFiles = new ArrayList<String>();
@@ -65,7 +66,6 @@ public class UpdateProfileServlet extends HttpServlet {
 
 			//member테이블에 저장할 데이터 가져오기
 			int memberNo = Integer.parseInt(multiRequest.getParameter("memberNo"));
-			String nick_name = multiRequest.getParameter("nick");
 			String introduction = multiRequest.getParameter("introtxt");
 			int writer_slot = Integer.parseInt(multiRequest.getParameter("slot"));
 			String[] reception_status = multiRequest.getParameterValues("reception_status");
@@ -73,23 +73,15 @@ public class UpdateProfileServlet extends HttpServlet {
 
 			if(multiRequest.getParameterValues("reception_status") == null){
 				reception_status1 = "0";
-				//System.out.println("if문 : " + reception_status1);
 			}else{
 				reception_status1 = "1";
-				//System.out.println("된다");
 			}
 			
 			int reception_status2 = Integer.parseInt(reception_status1);
 			
-			/*System.out.println(nick_name);
-			System.out.println(introduction);
-			System.out.println(writer_slot);
-			System.out.println(reception_status2);*/
-			
 			//member객체 생성
 			Member m = new Member();
 			m.setMember_no(memberNo);
-			m.setNick_name(nick_name);
 			m.setIntroduction(introduction);
 			m.setWriter_slot(writer_slot);
 			m.setReception_status(reception_status2);

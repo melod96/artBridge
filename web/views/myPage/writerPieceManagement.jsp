@@ -43,8 +43,14 @@
 	Files detailImg3 = list.get(3); */
 	
 	//프로필 이미지
-	ArrayList<Files> profileFile = (ArrayList<Files>)request.getAttribute("profileFile");
-	Files profileImg = profileFile.get(0);
+	ArrayList<Files> profileFile = null;
+	Files profileImg = null;
+	if(request.getAttribute("profileFile") != null){
+		profileFile = (ArrayList<Files>)request.getAttribute("profileFile");
+		if(profileFile.size() > 0){
+			profileImg = profileFile.get(0);
+		}
+	};
 	
 	//작가 슬롯갯수
 	int slot = 0;
@@ -68,7 +74,7 @@
 <%@ include file="/views/common/head.jsp" %>
 <style type="text/css">
    .frofile-box{overflow:hidden; position:relative; border:1px solid #9e9e9e; padding:30px; font-size:16px; width:1110px;}
-   .img-in{overflow:hidden; width:150px; height:150px; border:1px solid #ddd; border-radius:50%; background:url("/artBridge/image/common/img_profile.png") 50% no-repeat; background-size:100%;}
+   .img-in{overflow:hidden; width:150px; height:150px; border:1px solid #ddd; border-radius:50%; /* background:url("/artBridge/image/common/img_profile.png") 50% no-repeat; background-size:100%; */}
    .img-in img{width:100%;}
    .img-area{float:left; text-align:center;}
    .img-area .file-btn{margin-top:15px;}
@@ -85,6 +91,7 @@
    .input-area label[for=state2]{color:red; font-weight:bold;}
    .pro-save{width:200px; height:40px; font-size:15px;}
    .input-area .state{display:inline-block; margin-left:15px; line-height:30px; color:#afafaf; font-weight:bold;}
+   .input-area .nick-name{width:500px; display:inline-block; margin-left:20px; margin-bottom:15px; font-weight:bold;}
 
    .state-area{margin-left:20px; float:left; width:250px;}
    .state-area li{position:relative; border-bottom:1px solid #bdbdbd; margin-bottom:10px; font-weight:bold;}
@@ -213,8 +220,11 @@
                       <div class="frofile-box">
                           <div class="img-area">
                               <div class="img-in">
-                                <img id="img-change" src="<%=request.getContextPath()%>/image/profile/<%=profileImg.getChange_title()%>">
-                                <!-- <img id="img-change" src="/artBridge/image/common/img_profile.png" alt="default frofile image"> -->
+                              	<%if(request.getAttribute("profileFile") != null){ %>
+                                	<img id="img-change" src="/artBridge/image/profile/<%=profileImg.getChange_title()%>">
+                                <% }else{ %>
+                                	<img id="img-change" src="/artBridge/image/common/img_profile.png" alt="프로필 이미지">
+                                <% } %>
                               </div>
                               <div class="file-btn">
                                 <input type="file" id="sel-img" name="profileImg" value="이미지 선택">
@@ -225,7 +235,8 @@
                           <div class="input-area">
                           	  <input type="hidden" name="memberNo" value="<%=m.getMember_no()%>">
                               <label for="nick">닉네임</label>
-                              <input id="nick" name="nick" class="form-control" type="text" value="<%= m.getNick_name() %>">
+                              <%-- <input id="nick" name="nick" class="form-control" type="text" value="<%= m.getNick_name() %>" > --%>
+                              <span class="nick-name">[ <%= m.getNick_name() %> ]</span>
                               
                               <label for="introtxt">소개글</label>
                               <textarea id="introtxt" name="introtxt" class="form-control" rows="3"><%= m.getIntroduction() %></textarea> 
@@ -297,7 +308,7 @@
                        <button type="button" class="btn btn-primary" onclick="location.href='/artBridge/views/myPage/writerPieceInsertAgree.jsp?boardNo=<%=b.getBoard_no()%>'">커미션 작품등록</button>
                    </div>
                     <div class="bord-wrap">
-                    	<% if(list != null){
+                    	<% if(list != null) {if(list.size() > 0){
                   			int no = listCount - (currentPage - 1) * 10;
                     		for(int i = 0; i < list.size(); i++){
                     		b = list.get(i);%>
@@ -345,9 +356,9 @@
                         </div>
                         <% 	no--;
 	                        }
-	                    } else if(list == null) { %>
+	                    } else { %>
                         <div class="piece-list default">첫 작품을 등록해주세요.</div>
-                        <% } %>
+                        <% }} %>
                     </div>
                     <!-- // 내 작품 관리 영역 -->
 				

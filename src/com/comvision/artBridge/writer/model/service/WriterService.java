@@ -141,7 +141,7 @@ public class WriterService {
 		return selectProfileImg;
 	}
 
-	//작품리스트 노출(썸네일 포함)
+	/*//작품리스트 노출(썸네일 포함)
 	public HashMap<String, Object> selectThumbImg(int currentPage, int limit, int memberNo) {
 		Connection con = getConnection();
 		
@@ -158,7 +158,7 @@ public class WriterService {
 		close(con);
 		
 		return hmap;
-	}
+	}*/
 
 	//작가 별점 노출용 메소드
 	public int selectWriterAvg(int memberNo) {
@@ -172,6 +172,18 @@ public class WriterService {
 		
 		return selectWriterAvg;
 	}
+
+	/*public ArrayList<HashMap<String, Files>> selectThumbImg(int currentPage, int limit, int memberNo) {
+		Connection con = getConnection();
+		
+		ArrayList<HashMap<String, Files>> list = null;
+		
+		list = new WriterDao().selectThumbImg(con, currentPage, limit, memberNo);
+		
+		close(con);
+		
+		return list;
+	}*/
 	
 
 }
