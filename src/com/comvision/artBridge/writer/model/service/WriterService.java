@@ -173,6 +173,18 @@ public class WriterService {
 		return selectWriterAvg;
 	}
 
+	public ArrayList<HashMap<String, Object>> selectBoardWithThumbImg(int currentPage, int limit, int memberNo) {
+		Connection con = getConnection();
+		
+		ArrayList<HashMap<String, Object>> list = null;
+		
+		list = new WriterDao().selectBoardWithThumbImg(con, currentPage, limit, memberNo);
+		
+		close(con);
+		
+		return list;
+	}
+
 	/*public ArrayList<HashMap<String, Files>> selectThumbImg(int currentPage, int limit, int memberNo) {
 		Connection con = getConnection();
 		

@@ -409,6 +409,89 @@ public class WriterDao {
 		return result;
 	}
 
+	public ArrayList<HashMap<String, Object>> selectBoardWithThumbImg(Connection con, int currentPage, int limit, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		ArrayList<Files> selectThumbImg = new ArrayList<Files>();
+		Board b = new Board();
+		Files f = null;
+		
+		String query = prop.getProperty("selectPieceListThumb");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			selectThumbImg = new ArrayList<Files>();
+			
+			while(rset.next()){
+				if(b.getBoard_no() == 0){
+					b.setBoard_no(rset.getInt("board_no"));
+					b.setBoard_type(rset.getInt("board_type"));
+					b.setBoard_title(rset.getString("board_title"));
+					b.setBoard_content(rset.getString("board_content"));
+					b.setBoard_date(rset.getDate("board_date"));
+					//b.setMember_no(rset.getInt("member_no"));
+					//b.setModify_date(rset.getDate("modify_date"));
+					b.setBoard_status(rset.getInt("board_status"));
+					b.setBoard_count(rset.getInt("board_count"));
+					b.setMain_view(rset.getInt("main_view"));
+				}
+				
+				if(b.getBoard_no() == rset.getInt("board_no")){
+					f = new Files();
+					f.setFiles_no(rset.getInt("files_no"));
+					//f.setF_reference_no(rset.getInt("f_reference_no"));
+					f.setFiles_title(rset.getString("files_title"));
+					f.setChange_title(rset.getString("change_title"));
+					f.setFiles_type(rset.getInt("files_type"));
+					f.setFiles_root(rset.getString("files_root"));
+					f.setFiles_date(rset.getDate("files_date"));
+					f.setFiles_secession(rset.getInt("files_secession"));
+
+					selectThumbImg.add(f);
+				} else {
+					hmap.put("board", b);
+					hmap.put("selectThumbImg", selectThumbImg);
+					b = new Board();
+					f = new Files();
+					selectThumbImg = new ArrayList<Files>();
+					
+					f.setFiles_no(rset.getInt("files_no"));
+					//f.setF_reference_no(rset.getInt("f_reference_no"));
+					f.setFiles_title(rset.getString("files_title"));
+					f.setChange_title(rset.getString("change_title"));
+					f.setFiles_type(rset.getInt("files_type"));
+					f.setFiles_root(rset.getString("files_root"));
+					f.setFiles_date(rset.getDate("files_date"));
+					f.setFiles_secession(rset.getInt("files_secession"));
+
+					selectThumbImg.add(f);
+				}
+
+					
+				list.add(hmap);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
+	}
+
 	/*public ArrayList<HashMap<String, Files>> selectThumbImg(Connection con, int currentPage, int limit, int memberNo) {
 		
 		PreparedStatement pstmt = null;

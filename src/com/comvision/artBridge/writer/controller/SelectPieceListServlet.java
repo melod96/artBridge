@@ -57,13 +57,13 @@ public class SelectPieceListServlet extends HttpServlet {
 		
 		
 		//작가 작품관리 리스트
-		ArrayList<Board> list = new WriterService().selectList(currentPage, limit, memberNo);
+		//ArrayList<Board> list = new WriterService().selectList(currentPage, limit, memberNo);
 		
 		//프로필 사진 노출
 		ArrayList<Files> profileFile = new WriterService().selectProfileImg(memberNo);
 		
 		//작품리스트 노출(썸네일 포함)
-		//ArrayList<HashMap<String, Files>> list = new WriterService().selectThumbImg(currentPage, limit, memberNo);
+		ArrayList<HashMap<String, Object>> list = new WriterService().selectBoardWithThumbImg(currentPage, limit, memberNo);
 		
 		//작가 별점 노출
 		int writerAvg = new WriterService().selectWriterAvg(memberNo);
