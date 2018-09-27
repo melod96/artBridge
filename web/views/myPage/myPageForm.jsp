@@ -146,15 +146,15 @@
         <!-- // Header -->
 
 <% 
-	ArrayList<Transaction> transList = null;
+	ArrayList<Transaction> tList = null;
 	/* if(session.getAttribute("transList") != null){
 		transList = (ArrayList<Transaction>)request.getAttribute("transList");
 	} */
 	if(request.getAttribute("transList")!= null){
-		transList = (ArrayList<Transaction>)request.getAttribute("transList");
+		tList = (ArrayList<Transaction>)request.getAttribute("transList");
 	}
-	System.out.println(transList);
-	Transaction t = null;
+	System.out.println("상단부" + tList);
+	/* Transaction t = null;
 	if(request.getAttribute("t") != null){
 		t = (Transaction)request.getAttribute("t");
 	}
@@ -418,54 +418,52 @@
 								<th scope="col">문의<br>확인</th>
 								<th scope="col">작업 시작일</th>
 								<th scope="col">작업 완료(예정)일</th>
+<!-- 								if 작활활동 결제가 완료 됐으면서 결제 완료일로부터 3일이 지나지 않았으면 보이기 -->
+<!-- 								<th scope="col">환불요청(결제상태)</th> -->
+<!-- 								if 작활활동 결제가 완료 됐으면서 결제 완료일로부터 3일이 지나지 않았으면 보이기 -->
 							</tr>
 						</thead>
 						
-						<tbody>
-<%-- 						<% for(transInfo n : list){  --%>		<!-- ***수정사항 : 조건에 따라 항목 구분하기 -->
-<%-- 								if(role.equals("seller"){ %> --%>
-<!-- 						<tr id="" class="seller-list transInfo-list"> -->
-<!-- 							<td>판매</td> -->
-<%-- 								<% }else{ %> --%>
-<!-- 						<tr id="buyer" class="buyer-list transInfo-list"> -->
-<!-- 							<td>구매</td> -->
-<%-- 								<% } %> --%>
-<!-- 							<td><a onclick="stmtDisplayBlock();" class="btn">18083001</a></td> -->
-<!-- 							<td>소나나</td> -->
-<!-- 							<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td> -->
-<!-- 							<td>컨펌 1단계</td> -->
-<!-- 							<td><img src='/artBridge/web/image/common/mypage/msg.png'></td> -->
-<!-- 							<td>2018-00-00</td> -->
-<!-- 							<td>2018-00-00</td> -->
-<!-- 						</tr> -->
-<%-- 						 <% } %>  --%>
-							
-							<% if(transList != null){for(Transaction ts : transList){ 
-							  if(ts.getDivRole_no() == 0){ %>	 
-								<tr id="" class="seller-list transInfo-list">
+						<tbody>		
+							<% if(tList != null){
+								for(int i = 0; i < tList.size(); i++){ 
+								  if(tList.get(i).getDivRole_no() == 0){ %>
+								  <tr id="" class="seller-list transInfo-list">
 									<td>판매</td>
-									<td><a onclick="stmtDisplayBlock(this.text);" id="orderNo" class="btn"><%= ts.getOrders_no() %></a></td>
-									<td><%= ts.getCusId() %></td>
-									<td class="txt-fl"><a href="#"><%= ts.getBoard_title() %></a></td>
-									<td><%= ts.getPay_status() %></td>
+									<td><a onclick="stmtDisplayBlock();" id="orderNo" class="btn"><%= tList.get(i).getOrders_no() %></a></td>
+									<td><%= tList.get(i).getCusId() %></td>
+									<td class="txt-fl"><a href="#"><%= tList.get(i).getBoard_title() %></a></td>
+<%-- 									<td><%= tList.get(i).getPay_status() %></td> --%>
+<td></td>
 									<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-									<td><%= ts.getOd_startDate() %></td>
-									<td><%= ts.getOd_endDate() %></td>
-								</tr>
-							  <% } else{ %>
+<%-- 									<td><%= tList.getOd_startDate() %></td> --%>
+<%-- 									<td><%= tList.getOd_endDate() %></td> --%>
+<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
+<!-- 										<div class="btn-center btn-outer-style"> -->
+<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">거래취소</button> -->
+<!-- 						                </div> -->
+<!-- 									</td> -->
+<td></td><td></td>
+								  </tr>
+							    <% } else{ %>
 								<tr id="" class="buyer-list transInfo-list">
 									<td>구매</td>
-									<td><a onclick="stmtDisplayBlock(this.text);" id="orderNo" class="btn"><%= ts.getOrders_no() %></a></td>
-									<td><%= ts.getWrtNick() %></td>
-									<td class="txt-fl"><a href="#"><%= ts.getBoard_title() %></a></td>
-									<td><%= ts.getPay_status() %></td>
+									<td><a onclick="stmtDisplayBlock();" id="orderNo" class="btn"><%= tList.get(i).getOrders_no() %></a></td>
+									<td><%= tList.get(i).getWrtNick() %></td>
+									<td class="txt-fl"><a href="#"><%= tList.get(i).getBoard_title() %></a></td>
+<%-- 									<td><%= tList.get(i).getPay_status() %></td> --%>
+<td></td>
 									<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-									<td><%= ts.getOd_startDate() %></td>
-									<td><%= ts.getOd_endDate() %></td>
-								</tr>
-							  <% } %>
-							<% }} %>
-							
+<%-- 									<td><%= tList.get(i).getOd_startDate() %></td> --%>
+<%-- 									<td><%= tList.get(i).getOd_endDate() %></td> --%>
+<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
+<!-- 										<div class="btn-center btn-outer-style"> -->
+<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">환불요청</button> -->
+<!-- 						                </div> -->
+<!-- 									</td> -->
+<td></td><td></td>
+								  </tr>
+								<% } } } %>
 						</tbody>
 					</table>
 	
@@ -1180,17 +1178,25 @@
 	//	* 페이지 호출
 		$(function(){
 // 			select orders_no from orders where member_no = ? or writer_no = ?
-			var pageName = '<%= (String)request.getParameter("pageName") %>';
+			var pageName = "<%= (String)request.getParameter("pageName") %>";
 <%-- 			location.href="<%= request.getContextPath() %>/selectTransList.ts"; --%>
+			
 
 			$('.order-menu, .bookmark-menu, .msg-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
 			
 			if(pageName != null){
+				alert(pageName);
 				anotherHidden(pageName)
-			} else{
-				anotherHidden('order-menu');			
+			} else if(pageName == null){
+				alert(pageName);
+				alert("안녕");
+				pageName = $('#order-menu').id();
+				console.log(pageName);
+				alert("2." + pageName);
 				/* $('.order-menu').css({"display":"block"});
 				$('#order-menu').css({"color":"black", "background":"white"}); */
+			}else if(pageName == $('#order-menu').id()){
+				location.href="<%= request.getContextPath() %>/selectTransList.ts";
 			}
 		});
 	            		  
@@ -1207,7 +1213,8 @@
 					type : "post",
 					success : function(data){
 						
-						}
+						var transList = data;
+						
 					}
 				});
 			
@@ -1225,6 +1232,9 @@
 				$('.heading .menuName').html("주문 관리");
 				$('#stmt-Filter').val("전체 보기");
 				$('.transInfo-list').css({"display":""});
+				$("select option").prop("selected", false);
+				
+				
 			}
 			if(thisMenu == "msg-menu" || thisMenu == "qna-menu"){
 				$('.msg-Filter').val("전체 보기");

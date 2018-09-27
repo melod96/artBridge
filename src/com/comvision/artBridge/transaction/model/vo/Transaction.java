@@ -128,19 +128,28 @@ public class Transaction implements Serializable{
 	public Date getOd_endDate() {
 		return od_endDate;
 	}
-
+	
 	public void setOd_endDate(Date od_endDate) {
 		this.od_endDate = od_endDate;
 	}
+
+	public int getOrders_activity() {
+		return orders_activity;
+	}
+
+	public void setOrders_activity(int orders_activity) {
+		this.orders_activity = orders_activity;
+	}
+
 	
-
-
 	@Override
 	public String toString() {
 		return "Transaction [divRole_no=" + divRole_no + ", orders_no=" + orders_no + ", cusName=" + cusName
 				+ ", cusId=" + cusId + ", wrtNick=" + wrtNick + ", wrtId=" + wrtId + ", pay_status=" + pay_status
 				+ ", o_date=" + o_date + ", payment=" + payment + ", board_title=" + board_title + ", od_startDate="
-				+ od_startDate + ", od_endDate=" + od_endDate + "]";
+				+ od_startDate + ", od_endDate=" + od_endDate + ", orders_activity=" + orders_activity + "]";
 	}
+
+	
 	
 }

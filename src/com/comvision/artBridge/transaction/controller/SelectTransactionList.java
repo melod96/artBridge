@@ -15,6 +15,7 @@ import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.transaction.model.service.TransactionService;
 import com.comvision.artBridge.transaction.model.vo.Transaction;
 import com.google.gson.Gson;
+import com.sun.xml.internal.ws.client.ResponseContext;
 
 /**
  * Servlet implementation class SelectTransactionList
@@ -69,26 +70,25 @@ public class SelectTransactionList extends HttpServlet {
 		ArrayList<Transaction> transList = new TransactionService().selectTransList(mNo);
 		System.out.println(transList);
 		
-
 		String page = "";
 		if(transList != null){
 			//page= "views/myPage/myPageForm.jsp";
 //			request.getSession().setAttribute("transList", transList);
 			page= "views/myPage/mypagelhm.jsp";
 			request.setAttribute("transList", transList);
+//			request.getSession().setAttribute("transList", transList);
 //			request.setAttribute("pi", pi);
 			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
 			new Gson().toJson(transList, response.getWriter());
-			
 		}else{
-			page = "views/common/errorPage.jsp";
+			String page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "리스트를 불러올 수 없습니다");
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
-		
+			RequestDispatcher view = request.getRequestDispatcher("views/myPage/myPageForm.jsp");
+			view.forward(request, response);
+//			response.getWriter();
 	}
 
 	/**
