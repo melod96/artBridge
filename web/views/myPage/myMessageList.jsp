@@ -41,6 +41,8 @@ ul.tab-menu li>a:hover {
 
 		<%@ include file="/views/common/adminHeader.jsp"%>
 
+<%int mem_id = ((Member)(session.getAttribute("loginUser"))).getMember_no(); %>
+
 		<!-- 주석 영역 -->
 		<div class="contents">
 			<!-- contents 필수 사용 -->
@@ -52,7 +54,9 @@ ul.tab-menu li>a:hover {
 					</div>
 
 					<hr>
-
+						<button type="submit" id="searchBtn1"  id="searchWords" name="searchWords" value="<%=mem_id %>"
+								class="btn btn-primary btn-md" style="float:right; margin-bottom:20px; margin-right:10px;"
+								onclick="send();">쪽지 보내기</button>
 					<br>
 					 <script>
 							//radio : '전체'클릭시 date박스 비활성화.
@@ -67,8 +71,23 @@ ul.tab-menu li>a:hover {
 							});
 
 						});
+					 
+					 
+					 
+					 	function send(){
+					 		
+					 		location.href = "/artBridge/views/myPage/sendMessageForm.jsp";
+					 		
+					 	}
 					</script> 
+					
+					
+					
+					
 					<div>
+					
+					
+												
 						<form action="<%= request.getContextPath() %>/selectList.msg?pageName=customerAdmin&currentPage=1" method="post">
 							<table class="tbl-type02">
 
@@ -274,7 +293,7 @@ ul.tab-menu li>a:hover {
 							<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.msg?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
 							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 						<%} %>
-						
+							
 						<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.msg?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
@@ -282,7 +301,7 @@ ul.tab-menu li>a:hover {
 					
 					<!--//페이징 처리-->
 				<%}else{ %>
-				
+					
 				<!-- 페이징 처리 부분 search-->
 					<div class="paginate">
 						<a onclick="location.href='<%=request.getContextPath()%>/search.ad?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
@@ -314,17 +333,18 @@ ul.tab-menu li>a:hover {
 						<a onclick = "location.href = '<%= request.getContextPath()%>/search.ad?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
+					
 					</div>
 				
 				<%} %>
 					
-					
-					
-					
-					
 					<!--//페이징-->
 					 
+					
+					 
 					<br> <br>
+					
+					
 				</div>
 			</div>
 		</div>
