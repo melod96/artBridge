@@ -63,14 +63,13 @@ public class UpdatePieceDeleteServlet extends HttpServlet {
 		
 		String page = "";
 		if(list != null){
-			page = "selectPieceList.wr";
-			//request.setAttribute("list", list);
+			response.sendRedirect("/artBridge/selectPieceList.wr?memberNo=" + memberNo);
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "작품 삭제 실패!");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 		
 	}
 

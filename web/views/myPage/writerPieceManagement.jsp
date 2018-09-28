@@ -7,9 +7,9 @@
     		com.comvision.artBridge.grade.model.vo.*"
 %>
 <% 
-	ArrayList<Board> list = null;
+	ArrayList<HashMap<String, Object>> list = null;
 	if(request.getAttribute("list") != null){
-		list = (ArrayList<Board>)request.getAttribute("list");
+		list = (ArrayList<HashMap<String, Object>>)request.getAttribute("list");
 	}
 	
 	//페이징
@@ -108,28 +108,23 @@
    .bord-wrap .piece-list{float:left; border:1px solid #9e9e9e; padding:20px; width:545px; margin-left:20px; margin-bottom:20px; font-weight:bold;}
    .bord-wrap .piece-list.default{width:100%; text-align:center; padding:50px 0;}
    .bord-wrap .piece-list:nth-child(2n+1){margin-left:0;}
-   .bord-wrap .seting-area{overflow:hidden; float:right;}
-   .bord-wrap .seting-area li{float:left; margin-left:10px;}
+   .bord-wrap .seting-area{overflow:hidden; float:right; margin-bottom:0;}
+   .bord-wrap .seting-area li{float:left; margin-left:10px; height:25px;}
    .bord-wrap .seting-area li input{display:inline-block; width:25px; height:25px; background-size:100% !important; border: none;}
    .bord-wrap .seting-area .btn-edit{background:url("/artBridge/image/common/ico_repaint.png") 0 0 no-repeat;}
    .bord-wrap .seting-area .btn-del{background:url("/artBridge/image/common/ico_delete.png") 0 0 no-repeat;}
 
    .bord-wrap .img-area{float:none; overflow:hidden; width:100%;}
-   .bord-wrap .img-area .tmb{overflow:hidden; float:left; width:32%;}
+   .bord-wrap .img-area .tmb{overflow:hidden; float:left; width:32%; height:122px;}
    .bord-wrap .img-area .tmb~.tmb{margin-left:1.9%;}
    .bord-wrap .img-area .tmb img{width:100%;}
 
-   .bord-wrap .info-area1{overflow:hidden; margin-top:20px;}
-   .bord-wrap .info-area1 span{float:left; width:30%; text-align:right;}
-   .bord-wrap .info-area1 span:first-child{width:70%; text-align:left;}
-   .bord-wrap .info-area2{overflow:hidden; margin-top:10px;}
-   .bord-wrap .info-area2 span{float:left;}
-   .bord-wrap .info-area2 .price{float:right; font-size:20px; font-weight:bold;}
-   .bord-wrap .info-area2 .tit_txt a{color:#333;}
-   .bord-wrap .info-area2 .tit_txt:hover{border-bottom:1px solid #3f51b5;}
-   .bord-wrap .info-area2 .tit_txt:hover a{color:#3f51b5;}
+   .bord-wrap .info-area1{margin-bottom:20px; font-size:15px; color:#242424;}
+   .bord-wrap .info-area1 span{width:30%;}
+   .bord-wrap .info-area1 span:first-child{width:70%;}
+   .bord-wrap .tit_txt a{color:#333;}
 
-   .heading{margin: 30px 0 10px 0 !important;}
+   .heading{margin: 30px 0 20px 0 !important;}
    div.btn-right.add-some button{bottom:0; top:auto;}
    .paginate{margin-bottom:50px;}
    .btn-default{background-color:#e4e4e4; color:#4e4e4e;}
@@ -292,47 +287,45 @@
 	                    	<% if(list != null) {if(list.size() > 0){
 	                  			int no = listCount - (currentPage - 1) * 10;
 	                    		for(int i = 0; i < list.size(); i++){
-	                    		b = list.get(i);%>
+	                    		b = (Board)(list.get(i).get("board"));%>
 	                        <div class="piece-list">
-	                          <ul class="seting-area">
-	                          	  <%-- <input type="hidden" name="boardNo" value="<%=b.getBoard_no()%>"> --%>
-	                              <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='/artBridge/views/myPage/writerPieceUpdateForm.jsp'"><label class="hide">수정</label></li>
-	                              <%-- <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='<%=request.getContextPath()%>/updatePieceView.wr?pieceNo=<%=b.getBoard_no()%>'"><label class="hide">수정</label></li> --%>
-	                              <!-- <li><input type="button" class="btn-del" title="작품 삭제" onclick="pieceDel()"><label class="hide">삭제</label></li> -->
-	                              <li><input type="button" class="btn-del" title="작품 삭제" onclick="location.href='<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>'"><label class="hide">삭제</label></li>
-	                          </ul>
-	                          <script>
-	                        	//서블릿으로 보내서 삭제하기 --> 보드 넘버가 마지막 게시글만 출력됨...
-	                          	<%-- function pieceDel(){
-	                        		var msg = confirm("작품을 삭제하시겠습니까?ㅜㅜ");
-	                          		if(msg == true){
-	                          			location.href="<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>";
-	                          			var theForm = document.pieceListForm;
-                         				theForm.method = "post";
-                         				theForm.action = "<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>";
-                         				theForm.submit();
-	                         			
-	                          		}else{
-	                          			return false;	
-	                          		}
-	                          	} --%>
-	                          </script>
+	                       		<div class="info-area1">
+	                              <span><%= m.getNick_name() %>작가 &nbsp; / &nbsp; <%= b.getBoard_title() %></span>
+	                              <ul class="seting-area">
+		                          	  <%-- <input type="hidden" name="boardNo" value="<%=b.getBoard_no()%>"> --%>
+		                              <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='/artBridge/views/myPage/writerPieceUpdateForm.jsp'"><label class="hide">수정</label></li>
+		                              <%-- <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='<%=request.getContextPath()%>/updatePieceView.wr?pieceNo=<%=b.getBoard_no()%>'"><label class="hide">수정</label></li> --%>
+		                              <!-- <li><input type="button" class="btn-del" title="작품 삭제" onclick="pieceDel()"><label class="hide">삭제</label></li> -->
+		                              <li><input type="button" class="btn-del" title="작품 삭제" onclick="location.href='<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>'"><label class="hide">삭제</label></li>
+		                          </ul>
+		                          <script>
+		                        	//서블릿으로 보내서 삭제하기 --> 보드 넘버가 마지막 게시글만 출력됨...
+		                          	<%-- function pieceDel(){
+		                        		var msg = confirm("작품을 삭제하시겠습니까?ㅜㅜ");
+		                          		if(msg == true){
+		                          			location.href="<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>";
+		                          			var theForm = document.pieceListForm;
+	                         				theForm.method = "post";
+	                         				theForm.action = "<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>";
+	                         				theForm.submit();
+		                         			
+		                          		}else{
+		                          			return false;	
+		                          		}
+		                          	} --%>
+		                          </script>
+	                          </div>
 	                          <div class="img-area">
-	                              <!-- <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span> -->
-	                              <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
-	                              <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
-	                              <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
-	                          </div>
-	                          <div class="info-area1">
-	                              <span><%= m.getNick_name() %>작가</span>
-	                              <!-- <span>신뢰도 : 100%</span> -->
-	                              <span>
-	                              	<div class="rateit" data-rateit-value="4.5" data-rateit-ispreset="true" data-rateit-readonly="true"></div>
-	                            </span>
-	                          </div>
-	                          <div class="info-area2">
-	                              <span class="tit_txt"><a href="#"><%= b.getBoard_title() %></a></span>
-	                              <span class="price">7,000 ~</span>
+		                          <a href="#">
+		                          	  <% for(int j = 0; j < ((ArrayList<Files>)list.get(i).get("selectThumbImg")).size(); j++){ 
+		                          	  		Files f = ((ArrayList<Files>)list.get(i).get("selectThumbImg")).get(j);%>
+			                              <% if(f.getChange_title() != null){ %>
+			                              	<span class="tmb"><img src="/artBridge/image/thumbnail_upload/<%= f.getChange_title() %>"></span>
+			                              <% }else{ %>
+			                             	 <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
+		                              <% 	}
+		                             	 } %>
+		                          </a>
 	                          </div>
 	                        </div>
 	                        <% 	no--;

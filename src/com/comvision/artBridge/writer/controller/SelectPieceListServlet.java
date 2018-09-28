@@ -45,6 +45,8 @@ public class SelectPieceListServlet extends HttpServlet {
 
 		int listCount = new WriterService().getListCount(memberNo);
 
+		listCount /= 3;
+		
 		maxPage = (int)((double)listCount/limit + 0.9);
 		startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
 		
@@ -55,21 +57,27 @@ public class SelectPieceListServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 		
-		
-		//작가 작품관리 리스트
-		ArrayList<Board> list = new WriterService().selectList(currentPage, limit, memberNo);
-		
 		//프로필 사진 노출
 		ArrayList<Files> profileFile = new WriterService().selectProfileImg(memberNo);
 		
-		//작품리스트 노출(썸네일 포함)
-		//ArrayList<HashMap<String, Files>> list = new WriterService().selectThumbImg(currentPage, limit, memberNo);
-		
 		//작가 별점 노출
 		int writerAvg = new WriterService().selectWriterAvg(memberNo);
-
+		
 		//진행중인 의뢰 갯수 노출
 		int orderIngCount = new WriterService().OrderIngCount(memberNo);
+
+		//작가 작품관리 리스트(썸네일 포함)
+		ArrayList<HashMap<String, Object>> list = new WriterService().selectBoardWithThumbImg(currentPage, limit, memberNo);
+		
+		for(int i = 0; i < list.size(); i++){
+			Board b = (Board) list.get(i).get("board");
+			System.out.println(b.getBoard_no());
+			
+			for(int j = 0; j < ((ArrayList<Files>)list.get(i).get("selectThumbImg")).size(); j++){
+				Files f = ((ArrayList<Files>)list.get(i).get("selectThumbImg")).get(j);
+				System.out.println(f.getChange_title());
+			}
+		}
 		
 		String page = "";
 		if(list != null){

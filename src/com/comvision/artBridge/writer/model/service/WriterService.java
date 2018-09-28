@@ -141,25 +141,6 @@ public class WriterService {
 		return selectProfileImg;
 	}
 
-	/*//작품리스트 노출(썸네일 포함)
-	public HashMap<String, Object> selectThumbImg(int currentPage, int limit, int memberNo) {
-		Connection con = getConnection();
-		
-		HashMap<String, Object> hmap = null;
-		
-		hmap = new WriterDao().selectThumbImg(con, currentPage, limit, memberNo);
-		
-		if(hmap != null){
-			commit(con);
-		}else{
-			rollback(con);
-		}
-		
-		close(con);
-		
-		return hmap;
-	}*/
-
 	//작가 별점 노출용 메소드
 	public int selectWriterAvg(int memberNo) {
 		Connection con = getConnection();
@@ -186,18 +167,19 @@ public class WriterService {
 		return OrderIngCount;
 	}
 
-
-	/*public ArrayList<HashMap<String, Files>> selectThumbImg(int currentPage, int limit, int memberNo) {
+	//작가 작품관리 리스트(썸네일 포함)
+	public ArrayList<HashMap<String, Object>> selectBoardWithThumbImg(int currentPage, int limit, int memberNo) {
 		Connection con = getConnection();
 		
-		ArrayList<HashMap<String, Files>> list = null;
+		ArrayList<HashMap<String, Object>> list = null;
 		
-		list = new WriterDao().selectThumbImg(con, currentPage, limit, memberNo);
+		list = new WriterDao().selectBoardWithThumbImg(con, currentPage, limit, memberNo);
 		
 		close(con);
 		
 		return list;
-	}*/
+	}
+
 	
 
 }
