@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.message.model.vo.*, com.comvision.artBridge.admin.model.vo.*"%>
+    pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.message.model.vo.*,com.comvision.artBridge.admin.model.vo.*"%>
  <% 
 	ArrayList<Message> mlist= (ArrayList<Message>)request.getAttribute("mlist");
 	
@@ -17,6 +17,8 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage(); 
+	
+	int mem_id = ((Member)(session.getAttribute("loginUser"))).getMember_no();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -41,7 +43,7 @@ ul.tab-menu li>a:hover {
 
 		<%@ include file="/views/common/adminHeader.jsp"%>
 
-<%int mem_id = ((Member)(session.getAttribute("loginUser"))).getMember_no(); %>
+
 
 		<!-- 주석 영역 -->
 		<div class="contents">
@@ -59,6 +61,7 @@ ul.tab-menu li>a:hover {
 								onclick="send();">쪽지 보내기</button>
 					<br>
 					 <script>
+					 
 							//radio : '전체'클릭시 date박스 비활성화.
 						$(function() {
 							$("#whole").click(function() {
@@ -88,7 +91,7 @@ ul.tab-menu li>a:hover {
 					
 					
 												
-						<form action="<%= request.getContextPath() %>/selectList.msg?pageName=customerAdmin&currentPage=1" method="post">
+						<form action="<%= request.getContextPath() %>/selectList.my?pageName=customerAdmin&currentPage=1&memberNo=<%=mem_id %>" method="post">
 							<table class="tbl-type02">
 
 								<tbody>
@@ -113,14 +116,14 @@ ul.tab-menu li>a:hover {
 
 
 
-									<tr>
+									<!-- <tr>
 										<td style="background: lightgray">답변상태</td>
 										<td><select class="form-control input-short" id="searchSelect1" name="searchSelect1">
 												<option value="se1Option1" id="se1Option1">전체</option>
 												<option value="se1Option2" id="se1Option2">접수</option>
 												<option value="se1Option3" id="se1Option3">답변완료</option>
 										</select></td>
-									</tr>
+									</tr> -->
 									<tr>
 										<td style="background: lightgray">검색옵션</td>
 										<td><select class="form-control input-short" id="searchSelect2" name="searchSelect2">
@@ -202,13 +205,14 @@ ul.tab-menu li>a:hover {
 						</colgroup>
 						<thead>
 							<tr>
-								<th scope="col">선택</th>
+								<!-- <th scope="col">선택</th> -->
 								<th scope="col">NO</th>
-								<th scope="col">확인 날짜</th>
+								<th scope="col">답장 날짜</th>
 								<th scope="col">접수일</th>
-								<th scope="col">이름</th>
-								<th scope="col">구분</th>
 								<th scope="col">제목</th>
+								<th scope="col">보낸 사람(No)</th>
+								<th scope="col">받는 사람(No)</th>
+								
 
 							</tr>
 						</thead>
@@ -246,15 +250,16 @@ ul.tab-menu li>a:hover {
 								
 								
 								<tr>
-									<td><input type="checkbox" name="msgNo" value=<%=m.getMsg_no() %>></td>
+									<%-- <td><input type="checkbox" name="msgNo" value=<%=m.getMsg_no() %>></td> --%>
 									<td class="num3"><%=m.getMsg_no() %></td>
 									<td><%=date %></td>
 									<td><%=m.getMsg_date() %></td>
-									<td><%=m.getMem_name() %></td>
-									<td><%=writer%></td>	
 									<td><div style="float: left;">
-											&nbsp;&nbsp;<a onclick = "location.href='<%= request.getContextPath() %>/selectDetail.msg?msg_no=<%=m.getMsg_no() %>'" id="customerQna"><%=m.getMsg_title() %></a>
+											&nbsp;&nbsp;<a onclick = "location.href='<%= request.getContextPath() %>/selectDetail.my?msg_no=<%=m.getMsg_no() %>'" id=""><%=m.getMsg_title() %></a>
 										</div></td>
+									<td><%=m.getDispatch_member_no()%></td>
+									<td><%=m.getReceive_member_no()%></td>
+									
 								</tr>
 							<% }} %>
 
@@ -268,11 +273,11 @@ ul.tab-menu li>a:hover {
 					<%if(num == 1){ %>
 						<!-- 페이징 처리 부분  normal -->
 					<div class="paginate">
-						<a onclick="location.href='<%=request.getContextPath()%>/selectList.msg?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<a onclick="location.href='<%=request.getContextPath()%>/selectList.my?currentPage=1&memberNo=<%=mem_id %>'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
 						<% if(currentPage <=1){ %>
 							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
 						<%}else{ %>
-							<a onclick = "location.href='<%= request.getContextPath()%>/selectList.msg?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+							<a onclick = "location.href='<%= request.getContextPath()%>/selectList.my?currentPage=<%=currentPage -1%>&memberNo=<%=mem_id %>'" class="btn-prev" title="이전">
 							<em class="blind">목록에서 이전 페이지 이동</em></a>
 						<%} %>
 						
@@ -282,7 +287,7 @@ ul.tab-menu li>a:hover {
 								if(p==currentPage){%>
 									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
 								<%}else{ %>
-									<a onclick= "location.href='<%= request.getContextPath()%>/selectList.msg?currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+									<a onclick= "location.href='<%= request.getContextPath()%>/selectList.my?currentPage=<%=p%>&memberNo=<%=mem_id %>'"><%= p %><span class="blind">페이지로 이동</span></a>
 								<%} %>
 							<%} %>
 						</span>
@@ -290,11 +295,11 @@ ul.tab-menu li>a:hover {
 						<% if(currentPage >= maxPage){ %>
 					<!-- <a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> -->
 						<%}else{ %>
-							<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.msg?currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+							<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.my?currentPage=<%=currentPage +1%>&memberNo=<%=mem_id %>'" class="btn-next" title="다음">
 							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 						<%} %>
 							
-						<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.msg?currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.my?currentPage=<%=maxPage%>&memberNo=<%=mem_id %>'" class="btn-last" title="끝">
 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
 					</div>
