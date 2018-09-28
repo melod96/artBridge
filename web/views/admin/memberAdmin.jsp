@@ -306,7 +306,7 @@ ul.tab-menu li>a:hover {
 									<td><%= m.getEmail() %></td>
 									<td><%= m.getEnroll_date() %></td> 
 									<td style="font-weight:bold">
-										 <a style="color:orangered;" onclick="<%= request.getContextPath() %>/selectPostulat.ad?member_no=" + <%= m.getMember_no() %>><%= wrt %></a> 
+										 <a style="color:orangered;" href="<%= request.getContextPath() %>/selectPostulat.ad?member_no=<%= m.getMember_no() %>"><%= wrt %></a> 
 									</td>								
 								</tr>
 								

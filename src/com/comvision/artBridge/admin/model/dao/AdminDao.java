@@ -17,6 +17,7 @@ import java.util.Properties;
 import com.comvision.artBridge.admin.model.vo.Notice;
 import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.message.model.vo.Message;
 import com.comvision.artBridge.relate.model.vo.Relate;
@@ -743,19 +744,21 @@ public class AdminDao {
 		}
 
 		//작가 신청 승인
-		public Member selectPostulat(Connection con, String num) {
+		public Member selectPostulat(Connection con, int num) {
 			PreparedStatement pstmt = null;
 			ResultSet rset = null;
 			Member m = null;
+
 			
 			String query = prop.getProperty("selectPostulat");
 			
 			try {
 				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, Integer.parseInt(num));
+				pstmt.setInt(1, num);
 				
 				rset = pstmt.executeQuery();
 				
+
 				if(rset.next()){
 					m = new Member();
 					
@@ -777,6 +780,84 @@ public class AdminDao {
 			}
 			
 			return m;
+		}
+
+		public ArrayList<Files> selectFilelist(Connection con, int num) {
+			PreparedStatement pstmt = null;
+			ResultSet rset= null;
+			Files f = null;
+			ArrayList<Files> flist = null;
+			
+			String query = prop.getProperty("selectFilelsit");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, num);
+				
+				rset = pstmt.executeQuery();
+				
+				flist = new ArrayList<Files>();
+				while(rset.next()){
+					f = new Files();
+					
+					f.setFiles_root(rset.getString("files_root"));
+					
+					flist.add(f);
+					
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally{
+				close(pstmt);
+				close(rset);
+			}
+			return flist;
+		}
+
+		public int updateInsertPostulat(Connection con, String approval_content, int member_no, int pos) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = prop.getProperty("updateInsertPostulat");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, pos);
+				pstmt.setString(2, approval_content);
+				pstmt.setInt(3, member_no);
+
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(pstmt);
+			}
+			return result;
+		}
+
+		public int insertPostulat(Connection con, int member_no, String string) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = prop.getProperty("sendMessagePos");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setString(1, "작가 승인 답장");
+				pstmt.setString(2, string);
+				pstmt.setInt(3, member_no);
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
 		}
 
 	
