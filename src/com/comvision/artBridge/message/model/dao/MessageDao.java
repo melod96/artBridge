@@ -193,4 +193,93 @@ public class MessageDao {
 		
 	}
 
+	public ArrayList<Message> myselectList(Connection con, int currentPage, int limit, String addQuery, int memberNo) {
+		
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Message> list = null;
+		
+		String query = prop.getProperty("selectmyList");
+		
+		try {
+			stmt = con.createStatement();
+			
+			query += " " + addQuery;
+			
+			query += ") ";
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			String rnumQuery = "where rnum between " + startRow + " and " + endRow ;
+			
+			query += rnumQuery;
+			
+			System.out.println("최종 실행되는 Query : " + query);
+			
+			rset = stmt.executeQuery(query);
+			
+			list = new ArrayList<Message>();
+			
+			
+			while(rset.next()){
+				Message m = new Message();
+				m.setMsg_no(rset.getInt("MESSAGE_NO"));
+				m.setMsg_title(rset.getString("MESSAGE_TITLE"));
+				m.setMsg_content(rset.getString("MESSAGE_CONTENT"));
+				m.setMsg_date(rset.getDate("MESSAGE_DATE"));
+				m.setDispatch_member_no(rset.getInt("DISPATCH_MEMBER_NO"));
+				m.setReceive_member_no(rset.getInt("RECEIVE_MEMBER_NO"));
+				m.setCheck_date(rset.getDate("CHECK_DATE"));
+				m.setMem_name(rset.getString("NAME"));
+				m.setWriter_right(rset.getInt("WRITER_RIGHT"));
+				
+				list.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(stmt);
+			close(rset);
+		}
+		
+		
+		return list;
+		
+	}
+
+	public int getMyListCount(Connection con, String addQuery) {
+		
+		Statement stmt= null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("MyListCount");
+		
+		int listCount = 0;
+		
+		try {
+			stmt = con.createStatement();
+			
+			query += " " + addQuery;
+			
+			query += ") ";
+			
+			System.out.println("최종 실행되는 Query : " + query);
+			
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(stmt);
+			close(rset);
+		}
+		
+		return listCount;
+		
+	}
+
 }

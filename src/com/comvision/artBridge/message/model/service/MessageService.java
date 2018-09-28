@@ -25,7 +25,9 @@ public class MessageService {
 	}
 
 	public ArrayList<Message> SelectList(int currentPage, int limit, String addQuery) {
+		
 		System.out.println("서비스 진입");
+		
 		Connection con = getConnection();
 		
 		ArrayList<Message> list = new MessageDao().selectList(con,currentPage, limit,addQuery);
@@ -89,6 +91,30 @@ public class MessageService {
 		close(con);
 		
 		return result;
+		
+	}
+
+	public ArrayList<Message> mySelectList(int currentPage, int limit, String addQuery, int memberNo) {
+		
+		Connection con = getConnection();
+		
+		ArrayList<Message> list = new MessageDao().myselectList(con,currentPage, limit,addQuery,memberNo);
+		
+		close(con);
+		
+		return list;
+		
+	}
+
+	public int getMyListCount(String addQuery) {
+		
+		Connection con = getConnection();
+		
+		int listCount = new MessageDao().getMyListCount(con, addQuery);
+		
+		close(con);
+		
+		return listCount;
 		
 	}
 

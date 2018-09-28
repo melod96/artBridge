@@ -31,12 +31,19 @@ public class SelectMyMSGListServlet extends HttpServlet {
 		Date date11 = null;
 		
 		String addQuery ="";
+		
+		//접속한 사람의 member_no
+		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
+		addQuery += " and DISPATCH_MEMBER_NO = " + memberNo + " ";
+		
+		
+		
 		//날짜로 검색.
 		if(request.getParameter("date1") != null && request.getParameter("date2") != null){
 		date1 = request.getParameter("date1");
 		date2 = request.getParameter("date2");
 		
-		addQuery += "and message_date between '" +date1+"' and '"+date2 + "' ";
+		addQuery += " and message_date between '" +date1+"' and '"+date2 + "' ";
 		
 		}
 		
@@ -78,6 +85,8 @@ public class SelectMyMSGListServlet extends HttpServlet {
 		
 		
 		
+		
+		
 		int num = 1;
 		// 페이징 처리
 		int currentPage;
@@ -93,7 +102,7 @@ public class SelectMyMSGListServlet extends HttpServlet {
 		if (request.getParameter("currentPage") != null) {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
-		int listCount = new MessageService().getListCount();
+		int listCount = new MessageService().getMyListCount(addQuery);
 
 		maxPage = (int) ((double) listCount / limit + 0.9);
 
@@ -108,7 +117,7 @@ public class SelectMyMSGListServlet extends HttpServlet {
 		
 		
 		//메세지 리스트 출력
-		ArrayList<Message> mlist = new MessageService().SelectList(currentPage, limit, addQuery);
+		ArrayList<Message> mlist = new MessageService().mySelectList(currentPage, limit, addQuery, memberNo);
 		
 		String page = "";
 		

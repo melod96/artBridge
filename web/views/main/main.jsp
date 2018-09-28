@@ -42,7 +42,7 @@
 	.noticeArea{width:500px;height:300px;padding-top:60px;display:inline-block;padding-left:20px;}
 	.noticeArea h5{padding-left:25px;padding-top:14px;background:#3446d1;color:white;height:40px;
 					border-radius:30px;}
-	.noticeArea 
+	.noticeArea
 	
 	.notice1 li{border-bottom:1px solid #ddd; solid #ddd;padding-top:10px;}
 	.ntTitle{color:black;width:70%;height:20px;text-overflow: ellipsis;display:inline-block;overflow: hidden;white-space: nowrap}
@@ -154,7 +154,7 @@
 				margin-bottom:-50px;}
 		#popA{margin-top:10px;}
 		
-		.bestArtist{ width:1200px; height: 600px;border:1px solid darkgray;margin-left:auto;margin-right:auto;margin-top:50px;}
+		.bestArtist{ width:1200px; height: 600px;/* border:1px solid darkgray; */margin-left:auto;margin-right:auto;margin-top:50px;}
 </style>
 	
 </head>
