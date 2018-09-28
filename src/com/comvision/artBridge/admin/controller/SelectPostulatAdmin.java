@@ -1,6 +1,7 @@
 package com.comvision.artBridge.admin.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,9 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.admin.model.service.AdminService;
-import com.comvision.artBridge.admin.model.vo.Notice;
+import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
-import com.comvision.artBridge.nBoard.model.service.NBoardService;
 
 
 @WebServlet("/selectPostulat.ad")
@@ -29,16 +29,20 @@ public class SelectPostulatAdmin extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		
-		String num = request.getParameter("num");
-		
+		int num = Integer.parseInt(request.getParameter("member_no"));
+		System.out.println(num);
 		
 		Member m = new AdminService().selectPostulat(num);
+		ArrayList<Files> flist = new AdminService().selectFilelist(num);
+		
+		/*Member m = new AdminService().selectPostulat(num);*/
 		
 		
 		String page = "";
 		if(m != null){
-			page = "views/notice/writerPostulatAdmin.jsp";
-			request.setAttribute("m", m);
+			page = "views/admin/writerPostulatAdmin.jsp";
+			request.setAttribute("list", m);
+			request.setAttribute("flist", flist);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시글 상세보기 실패!");

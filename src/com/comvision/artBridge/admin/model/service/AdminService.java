@@ -14,12 +14,14 @@ import com.comvision.artBridge.admin.model.vo.Notice;
 import com.comvision.artBridge.admin.model.vo.Rating;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.dao.MemberDao;
 import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.message.model.dao.MessageDao;
 import com.comvision.artBridge.message.model.vo.Message;
 import com.comvision.artBridge.nBoard.model.dao.NBoardDao;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.sale.model.dao.SaleDao;
 import com.comvision.artBridge.transaction.model.vo.Transaction;
 
 public class AdminService {
@@ -301,7 +303,7 @@ public class AdminService {
 	}
 
 	//작가 신청 페이지
-	public Member selectPostulat(String num) {
+	public Member selectPostulat(int num) {
 		Connection con = getConnection();
 		
 		Member m = new AdminDao().selectPostulat(con, num);
@@ -311,6 +313,39 @@ public class AdminService {
 		return m;
 		
 		
+	}
+	//작가 신청 첨부파일 불러오기
+	public ArrayList<Files> selectFilelist(int num) {
+		Connection con = getConnection();
+		
+		ArrayList<Files> flist = new AdminDao().selectFilelist(con, num);
+		
+		close(con);
+		return flist;
+	}
+
+	//작가 승인 버튼
+	public int updateInsertPostulat(String approval_content, int member_no, int pos ) {
+		Connection con = getConnection();
+		int result = 0;
+		int update = 0;
+		int insert = 0;
+		
+		update = new AdminDao().updateInsertPostulat(con, approval_content, member_no, pos);
+		if(pos == 1){
+			insert = new AdminDao().insertPostulat(con, member_no, "작가신청이 승인되었습니다.");
+		}else{
+			insert = new AdminDao().insertPostulat(con, member_no, "작가신청이 거절되었습니다.");
+		}
+		
+		if(update > 0 && insert > 0){
+			commit(con);
+			result = 1;
+		}else{
+			rollback(con);
+		}
+		
+		return result;
 	}
 
 
