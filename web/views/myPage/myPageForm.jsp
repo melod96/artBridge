@@ -222,7 +222,7 @@
 		<div class="contents"><!-- contents 필수 사용 -->
 
 <!--      	* 1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
-<%if(t!=null){ %>
+<%-- <%if(t!=null){ %>
 			<form action="" method="post">
 				<div id="stmtModalArea" class="w3-modal" onclick="stmtDisplayNone();"></div>
 				<div id="stmtArea" class="settingArea">
@@ -297,10 +297,11 @@
 				</div>
 			</form>
 			<%} %>
+			 --%>
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
 <!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
-			<form action="" method="post" id="callReqWriterRightServlet" onsubmit="return reqWriterRight();" encType="multipart/form-data">
+			<form action="<%= request.getContextPath() %>/reqWriterRight.me" method="post" id="callReqWriterRightServlet" onsubmit="return reqWriterRight();" encType="multipart/form-data">
 				<div id="reqWriterModal" class="w3-modal"></div>
 				<div id="reqWriterFormArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
@@ -467,55 +468,55 @@
 						</tbody>
 					</table>
 	
-	<!-- 			페이징 처리하기 -->
-					<!-- <br>
-					<hr>
-					<br>
+<!-- 	<!-- 			페이징 처리하기 --> -->
+<!-- 					<br>
+<!-- 					<hr> -->
+<!-- 					<br> -->
 	
-					<h3>페이징 스타일</h3>
-					<div class="paginate">
-						<a href="#" class="btn-first" title="처음"><em class="blind">목록에서
-								처음 페이지 이동</em></a> <a href="#" class="btn-prev" title="이전"><em
-							class="blind">목록에서 이전 페이지 이동</em></a> <span class="paging-numbers">
-							<a href="#">1<span class="blind">페이지로 이동</span></a> <a href="#"
-							class="on">2<span class="blind">페이지로 이동</span></a> <a href="#">3<span
-								class="blind">페이지로 이동</span></a> <a href="#">4<span
-								class="blind">페이지로 이동</span></a> <a href="#">5<span
-								class="blind">페이지로 이동</span></a>
-						</span> <a href="#" class="btn-next" title="다음"><span class="spr"><em
-								class="blind">목록에서 다음 페이지 이동</em></span></a> <a href="#" class="btn-last"
-							title="끝"><span class="spr"><em class="blind">목록에서
-									끝 페이지 이동</em></span></a>
-					</div>
-					                    <!-- 페이징 영역 -->
-                    <div class="paginate">
-						<a onclick="location.href='<%= request.getContextPath() %>/selectTransList.ts?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
-						<% if(currentPage <=1){ %>
-							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
-						<% }else{ %>
-							<a onclick = "location.href='<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
-							<em class="blind">목록에서 이전 페이지 이동</em></a>
-						<% } %>
-						<span class="paging-numbers">
-							<% for(int p = startPage; p <= endPage; p++){
-								if(p == currentPage){ %>
-									<a disabled class="on"><%= p %><span class="blind">페이지로 이동</span></a>
-								<% }else{ %>
-									<a onclick= "location.href='<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%= p %>'"><%= p %><span class="blind">페이지로 이동</span></a>
-								<% } %>
-							<% } %>
-						</span>
-						<% if(currentPage >= maxPage){ %>
-							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
-						<% }else{ %>
-							<a onclick = "location.href = '<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%= currentPage +1 %>'" class="btn-next" title="다음">
-							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
-						<% } %>
+<!-- 					<h3>페이징 스타일</h3> -->
+<!-- 					<div class="paginate"> -->
+<!-- 						<a href="#" class="btn-first" title="처음"><em class="blind">목록에서 -->
+<!-- 								처음 페이지 이동</em></a> <a href="#" class="btn-prev" title="이전"><em -->
+<!-- 							class="blind">목록에서 이전 페이지 이동</em></a> <span class="paging-numbers"> -->
+<!-- 							<a href="#">1<span class="blind">페이지로 이동</span></a> <a href="#" -->
+<!-- 							class="on">2<span class="blind">페이지로 이동</span></a> <a href="#">3<span -->
+<!-- 								class="blind">페이지로 이동</span></a> <a href="#">4<span -->
+<!-- 								class="blind">페이지로 이동</span></a> <a href="#">5<span -->
+<!-- 								class="blind">페이지로 이동</span></a> -->
+<!-- 						</span> <a href="#" class="btn-next" title="다음"><span class="spr"><em -->
+<!-- 								class="blind">목록에서 다음 페이지 이동</em></span></a> <a href="#" class="btn-last" -->
+<!-- 							title="끝"><span class="spr"><em class="blind">목록에서 -->
+<!-- 									끝 페이지 이동</em></span></a> -->
+<!-- 					</div> -->
+<!-- 					                    페이징 영역 -->
+<!--                     <div class="paginate"> -->
+<%-- 						<a onclick="location.href='<%= request.getContextPath() %>/selectTransList.ts?currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a>  --%>
+<%-- 						<% if(currentPage <=1){ %> --%>
+<!-- 							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a>  -->
+<%-- 						<% }else{ %> --%>
+<%-- 							<a onclick = "location.href='<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전"> --%>
+<!-- 							<em class="blind">목록에서 이전 페이지 이동</em></a> -->
+<%-- 						<% } %> --%>
+<!-- 						<span class="paging-numbers"> -->
+<%-- 							<% for(int p = startPage; p <= endPage; p++){ --%>
+<%-- 								if(p == currentPage){ %> --%>
+<%-- 									<a disabled class="on"><%= p %><span class="blind">페이지로 이동</span></a> --%>
+<%-- 								<% }else{ %> --%>
+<%-- 									<a onclick= "location.href='<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%= p %>'"><%= p %><span class="blind">페이지로 이동</span></a> --%>
+<%-- 								<% } %> --%>
+<%-- 							<% } %> --%>
+<!-- 						</span> -->
+<%-- 						<% if(currentPage >= maxPage){ %> --%>
+<!-- 							<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> -->
+<%-- 						<% }else{ %> --%>
+<%-- 							<a onclick = "location.href = '<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%= currentPage +1 %>'" class="btn-next" title="다음"> --%>
+<!-- 							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> -->
+<%-- 						<% } %> --%>
 						
-						<a onclick = "location.href = '<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%= maxPage %>'" class="btn-last" title="끝">
-						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
-					</div>
-                   <!-- // 페이징 영역 -->
+<%-- 						<a onclick = "location.href = '<%= request.getContextPath() %>/selectTransList.ts?currentPage=<%= maxPage %>'" class="btn-last" title="끝"> --%>
+<!-- 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a> -->
+<!-- 					</div> -->
+<!--                    // 페이징 영역 -->
 
 				<br><br><br><br>
 				</div>
@@ -1630,7 +1631,7 @@
 			}
 		};
 		
-	// 	* 작가신청 양식 모달 띄우기
+		// 	* 작가신청 양식 모달 띄우기
 	   	function reqWriterDisplayBlock(){
 	   		$('#reqWriterModal').css({"display":"block"});
 	   		$('#reqWriterFormArea').css({"display":"block"});
@@ -1725,9 +1726,9 @@
 			}
 			
 			var submit = confirm("신청 양식을 제출 하시겠습니까?");
-			if(submit == true){
+			<%-- if(submit == true){
 				alert("submit 트루니?");
-<%-- 				$("#callReqWriterRightServlet").attr("action", "<%= request.getContextPath() %>/reqWriterRight.me"); --%>
+				$("#callReqWriterRightServlet").attr("action", "<%= request.getContextPath() %>/reqWriterRight.me");
 				$.ajax({
 					url : "<%= request.getContextPath() %>/reqWriterRight.me",
 					type : "post",
@@ -1750,13 +1751,13 @@
 			        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			        }
 				});
-				alert("에이작스 뒤에 링크 가야되는딩");
+				alert("에이작스 뒤에 링크 가야되는딩"); --%>
 				
-				/* return true; */
-			}else{
-				return false;
-			}
-			
+// 				return true;
+// 			}else{
+// 				return false;
+// 			}
+			return true;
 //  			location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
 		};
 	</script>

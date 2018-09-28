@@ -432,6 +432,8 @@ private Properties prop = new Properties();
 		String query = prop.getProperty("insertWriterRightConfirmImg");
 		//insert into files values (seq_files_no.nextval, ?, ?, ?, ?, ?, sysdate, default)
 		
+		System.out.println("aaa" + fileList.size());
+		
 		try {
 			for(int i = 0; i < fileList.size(); i++){
 				System.out.println("8-1. 첨부파일 저장데이터 fileTB 인서트쿼리 작동 반복문 들어왔니?");
