@@ -129,6 +129,8 @@ public class MessageDao {
 				m.setWriter_right(rset.getInt("WRITER_RIGHT"));
 				m.setMem_name(rset.getString("name"));
 				m.setMsg_content(rset.getString("MESSAGE_CONTENT"));
+				m.setDispatch_member_no(rset.getInt("DISPATCH_MEMBER_NO"));
+				m.setReceive_member_no(rset.getInt("RECEIVE_MEMBER_NO"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -215,7 +217,7 @@ public class MessageDao {
 			
 			query += rnumQuery;
 			
-			System.out.println("최종 실행되는 Query : " + query);
+			System.out.println("1최종 실행되는 Query : " + query);
 			
 			rset = stmt.executeQuery(query);
 			
@@ -233,6 +235,7 @@ public class MessageDao {
 				m.setCheck_date(rset.getDate("CHECK_DATE"));
 				m.setMem_name(rset.getString("NAME"));
 				m.setWriter_right(rset.getInt("WRITER_RIGHT"));
+//				m.setReceive_member_name(rset.getString("RENAME"));
 				
 				list.add(m);
 			}
@@ -262,9 +265,8 @@ public class MessageDao {
 			
 			query += " " + addQuery;
 			
-			query += ") ";
 			
-			System.out.println("최종 실행되는 Query : " + query);
+			System.out.println("최종 실행되는 Query2 : " + query);
 			
 			rset = stmt.executeQuery(query);
 			
@@ -281,5 +283,61 @@ public class MessageDao {
 		return listCount;
 		
 	}
+
+	public int sendMSG(Connection con, String mem_id, String receive_mem_no, String title, String editor) {
+		
+		PreparedStatement pstmt = null;
+		int result = 0 ;
+		String query = prop.getProperty("sendMSG");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			//--MESSAGE_NO, MESSAGE_TITLE, MESSAGE_CONTENT, MESSAGE_DATE, DISPATCH_MEMBER_NO, RECEIVE_MEMBER_NO, CHECK_DATE
+			// INSERT INTO MESSAGE VALUES (SEQ_MESSAGE_NO.NEXTVAL, ? ,? ,SYSDATE, ?, ?, NULL)
+			
+			pstmt.setString(1, title);
+			pstmt.setString(2, editor);
+			pstmt.setInt(3, Integer.parseInt(mem_id));
+			pstmt.setInt(4, Integer.parseInt(receive_mem_no));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int insertMyMSGTo(Connection con, String title, String content, String dispatch_member_no, String mem_id) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String query = prop.getProperty("insertMyMSGTo");
+		
+//		MESSAGE_TITLE, MESSAGE_CONTENT, RECEIVE_MEMBER_NO(MEMBER_NO)
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, title);
+			pstmt.setString(2, content);
+			pstmt.setInt(3, Integer.parseInt(mem_id));
+			pstmt.setInt(4, Integer.parseInt(dispatch_member_no));
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		
+		
+		return result;
+		
+	}
+
 
 }

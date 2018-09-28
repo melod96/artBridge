@@ -118,4 +118,36 @@ public class MessageService {
 		
 	}
 
+	public int sendMSG(String mem_id, String receive_mem_no, String title, String editor) {
+		
+		Connection con = getConnection();
+		
+		int result = new MessageDao().sendMSG(con, mem_id, receive_mem_no, title, editor);
+		
+		close(con);
+		
+		return result;
+		
+	}
+
+	public int insertMyMSGTo(String title, String content, String dispatch_member_no, String mem_id) {
+		
+		Connection con = getConnection();
+		
+		int result = new MessageDao().insertMyMSGTo(con, title, content,dispatch_member_no, mem_id);
+		
+		if(result > 0){
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+		
+		
+	}
+
+
 }

@@ -34,7 +34,7 @@ public class SelectMyMSGListServlet extends HttpServlet {
 		
 		//접속한 사람의 member_no
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		addQuery += " and DISPATCH_MEMBER_NO = " + memberNo + " ";
+		addQuery += " and DISPATCH_MEMBER_NO = " + memberNo + " OR RECEIVE_MEMBER_NO = " + memberNo + " ";
 		
 		
 		
@@ -66,7 +66,6 @@ public class SelectMyMSGListServlet extends HttpServlet {
 		
 		if (request.getParameter("searchWords") != "") {
 			searchWords = request.getParameter("searchWords");
-			System.out.println(searchWords);
 			if (request.getParameter("searchSelect2") != null) {
 				searchSelect2 = request.getParameter("searchSelect2");
 				switch (searchSelect2) {
@@ -83,7 +82,7 @@ public class SelectMyMSGListServlet extends HttpServlet {
 			}
 		}
 		
-		
+		System.out.println("addQuery : " + addQuery);
 		
 		
 		
