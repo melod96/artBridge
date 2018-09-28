@@ -173,6 +173,20 @@ public class WriterService {
 		return selectWriterAvg;
 	}
 
+	//진행중인 의뢰 갯수 노출
+	public int OrderIngCount(int memberNo) {
+		Connection con = getConnection();
+		
+		int OrderIngCount = 0;
+		
+		OrderIngCount = new WriterDao().OrderIngCount(con, memberNo);
+		
+		close(con);
+		
+		return OrderIngCount;
+	}
+
+
 	/*public ArrayList<HashMap<String, Files>> selectThumbImg(int currentPage, int limit, int memberNo) {
 		Connection con = getConnection();
 		

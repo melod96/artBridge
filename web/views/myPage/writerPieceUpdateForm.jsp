@@ -215,7 +215,7 @@
                               <tr>
                                   <th>제목 *</th>
                                   <td>
-                                      <input type="text" name="title" class="form-control" placeholder="작품의 제목을 입력하세요">
+                                      <input type="text" name="title" class="form-control" placeholder="작품의 제목을 입력하세요" value="<%=b.getBoard_title()%>">
                                   </td>
                               </tr>
                               <tr>

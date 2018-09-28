@@ -409,6 +409,34 @@ public class WriterDao {
 		return result;
 	}
 
+	//진행중인 의뢰 갯수 노출
+	public int OrderIngCount(Connection con, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("selectOrderIngCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				result = rset.getInt(1);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+
+		return result;
+	}
+
+
 	/*public ArrayList<HashMap<String, Files>> selectThumbImg(Connection con, int currentPage, int limit, int memberNo) {
 		
 		PreparedStatement pstmt = null;

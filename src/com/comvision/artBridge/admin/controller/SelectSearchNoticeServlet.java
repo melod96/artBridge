@@ -61,6 +61,7 @@ public class SelectSearchNoticeServlet extends HttpServlet {
 		if(list != null){
 			page = "/views/admin/noticeList.jsp";
 			request.setAttribute("list", list);
+			request.setAttribute("pi", pi);
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "공지사항 검색 실패!");

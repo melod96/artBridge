@@ -64,6 +64,7 @@ public class UpdatePieceDeleteServlet extends HttpServlet {
 		String page = "";
 		if(list != null){
 			page = "selectPieceList.wr";
+			//request.setAttribute("list", list);
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "작품 삭제 실패!");

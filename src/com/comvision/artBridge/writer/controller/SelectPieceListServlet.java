@@ -67,6 +67,9 @@ public class SelectPieceListServlet extends HttpServlet {
 		
 		//작가 별점 노출
 		int writerAvg = new WriterService().selectWriterAvg(memberNo);
+
+		//진행중인 의뢰 갯수 노출
+		int orderIngCount = new WriterService().OrderIngCount(memberNo);
 		
 		String page = "";
 		if(list != null){
@@ -75,6 +78,7 @@ public class SelectPieceListServlet extends HttpServlet {
 				request.setAttribute("profileFile", profileFile);
 			}
 			request.setAttribute("writerAvg", writerAvg);
+			request.setAttribute("orderIngCount", orderIngCount);
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 		}else{
