@@ -69,7 +69,7 @@ public class SelectPieceListServlet extends HttpServlet {
 		//작가 작품관리 리스트(썸네일 포함)
 		ArrayList<HashMap<String, Object>> list = new WriterService().selectBoardWithThumbImg(currentPage, limit, memberNo);
 		
-		for(int i = 0; i < list.size(); i++){
+		/*for(int i = 0; i < list.size(); i++){
 			Board b = (Board) list.get(i).get("board");
 			System.out.println(b.getBoard_no());
 			
@@ -77,7 +77,7 @@ public class SelectPieceListServlet extends HttpServlet {
 				Files f = ((ArrayList<Files>)list.get(i).get("selectThumbImg")).get(j);
 				System.out.println(f.getChange_title());
 			}
-		}
+		}*/
 		
 		String page = "";
 		if(list != null){

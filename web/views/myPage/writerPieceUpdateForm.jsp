@@ -2,16 +2,23 @@
     pageEncoding="UTF-8" import="java.util.*, 
     com.comvision.artBridge.relate.model.vo.Relate, 
     com.comvision.artBridge.member.model.vo.Member,
-    com.comvision.artBridge.board.model.vo.Board"%>
+    com.comvision.artBridge.board.model.vo.Board,
+    com.comvision.artBridge.files.model.vo.Files"%>
 <% 
-	ArrayList<Relate> relate = (ArrayList<Relate>)request.getAttribute("relate");
-	
 	Member m = null;
 	if(session.getAttribute("loginUser") != null){
 		m = (Member)session.getAttribute("loginUser");
 	}
+
+	Board board = new Board();
 	
-	Board b = new Board();
+	ArrayList<Files> pieceData = null;
+	if(request.getAttribute("pieceData") != null){
+		pieceData = (ArrayList<Files>)request.getAttribute("pieceData");
+	}
+
+	ArrayList<Relate> relate = (ArrayList<Relate>)request.getAttribute("relate");
+	
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -202,7 +209,6 @@
                     
                     <form name="frmSubmit" encType="multipart/form-data">
                    	 	<input type="hidden" name="memberNo" value="<%= m.getMember_no() %>">
-                   	 	<input type="hidden" name="boardNo" value="<%= b.getBoard_no() %>">
                         <div class="heading">
                             <h2 class="tit1">내 작품 등록</h2>
                           </div>
@@ -215,7 +221,7 @@
                               <tr>
                                   <th>제목 *</th>
                                   <td>
-                                      <input type="text" name="title" class="form-control" placeholder="작품의 제목을 입력하세요" value="<%=b.getBoard_title()%>">
+                                      <input type="text" name="title" class="form-control" placeholder="작품의 제목을 입력하세요" value="<%=board.getBoard_title()%>">
                                   </td>
                               </tr>
                               <tr>

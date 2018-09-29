@@ -516,6 +516,92 @@ public class WriterDao {
 		
 		return list;
 	}
+	
+	//작품 수정하기 폼 메소드
+	public HashMap<String, Object> selectPieceData(Connection con, int memberNo, int pieceNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		HashMap<String, Object> hmap = new HashMap<String, Object>();
+		ArrayList<Files> selectThumbImg = new ArrayList<Files>();
+		Board b = new Board();
+		Files f = null;
+		
+		String query = prop.getProperty("selectPieceData");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			pstmt.setInt(2, pieceNo);
+			
+			rset = pstmt.executeQuery();
+			
+			selectThumbImg = new ArrayList<Files>();
+			
+			while(rset.next()){
+				if(b.getBoard_no() == 0){
+					b.setBoard_no(rset.getInt("board_no"));
+					b.setBoard_type(rset.getInt("board_type"));
+					b.setBoard_title(rset.getString("board_title"));
+					b.setBoard_content(rset.getString("board_content"));
+					b.setBoard_date(rset.getDate("board_date"));
+					b.setMember_no(rset.getInt("member_no"));
+					b.setModify_date(rset.getDate("modify_date"));
+					/*b.setBoard_status(rset.getInt(""));
+
+MODIFY_DATE
+BOARD_STATUS
+BOARD_COUNT
+MAIN_VIEW
+RESOLUTION
+SUBMIT_FILE_TYPE
+SUBMIT_SIZE
+WORKING_PERIOD*/
+				}
+				
+				if(b.getBoard_no() == rset.getInt("board_no")){
+					f = new Files();
+					f.setFiles_title(rset.getString("files_title"));
+					f.setChange_title(rset.getString("change_title"));
+					f.setFiles_type(rset.getInt("files_type"));
+					f.setFiles_root(rset.getString("files_root"));
+
+					selectThumbImg.add(f);
+				} else {
+					hmap.put("board", b);
+					hmap.put("selectThumbImg", selectThumbImg);
+					
+					hmap = new HashMap<String, Object>();
+					selectThumbImg = new ArrayList<Files>();
+
+					b = new Board();
+					b.setBoard_no(rset.getInt("board_no"));
+					b.setBoard_title(rset.getString("board_title"));
+					b.setBoard_content(rset.getString("board_content"));
+					b.setBoard_date(rset.getDate("board_date"));
+					b.setMember_no(rset.getInt("member_no"));
+					
+					f = new Files();
+					f.setFiles_title(rset.getString("files_title"));
+					f.setChange_title(rset.getString("change_title"));
+					f.setFiles_type(rset.getInt("files_type"));
+					f.setFiles_root(rset.getString("files_root"));
+
+					selectThumbImg.add(f);
+				}
+			}
+			
+			hmap.put("board", b);
+			hmap.put("selectThumbImg", selectThumbImg);
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return hmap;
+	}
 
 
 }

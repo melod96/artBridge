@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.comvision.artBridge.admin.model.dao.NoticeDao;
+import com.comvision.artBridge.admin.model.vo.Notice;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.grade.model.vo.Grade;
@@ -180,6 +182,30 @@ public class WriterService {
 		return list;
 	}
 
+	//작품 수정하기 폼 메소드
+	/*public ArrayList<HashMap<String, Object>> selectPieceData(int memberNo, int pieceNo) {
+		Connection con = getConnection();
+		
+		ArrayList<HashMap<String, Object>> list = null;
+		
+		list = new WriterDao().selectPieceData(con, memberNo, pieceNo);
+		
+		close(con);
+		
+		return list;
+	}*/
 	
+	public HashMap<String, Object> selectPieceData(int memberNo, int pieceNo) {
+		Connection con = getConnection();
+		
+		HashMap<String, Object> hamp = null;
+		
+		hamp = new WriterDao().selectPieceData(con, memberNo, pieceNo);
+		
+		close(con);
+		
+		return hamp;
+	}
 
+	
 }

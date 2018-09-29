@@ -291,7 +291,7 @@
 	                              <span><%= m.getNick_name() %>작가 &nbsp; / &nbsp; <%= b.getBoard_title() %></span>
 	                              <ul class="seting-area">
 		                          	  <%-- <input type="hidden" name="boardNo" value="<%=b.getBoard_no()%>"> --%>
-		                              <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='/artBridge/views/myPage/writerPieceUpdateForm.jsp'"><label class="hide">수정</label></li>
+		                              <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='updatePieceView.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>'"><label class="hide">수정</label></li>
 		                              <%-- <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='<%=request.getContextPath()%>/updatePieceView.wr?pieceNo=<%=b.getBoard_no()%>'"><label class="hide">수정</label></li> --%>
 		                              <!-- <li><input type="button" class="btn-del" title="작품 삭제" onclick="pieceDel()"><label class="hide">삭제</label></li> -->
 		                              <li><input type="button" class="btn-del" title="작품 삭제" onclick="location.href='<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>'"><label class="hide">삭제</label></li>
