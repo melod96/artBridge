@@ -72,9 +72,9 @@ public class SelectTransactionList extends HttpServlet {
 		
 		String page = "";
 		if(transList != null){
-			//page= "views/myPage/myPageForm.jsp";
+			page= "views/myPage/mypagelhm2.jsp";
 //			request.getSession().setAttribute("transList", transList);
-			page= "views/myPage/mypagelhm.jsp";
+//			page= "views/myPage/mypagelhm.jsp";
 			request.setAttribute("transList", transList);
 //			request.getSession().setAttribute("transList", transList);
 //			request.setAttribute("pi", pi);
@@ -83,10 +83,10 @@ public class SelectTransactionList extends HttpServlet {
 			response.setCharacterEncoding("UTF-8");
 			new Gson().toJson(transList, response.getWriter());
 		}else{
-			String page = "views/common/errorPage.jsp";
+			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "리스트를 불러올 수 없습니다");
 		}
-			RequestDispatcher view = request.getRequestDispatcher("views/myPage/myPageForm.jsp");
+			RequestDispatcher view = request.getRequestDispatcher(page);
 			view.forward(request, response);
 //			response.getWriter();
 	}

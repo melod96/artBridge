@@ -50,49 +50,38 @@ public class RequestWriterRightUpdate extends HttpServlet {
 			
 			ArrayList<String> saveFilesNameList = new ArrayList<String>();
 			ArrayList<String> originFilesNameList = new ArrayList<String>();
-			
+						
 			Enumeration<String> fileNames = multiRequest.getFileNames();
 			
-			int cursorPoint = 1;
+			int cursorPoint = 0;
 			while(fileNames.hasMoreElements()){
-				System.out.println("파일 이름 요소다 오니?? " + cursorPoint + "\n");
 				String name = fileNames.nextElement();
 				
 				saveFilesNameList.add(multiRequest.getFilesystemName(name));
 				originFilesNameList.add(multiRequest.getOriginalFileName(name));
-				System.out.println("저장 할 사진 이름 리스트" + cursorPoint + "번째 정보 : " + saveFilesNameList.get(cursorPoint));
-				System.out.println("저장 할 사진 이름 리스트" + cursorPoint + "번째 정보 : " + saveFilesNameList.get(cursorPoint));
-				cursorPoint++;
 			}
-
-			System.out.println("반복문 끝났는데 몇 개 받아오니?" + cursorPoint);
-			System.out.println("세이브 파일 이름 리스트 개수야 : " + saveFilesNameList.size());
-			System.out.println("원래 파일 이름 리스트 개수야 : " + originFilesNameList.size());
 			
 			int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
 			String mBank = multiRequest.getParameter("userBank");
 			String mAccount = multiRequest.getParameter("userAccount");
-			System.out.println("0-1. 업데이트 할 넘어온 유저 정보야 (mNo : " + mNo + " , mBank : " + mBank + ", mAccount : " + mAccount);
 			
 			Member m = new Member();
 			m.setMember_no(mNo);
 			m.setBank(mBank);
 			m.setAccount(mAccount);
-			System.out.println("0-2. 멤버 잘 만들어 졌어요? : " + m.toString());
 			
 			ArrayList<Files> fileList = new ArrayList<Files>();
-			for(int i = originFilesNameList.size(); i > 0; i--){
+			for(int i = originFilesNameList.size()-1; i >= 0; i--){
 				Files file = new Files();
 				
 				file.setF_reference_no(mNo);
 				file.setFiles_title(originFilesNameList.get(i));
 				file.setChange_title(saveFilesNameList.get(i));
-				System.out.println(i + " 번째 파일 리스트의 정보야" + file.toString());
 				
 				switch(i){
-					case 3 : file.setFiles_type(7); break;
-					case 2 : file.setFiles_type(6); break;
-					case 1 : file.setFiles_type(5); break;
+					case 2 : file.setFiles_type(7); break;
+					case 1 : file.setFiles_type(6); break;
+					case 0 : file.setFiles_type(5); break;
 				}
 				file.setFiles_root(savePath);
 				
@@ -107,7 +96,7 @@ public class RequestWriterRightUpdate extends HttpServlet {
 			
 			System.out.println("결과 : " + result);
 			
-			if(result > 4){
+			if(result >= 4){
 				/*response.getWriter().print(result);*/
 				response.sendRedirect("/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu");
 			}else{

@@ -154,7 +154,7 @@
 		tList = (ArrayList<Transaction>)request.getAttribute("transList");
 	}
 	System.out.println("상단부" + tList);
-	/* Transaction t = null;
+	Transaction t = null;
 	if(request.getAttribute("t") != null){
 		t = (Transaction)request.getAttribute("t");
 	}
@@ -222,7 +222,7 @@
 		<div class="contents"><!-- contents 필수 사용 -->
 
 <!--      	* 1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
-<%-- <%if(t!=null){ %>
+<%if(t!=null){ %>
 			<form action="" method="post">
 				<div id="stmtModalArea" class="w3-modal" onclick="stmtDisplayNone();"></div>
 				<div id="stmtArea" class="settingArea">
@@ -297,7 +297,6 @@
 				</div>
 			</form>
 			<%} %>
-			 --%>
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
 <!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
@@ -336,17 +335,17 @@
 								<td colspan="7" width="715px" style="padding-bottom:10px;">
 	                                <ul class="insert-img-area" style="text-align:center;">
 	                                  <li>
-	                                      <input type="file" id="file-btn1" name="confirmImg_writerRight" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
+	                                      <input type="file" id="file-btn1" name="confirmImg_writerRight1" multiple="multiple" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
 	                                      <label for="file-btn1" class="btn btn-primary">이미지 파일 불러오기</label>
 	                                      <p><img class="img1" src="/artBridge/image/common/no_thumb.jpg" /></p>
 	                                  </li>
 	                                  <li>
-	                                      <input type="file" id="file-btn2" name="confirmImg_writerRight" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
+	                                      <input type="file" id="file-btn2" name="confirmImg_writerRight2" multiple="multiple" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
 	                                      <label for="file-btn2" class="btn btn-primary">이미지 파일 불러오기</label>
 	                                      <p><img class="img2" src="/artBridge/image/common/no_thumb.jpg"></p>
 	                                  </li>
 	                                  <li style="margin-right:0px;">
-	                                      <input type="file" id="file-btn3" name="confirmImg_writerRight" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
+	                                      <input type="file" id="file-btn3" name="confirmImg_writerRight3" multiple="multiple" onchange="readURL(this);" accept="image/gif, image/jpeg, image/png">
 	                                      <label for="file-btn3" class="btn btn-primary">이미지 파일 불러오기</label>
 	                                      <p><img class="img3" src="/artBridge/image/common/no_thumb.jpg"></p>
 	                                  </li>
@@ -1186,19 +1185,15 @@
 			$('.order-menu, .bookmark-menu, .msg-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
 			
 			if(pageName != null){
-				alert(pageName);
 				anotherHidden(pageName)
-			} else if(pageName == null){
-				alert(pageName);
-				alert("안녕");
+			} else{
 				pageName = $('#order-menu').id();
-				console.log(pageName);
 				alert("2." + pageName);
 				/* $('.order-menu').css({"display":"block"});
 				$('#order-menu').css({"color":"black", "background":"white"}); */
-			}else if(pageName == $('#order-menu').id()){
+			}<%-- else if(pageName == $('#order-menu').id()){
 				location.href="<%= request.getContextPath() %>/selectTransList.ts";
-			}
+			} --%>
 		});
 	            		  
 	//	* 탭 선택 함수
@@ -1657,6 +1652,8 @@
 			var type = $(input).attr('id');
 			
 	        if (input.files && input.files[0]) {
+	        	alert(input.files);
+	        	alert(input.files[0]);
 	          var reader = new FileReader();
 	          reader.onload = function(e) {
 	            if(type == 'file-btn1'){
@@ -1672,6 +1669,7 @@
 		        insertImgTotalCnt = insertImgCnt1 + insertImgCnt2 + insertImgCnt3;
 	          }
 	          reader.readAsDataURL(input.files[0]);
+	          alert(reader.readAsDataURL(input.files[0]));
 	        }
 		};
 		
@@ -1722,12 +1720,13 @@
 				checkImgTotalCnt = false;
 				return false;
 			}else{
+				alert(insertImgTotalCnt);
 				checkImgTotalCnt = true;
 			}
 			
 			var submit = confirm("신청 양식을 제출 하시겠습니까?");
-			<%-- if(submit == true){
-				alert("submit 트루니?");
+			 if(submit == true){
+		<%--	alert("submit 트루니?");
 				$("#callReqWriterRightServlet").attr("action", "<%= request.getContextPath() %>/reqWriterRight.me");
 				$.ajax({
 					url : "<%= request.getContextPath() %>/reqWriterRight.me",
@@ -1753,11 +1752,11 @@
 				});
 				alert("에이작스 뒤에 링크 가야되는딩"); --%>
 				
-// 				return true;
-// 			}else{
-// 				return false;
-// 			}
-			return true;
+				return true;
+			}else{
+				return false;
+			}
+// 			return true;
 //  			location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
 		};
 	</script>

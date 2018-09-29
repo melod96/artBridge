@@ -58,7 +58,7 @@
 						<li class="dropdown"><a href="#"
 							class="login dropdown-toggle">마이페이지</a>
 							<ul class="dropdown-menu">
-								<li><a href="<%= request.getContextPath() %>/selectTransList.ts?">주문관리</a></li>
+								<li><a href="<%= request.getContextPath() %>/selectTransListlhm.ts?">주문관리</a></li>
 <%-- 								<li><a href="<%= request.getContextPath() %>/selectTransList.ts?pageName=order-menu">주문관리</a></li> --%>
 <!-- 								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu">주문관리</a></li> -->
 								<li><a href="/artBridge/selectList.my?memberNo=<%= loginUser.getMember_no() %>">쪽지함</a></li>
