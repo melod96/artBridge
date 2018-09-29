@@ -253,13 +253,13 @@
                                       </div>
                                       <div class="row-inp">
                                           <label>사이즈(단위 필수)</label><input type="text" name="file_size" class="form-control input-short" placeholder="ex) 가로 3000px, A4...">
-                                          <label>작업 소요 일 수</label>
-                                          <select class="form-control input-xshort" name="working_period">
+                                          <label>작업 소요 일 수</label><input type="number" name="working_period" class="form-control input-xshort" min="1">
+                                          <!-- <select class="form-control input-xshort" name="working_period">
                                             <option value="0">선택</option>
                                             <option value="1">1일</option>
                                             <option value="2">2일</option>
                                             <option value="3">3일</option>
-                                          </select>
+                                          </select> -->
                                       </div>
                                   </td>
                               </tr>
