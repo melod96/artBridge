@@ -153,11 +153,10 @@
 	if(request.getAttribute("transList")!= null){
 		transList = (ArrayList<Transaction>)request.getAttribute("transList");
 	}
-	System.out.println(transList);
-	Transaction t = null;
+	/* Transaction t = null;
 	if(request.getAttribute("t") != null){
 		t = (Transaction)request.getAttribute("t");
-	}
+	} */
 	
 	PageInfo pi = null;
 	int listCount = 0;
@@ -222,7 +221,7 @@
 		<div class="contents"><!-- contents 필수 사용 -->
 
 <!--      	* 1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
-<%if(t!=null){ %>
+<%-- <%if(t!=null){ %>
 			<form action="" method="post">
 				<div id="stmtModalArea" class="w3-modal" onclick="stmtDisplayNone();"></div>
 				<div id="stmtArea" class="settingArea">
@@ -296,7 +295,81 @@
 					</div>
 				</div>
 			</form>
-			<%} %>
+			<%}else{ %>
+				<form action="" method="post">
+				<div id="stmtModalArea" class="w3-modal" onclick="stmtDisplayNone();"></div>
+				<div id="stmtArea" class="settingArea">
+					<!-- 모달 요소 넣기 -->
+					<div class=stmtModal-Area-Style align="center">
+						<h3>명 &nbsp; 세 &nbsp; 서</h3>
+						<table class="form-table">
+							<tr>
+								<td width="15px"></td>
+								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td>
+								<td colspan="3"></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="stmt-title">신 청 일  : </td>
+								<td colspan="3"></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="stmt-title">구 매 자  : </td>
+								<td width="230px"></td>
+								<td width="80px" class="stmt-title">판 매 자  : </td>
+								<td width="150px"></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td class="stmt-title">옵 션 명  : </td>
+								<td colspan="3">인물화</td>
+							</tr>
+							<tr>
+								<td colspan="5" height="30px"></td>
+							</tr>
+							<tr>
+							<td colspan="5" width="540px">
+								<table border="1" >
+									<tr class="form-inner-table-title" style="font-weight:bold; text-align:center;" height="25px">
+										<td width="35px">No</td>
+										<td width="380px">요 구 사 항</td>
+										<td width="87px">금 액</td>
+									</tr>
+									<tr height="23px">
+										<td align="center">1</td>
+										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~</td>
+										<td align="right">작가기입 원</td>
+									</tr>
+									<tr>
+										<td align="center">2</td>
+										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~ 귀염뽀짝하게 해주시면 더 좋아요~!</td>
+										<td align="right">45,454원</td>
+									</tr>
+								</table>
+								<br>
+								<table align="right">
+									<tr >
+										<td>총   금 액  :  </td>
+										<td><label>123,456원</label></td>
+									</tr>
+								</table>
+							</td>
+							</tr>
+							<tr>
+								<td colspan="5">
+									<div class="btn-center stmtBtn">
+										  <button class="btn btn-primary btn-lg btn-plus-design" style="width:67%;">거 래 수 락</button><br>
+					                      <button class="btn btn-primary btn-lg btn-plus-design" style="margin-left:0;">재 요청</button>
+					                      <button class="btn btn-default btn-lg btn-plus-design">거래 취소</button>
+					                </div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</form>
+			<%} %> --%>
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
 
@@ -581,8 +654,6 @@
 	    
 	// 	* 명세표 모달 띄우기
 	   	function stmtDisplayBlock(t){
-	   		$('#stmtModalArea').css({"display":"block"});
-	   		$('#stmtArea').css({"display":"block"});
 	   		
 	   		//var orderNoo = $('#orderNo').val();
 	   		var orderNoo = t
@@ -592,15 +663,17 @@
 					url : "<%= request.getContextPath() %>/selectTransOne.ts",
 					type : "post",
 					data : {orderNoo : orderNoo},
-					success : function(){
+					success : function(data){
 						
+				   		$('#stmtModalArea').css({"display":"block"});
+				   		$('#stmtArea').css({"display":"block"});
 						
 					},
 					error:function(request,status,error){
 			        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			        }
 				});
-			}  		
+			}
 	  	};							
 	// 	* 명세표 모달 닫기
 		function stmtDisplayNone(){
@@ -611,7 +684,7 @@
 		};
 	</script>
 <!-- //1. 주문관리 탭 스크립트 -->
-
+<%@ include file="/views/myPage/paymentmodel.jsp"%>
 
 </body>
 </html>

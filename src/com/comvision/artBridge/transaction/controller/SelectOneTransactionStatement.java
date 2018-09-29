@@ -39,9 +39,11 @@ public class SelectOneTransactionStatement extends HttpServlet {
 		
 		String page = "";
 		if(t != null){
-			response.getWriter().print(t);
+//			response.getWriter().print(t);
 			/*HttpSession session = request.getSession();
 			session.setAttribute("t", t);*/
+			page= "views/myPage/paymentmodel.jsp";
+			request.setAttribute("t", t);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg",  "명세표 상세 조회 실패!");
