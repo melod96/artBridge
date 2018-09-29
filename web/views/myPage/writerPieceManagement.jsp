@@ -105,7 +105,7 @@
    .state-area li span{float:right; font-weight:normal;}
 
    .bord-wrap{overflow:hidden; width:1110px; font-size:16px;}
-   .bord-wrap .piece-list{float:left; border:1px solid #9e9e9e; padding:20px; width:545px; margin-left:20px; margin-bottom:20px; font-weight:bold;}
+   .bord-wrap .piece-list{float:left; border:1px solid #9e9e9e; padding:20px; width:550px; margin-left:10px; margin-bottom:30px; font-weight:bold;}
    .bord-wrap .piece-list.default{width:100%; text-align:center; padding:50px 0;}
    .bord-wrap .piece-list:nth-child(2n+1){margin-left:0;}
    .bord-wrap .seting-area{overflow:hidden; float:right; margin-bottom:0;}
@@ -114,14 +114,13 @@
    .bord-wrap .seting-area .btn-edit{background:url("/artBridge/image/common/ico_repaint.png") 0 0 no-repeat;}
    .bord-wrap .seting-area .btn-del{background:url("/artBridge/image/common/ico_delete.png") 0 0 no-repeat;}
 
-   .bord-wrap .img-area{float:none; overflow:hidden; width:100%;}
+   .bord-wrap .img-area{display:inline-block;}
    .bord-wrap .img-area .tmb{overflow:hidden; float:left; width:32%; height:122px;}
    .bord-wrap .img-area .tmb~.tmb{margin-left:1.9%;}
    .bord-wrap .img-area .tmb img{width:100%;}
 
-   .bord-wrap .info-area1{margin-bottom:20px; font-size:15px; color:#242424;}
-   .bord-wrap .info-area1 span{width:30%;}
-   .bord-wrap .info-area1 span:first-child{width:70%;}
+   .bord-wrap .info-area1{margin-bottom:20px; padding-bottom:12px; font-size:15px; color:#242424; border-bottom:1px solid #ddd;}
+   .bord-wrap .info-area1 span{display:inline-block; width:430px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
    .bord-wrap .tit_txt a{color:#333;}
 
    .heading{margin: 30px 0 20px 0 !important;}
@@ -265,7 +264,6 @@
                                 <li>평점 <span><div class="rateit" data-rateit-value="<%= writerAvg %>" data-rateit-ispreset="true" data-rateit-readonly="true"></div>&nbsp; <%= writerAvg %> 점 </span></li>
                                 <li>진행중인 의뢰 <span><%= orderIngCount %> 건</span></li>
                                 <li>슬롯 갯수 <span><%= slot %> 개</span></li>
-                                <li>입금 예정 금액 <span>0 원</span></li>
                               </ul>
                           </div>
                       </div>

@@ -38,35 +38,6 @@ public class InsertPieceServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		if(ServletFileUpload.isMultipartContent(request)){
-			/*int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-			
-			//페이징 처리
-			int currentPage;
-			int limit;		
-			int maxPage; 	
-			int startPage;	
-			int endPage; 	
-
-			currentPage = 1;
-			limit = 10;
-
-			if(request.getParameter("currentPage")!= null){
-				currentPage = Integer.parseInt(request.getParameter("currentPage"));
-			}
-
-			int listCount = new WriterService().getListCount(memberNo);
-
-			maxPage = (int)((double)listCount/limit + 0.9);
-			startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
-			
-			endPage = startPage + limit -1;
-			if(maxPage<endPage){
-				endPage = maxPage;
-			}
-
-			PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);*/
-			
-			
 			//썸네일 파일 첨부 저장용
 			int maxSize = 1024 * 1024 * 10;
 			
@@ -144,7 +115,6 @@ public class InsertPieceServlet extends HttpServlet {
 			System.out.println("결과 : " + result);
 			
 			if(result > 0){
-				//request.setAttribute("list", new WriterService().selectList(currentPage, limit, memberNo));
 				response.sendRedirect(request.getContextPath() + "/selectPieceList.wr?memberNo=" + memberNo);
 			}else{
 				//실패시 서버에 저장된 파일 삭제
