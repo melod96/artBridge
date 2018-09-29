@@ -55,7 +55,7 @@ public class MainLoadServlet extends HttpServlet {
 		
 		
 		if(slidelist != null){
-			page = "/views/main/main.jsp";
+			page = "/views/main/main2.jsp";
 			request.setAttribute("slidelist", slidelist);
 			
 			

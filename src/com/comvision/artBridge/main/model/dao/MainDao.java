@@ -57,6 +57,11 @@ public class MainDao {
 					f.setFiles_root(rset.getString("FILES_ROOT"));
 					f.setFiles_date(rset.getDate("FILES_DATE"));
 					f.setFiles_secession(rset.getInt("FILES_SECESSION"));
+					f.setBoard_no(rset.getInt("BOARD_NO"));
+					f.setBoard_title(rset.getString("BOARD_TITLE"));
+					f.setMem_no(rset.getInt("MEMBER_NO"));
+					f.setMem_name(rset.getString("NAME"));
+					
 					
 					
 					
