@@ -155,9 +155,12 @@ public class MemberService {
 		Connection con = getConnection();
 		System.out.println("2. 작가 신청 양식 전송 서비스입니다. 들어오네요~");
 		int result = 0;
+		
 		int result1 = new MemberDao().request_writerRight(con, m);
 		System.out.println("6-1. 업데이트 정보 갯수 : " + result1);
 		System.out.println("6-2. memberTB없뎃 쿼리 dao에서 실행하고 다시 service로 왔어용~ 이번엔 첨부파일을 저장해볼까요~?");
+		
+		
 		int result2 = new MemberDao().confirmImg_writerRight(con, fileList);
 		System.out.println("6-3. 사진 인서트 갯수 : " + result2);
 		
