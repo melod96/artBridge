@@ -1,6 +1,7 @@
 package com.comvision.artBridge.transaction.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.member.model.vo.Member;
+import com.comvision.artBridge.sale.model.service.SaleService;
+import com.comvision.artBridge.sale.model.vo.Requirements;
 import com.comvision.artBridge.transaction.model.service.TransactionService;
 import com.comvision.artBridge.transaction.model.vo.Transaction;
 
@@ -36,6 +39,9 @@ public class SelectOneTransactionStatement extends HttpServlet {
 		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
 		
 		Transaction t = new TransactionService().selectTransOne(mNo, orderNoo);
+		ArrayList<Requirements> rlist = new SaleService().selectsaleRequirementsList(orderNoo, mNo);
+		
+		int price = new SaleService().totalPrice(orderNoo, mNo);
 		
 		String page = "";
 		if(t != null){
@@ -44,6 +50,8 @@ public class SelectOneTransactionStatement extends HttpServlet {
 			session.setAttribute("t", t);*/
 			page= "views/myPage/paymentmodel.jsp";
 			request.setAttribute("t", t);
+			request.setAttribute("rlist", rlist);
+			request.setAttribute("totalprice", price);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg",  "명세표 상세 조회 실패!");
