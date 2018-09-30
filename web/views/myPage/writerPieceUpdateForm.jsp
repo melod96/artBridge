@@ -9,15 +9,21 @@
 	if(session.getAttribute("loginUser") != null){
 		m = (Member)session.getAttribute("loginUser");
 	}
-
-	Board board = new Board();
-	
+	Board board = null;
+	if(request.getAttribute("board") != null){
+		board = (Board)request.getAttribute("board");
+	}
 	ArrayList<Files> pieceData = null;
 	if(request.getAttribute("pieceData") != null){
 		pieceData = (ArrayList<Files>)request.getAttribute("pieceData");
+		/* Files thumbImg1 = pieceData.get(0);
+		Files thumbImg2 = pieceData.get(1);
+		Files thumbImg3 = pieceData.get(2); */
 	}
-
-	ArrayList<Relate> relate = (ArrayList<Relate>)request.getAttribute("relate");
+	ArrayList<Relate> relate = null;
+	if(request.getAttribute("relate") != null){
+		relate = (ArrayList<Relate>)request.getAttribute("relate");
+	}
 	
 %>
 
@@ -210,7 +216,7 @@
                     <form name="frmSubmit" encType="multipart/form-data">
                    	 	<input type="hidden" name="memberNo" value="<%= m.getMember_no() %>">
                         <div class="heading">
-                            <h2 class="tit1">내 작품 등록</h2>
+                            <h2 class="tit1">내 작품 수정</h2>
                           </div>
                         <table class="tbl-type01">
                           <colgroup>
@@ -231,17 +237,18 @@
                                       <li>
                                           <input type="file" name="thumb01"  id="file-btn1">
                                           <label for="file-btn1" class="btn btn-primary">썸네일 이미지 선택1</label>
-                                          <p><img class="img1" src="/artBridge/image/common/no_thumb.jpg" /></p>
+                                          <p><img class="img1" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(2).getChange_title()%>"></p>
+                                          <!-- <p><img class="img1" src="/artBridge/image/common/no_thumb.jpg" /></p> -->
                                       </li>
                                       <li>
                                           <input type="file" name="thumb02" id="file-btn2">
                                            <label for="file-btn2" class="btn btn-primary">썸네일 이미지 선택2</label>
-                                          <p><img class="img2" src="/artBridge/image/common/no_thumb.jpg"></p>
+                                          <p><img class="img2" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(1).getChange_title()%>"></p>
                                       </li>
                                       <li>
                                           <input type="file" name="thumb03" id="file-btn3">
                                            <label for="file-btn3" class="btn btn-primary">썸네일 이미지 선택3</label>
-                                          <p><img class="img3" src="/artBridge/image/common/no_thumb.jpg"></p>
+                                          <p><img class="img3" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(0).getChange_title()%>"></p>
                                       </li>
                                     </ul>
                                     <ul>
@@ -254,18 +261,18 @@
                                   <th>상세옵션</th>
                                   <td>
                                       <div class="row-inp">
-                                           <label>제출파일유형</label><input type="text" name="file_type" class="form-control input-short" placeholder="ex) png, jpg, ai...">
-                                           <label>작업 해상도(dpi)</label><input type="text" name="resolution" class="form-control input-xshort">
+                                           <label>제출파일유형</label><input type="text" name="file_type" class="form-control input-short" placeholder="ex) png, jpg, ai..." value="<%=board.getSubmit_file_type()%>">
+                                           <label>작업 해상도(dpi)</label><input type="text" name="resolution" class="form-control input-xshort" value="<%=board.getResolution()%>">
                                       </div>
                                       <div class="row-inp">
-                                          <label>사이즈(단위 필수)</label><input type="text" name="file_size" class="form-control input-short" placeholder="ex) 가로 3000px, A4...">
-                                          <label>작업 소요 일 수</label>
-                                          <select class="form-control input-xshort" name="working_period">
+                                          <label>사이즈(단위 필수)</label><input type="text" name="file_size" class="form-control input-short" placeholder="ex) 가로 3000px, A4..." value="<%=board.getSubmit_size()%>">
+                                          <label>작업 소요 일 수</label><input type="number" name="working_period" class="form-control input-xshort" min="1" value="<%=board.getWorking_period()%>">
+                                          <!-- <select class="form-control input-xshort" name="working_period">
                                             <option value="0">선택</option>
                                             <option value="1">1일</option>
                                             <option value="2">2일</option>
                                             <option value="3">3일</option>
-                                          </select>
+                                          </select> -->
                                       </div>
                                   </td>
                               </tr>
@@ -292,7 +299,7 @@
                                           <tbody>
                                               <tr>
                                                   <td><input type="checkbox"></td>
-                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력"></td>
+                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력" value=""></td>
                                                   <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)"></td>
                                               </tr>
                                               <tr>
@@ -330,7 +337,7 @@
                       </table>
                       <br>
                       <!-- 에디터 영역 -->
-                      <textarea id="editor" name="contents"></textarea>
+                      <textarea id="editor" name="contents"><%=board.getBoard_content()%></textarea>
                       <!-- // 에디터 영역 -->
                       <div class="btn-center">
                           <button type="reset" class="btn btn-default btn-lg" onclick="location.href='/artBridge/selectPieceList.wr?memberNo=<%=loginUser.getMember_no()%>'">취소</button>

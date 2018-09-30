@@ -183,28 +183,22 @@ public class WriterService {
 	}
 
 	//작품 수정하기 폼 메소드
-	/*public ArrayList<HashMap<String, Object>> selectPieceData(int memberNo, int pieceNo) {
-		Connection con = getConnection();
-		
-		ArrayList<HashMap<String, Object>> list = null;
-		
-		list = new WriterDao().selectPieceData(con, memberNo, pieceNo);
-		
-		close(con);
-		
-		return list;
-	}*/
-	
 	public HashMap<String, Object> selectPieceData(int memberNo, int pieceNo) {
 		Connection con = getConnection();
 		
 		HashMap<String, Object> hamp = null;
 		
 		hamp = new WriterDao().selectPieceData(con, memberNo, pieceNo);
-		
+		System.out.println("서비스너냐?" + hamp);
 		close(con);
 		
 		return hamp;
+	}
+
+	//저장되어있는 연관검색어 노출
+	public ArrayList<Relate> selectRelateWord() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

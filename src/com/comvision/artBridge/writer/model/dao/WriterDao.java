@@ -521,10 +521,10 @@ public class WriterDao {
 	public HashMap<String, Object> selectPieceData(Connection con, int memberNo, int pieceNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
-		HashMap<String, Object> hmap = new HashMap<String, Object>();
-		ArrayList<Files> selectThumbImg = new ArrayList<Files>();
-		Board b = new Board();
+		HashMap<String, Object> hmap = null;
+		Board b = null;
 		Files f = null;
+		ArrayList<Files> selectThumbImg = null;
 		
 		String query = prop.getProperty("selectPieceData");
 		
@@ -538,60 +538,28 @@ public class WriterDao {
 			selectThumbImg = new ArrayList<Files>();
 			
 			while(rset.next()){
-				if(b.getBoard_no() == 0){
-					b.setBoard_no(rset.getInt("board_no"));
-					b.setBoard_type(rset.getInt("board_type"));
-					b.setBoard_title(rset.getString("board_title"));
-					b.setBoard_content(rset.getString("board_content"));
-					b.setBoard_date(rset.getDate("board_date"));
-					b.setMember_no(rset.getInt("member_no"));
-					b.setModify_date(rset.getDate("modify_date"));
-					/*b.setBoard_status(rset.getInt(""));
+				hmap = new HashMap<String, Object>();
+				//selectThumbImg = new ArrayList<Files>();
 
-MODIFY_DATE
-BOARD_STATUS
-BOARD_COUNT
-MAIN_VIEW
-RESOLUTION
-SUBMIT_FILE_TYPE
-SUBMIT_SIZE
-WORKING_PERIOD*/
-				}
+				b = new Board();
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				b.setResolution(rset.getInt("resolution"));
+				b.setSubmit_file_type(rset.getString("submit_file_type"));
+				b.setSubmit_size(rset.getString("submit_size"));
+				b.setWorking_period(rset.getInt("working_period"));
 				
-				if(b.getBoard_no() == rset.getInt("board_no")){
-					f = new Files();
-					f.setFiles_title(rset.getString("files_title"));
-					f.setChange_title(rset.getString("change_title"));
-					f.setFiles_type(rset.getInt("files_type"));
-					f.setFiles_root(rset.getString("files_root"));
+				f = new Files();
+				f.setChange_title(rset.getString("change_title"));
+				f.setFiles_type(rset.getInt("files_type"));
+				f.setFiles_root(rset.getString("files_root"));
 
-					selectThumbImg.add(f);
-				} else {
-					hmap.put("board", b);
-					hmap.put("selectThumbImg", selectThumbImg);
-					
-					hmap = new HashMap<String, Object>();
-					selectThumbImg = new ArrayList<Files>();
-
-					b = new Board();
-					b.setBoard_no(rset.getInt("board_no"));
-					b.setBoard_title(rset.getString("board_title"));
-					b.setBoard_content(rset.getString("board_content"));
-					b.setBoard_date(rset.getDate("board_date"));
-					b.setMember_no(rset.getInt("member_no"));
-					
-					f = new Files();
-					f.setFiles_title(rset.getString("files_title"));
-					f.setChange_title(rset.getString("change_title"));
-					f.setFiles_type(rset.getInt("files_type"));
-					f.setFiles_root(rset.getString("files_root"));
-
-					selectThumbImg.add(f);
-				}
+				selectThumbImg.add(f);
 			}
-			
-			hmap.put("board", b);
 			hmap.put("selectThumbImg", selectThumbImg);
+			System.out.println("dao썸네일 이미지 너냐?" + selectThumbImg);
+			hmap.put("board", b);
+			System.out.println("dao너냐?" + hmap);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
