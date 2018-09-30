@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="java.util.*, 
-    com.comvision.artBridge.relate.model.vo.Relate, 
+    com.comvision.artBridge.relate.model.vo.Relate,
+    com.comvision.artBridge.relate.model.vo.RelateNumList,
     com.comvision.artBridge.member.model.vo.Member,
     com.comvision.artBridge.board.model.vo.Board,
     com.comvision.artBridge.files.model.vo.Files"%>
@@ -23,6 +24,10 @@
 	ArrayList<Relate> relate = null;
 	if(request.getAttribute("relate") != null){
 		relate = (ArrayList<Relate>)request.getAttribute("relate");
+	}
+	ArrayList<RelateNumList> relatecK = null;
+	if(request.getAttribute("relatecK") != null){
+		relatecK = (ArrayList<RelateNumList>)request.getAttribute("relatecK");
 	}
 	
 %>

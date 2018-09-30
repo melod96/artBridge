@@ -2,6 +2,7 @@ package com.comvision.artBridge.writer.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -59,7 +60,7 @@ public class UpdatePieceDeleteServlet extends HttpServlet {
 		int pieceNo = Integer.parseInt(request.getParameter("pieceNo"));
 		//System.out.println(pieceNo);
 		
-		ArrayList<Board> list = new WriterService().deletePiece(pieceNo, currentPage, limit, memberNo);
+		ArrayList<HashMap<String, Object>> list = new WriterService().deletePiece(pieceNo, currentPage, limit, memberNo);
 		
 		String page = "";
 		if(list != null){

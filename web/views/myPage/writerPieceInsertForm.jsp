@@ -286,18 +286,18 @@
                                           <tbody>
                                               <tr>
                                                   <td><input type="checkbox"></td>
-                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력"></td>
-                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)"></td>
+                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력" name="option1"></td>
+                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)" name="price1"></td>
                                               </tr>
                                               <tr>
                                                   <td><input type="checkbox"></td>
-                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력"></td>
-                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)"></td>
+                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력" name="option2"></td>
+                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)" name="price2"></td>
                                               </tr>
                                               <tr>
                                                   <td><input type="checkbox"></td>
-                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력"></td>
-                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)"></td>
+                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력" name="option3"></td>
+                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)" name="price3"></td>
                                               </tr>
                                           </tbody>
                                       </table>

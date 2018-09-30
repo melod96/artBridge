@@ -20,17 +20,6 @@ import static com.comvision.artBridge.common.JDBCTemplate.*;
 
 public class WriterService {
 
-	//작가 작품관리 리스트 출력
-	public ArrayList<Board> selectList(int currentPage, int limit, int memberNo) {
-		Connection con = getConnection();
-		
-		ArrayList<Board> list = new WriterDao().selectList(con, currentPage, limit, memberNo);
-
-		close(con);
-		
-		return list;
-	}
-
 	//페이징처리
 	public int getListCount(int memberNo) {
 		Connection con = getConnection();
@@ -65,7 +54,10 @@ public class WriterService {
 		for(int i = 0; i < relateCk.length; i++){
 			result4 += new WriterDao().relateNumList(con, relateCk[i], currval);
 		}
-		
+		System.out.println(result1);
+		System.out.println(result2);
+		System.out.println(result3);
+		System.out.println(result4);
 		if(result1 > 0 && result2 == fileList.size() && result3 == optionsList.size() && result4 == relateCk.length){
 			commit(con);
 			result = 1;
@@ -90,15 +82,16 @@ public class WriterService {
 	}
 
 	//커미션 삭제용 메소드
-	public ArrayList<Board> deletePiece(int pieceNo, int currentPage, int limit, int memberNo) {
+	public ArrayList<HashMap<String, Object>> deletePiece(int pieceNo, int currentPage, int limit, int memberNo) {
 		Connection con = getConnection();
-		ArrayList<Board> list = null;
+		ArrayList<HashMap<String, Object>> list = null;
 		int result = 0;
 		
 		int b = new WriterDao().deletePiece(con, pieceNo);
 
 		if(b > 0){
-			list = new WriterDao().selectList(con, currentPage, limit, memberNo);
+			//list = new WriterDao().selectList(con, currentPage, limit, memberNo);
+			list = new WriterDao().selectBoardWithThumbImg(con, currentPage, limit, memberNo);
 			commit(con);
 		}else{
 			rollback(con);
@@ -189,16 +182,10 @@ public class WriterService {
 		HashMap<String, Object> hamp = null;
 		
 		hamp = new WriterDao().selectPieceData(con, memberNo, pieceNo);
-		System.out.println("서비스너냐?" + hamp);
+
 		close(con);
 		
 		return hamp;
-	}
-
-	//저장되어있는 연관검색어 노출
-	public ArrayList<Relate> selectRelateWord() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	

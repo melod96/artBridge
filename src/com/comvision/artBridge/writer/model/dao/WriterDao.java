@@ -15,6 +15,7 @@ import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.relate.model.vo.Relate;
+import com.comvision.artBridge.relate.model.vo.RelateNumList;
 import com.comvision.artBridge.sale.model.vo.Options;
 
 import static com.comvision.artBridge.common.JDBCTemplate.*;
@@ -31,54 +32,6 @@ public class WriterDao {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	//작가 작품관리 리스트 출력
-	public ArrayList<Board> selectList(Connection con, int currentPage, int limit, int memberNo) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Board> list = null;
-		Board b = null;
-		
-		String query = prop.getProperty("selectPieceList");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, memberNo);
-			
-			int startRow = (currentPage -1) *limit +1;
-			int endRow= startRow +limit -1;
-			pstmt.setInt(2, startRow);
-			pstmt.setInt(3, endRow);
-			
-			rset = pstmt.executeQuery();
-			
-			list = new ArrayList<Board>();
-			
-			while(rset.next()){
-				b = new Board();
-				b.setBoard_no(rset.getInt("board_no"));
-				b.setBoard_type(rset.getInt("board_type"));
-				b.setBoard_title(rset.getString("board_title"));
-				b.setBoard_content(rset.getString("board_content"));
-				b.setBoard_date(rset.getDate("board_date"));
-				//b.setMember_no(rset.getInt("member_no"));
-				//b.setModify_date(rset.getDate("modify_date"));
-				b.setBoard_status(rset.getInt("board_status"));
-				b.setBoard_count(rset.getInt("board_count"));
-				b.setMain_view(rset.getInt("main_view"));
-				
-				list.add(b);
-				//System.out.println(b);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally{
-			close(rset);
-			close(pstmt);
-		}
-		
-		return list;
 	}
 
 	//페이징처리
@@ -524,7 +477,11 @@ public class WriterDao {
 		HashMap<String, Object> hmap = null;
 		Board b = null;
 		Files f = null;
+		//RelateNumList rn = null;
+		Relate r = null;
 		ArrayList<Files> selectThumbImg = null;
+		//ArrayList<RelateNumList> selectRelateWord = null;
+		ArrayList<Relate> relateWord = null;
 		
 		String query = prop.getProperty("selectPieceData");
 		
@@ -536,6 +493,8 @@ public class WriterDao {
 			rset = pstmt.executeQuery();
 			
 			selectThumbImg = new ArrayList<Files>();
+			//selectRelateWord = new ArrayList<RelateNumList>();
+			relateWord = new ArrayList<Relate>();
 			
 			while(rset.next()){
 				hmap = new HashMap<String, Object>();
@@ -553,13 +512,24 @@ public class WriterDao {
 				f.setChange_title(rset.getString("change_title"));
 				f.setFiles_type(rset.getInt("files_type"));
 				f.setFiles_root(rset.getString("files_root"));
-
 				selectThumbImg.add(f);
+				
+				/*rn = new RelateNumList();
+				rn.setRelate_no(rset.getInt("relate_no"));
+				selectRelateWord.add(rn);*/
+				
+				r = new Relate();
+				r.setRelate_no(rset.getInt("relate_no"));
+				r.setRelate_name(rset.getString("relate_name"));
+				relateWord.add(r);
+
 			}
-			hmap.put("selectThumbImg", selectThumbImg);
-			System.out.println("dao썸네일 이미지 너냐?" + selectThumbImg);
 			hmap.put("board", b);
-			System.out.println("dao너냐?" + hmap);
+			hmap.put("selectThumbImg", selectThumbImg);
+			//hmap.put("selectRelateWord", selectRelateWord);
+			hmap.put("relateWord", relateWord);
+			//System.out.println("dao썸네일 이미지 너냐?" + selectThumbImg);
+			//System.out.println("dao너냐?" + hmap);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -570,6 +540,8 @@ public class WriterDao {
 		
 		return hmap;
 	}
+
+	
 
 
 }
