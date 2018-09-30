@@ -53,7 +53,6 @@ public class RequestWriterRightUpdate extends HttpServlet {
 						
 			Enumeration<String> fileNames = multiRequest.getFileNames();
 			
-			int cursorPoint = 0;
 			while(fileNames.hasMoreElements()){
 				String name = fileNames.nextElement();
 				
