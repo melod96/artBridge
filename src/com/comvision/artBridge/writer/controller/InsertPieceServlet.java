@@ -90,7 +90,23 @@ public class InsertPieceServlet extends HttpServlet {
 			
 			//options테이블에 저장할 데이터 가져오기
 			int optionstNum = Integer.parseInt(request.getParameter("insertNum"));
-			
+			String option1 = request.getParameter("option1");
+			String option2 = request.getParameter("option2");
+			String option3 = request.getParameter("option3");
+			String option4 = request.getParameter("option4");
+			/*int price1 = Integer.parseInt(request.getParameter("price1"));
+			int price2 = Integer.parseInt(request.getParameter("price2"));
+			int price3 = Integer.parseInt(request.getParameter("price3"));
+			int price4 = Integer.parseInt(request.getParameter("price4"));*/
+			System.out.println("옵션 넘버는 들어왔니?" + optionstNum);
+			System.out.println("아 옵션들어와라1" + option1);
+			System.out.println("아 옵션들어와라2" + option2);
+			System.out.println("아 옵션들어와라3" + option3);
+			System.out.println("아 옵션들어와라4" + option4);
+			/*System.out.println("가격은 들어오니1" + price1);
+			System.out.println("가격은 들어오니2" + price2);
+			System.out.println("가격은 들어오니3" + price3);
+			System.out.println("가격은 들어오니4" + price4);*/
 			ArrayList<Options> optionsList = new ArrayList<Options>();
 			
 			for(int i = 0; i < optionstNum; i++){
@@ -105,6 +121,7 @@ public class InsertPieceServlet extends HttpServlet {
 					optionsList.add(o);
 				}
 			}
+			System.out.println("옵션리스트 값은?" + optionsList);
 			
 			//연관검색어 R_N_LIST테이블에 저장할 데이터 가져오기
 			String[] relateCk = multiRequest.getParameterValues("relateCk");
@@ -112,7 +129,7 @@ public class InsertPieceServlet extends HttpServlet {
 			//service 전송
 			int result = new WriterService().insertPiece(b, fileList, relateCk, optionsList);
 			
-			System.out.println("결과 : " + result);
+			//System.out.println("결과 : " + result);
 			
 			if(result > 0){
 				response.sendRedirect(request.getContextPath() + "/selectPieceList.wr?memberNo=" + memberNo);
