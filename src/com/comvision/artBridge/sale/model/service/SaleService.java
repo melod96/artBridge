@@ -224,6 +224,16 @@ public class SaleService {
 		return result;
 	}
 
+	//총 가격
+	public int totalPrice(int orderNoo, int mNo) {
+		Connection con = getConnection();
+		
+		int price = new SaleDao().totalPrice(con, orderNoo, mNo);
+		
+		close(con);
+		return price;
+	}
+
 	
 
 	

@@ -103,6 +103,7 @@ public class TransactionDao {
 				t.setWrtNick(rset.getString("wrt_nick"));
 				t.setWrtId(rset.getString("wrt_id"));
 				t.setO_date(rset.getDate("o_start_date"));
+
 				t.setO_final_date(rset.getDate("o_final_date"));
 				
 				t.setOd_startDate(rset.getDate("od_start_date"));
@@ -116,6 +117,7 @@ public class TransactionDao {
 				transList.add(t);
 				System.out.println("3. 저장할 트랜객체야 : " + t);
 				System.out.println("3. 생성된 트랜스리스트야 : " + transList);
+
 			}
 			
 		} catch (SQLException e) {

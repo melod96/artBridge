@@ -629,7 +629,7 @@
 			if(thisMenu == "mywork-menu"){
 				$('.heading .menuName').html("내 작품 관리");
 			}
-		};
+		}
 	</script>
 <!-- //페이지 호출 & 선택 탭 영역 보이기 스크립트 -->
 
@@ -655,7 +655,7 @@
 	// 	* 명세표 모달 띄우기
 	   	function stmtDisplayBlock(t){
 	   		
-	   		//var orderNoo = $('#orderNo').val();
+	   		<%-- //var orderNoo = $('#orderNo').val();
 	   		var orderNoo = t
 	   		console.log(orderNoo);
 			if(orderNoo != null && orderNoo != ""){
@@ -673,7 +673,8 @@
 			        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			        }
 				});
-			}
+			} --%>
+			location.href = "<%= request.getContextPath() %>/selectTransOne.ts?orderNoo="+t;
 	  	};							
 	// 	* 명세표 모달 닫기
 		function stmtDisplayNone(){
@@ -684,7 +685,6 @@
 		};
 	</script>
 <!-- //1. 주문관리 탭 스크립트 -->
-<%@ include file="/views/myPage/paymentmodel.jsp"%>
 
 </body>
 </html>
