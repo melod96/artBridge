@@ -12,16 +12,18 @@ public class Transaction implements Serializable{
 	private String wrtId; //작가 아이디
 	private int pay_status; //진행상황 1번 2번 3번(결제대기 등등)  -
 	private Date o_date; //거래접수일
+	private Date o_final_date; //거래완료일
 	private int payment; //결제금액    -
 	private String board_title; //판매글명
-	private Date od_startDate;	//작업 시작일   -
-	private Date od_endDate;	//작업 종료일   -
-	private int orders_activity; //주문활동 1.조율 2.1단계 작업시작 등등
+	private Date od_startDate;	//활동 시작일   *
+	private Date od_endDate;	//활동 종료일   *
+	private int orders_activity; //주문활동 1.조율 2.1단계 작업시작 등등 *
 
 	public Transaction(){}
 
 	public Transaction(int divRole_no, int orders_no, String cusName, String cusId, String wrtNick, String wrtId,
-			int pay_status, Date o_date, int payment, String board_title, Date od_startDate, Date od_endDate) {
+			int pay_status, Date o_date, Date o_final_date, int payment, String board_title, Date od_startDate,
+			Date od_endDate, int orders_activity) {
 		super();
 		this.divRole_no = divRole_no;
 		this.orders_no = orders_no;
@@ -31,11 +33,14 @@ public class Transaction implements Serializable{
 		this.wrtId = wrtId;
 		this.pay_status = pay_status;
 		this.o_date = o_date;
+		this.o_final_date = o_final_date;
 		this.payment = payment;
 		this.board_title = board_title;
 		this.od_startDate = od_startDate;
 		this.od_endDate = od_endDate;
+		this.orders_activity = orders_activity;
 	}
+
 
 	public int getDivRole_no() {
 		return divRole_no;
@@ -101,6 +106,14 @@ public class Transaction implements Serializable{
 		this.o_date = o_date;
 	}
 
+	public Date getO_final_date() {
+		return o_final_date;
+	}
+
+	public void setO_final_date(Date o_final_date) {
+		this.o_final_date = o_final_date;
+	}
+
 	public int getPayment() {
 		return payment;
 	}
@@ -128,7 +141,7 @@ public class Transaction implements Serializable{
 	public Date getOd_endDate() {
 		return od_endDate;
 	}
-	
+
 	public void setOd_endDate(Date od_endDate) {
 		this.od_endDate = od_endDate;
 	}
@@ -141,15 +154,13 @@ public class Transaction implements Serializable{
 		this.orders_activity = orders_activity;
 	}
 
-	
 	@Override
 	public String toString() {
 		return "Transaction [divRole_no=" + divRole_no + ", orders_no=" + orders_no + ", cusName=" + cusName
 				+ ", cusId=" + cusId + ", wrtNick=" + wrtNick + ", wrtId=" + wrtId + ", pay_status=" + pay_status
-				+ ", o_date=" + o_date + ", payment=" + payment + ", board_title=" + board_title + ", od_startDate="
-				+ od_startDate + ", od_endDate=" + od_endDate + ", orders_activity=" + orders_activity + "]";
+				+ ", o_date=" + o_date + ", o_final_date=" + o_final_date + ", payment=" + payment + ", board_title="
+				+ board_title + ", od_startDate=" + od_startDate + ", od_endDate=" + od_endDate + ", orders_activity="
+				+ orders_activity + "]";
 	}
 
-	
-	
 }

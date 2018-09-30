@@ -146,14 +146,13 @@
         <!-- // Header -->
 
 <% 
-	ArrayList<Transaction> tList = null;
-	/* if(session.getAttribute("transList") != null){
-		transList = (ArrayList<Transaction>)request.getAttribute("transList");
-	} */
+	ArrayList<Transaction> transList = null;
 	if(request.getAttribute("transList")!= null){
-		tList = (ArrayList<Transaction>)request.getAttribute("transList");
+		transList = (ArrayList<Transaction>)request.getAttribute("transList");
 	}
-	System.out.println("상단부" + tList);
+	
+ 	System.out.println("상단부" + transList);
+	
 	Transaction t = null;
 	if(request.getAttribute("t") != null){
 		t = (Transaction)request.getAttribute("t");
@@ -204,7 +203,8 @@
 		<div class="container">
 			<h2>마이 페이지</h2>
 			<ul class="tab-menu">
-				<li><a href="<%= request.getContextPath() %>/selectTransList.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li>
+<%-- 				<li><a href="<%= request.getContextPath() %>/selectTransList.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li> --%>
+				<li><a href="#" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="msg-menu">쪽지함</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="bookmark-menu">관심작가</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="memberinfo-menu">회원정보수정</a></li>
@@ -389,12 +389,14 @@
 <!-- 	   	//마이페이지 탭 제목 -->
 					
 <!--        * 1. 마이페이지 탭 메뉴 - 주문관리 탭 -->
-			<form action="" method="get"class="order-menu tab-menu-content-form">
+			<form action="" method="post"class="order-menu tab-menu-content-form">
 				<div class="order-menu">	<!-- ***수정사항 : 구매자(buyer) 판매자(seller) 입장에 따른 필터링, 행 색 속성, DB처리 등  -->
 					<select id="stmt-Filter" class="form-control input-xshort selectBox">
 						<option>전체 보기</option>
 						<option>구매 내역</option>
 						<option>판매 내역</option>
+						<!-- <option>진행중인 거래내역</option>
+						<option>거래 완료 내역</option> -->
 					</select>
 	
 					<table class="tbl-type02">
@@ -425,49 +427,57 @@
 						</thead>
 						
 						<tbody>		
-							<% if(tList != null){
-								for(int i = 0; i < tList.size(); i++){ 
-								  if(tList.get(i).getDivRole_no() == 0){ %>
-								  <tr id="" class="seller-list transInfo-list">
-									<td>판매</td>
-									<td><a onclick="stmtDisplayBlock();" id="orderNo" class="btn"><%= tList.get(i).getOrders_no() %></a></td>
-									<td><%= tList.get(i).getCusId() %></td>
-									<td class="txt-fl"><a href="#"><%= tList.get(i).getBoard_title() %></a></td>
-<%-- 									<td><%= tList.get(i).getPay_status() %></td> --%>
-<td></td>
-									<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-<%-- 									<td><%= tList.getOd_startDate() %></td> --%>
-<%-- 									<td><%= tList.getOd_endDate() %></td> --%>
-<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
-<!-- 										<div class="btn-center btn-outer-style"> -->
-<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">거래취소</button> -->
-<!-- 						                </div> -->
-<!-- 									</td> -->
-<td></td><td></td>
-								  </tr>
-							    <% } else{ %>
-								<tr id="" class="buyer-list transInfo-list">
-									<td>구매</td>
-									<td><a onclick="stmtDisplayBlock();" id="orderNo" class="btn"><%= tList.get(i).getOrders_no() %></a></td>
-									<td><%= tList.get(i).getWrtNick() %></td>
-									<td class="txt-fl"><a href="#"><%= tList.get(i).getBoard_title() %></a></td>
-<%-- 									<td><%= tList.get(i).getPay_status() %></td> --%>
-<td></td>
-									<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-<%-- 									<td><%= tList.get(i).getOd_startDate() %></td> --%>
-<%-- 									<td><%= tList.get(i).getOd_endDate() %></td> --%>
-<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
-<!-- 										<div class="btn-center btn-outer-style"> -->
-<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">환불요청</button> -->
-<!-- 						                </div> -->
-<!-- 									</td> -->
-<td></td><td></td>
-								  </tr>
-								<% } } } %>
+							<% if(transList != null){
+								for(int i = 0; i < transList.size(); i++){ 
+								  if(transList.get(i).getDivRole_no() == 0){ %>
+									<tr id="" class="seller-list transInfo-list">
+										<td>판매</td>
+										<td><a onclick="stmtDisplayBlock(<%= transList.get(i).getOrders_no() %>);" id="orderNo" class="btn"><%= transList.get(i).getOrders_no() %></a></td>
+										<td><%= transList.get(i).getCusId() %></td>
+										<td class="txt-fl"><a href="#"><%= transList.get(i).getBoard_title() %></a></td>
+										
+										<td><%= transList.get(i).getOrders_activity() %></td>
+										
+										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
+										<td><%= transList.get(i).getOd_startDate() %></td>
+									  <% if(transList.get(i).getOd_endDate() == null){ %>
+									    <td>-</td>
+									  <% }else{ %>
+										<td><%= transList.get(i).getOd_endDate() %></td>
+									  <% } %>	
+	<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
+	<!-- 										<div class="btn-center btn-outer-style"> -->
+	<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">거래취소</button> -->
+	<!-- 						                </div> -->
+	<!-- 									</td> -->
+									  </tr>
+								  <% } else if(transList.get(i).getDivRole_no() == 1){ %>
+									<tr id="" class="buyer-list transInfo-list">
+										<td>구매</td>
+										<td><a onclick="stmtDisplayBlock(<%= transList.get(i).getOrders_no() %>);" id="orderNo" class="btn"><%= transList.get(i).getOrders_no() %></a></td>
+										<td><%= transList.get(i).getWrtNick() %></td>
+										<td class="txt-fl"><a href="#"><%= transList.get(i).getBoard_title() %></a></td>
+										
+										<td><%= transList.get(i).getOrders_activity() %></td>
+										
+										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
+										<td><%= transList.get(i).getOd_startDate() %></td>
+									  <% if(transList.get(i).getOd_endDate() == null){ %>
+									    <td>-</td>
+									  <% }else{ %>
+										<td><%= transList.get(i).getOd_endDate() %></td>
+									  <% } %>	
+	<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
+	<!-- 										<div class="btn-center btn-outer-style"> -->
+	<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">환불요청</button> -->
+	<!-- 						                </div> -->
+	<!-- 									</td> -->
+									  </tr>
+									<% } } } %>
 						</tbody>
 					</table>
 	
-<!-- 	<!-- 			페이징 처리하기 --> -->
+<!-- 	<!-- 			페이징 처리하기 -->
 <!-- 					<br>
 <!-- 					<hr> -->
 <!-- 					<br> -->
@@ -1181,39 +1191,46 @@
 			var pageName = "<%= (String)request.getParameter("pageName") %>";
 <%-- 			location.href="<%= request.getContextPath() %>/selectTransList.ts"; --%>
 			
-
 			$('.order-menu, .bookmark-menu, .msg-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
 			
 			if(pageName != null){
-				anotherHidden(pageName)
+				anotherHidden(pageName);
 			} else{
 				pageName = $('#order-menu').id();
-				alert("2." + pageName);
-				/* $('.order-menu').css({"display":"block"});
-				$('#order-menu').css({"color":"black", "background":"white"}); */
-			}<%-- else if(pageName == $('#order-menu').id()){
-				location.href="<%= request.getContextPath() %>/selectTransList.ts";
-			} --%>
+				anotherHidden(pageName);
+			}
 		});
 	            		  
 	//	* 탭 선택 함수
 		function anotherHidden(thisMenu){	
 			//var thisMenu = event.srcElement.id;
-			
-			var servletUrl;
-			switch(thisMenu){
-			case 'order-menu' : servletUrl = "<%= request.getContextPath() %>/selectTransList.ts"
-			}
-			$.ajax({
-					url : servletUrl,
-					type : "post",
-					success : function(data){
-						
-						var transList = data;
-						
-					}
-				});
-			
+			 
+			alert(thisMenu);
+			var pageName = thisMenu;
+			<%-- switch(pageName){
+			case 'order-menu' : alert("에이작스로 들어왔어?");					
+								$.ajax({									
+									url : "<%= request.getContextPath() %>/selectTransList.ts",
+									type : "post",
+									success : function(data){
+										<%
+											if(request.getAttribute("transList")!= null){
+												transList = (ArrayList<Transaction>)request.getAttribute("transList");
+											}
+										%>
+										if(data > 0){
+											location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
+											location.href="/artBridge/views/myPage/myPageForm.jsp";
+										}
+ 											
+										console.log(data);
+										
+										console.log(transList);
+										alert(transList);
+									}
+								}); break;
+			" } " --%>
+					
 	 
 			$('.order-menu, .msg-menu, .bookmark-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
 			$('.' + thisMenu).css({"display":"block"});
