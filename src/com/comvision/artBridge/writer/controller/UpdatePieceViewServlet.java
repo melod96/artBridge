@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.writer.model.service.WriterService;
 
 @WebServlet("/updatePieceView.wr")
@@ -27,42 +28,24 @@ public class UpdatePieceViewServlet extends HttpServlet {
 		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
 		int pieceNo = Integer.parseInt(request.getParameter("pieceNo"));
 		
-		
-		/*ArrayList<HashMap<String, Object>> list = new WriterService().selectPieceData(memberNo, pieceNo);
-		
-		for(int i = 0; i < list.size(); i++){
-			Board b = (Board) list.get(i).get("board");
-			//System.out.println(b.getBoard_no());
-			
-			for(int j = 0; j < ((ArrayList<Files>)list.get(i).get("selectThumbImg")).size(); j++){
-				Files f = ((ArrayList<Files>)list.get(i).get("selectThumbImg")).get(j);
-				//System.out.println(f.getChange_title());
-			}
-		}*/
-		
-		//hadhMap(board) + arrayList(files) 
 		HashMap<String, Object> hmap = new WriterService().selectPieceData(memberNo, pieceNo);
 		
 		Board board = (Board)hmap.get("board");
-		ArrayList<Files> pieceData = (ArrayList<Files>)hmap.get("files");
-		
-		System.out.println(board);
+		ArrayList<Files> pieceData = (ArrayList<Files>)hmap.get("selectThumbImg");
+
 		System.out.println(pieceData);
-		/*for(int i = 0; i < list.size(); i++){
-			Board b = (Board) list.get(i).get("board");
-			System.out.println(b.getBoard_no());
-			
-			for(int j = 0; j < ((ArrayList<Files>)list.get(i).get("selectThumbImg")).size(); j++){
-				Files f = ((ArrayList<Files>)list.get(i).get("selectThumbImg")).get(j);
-				System.out.println(f.getChange_title());
-			}
-		}*/
+		
+		//저장되어있는 연관검색어 노출
+		//ArrayList<Relate> relate = new WriterService().RelateWord();
+		ArrayList<Relate> relate = new WriterService().selectRelateWord();
+		System.out.println(relate);
 		
 		String page = "";
 		if(hmap != null){
 			page = "views/myPage/writerPieceUpdateForm.jsp";
 			request.setAttribute("board", board);
 			request.setAttribute("pieceData", pieceData);
+			request.setAttribute("relate", relate);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "작품 수정보기 실패!");
