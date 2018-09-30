@@ -755,6 +755,34 @@ public class SaleDao {
 		return result;
 	}
 
+	public int totalPrice(Connection con, int orderNoo, int mNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("totalPrice");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, orderNoo);
+			pstmt.setInt(2, mNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result = rset.getInt("totalPrice");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return result;
+	}
+
 	
 
 	

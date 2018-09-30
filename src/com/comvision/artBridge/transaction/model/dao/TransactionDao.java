@@ -93,6 +93,7 @@ public class TransactionDao {
 				t.setO_date(rset.getDate("o_start_date"));
 				t.setCusName(rset.getString("cusnick"));
 				t.setWrtNick(rset.getString("wrinick"));
+				t.setBoard_title(rset.getString("board_title"));
 			}
 			
 		} catch (SQLException e) {
