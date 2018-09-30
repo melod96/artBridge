@@ -42,12 +42,22 @@ public class SearchSaleAdminServlet extends HttpServlet {
 				
 				limit = 5;
 				
-				if(request.getParameter("currentPage")!= null){
+				if(request.getParameter("currentPage") != null){
 					currentPage = Integer.parseInt(request.getParameter("currentPage"));
 				}
+				
+				String addQuery = "";
+				if(kind != null && kind.length() > 0){
+					if(kind.equals("BOARD_NO")){
+						 addQuery = " board_no = " + value + " ";
+					}else if(kind.equals("NICK_NAME")){
+						 addQuery = " nick_name like '%' || '" + value + "' || '% ";
+					}else if(kind.equals("BOARD_TITLE")){
+						 addQuery = " board_title like '%' || '" + value + "' || '% ";
+					}
+				}
 
-
-				int listCount = new BoardService().getListCount();
+				int listCount = new BoardService().getListCount(addQuery);
 
 
 				maxPage = (int)((double)listCount/limit + 0.9);

@@ -45,7 +45,7 @@ public class SelectCommissionServlet extends HttpServlet {
 				}
 
 
-				int listCount = new BoardService().getListCount();
+				int listCount = new BoardService().getListCount("");
 
 
 				maxPage = (int)((double)listCount/limit + 0.9);
