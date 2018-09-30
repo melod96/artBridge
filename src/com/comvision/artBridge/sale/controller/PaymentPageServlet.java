@@ -35,33 +35,27 @@ public class PaymentPageServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//해당 주문 번호 받아오기
-		//orders_no = 1일때
-		int orders_no= 4;
-		int customer_no= 1;
-		int writer_no = 2;
-//		int orders_no = Integer.parseInt(request.getParameter("orders_no"));
-//		int writer_no = Integer.parseInt(request.getParameter("writer_no"));
-//		int customer_no = Integer.parseInt(request.getParameter("member_no"));
-//		String main_option = request.getParameter("main_option");
-//		int total = Integer.parseInt(request.getParameter("total"));
-		//오더번호로 보더넘버를 받아와서 해주면 될 것 같지욤
+		
+		int orders_no = Integer.parseInt(request.getParameter("orders_no"));
+		int writer_no = Integer.parseInt(request.getParameter("writer_no"));
+		int customer_no = Integer.parseInt(request.getParameter("customer_no"));
+		int total = Integer.parseInt(request.getParameter("total"));
 		int board_no = new SaleService().selectBoard_no(orders_no);
 		Board b = new SaleService().selectBoard(board_no);
-		//요구사항 출력arraylist사용
-//		ArrayList<Options> olist = new SaleService().selectsaleOptionList(board_no,customer_no);
-		//requirment
+
+		//사용자의 요구사항
 		ArrayList<Requirements> rlist = new SaleService().selectsaleRequirementsList(orders_no, customer_no);
 		//작가의 썸네일
 		Files f = new SaleService().selectProfile(board_no);
-		//판매글 번호도 필요해요
-		//member_no로 닉네임까지만 가져오기
+
 		String page = "";
 		if(b!=null && rlist != null && f != null){
 			page = "views/sale/paymentpage.jsp";
 			request.setAttribute("b", b);
 			request.setAttribute("rlist", rlist);
 			request.setAttribute("f", f);
+			request.setAttribute("totalPrcie", total);
+			request.setAttribute("orders_no", orders_no);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 상세 조회 실패");

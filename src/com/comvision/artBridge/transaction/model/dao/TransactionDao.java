@@ -101,7 +101,7 @@ public class TransactionDao {
 				t.setCusName(rset.getString("cus_name"));
 				t.setCusId(rset.getString("cus_id"));
 				t.setWrtNick(rset.getString("wrt_nick"));
-				t.setWrtId(rset.getString("wrt_id"));
+				t.setWrtId(rset.getString("WRT_ID"));
 				t.setO_date(rset.getDate("o_start_date"));
 
 				t.setO_final_date(rset.getDate("o_final_date"));
@@ -149,6 +149,8 @@ public class TransactionDao {
 				t.setO_date(rset.getDate("o_start_date"));
 				t.setCusName(rset.getString("cusnick"));
 				t.setWrtNick(rset.getString("wrinick"));
+				t.setBoard_title(rset.getString("board_title"));
+				t.setWrtNo(rset.getInt("writer_no"));
 			}
 			
 		} catch (SQLException e) {
