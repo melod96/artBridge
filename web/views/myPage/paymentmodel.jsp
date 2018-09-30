@@ -53,6 +53,10 @@
 						if (t != null) {
 					%>
 					<form action="<%=request.getContextPath()%>/paymentpage.pg" method="post">
+					<input type="hidden" name = "orders_no" value = "<%=t.getOrders_no() %>" />
+					<input type="hidden" name = "customer_no" value = "<%= m.getMember_no() %>" />
+					<input type="hidden" name= "writer_no" value = "<%= t.getWrtNo()%>" />
+					<input type="hidden" name = "total" value = "<%=totalPrice %>" />
 						<div id="stmtModalArea" class="w3-modal"
 							onclick="stmtDisplayNone();"></div>
 						<div id="stmtArea" class="settingArea">
@@ -126,8 +130,13 @@
 													type="submit" style="width: 50%;">거 래 수 락</button>
 												<br>
 												<br />
+												<%if(m.getWriter_right()==0){ %>
 												<button class="btn btn-primary btn-mg btn-plus-design"
-													style="margin-left: 0;">재 요청</button>
+													style="margin-left: 0;" type="button" onclick = "change()">재 요청</button>
+													<%}else{ %>
+													<button class="btn btn-primary btn-mg btn-plus-design"
+													style="margin-left: 0;" type="button" onclick = "req()">재 요청</button>
+													<%} %>
 												<button class="btn btn-danger btn-mg btn-plus-design">거래
 													취소</button>
 												<button class="btn btn-default btn-mg btn-plus-design"
@@ -141,6 +150,15 @@
 						</div>
 					</form>
 					<%} %>
+					<script>
+						function change(){
+							location.href="<%= request.getContextPath()%>/detailedList.pg?orderno=<%= t.getOrders_no()%>";
+						}
+						function req(){
+							
+						}
+						
+					</script>
 					<!-- // 이 영역에서 작업하세요 -->
 				</div>
 			</div>

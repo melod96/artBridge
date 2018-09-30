@@ -685,7 +685,7 @@ public class SaleDao {
 		return olist;
 	}
 
-	public int insertPayment(Connection con, int customer_no, int orders_no, int totalPrice) {
+	public int insertPayment(Connection con, int customer_no, int orders_no, int totalPrice, String imp_uid, String apply_num) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -696,6 +696,8 @@ public class SaleDao {
 			pstmt.setInt(1, orders_no);
 			pstmt.setInt(2, customer_no);
 			pstmt.setInt(3, totalPrice);
+			pstmt.setString(4, imp_uid);
+			pstmt.setString(5, apply_num);
 			
 			result = pstmt.executeUpdate();
 		
@@ -779,6 +781,50 @@ public class SaleDao {
 		}finally{
 			close(pstmt);
 			close(rset);
+		}
+		return result;
+	}
+
+	public int updateprice(Connection con, int orderno, int mNo, String price) {
+		PreparedStatement pstmt= null;
+		
+		int result = 0;
+		
+		String query = prop.getProperty("updateprice");
+		
+		try {
+			pstmt= con.prepareStatement(query);
+			pstmt.setString(1, price);
+			pstmt.setInt(2, orderno);
+			pstmt.setInt(3, mNo);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int insertComment(Connection con, int orderno, String comment) {
+		PreparedStatement pstmt= null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertComment");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, comment);
+			pstmt.setInt(2, orderno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
 		}
 		return result;
 	}

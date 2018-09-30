@@ -19,6 +19,14 @@
 	if ((Files) request.getAttribute("f") != null) {
 		f = (Files) request.getAttribute("f");
 	}
+	int totalPrice = 0;
+	if (request.getAttribute("totalPrcie") != null) {
+		totalPrice = (int)(request.getAttribute("totalPrcie"));
+	}
+	int orders_no = 0;
+	if(request.getAttribute("orders_no")!= null){
+		orders_no = (int)(request.getAttribute("orders_no"));
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -213,13 +221,14 @@
 								%>
 							</table>
 							<h3 align="right">
-								<span>합계 : </span><span>00000원</span>
+								<span>합계 : </span><span><%=totalPrice%>원</span>
 							</h3>
 						</div>
 						<br>
 						<form action="<%=request.getContextPath()%>/paymentAPIinfo.pg" method="post">
 						<input type="hidden" value = "<%=m.getMember_no() %>" name = "customer_no" />
-						<input type="hidden" value = "10000" name = "total_Price" />
+						<input type="hidden" value = "<%=totalPrice %>" name = "total_Price" />
+						<input type="hidden" value = "<%=orders_no %>" name = "orders_no" />
 							<div class="payment">
 								<p>
 									<span>주문자</span><span><input type="text" value="<%=m.getNick_name()%>"></span><span
@@ -291,7 +300,7 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button type="button" class="btn btn-dark" onclick = "location.href='/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu'">네</button>
+						<button type="button" class="btn btn-dark" onclick = "location.href='<%= request.getContextPath() %>/selectTransList.ts'">네</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">아니요</button>
 					</div>
 

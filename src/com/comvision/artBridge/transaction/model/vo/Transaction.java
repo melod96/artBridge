@@ -18,12 +18,13 @@ public class Transaction implements Serializable{
 	private Date od_startDate;	//활동 시작일   *
 	private Date od_endDate;	//활동 종료일   *
 	private int orders_activity; //주문활동 1.조율 2.1단계 작업시작 등등 *
+	private int wrtNo;//작가 번호
 
 	public Transaction(){}
 
 	public Transaction(int divRole_no, int orders_no, String cusName, String cusId, String wrtNick, String wrtId,
 			int pay_status, Date o_date, Date o_final_date, int payment, String board_title, Date od_startDate,
-			Date od_endDate, int orders_activity) {
+			Date od_endDate, int orders_activity, int wrtNo) {
 		super();
 		this.divRole_no = divRole_no;
 		this.orders_no = orders_no;
@@ -39,8 +40,8 @@ public class Transaction implements Serializable{
 		this.od_startDate = od_startDate;
 		this.od_endDate = od_endDate;
 		this.orders_activity = orders_activity;
+		this.wrtNo = wrtNo;
 	}
-
 
 	public int getDivRole_no() {
 		return divRole_no;
@@ -154,13 +155,23 @@ public class Transaction implements Serializable{
 		this.orders_activity = orders_activity;
 	}
 
+	public int getWrtNo() {
+		return wrtNo;
+	}
+
+	public void setWrtNo(int wrtNo) {
+		this.wrtNo = wrtNo;
+	}
+
 	@Override
 	public String toString() {
 		return "Transaction [divRole_no=" + divRole_no + ", orders_no=" + orders_no + ", cusName=" + cusName
 				+ ", cusId=" + cusId + ", wrtNick=" + wrtNick + ", wrtId=" + wrtId + ", pay_status=" + pay_status
 				+ ", o_date=" + o_date + ", o_final_date=" + o_final_date + ", payment=" + payment + ", board_title="
 				+ board_title + ", od_startDate=" + od_startDate + ", od_endDate=" + od_endDate + ", orders_activity="
-				+ orders_activity + "]";
+				+ orders_activity + ", wrtNo=" + wrtNo + "]";
 	}
+
+	
 
 }

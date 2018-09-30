@@ -214,10 +214,10 @@ public class SaleService {
 	}
 
 	//결제 로직
-	public int insertPayment(int customer_no, int orders_no, int totalPrice) {
+	public int insertPayment(int customer_no, int orders_no, int totalPrice, String imp_uid, String apply_num) {
 		Connection con = getConnection();
 		
-		int result = new SaleDao().insertPayment(con, customer_no, orders_no, totalPrice);
+		int result = new SaleDao().insertPayment(con, customer_no, orders_no, totalPrice,imp_uid,apply_num);
 		int currval = new SaleDao().selectPaymentCurrval(con);
 		int detailresult = new SaleDao().insertPaymentDetail(con, currval);
 		close(con);
@@ -232,6 +232,27 @@ public class SaleService {
 		
 		close(con);
 		return price;
+	}
+
+	//요구사항 가격 업데이트
+	public int updateprice(int orderno, int mNo, String price) {
+		Connection con = getConnection();
+		
+		int update = new SaleDao().updateprice(con, orderno, mNo, price);
+		
+		close(con);
+		return update;
+	}
+
+	//작가 코멘트 입력
+	public int insertComment(int orderno, String comment) {
+		Connection con = getConnection();
+		
+		int insert = new SaleDao().insertComment(con, orderno, comment);
+		
+		close(con);
+		
+		return insert;
 	}
 
 	
