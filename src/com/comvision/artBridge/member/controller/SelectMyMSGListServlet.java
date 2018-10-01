@@ -121,7 +121,7 @@ public class SelectMyMSGListServlet extends HttpServlet {
 		String page = "";
 		
 		if(mlist != null){
-			page = "views/myPage/myMessageList.jsp";
+			page = "views/myPage/myPageForm.jsp?pageName=msg-menu";
 			request.setAttribute("mlist", mlist);
 			request.setAttribute("pi", pi);
 			request.setAttribute("num", num);

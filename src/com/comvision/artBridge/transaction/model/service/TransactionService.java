@@ -10,6 +10,7 @@ import com.comvision.artBridge.transaction.model.vo.Transaction;
 
 public class TransactionService {
 	
+	/*수정한 메소드 아래에 작성 됨  ->  추후 수정, 통합 예정 */
 	public ArrayList<Transaction> selectTransList(int mNo){
 		Connection con = getConnection();
 
@@ -30,7 +31,7 @@ public class TransactionService {
 		System.out.println("1. 트랜젝션 서비스야 오니?");
 		
 		// orders_detail 테이블 생성 -> 포함   쿼리 완료*********
-		ArrayList<Transaction> transList = new TransactionDao().selectTransList(con, mNo);
+		ArrayList<Transaction> transList = new TransactionDao().selectTransList2(con, mNo);
 		
 		System.out.println("4. 다시 서비스로 왔니?");
 		
