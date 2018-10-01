@@ -478,10 +478,10 @@ public class WriterDao {
 		Board b = null;
 		Files f = null;
 		//RelateNumList rn = null;
-		Relate r = null;
+		Relate rc = null;
 		ArrayList<Files> selectThumbImg = null;
 		//ArrayList<RelateNumList> selectRelateWord = null;
-		ArrayList<Relate> relateWord = null;
+		ArrayList<Relate> relateCk = null;
 		
 		String query = prop.getProperty("selectPieceData");
 		
@@ -494,11 +494,10 @@ public class WriterDao {
 			
 			selectThumbImg = new ArrayList<Files>();
 			//selectRelateWord = new ArrayList<RelateNumList>();
-			relateWord = new ArrayList<Relate>();
+			relateCk = new ArrayList<Relate>();
 			
 			while(rset.next()){
 				hmap = new HashMap<String, Object>();
-				//selectThumbImg = new ArrayList<Files>();
 
 				b = new Board();
 				b.setBoard_title(rset.getString("board_title"));
@@ -518,18 +517,16 @@ public class WriterDao {
 				rn.setRelate_no(rset.getInt("relate_no"));
 				selectRelateWord.add(rn);*/
 				
-				r = new Relate();
-				r.setRelate_no(rset.getInt("relate_no"));
-				r.setRelate_name(rset.getString("relate_name"));
-				relateWord.add(r);
+				rc = new Relate();
+				rc.setRelate_no(rset.getInt("relate_no"));
+				rc.setRelate_name(rset.getString("relate_name"));
+				relateCk.add(rc);
 
 			}
 			hmap.put("board", b);
 			hmap.put("selectThumbImg", selectThumbImg);
 			//hmap.put("selectRelateWord", selectRelateWord);
-			hmap.put("relateWord", relateWord);
-			//System.out.println("dao썸네일 이미지 너냐?" + selectThumbImg);
-			//System.out.println("dao너냐?" + hmap);
+			hmap.put("relateCk", relateCk);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
