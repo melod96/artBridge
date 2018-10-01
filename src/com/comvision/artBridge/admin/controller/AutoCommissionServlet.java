@@ -10,8 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.admin.model.service.AdminService;
-import com.comvision.artBridge.board.model.vo.Board;
-import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.admin.model.vo.Board;
 import com.google.gson.Gson;
 
 @WebServlet("/autoCommission.ad")
@@ -24,17 +23,12 @@ public class AutoCommissionServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+
 		ArrayList<Board> blist = new AdminService().selectCommissionView();
-		
 		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
 		new Gson().toJson(blist, response.getWriter()); 
-		
-		
-		
 		
 	}
 
