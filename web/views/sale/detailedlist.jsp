@@ -86,13 +86,14 @@
 						<form action="<%=request.getContextPath()%>/writercommentupdate.pg" method="post">
 						<input type="hidden" id= "plist" name = "pricelist" />
 						<input type="hidden" id="clist" name = "commentlist"/>
+						<input type="hidden" id="contlist" name = "contentlist"/>
 						<input type="hidden" value = "<%=t.getOrders_no() %>" name = "orderno" />
 							<div class="detailcomment">
 								<div align="center" style="background: lightgray; height: 50px;">
 									<h4 style="line-height: 50px; vertical-align: middle;">요구사항</h4>
 								</div>
-								<% int i = 1;for(Requirements r : rlist){ %>
-								<label style="font-size: 15px;" class = "requirmentcontent"><%=r.getRequirements_content() %></label>
+								<% int i = 0;for(Requirements r : rlist){ %>
+								<label style="font-size: 15px;" class = "requirmentcontent" id = "content<%=i%>"><%=r.getRequirements_content() %></label>
 								<div class="form-group">
 									<label>가격 : </label> <input type="text"
 										class="form-control input-short" id="price<%=i %>" name="payment" value = "<%=r.getRequirement_price()%>">
@@ -118,15 +119,18 @@
 										//코멘트랑 가격 정보를 요구사항의 크기 만큼 받아 온다.
 										var pricelist = [];
 										var commentlist= [];
+										var contentlist = [];
 										var count = document.getElementsByClassName("requirmentcontent").length; 
 										
 										for(var i = 1; i<count; i++){
 											pricelist+=$("#price"+i).val()+"@";
 											commentlist+=$("#comment"+i).val()+"@";
+											contentlist+=$("#content"+i).text()+"@";
 										}
 										
 										$("#plist").val(pricelist);
 										$("#clist").val(commentlist);
+										$("#contlist").val(contentlist);
 									
 										$("#wriupdate").attr("type","submit");
 										

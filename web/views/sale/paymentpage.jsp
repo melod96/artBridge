@@ -266,7 +266,7 @@
 					</div>
 					<div class="btn-center">
 						<button type="submit" class="btn btn-primary btn-lg">결제하기</button>
-						<button class="btn btn-default btn-lg" data-toggle="modal"
+						<button class="btn btn-default btn-lg" data-toggle="modal" type = "button"
 							data-target="#myModal">취소</button>
 					</div>
 						</form>

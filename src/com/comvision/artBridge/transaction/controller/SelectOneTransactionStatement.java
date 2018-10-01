@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.comvision.artBridge.comments.model.vo.Comments;
 import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.sale.model.service.SaleService;
 import com.comvision.artBridge.sale.model.vo.Requirements;
@@ -40,7 +41,8 @@ public class SelectOneTransactionStatement extends HttpServlet {
 		
 		Transaction t = new TransactionService().selectTransOne(mNo, orderNoo);
 		ArrayList<Requirements> rlist = new SaleService().selectsaleRequirementsList(orderNoo, mNo);
-		
+		//작가 코멘트 출력
+		ArrayList<Comments> clist = new SaleService().selectcommentlist(orderNoo);
 		int price = new SaleService().totalPrice(orderNoo, mNo);
 		
 		String page = "";
@@ -52,6 +54,7 @@ public class SelectOneTransactionStatement extends HttpServlet {
 			request.setAttribute("t", t);
 			request.setAttribute("rlist", rlist);
 			request.setAttribute("totalprice", price);
+			request.setAttribute("clist", clist);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg",  "명세표 상세 조회 실패!");
