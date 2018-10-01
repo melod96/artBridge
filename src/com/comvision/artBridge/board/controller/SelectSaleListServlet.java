@@ -86,6 +86,7 @@ public class SelectSaleListServlet extends HttpServlet {
 			
 			opmap.addAll(oplist);
 		}
+		System.out.println(opmap);
 		
 		//한 게시글 마다 해당하는 이미지 파일 불러오기
 		ArrayList<HashMap<String, Object>> alist = new ArrayList<HashMap<String,Object>>();
@@ -97,7 +98,7 @@ public class SelectSaleListServlet extends HttpServlet {
 		//연관 검색어 출력
 		ArrayList<Relate> rlist = new BoardService().selectRelateList();
 		String page = "";
-
+		int changenum = 0;
 		if(list.size()> 0 && alist!=null && opmap !=null){
 			page = "views/sale/salepage.jsp";
 			request.setAttribute("list", list);
@@ -105,6 +106,7 @@ public class SelectSaleListServlet extends HttpServlet {
 			request.setAttribute("rlist", rlist);
 			request.setAttribute("oplist", opmap);
 			request.setAttribute("alist", alist);
+			request.setAttribute("changenum", changenum);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 조회 실패");

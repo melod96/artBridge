@@ -48,50 +48,16 @@ public class BoardService {
 		return list;
 	}
 	//최저가 정렬
-	public ArrayList<Board> selectCheapList(int currentPage, int limit) {
+	public ArrayList<Board> selectSaleChangeList(int currentPage, int limit, String query) {
 		Connection con = getConnection();
 		
-		ArrayList<Board> list = new BoardDao().selectCheapList(con,currentPage, limit);
+		ArrayList<Board> list = new BoardDao().selectSaleChangeList(con,currentPage, limit,query);
 		
 		close(con);
 		
 		return list;
 	}
 	
-	//최고가 정렬
-	public ArrayList<Board> selectExpensiveList(int currentPage, int limit) {
-		Connection con = getConnection();
-		
-		ArrayList<Board> list = new BoardDao().selectExpensiveList(con,currentPage, limit);
-		
-		close(con);
-		
-		return list;
-	}
-	
-	//거래완료율 정렬
-	public ArrayList<Board> selectCredibilityList(int currentPage, int limit) {
-		Connection con = getConnection();
-		
-		ArrayList<Board> list = new BoardDao().selectCredibilityList(con,currentPage, limit);
-		
-		close(con);
-		
-		return list;
-	}
-
-	//별점 정렬
-	public ArrayList<Board> selectStarList(int currentPage, int limit) {
-		Connection con = getConnection();
-		
-		ArrayList<Board> list = new BoardDao().selectStarList(con,currentPage, limit);
-		
-		close(con);
-		
-		return list;
-	}
-
-
 	//연관검색어 출력
 	public ArrayList<Relate> selectRelateList() {
 		Connection con = getConnection();
