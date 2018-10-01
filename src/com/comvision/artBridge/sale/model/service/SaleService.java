@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.comments.model.vo.Comments;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.grade.model.vo.Grade;
 import com.comvision.artBridge.member.model.dao.MemberDao;
@@ -235,10 +236,10 @@ public class SaleService {
 	}
 
 	//요구사항 가격 업데이트
-	public int updateprice(int orderno, int mNo, String price) {
+	public int updateprice(int orderno, int mNo, String price, String content) {
 		Connection con = getConnection();
 		
-		int update = new SaleDao().updateprice(con, orderno, mNo, price);
+		int update = new SaleDao().updateprice(con, orderno, mNo, price, content);
 		
 		close(con);
 		return update;
@@ -253,6 +254,26 @@ public class SaleService {
 		close(con);
 		
 		return insert;
+	}
+
+	//작가 코멘트 출력
+	public ArrayList<Comments> selectcommentlist(int orderNoo) {
+		Connection con = getConnection();
+		
+		ArrayList<Comments> clist = new SaleDao().selectcommentlist(con, orderNoo);
+		
+		close(con);
+		return clist;
+	}
+
+	//주문 취소
+	public int dealCancel(int orderno) {
+		Connection con = getConnection();
+		
+		int result = new SaleDao().dealCancel(con, orderno);
+		
+		close(con);
+		return result;
 	}
 
 	

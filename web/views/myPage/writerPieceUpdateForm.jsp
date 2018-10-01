@@ -17,17 +17,14 @@
 	ArrayList<Files> pieceData = null;
 	if(request.getAttribute("pieceData") != null){
 		pieceData = (ArrayList<Files>)request.getAttribute("pieceData");
-		/* Files thumbImg1 = pieceData.get(0);
-		Files thumbImg2 = pieceData.get(1);
-		Files thumbImg3 = pieceData.get(2); */
 	}
 	ArrayList<Relate> relate = null;
 	if(request.getAttribute("relate") != null){
 		relate = (ArrayList<Relate>)request.getAttribute("relate");
 	}
-	ArrayList<RelateNumList> relatecK = null;
-	if(request.getAttribute("relatecK") != null){
-		relatecK = (ArrayList<RelateNumList>)request.getAttribute("relatecK");
+	ArrayList<Relate> relateCk = null;
+	if(request.getAttribute("relateCk") != null){
+		relateCk = (ArrayList<Relate>)request.getAttribute("relateCk");
 	}
 	
 %>
@@ -95,12 +92,13 @@
     });
     
   	$(function(){
-  		optionCk();		//옵션체크시
-  		optionAdd();	//옵션추가버튼
-  		optionDel();	//옵션삭제버튼
-  		optionName();	//옵션테이블 name추가
-  		relateWorld();	//연관검색어
-  		submitBtn();	//저장버튼 클릭시 서블릿 이동
+  		optionCk();				//옵션체크시
+  		optionAdd();			//옵션추가버튼
+  		optionDel();			//옵션삭제버튼
+  		optionName();			//옵션테이블 name추가
+  		relateWorld();			//연관검색어
+  		relateCheckedDate();	//연관검색어 수정페이지 에서 체크된 데이터 매칭
+  		submitBtn();			//저장버튼 클릭시 서블릿 이동
   		$('#editor').froalaEditor(); //에디터 API
   	});
 
@@ -179,13 +177,32 @@
 			});
 		}
 	}
+	
+	//연관검색어 수정페이지 에서 체크된 데이터 매칭
+	function relateCheckedDate(){
+  	 	//relateWorld();
+  		var liCount1 = $(".printRelate1 li").length;
+  		var liCount2 = $(".printRelate2 li").length;
+			
+  		for(var i = 0; i < liCount1; i++){
+  			for(var j = 0; j < liCount2; j++){
+    			var relate1 = $(".printRelate1 input").eq(i).val();
+     			var relate2 = $(".printRelate2 input").eq(j).val();
+  				
+      			if(relate1 == relate2){
+      				$(".printRelate1 input").eq(i).attr("checked", true);
+      				$(".printRelate1 input + label").eq(i).removeClass("btn-default").addClass("btn-info");
+      			}
+  			}
+  		}
+  	}
     
    //저장버튼 클릭시 서블릿 이동
 	function submitBtn(){
 		var theForm = document.frmSubmit;
 		$("#addBtn").click(function(){
 			theForm.method = "post";
-			theForm.action = "<%=request.getContextPath()%>/insertPiece.wr?insertNum=" + num;
+			theForm.action = "<%=request.getContextPath()%>/updatePiece.wr?insertNum=" + num;
 			theForm.submit();
 		});
 	};
@@ -328,10 +345,17 @@
                                   <td>
                                     <div class="relate-word">
                                       <p>작품과 연관된 단어를 선택해주세요!</p>
-                                      <ul>
+                                      <ul class="printRelate1">
 	                                   	<% if(relate != null){
 				                    		for(Relate r : relate){ %>
 				                        <li><input type="checkbox" name="relateCk" value="<%= r.getRelate_no() %>" ><label class="btn btn-default"><%= r.getRelate_name() %></label></li>
+				                        <% 	}
+				                    	} %>
+                                      </ul>
+                                      <ul class="printRelate2" style="display:none;">
+	                                   	<% if(relateCk != null){
+				                    		for(Relate rc : relateCk){ %>
+				                        <li><input type="checkbox" value="<%= rc.getRelate_no() %>" ><label class="btn btn-default"><%= rc.getRelate_name() %></label></li>
 				                        <% 	}
 				                    	} %>
                                       </ul>

@@ -33,11 +33,12 @@ public class BoardDao {
 	}
 	
 	//페이징처리
-	public int getListCount(Connection con) {
+	public int getListCount(Connection con, String addQuery) {
 		Statement stmt= null;
 		ResultSet rset = null;
 		
 		String query = prop.getProperty("listCount");
+		query += addQuery;
 		
 		int listCount = 0;
 		

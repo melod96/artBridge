@@ -72,7 +72,7 @@
 						<li class="dropdown"><a href="#" class="join dropdown-toggle"><%= loginUser.getNick_name() %>님</a>
 							<ul class="dropdown-menu">
 								<% if(loginUser.getAdmin_right() == 1){ %>
-								<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMain.ad?pageName=mainAdmin'" id="mainAdmin">관리자</a></li>
+								<li><a onclick = "location.href='<%= request.getContextPath() %>/selectMain.ad?pageName=mainAdmin'">관리자</a></li>
 								<% } %>
 								<li><a href="<%= request.getContextPath() %>/logout.me">로그아웃</a></li>
 							</ul></li>

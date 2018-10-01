@@ -41,8 +41,7 @@ public class SelectMainAdminServlet extends HttpServlet {
 			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
 
-
-		int listCount = new BoardService().getListCount();
+		int listCount = new BoardService().getListCount("");
 
 
 		maxPage = (int)((double)listCount/limit + 0.9);

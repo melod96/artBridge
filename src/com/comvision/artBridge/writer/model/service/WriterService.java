@@ -188,5 +188,44 @@ public class WriterService {
 		return hamp;
 	}
 
+	//작품 수정용 메소드
+	public int updatePiece(Board b, ArrayList<Files> fileList, String[] relateCk) {
+		/*Connection con = getConnection();
+		int result = 0;  //제목 등 데이터 저장용
+		int result2 = 0; //썸네일 파일 저장용
+		int result3 = 0; //옵션 및 가격 저장용
+		int result4 = 0; //연관검색어 저장용
+		
+		int result1 = new WriterDao().insertPiece(con, b);
+		
+		int currval = new WriterDao().selectBoardCurrval(con);
+		
+		for(int i = 0; i < fileList.size(); i++){
+			result2 += new WriterDao().insertAttachment(con, fileList.get(i), currval, i + 2);
+		}
+		
+		for(int i = 0; i < optionsList.size(); i++){
+			result3 += new WriterDao().insertOptions(con, optionsList.get(i), currval);
+		}
+		
+		for(int i = 0; i < relateCk.length; i++){
+			result4 += new WriterDao().relateNumList(con, relateCk[i], currval);
+		}
+		System.out.println(result1);
+		System.out.println(result2);
+		System.out.println(result3);
+		System.out.println(result4);
+		if(result1 > 0 && result2 == fileList.size() && result3 == optionsList.size() && result4 == relateCk.length){
+			commit(con);
+			result = 1;
+		}else{
+			rollback(con);
+		}
+		
+		close(con);*/
+		
+		return 0;
+	}
+
 	
 }

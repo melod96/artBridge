@@ -3,7 +3,7 @@
 <%@ page
 	import="java.util.*, com.comvision.artBridge.transaction.model.vo.Transaction,
 				 com.comvision.artBridge.board.model.vo.*, com.comvision.artBridge.files.model.vo.*,
-				 com.comvision.artBridge.sale.model.vo.*, com.comvision.artBridge.message.model.vo.Message"%>
+				 com.comvision.artBridge.sale.model.vo.*, com.comvision.artBridge.comments.model.vo.*"%>
 <%
 	Transaction t = null;
 	if (request.getAttribute("t") != null) {
@@ -20,6 +20,10 @@
 	int totalPrice = 0;
 	if (request.getAttribute("totalprice") != null) {
 		totalPrice = (int) (request.getAttribute("totalprice"));
+	}
+	ArrayList<Comments> clist= null;
+	if(request.getAttribute("clist")!= null){
+		clist= (ArrayList<Comments>)request.getAttribute("clist");
 	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -101,19 +105,39 @@
 													<td width="87px">금 액</td>
 												</tr>
 												<%
-													for (Requirements r : rlist) {
-															int i = 1;
+												int j = 1;for (Requirements r : rlist) {
+															
 												%>
 												<tr height="23px">
-													<td align="center"><%=i%></td>
+													<td align="center"><%=j%></td>
 													<td style="font-size: 12px; padding-left: 10px;"><%=r.getRequirements_content()%></td>
 													<td align="right"><%=r.getRequirement_price()%>원</td>
 												</tr>
 												<%
-													i++;
+													j++;
 														}
 												%>
 											</table> <br>
+											
+											<%if(clist !=null){ %>
+											<h5>작가 코멘트</h5>
+											<table border="1">
+												<tr class="form-inner-table-title"
+													style="font-weight: bold; text-align: center;"
+													height="25px">
+													<td width="35px">No</td>
+													<td width="467px;">작가 코멘트</td>
+												</tr>
+												<% int i = 1;for(Comments c : clist){ %>
+												<tr height="23px">
+													<td align="center"><%=i %></td>
+													<td style="font-size: 12px; padding-left: 10px;"><%=c.getComments_content() %></td>
+												</tr>
+												<% i++;} %>
+											</table>
+											
+											<%} %>
+											<br />
 											<table align="right">
 												<tr>
 													<td>총 금 액 :</td>
@@ -130,14 +154,14 @@
 													type="submit" style="width: 50%;">거 래 수 락</button>
 												<br>
 												<br />
-												<%if(m.getWriter_right()==0){ %>
+												<%if(m.getWriter_right()==1){ %>
 												<button class="btn btn-primary btn-mg btn-plus-design"
 													style="margin-left: 0;" type="button" onclick = "change()">재 요청</button>
 													<%}else{ %>
 													<button class="btn btn-primary btn-mg btn-plus-design"
 													style="margin-left: 0;" type="button" onclick = "req()">재 요청</button>
 													<%} %>
-												<button class="btn btn-danger btn-mg btn-plus-design">거래
+												<button class="btn btn-danger btn-mg btn-plus-design" type="button" onclick="cancel()">거래
 													취소</button>
 												<button class="btn btn-default btn-mg btn-plus-design"
 													type="button"
@@ -155,7 +179,10 @@
 							location.href="<%= request.getContextPath()%>/detailedList.pg?orderno=<%= t.getOrders_no()%>";
 						}
 						function req(){
-							
+							location.href="<%= request.getContextPath()%>/selectList.my?memberNo=<%=m.getMember_no()%>";
+						}
+						function cancel(){
+							location.href="<%= request.getContextPath()%>/dealcancel.pg?orderno=<%= t.getOrders_no()%>";
 						}
 						
 					</script>

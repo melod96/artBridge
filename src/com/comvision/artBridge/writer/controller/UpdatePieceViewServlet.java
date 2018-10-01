@@ -33,18 +33,25 @@ public class UpdatePieceViewServlet extends HttpServlet {
 		
 		Board board = (Board)hmap.get("board");
 		ArrayList<Files> pieceData = (ArrayList<Files>)hmap.get("selectThumbImg");
-		//ArrayList<RelateNumList> relatecK = (ArrayList<RelateNumList>)hmap.get("selectRelateWord");
-		ArrayList<Relate> relateCk = (ArrayList<Relate>)hmap.get("relateWord");
+		ArrayList<Relate> relateCks = (ArrayList<Relate>)hmap.get("relateCk");
 
+		ArrayList<Relate> relateCk = new ArrayList<Relate>();
+		for(int i = 0; i < relateCks.size(); i=i+3){
+			relateCk.add((Relate)relateCks.get(i)); 
+		}
+		System.out.print("등록된 연관검색어 노출!" + relateCk);
+		
+		
 		//default 연관검색어 노출
 		ArrayList<Relate> relate = new WriterService().relateWord();
+		
 		
 		String page = "";
 		if(hmap != null){
 			page = "views/myPage/writerPieceUpdateForm.jsp";
 			request.setAttribute("board", board);
 			request.setAttribute("pieceData", pieceData);
-			request.setAttribute("relatecK", relateCk);
+			request.setAttribute("relateCk", relateCk);
 			request.setAttribute("relate", relate);
 		}else{
 			page = "views/common/errorPage.jsp";

@@ -15,6 +15,7 @@ import java.util.Properties;
 
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
+import com.comvision.artBridge.comments.model.vo.Comments;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.grade.model.vo.Grade;
 import com.comvision.artBridge.member.model.vo.Rating;
@@ -785,7 +786,7 @@ public class SaleDao {
 		return result;
 	}
 
-	public int updateprice(Connection con, int orderno, int mNo, String price) {
+	public int updateprice(Connection con, int orderno, int mNo, String price, String content) {
 		PreparedStatement pstmt= null;
 		
 		int result = 0;
@@ -797,6 +798,7 @@ public class SaleDao {
 			pstmt.setString(1, price);
 			pstmt.setInt(2, orderno);
 			pstmt.setInt(3, mNo);
+			pstmt.setString(4, content);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -816,8 +818,8 @@ public class SaleDao {
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, comment);
-			pstmt.setInt(2, orderno);
+			pstmt.setInt(1, orderno);
+			pstmt.setString(2, comment);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -826,6 +828,61 @@ public class SaleDao {
 		}finally{
 			close(pstmt);
 		}
+		return result;
+	}
+
+	public ArrayList<Comments> selectcommentlist(Connection con, int orderNoo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset= null;
+		Comments c = null;
+		ArrayList<Comments> clist = null;
+		
+		String query = prop.getProperty("selectcommentlist");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, orderNoo);
+			
+			rset = pstmt.executeQuery();
+			
+			clist = new ArrayList<Comments>();
+			while(rset.next()){
+				c = new Comments();
+				c.setComments_no(rset.getInt("comments_no"));
+				c.setC_reference_no(rset.getInt("c_reference_no"));
+				c.setComments_content(rset.getString("comments_content"));
+				c.setComments_date(rset.getDate("comments_date"));
+				
+				clist.add(c);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return clist;
+	}
+
+	public int dealCancel(Connection con, int orderno) {
+		PreparedStatement pstmt= null;
+		int result = 0;
+		
+		String query = prop.getProperty("dealCancel");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, orderno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
 		return result;
 	}
 
