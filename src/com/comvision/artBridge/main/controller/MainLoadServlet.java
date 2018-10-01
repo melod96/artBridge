@@ -72,7 +72,6 @@ public class MainLoadServlet extends HttpServlet {
 			}
 			
 			
-			
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "공지사항 검색 실패!");
