@@ -62,9 +62,6 @@ public class MainDao {
 					f.setMem_no(rset.getInt("MEMBER_NO"));
 					f.setMem_name(rset.getString("NAME"));
 					
-					
-					
-					
 					flist.add(f);
 				}
 			} catch (SQLException e) {
@@ -106,7 +103,7 @@ public class MainDao {
 				f.setFiles_root(rset.getString("FILES_ROOT"));
 				f.setFiles_date(rset.getDate("FILES_DATE"));
 				f.setFiles_secession(rset.getInt("FILES_SECESSION"));
-				f.setMem_name(rset.getString("MEMBER_NO"));
+				f.setMem_no(rset.getInt("MEMBER_NO"));
 				f.setMem_name(rset.getString("NAME"));
 				
 				//쿼리문에는 name 과 member_no까지 select하도록 되어있음. files 객체에 추가 하여 사용 가능.

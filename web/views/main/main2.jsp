@@ -161,11 +161,11 @@
 				margin-bottom:-50px;}
 		#popA{margin-top:10px;}
 		
-		.bestArtist{ width:1200px; height: 500px; margin-left:auto;margin-right:auto;margin-top:50px;}
+		.bestArtist{ width:1200px; height: 500px; margin-left:auto;margin-right:auto;margin-top:100px;}
 		.newContent{ width:1200px; height: 500px; margin-left:auto;margin-right:auto;margin-top:-50px;}
 		
 		/* 180929 sona 추가 */
-		.slider-area1{width:1070px; margin:0 auto;}
+		.slider-area1{width:1070px; margin:0 auto;} 
 		/* 슬릭슬라이더 스타일 */
 		.slider-area{width:1070px; margin:0 auto;}
 		.slider-area .inner li{text-align:center;padding-top: 25px;}
@@ -178,18 +178,23 @@
 		.draggable{height:550px;}
 		.ntNFaq{margin-top:-100px;}
 	/* 	.slick-dots{position:relative; top:50px;} */
-		.slider-area1{height:580px;}
+		 .slider-area1{height:580px;}
 		
-		.particule {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 1rem;
-  height: 1rem;
-  margin: -.5rem 0 0 -.5rem;
-  border: 1px solid currentColor;
-  transform: scale(0);
-}
+		/* .particule {
+			  position: absolute;
+			  top: 50%;
+			  left: 50%;
+			  width: 1rem;
+			  height: 1rem;
+			  margin: -.5rem 0 0 -.5rem;
+			  border: 1px solid currentColor;
+			  transform: scale(0);
+			} */
+			
+		.slick-dots li button:before{background-image:url("/artBridge/image/mainContent/slide/back02.png");font-size:0px; border-radius : 75%; width:12px; height:12px;}
+		.slick-prev:before{font-size:50px; content:"◀";position:relative; left:-30px;}
+		.slick-next:before{font-size:50px; content:"▶";}
+		
 </style>
 	
 </head>
@@ -242,48 +247,41 @@
     		});
 	    });
 	  </script>
+	  
+	  
 	  <!-- // 180929 sona 추가 -->
 
-	
 		<div class="slider-area1">
+			<h2 class="bestH" style="margin-left: 75px; margin-bottom: 25px;">Best 작품 추천</h2>
 
-				<h2 class="bestH" style="margin-left:75px; margin-bottom :25px;">Best 작품 추천</h2>
-				
 
-						<div class="slider-area">
-							
-								<ul class="inner" style>
-								
-								<%if((ArrayList<Files>)request.getAttribute("slidelist") != null){
-									for(Files f : slidelist){
-								%>	
-									<li style="width:360px; height:480px">
-										<img src="/artBridge/image/mainContent/slide/<%=f.getChange_title() %>">
-										<p class="name"><%=f.getMem_name() %></p>
-										<p class="txt"><%=f.getBoard_title() %></p>
-									</li>
-								<%} }%>
-								</ul>
-				</div>
+			<div class="slider-area">
 
+				<ul class="inner">
+						
+					<%
+						if ((ArrayList<Files>) request.getAttribute("slidelist") != null) {
+							for (Files f : slidelist) {
+					%>
+					<li class="bestH" onclick="selectOneSale(this);">
+						<input type="hidden" value=<%=f.getBoard_no()%>>
+						<img src="/artBridge/image/mainContent/slide/<%=f.getChange_title()%>">
+						<p class="name"><%=f.getMem_name()%></p>
+						<p class="txt"><%=f.getBoard_title()%></p>
+					</li>
+					<%
+							}
+						}
+					%>
+					
+						
+				</ul>
 			</div>
-
-		<!-- <script>
-			/* 자동으로 5초의 지연시간이 설정되어 있는데 아래와 같이 바꿀수 있다. 
-			아래 코드 쓰려면 위 코드 지워야 한다.  */
-			 
-			$('.carousel').carousel({
-			    interval: 1000
-			}); 
-			 
-		</script> -->
+		</div>
 
 
 
-
-
-
-<!--인기 작가 영역-->
+		<!--인기 작가 영역-->
 <section name="bbox">
 <div class="bestArtist">
 		<h3 style="margin-left:155px; margin-bottom:-75px;">인기작가추천</h3>
@@ -293,7 +291,8 @@
 		for(Files bf : bestWriterList){
 		
 	%>
-			<div  class="box">
+			<div class="box" onclick="bestArtist(this);">
+				<input type = "hidden" value = <%= bf.getMem_no()%>>
 				<div class="img"><img src="/artBridge/image/profile/<%=bf.getChange_title()%>" alt=""></div>
 				<div class="info">
 					<h3><%=bf.getMem_name() %></h3>
@@ -303,6 +302,7 @@
 			</div>
 	
 	<%}} %>
+		
 		
 	</div>	
 	</div>
@@ -321,8 +321,8 @@
 			<%if((ArrayList<Files>)request.getAttribute("newList") != null){
 				for (Files nl : newList) {
 			%>
-			<div class="box">
-
+			<div class="box" onclick="newContent(this);">
+				<input type = "hidden" value = <%= nl.getBoard_no()%>>
 				<div class="img"><img src="/artBridge/image/thumbnail_upload/<%=nl.getChange_title()%>"	alt="">	</div>
 				<div class="info">
 						<h3><%=nl.getBoard_title()%></h3>
@@ -342,6 +342,27 @@
 
 
 
+<script>
+	function selectOneSale(is){
+		location.href = "/artBridge/selectOneSalepage.bo?num=" + $(is).children().eq(0).val();
+		
+	};
+	
+	function bestArtist(is){
+		location.href = "/artBridge/selectPieceList.wr?memberNo=" + $(is).children().eq(0).val();
+	};
+	
+	function newContent(is){
+		location.href = "/artBridge/selectPieceList.wr?memberNo=" + $(is).children().eq(0).val();
+	};
+
+	$(function (){
+		$(".bestH").mouseenter(function(){
+			$(this).css({"cursor" : "pointer"});
+		});
+	});
+	
+</script>
 
 
 
@@ -435,6 +456,7 @@
 		
 						});
 					});
+	   		 
 	   		 
 	</script>
 
