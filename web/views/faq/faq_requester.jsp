@@ -117,7 +117,7 @@
                         </colgroup>
                         <thead>
                         
-                        	<tr id="select1">
+                        	<!-- <tr id="select1">
 					 			<td colspan="8" style="border-bottom:0px;padding-bottom:15px;">
 					 			<a href="">전체</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="">의뢰</a>&nbsp;&nbsp;||&nbsp;&nbsp;
 					 			<a href="">결제</a>&nbsp;&nbsp;||&nbsp;&nbsp;<a href="">마이페이지</a>&nbsp;&nbsp;||&nbsp;&nbsp;
@@ -126,7 +126,7 @@
 					 	
 					 		<tr>
 					 		<td colspan="4" style="border-top:0px;padding-bottom:40px;"><form><input id="seBox" type="search" style="display: inline-block;"> <button for="seBox"type="submit" class="btn btn-primary btn-sm" style=" display: inline-block;">검색</button></form></td>
-					 		</tr>
+					 		</tr> -->
                         	
                         	
                         	
@@ -140,7 +140,7 @@
                         
                             <tr class="accordionMenu">
                                 <td >1</td>
-									<td colspan="8"id="aco1"><a href="#aco1">제목1</a>
+									<td colspan="8"id="aco1"><a href="#aco1">의뢰</a>
 									
 										<p id="acP1">아  이렇게 날씨도 좋은데 오늘은 양심적으로 한강 가야되는거 아닙니까? .1</p>
 									</td>
@@ -149,7 +149,7 @@
 								
 								 <tr class="accordionMenu">
                                 <td >2</td>
-									<td colspan="8"id="aco2"><a href="#aco2">제목2</a>
+									<td colspan="8"id="aco2"><a href="#aco2">결제</a>
 									
 										<p id="acP1">아 오늘은 이렇게 날씨도 좋은데 양심적으로 한강 가야되는거 아닙니까? .2</p>
 									</td>
@@ -158,16 +158,7 @@
 								
 								 <tr class="accordionMenu">
                                 <td >3</td>
-									<td colspan="8"id="aco3"><a href="#aco3">제목3</a>
-									
-										<p id="acP1">아 오늘은 날씨도 이렇게 좋은데 양심적으로 한강 가야되는거 아닙니까? .3</p>
-									</td>
-											
-								</tr>
-								
-								<tr class="accordionMenu">
-								<td >3</td>
-									<td colspan="8"id="aco4"><a href="#aco4">제목3</a>
+									<td colspan="8"id="aco3"><a href="#aco3">마이페이지</a>
 									
 										<p id="acP1">아 오늘은 날씨도 이렇게 좋은데 양심적으로 한강 가야되는거 아닙니까? .3</p>
 									</td>
@@ -176,7 +167,7 @@
 								
 								<tr class="accordionMenu">
 								<td >4</td>
-									<td colspan="8"id="aco5"><a href="#aco5">제목3</a>
+									<td colspan="8"id="aco4"><a href="#aco4">가입 및 탈퇴</a>
 									
 										<p id="acP1">아 오늘은 날씨도 이렇게 좋은데 양심적으로 한강 가야되는거 아닙니까? .3</p>
 									</td>
@@ -185,13 +176,13 @@
 								
 								<tr class="accordionMenu">
 								<td >5</td>
-									<td colspan="8"id="aco6"><a href="#aco6">제목3</a>
+									<td colspan="8"id="aco5"><a href="#aco5">기타</a>
 									
 										<p id="acP1">아 오늘은 날씨도 이렇게 좋은데 양심적으로 한강 가야되는거 아닙니까? .3</p>
 									</td>
 											
 								</tr>
-                            
+								
                         </tbody>
                     </table>
                     <br><br><Br>
