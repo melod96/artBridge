@@ -27,7 +27,7 @@ public class TransactionDao {
 		}
 	}
 	
-	/*수정한 메소드 아래에 작성 됨*/
+	/*수정한 메소드 아래에 작성 됨  ->  추후 수정, 통합 예정 */
 	public ArrayList<Transaction> selectAfterSubList(Connection con, int mNo) {		/*수정한 메소드 아래에 작성 됨*/
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -73,7 +73,7 @@ public class TransactionDao {
 		return transList;
 	}
 		
-	public ArrayList<Transaction> selectTransList(Connection con, int mNo) {
+	public ArrayList<Transaction> selectTransList2(Connection con, int mNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Transaction> transList = new ArrayList<Transaction>();
@@ -109,6 +109,7 @@ public class TransactionDao {
 				t.setOd_startDate(rset.getDate("od_start_date"));
 				t.setOd_endDate(rset.getDate("od_end_date"));		
 				t.setOrders_activity(rset.getInt("orders_activity"));
+				t.setBoard_no(rset.getInt("board_no"));
 				
 				//쿼리에 아직 처리 안 돼있음
 //				t.setPay_status(rset.getInt("pay_status"));

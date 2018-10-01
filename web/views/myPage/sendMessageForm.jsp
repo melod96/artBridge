@@ -105,13 +105,8 @@ div#editor {
 				
 					<br> <br>
 
-					<button type="submit" id="searchBtn" name="searchBtn"
-						class="btn btn-primary btn-lg"
-						style="padding: 2px 30px; float: right;">전송</button>
-						
-					<button type="reset" id="backPageBtn" name="searchBtn"
-						class="btn btn-primary btn-lg"
-						style="padding: 2px 30px; background: gray; float: right; margin-right: 10px;"
+					<button type="submit" id="searchBtn" name="searchBtn" class="btn btn-primary btn-lg" style="padding: 2px 30px; float: right;">전송</button>
+					<button type="reset" id="backPageBtn" name="searchBtn" class="btn btn-primary btn-lg" style="padding: 2px 30px; background: gray; float: right; margin-right: 10px;"
 						onclick = 'location.href="/artBridge/selectList.my?memberNo=<%= loginUser.getMember_no() %>"'>이전</button>
 				
 					<br> <br>

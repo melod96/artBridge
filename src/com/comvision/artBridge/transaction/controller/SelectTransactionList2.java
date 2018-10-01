@@ -20,7 +20,7 @@ import com.sun.xml.internal.ws.client.ResponseContext;
 /**
  * Servlet implementation class SelectTransactionList
  */
-@WebServlet("/selectTransList.ts")
+@WebServlet("/selectTransList2.ts")
 public class SelectTransactionList2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -75,14 +75,14 @@ public class SelectTransactionList2 extends HttpServlet {
 		if(transList != null){
 			System.out.println("2. 여기로 들어오니?");
 			page= "views/myPage/myPageForm.jsp?pageName=order-menu";
-//			page= "views/myPage/myPageForm.jsp";
+//			page= "views/myPage/myPageForm.jsp"; 키 달아줘야 탭속성 변경됨
 			request.setAttribute("transList", transList);
 //			request.setAttribute("pageName", "order-menu");
 //			request.setAttribute("pi", pi);
 			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-//			new Gson().toJson(transList, response.getWriter());
+//			new Gson().toJson(transList, response.getWriter());  이것도 가능 gson 개념 확인 다시 하기
 			response.getWriter().print(new Gson().toJson(transList));
 			System.out.println(new Gson().toJson(transList));
 		}else{

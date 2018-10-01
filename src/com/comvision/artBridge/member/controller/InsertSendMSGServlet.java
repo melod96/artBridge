@@ -25,6 +25,7 @@ public class InsertSendMSGServlet extends HttpServlet {
 		String receive_mem_no = request.getParameter("receive_mem_no");
 		String title = request.getParameter("title");
 		String editor = request.getParameter("editor");
+		System.out.println(request.getAttributeNames());
 		
 		System.out.println("mem_id :" + mem_id + ", receive_no : " + receive_mem_no + ", title : " + title + ", editor : " + editor); 
 		

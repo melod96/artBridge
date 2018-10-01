@@ -38,6 +38,8 @@
 /*  구입목록 */
     .seller-list{ background-color:rgba(255, 117, 223, 0.2); }
     .buyer-list{ background:rgba(117, 230, 255 , 0.2); }
+    .disabledBtn { background:#9a9a9a !important; font-size:10px; padding:2px 10px; border-color:#4c4c4c !important; }
+    .confirmBtn { font-size:10px; padding:2px 10px; }
 /*  .seller-list .buyer-list{ padding-top:5px; background-clip: content-box; !important; } */
 
 /*  명세표 팝업 */
@@ -47,6 +49,10 @@
   	
 /*  쪽지함 스타일 */
 	.messenger{ font-weight: bold; line-height:2em; }
+	ul.tab-menu li>a:hover { background: darkgray; }
+	div#editor { width: 81%; margin: auto; text-align: left; }
+	.ss { background-color: red; }
+	.fr-wrapper { overflow-Y: scroll; height: 86%; }
 	
 /* 	관심작가 리스트 스타일 */
 	.bookmark-list-wrap { width:100%; padding:0px 39px; }
@@ -158,6 +164,15 @@
 		t = (Transaction)request.getAttribute("t");
 	}
 	
+	ArrayList<Requirements> rlist = null;
+	if (request.getAttribute("rlist") != null) {
+		rlist = (ArrayList<Requirements>) request.getAttribute("rlist");
+	}
+	int totalPrice = 0;
+	if (request.getAttribute("totalprice") != null) {
+		totalPrice = (int) (request.getAttribute("totalprice"));
+	}
+	
 	PageInfo pi = null;
 	int listCount = 0;
 	int currentPage = 0;
@@ -203,7 +218,7 @@
 		<div class="container">
 			<h2>마이 페이지</h2>
 			<ul class="tab-menu">
-<%-- 				<li><a href="<%= request.getContextPath() %>/selectTransList.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li> --%>
+<%-- 				<li><a href="<%= request.getContextPath() %>/selectTransList2.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li> --%>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="msg-menu">쪽지함</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="bookmark-menu">관심작가</a></li>
@@ -222,9 +237,14 @@
 		<div class="contents"><!-- contents 필수 사용 -->
 
 <!--      	* 1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
-<%if(t!=null){ %>
-			<form action="" method="post">
-				<div id="stmtModalArea" class="w3-modal" onclick="stmtDisplayNone();"></div>
+			<% if(t != null) { %>
+			<form action="<%=request.getContextPath()%>/paymentpage.pg" method="post">
+				<input type="hidden" name = "orders_no" value = "<%=t.getOrders_no() %>" />
+				<input type="hidden" name = "customer_no" value = "<%= loginUser.getMember_no() %>" />
+				<input type="hidden" name= "writer_no" value = "<%= t.getWrtNo()%>" />
+				<input type="hidden" name = "total" value = "<%=totalPrice %>" />
+				
+				<div id="stmtModalArea" class="w3-modal"></div>
 				<div id="stmtArea" class="settingArea">
 					<!-- 모달 요소 넣기 -->
 					<div class=stmtModal-Area-Style align="center">
@@ -233,7 +253,7 @@
 							<tr>
 								<td width="15px"></td>
 								<td width="90px" class="stmt-title">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목  : </td>
-								<td colspan="3"></td>
+								<td colspan="3"><%=t.getBoard_title()%></td>
 							</tr>
 							<tr>
 								<td></td>
@@ -243,14 +263,14 @@
 							<tr>
 								<td></td>
 								<td class="stmt-title">구 매 자  : </td>
-								<td width="230px"><%= t.getCusId() %></td>
+								<td width="230px"><%=loginUser.getNick_name()%></td>
 								<td width="80px" class="stmt-title">판 매 자  : </td>
-								<td width="150px"><%= t.getWrtNick() %></td>
+								<td width="150px"><%= t.getWrtNick()%></td>
 							</tr>
 							<tr>
 								<td></td>
 								<td class="stmt-title">옵 션 명  : </td>
-								<td colspan="3">인물화</td>
+								<td colspan="3"><%=rlist.get(0).getRequirements_content()%></td>
 							</tr>
 							<tr>
 								<td colspan="5" height="30px"></td>
@@ -263,40 +283,60 @@
 										<td width="380px">요 구 사 항</td>
 										<td width="87px">금 액</td>
 									</tr>
+								  <% for (Requirements r : rlist) {		int i = 1; %>
 									<tr height="23px">
-										<td align="center">1</td>
-										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~</td>
-										<td align="right">작가기입 원</td>
+										<td align="center"><%= i %></td>
+										<td style="font-size: 12px; padding-left: 10px;"><%=r.getRequirements_content()%></td>
+										<td align="right"><%=r.getRequirement_price()%>원</td>
 									</tr>
-									<tr>
-										<td align="center">2</td>
-										<td style="font-size:12px; padding-left:10px;">제가 보내드리는 사진을 배경으로 만들어주세요~ 귀염뽀짝하게 해주시면 더 좋아요~!</td>
-										<td align="right">45,454원</td>
-									</tr>
+								  <% 	i++;	} %>
 								</table>
 								<br>
 								<table align="right">
-									<tr >
-										<td>총   금 액  :  </td>
-										<td><label>123,456원</label></td>
+									<tr>
+										<td>총 금 액 :</td>
+										<td><strong style="font-size:20px;"><%= totalPrice %>원</strong></td>
 									</tr>
 								</table>
 							</td>
 							</tr>
 							<tr>
-								<td colspan="5">
+								<!-- <td colspan="5">
 									<div class="btn-center stmtBtn">
 										  <button class="btn btn-primary btn-lg btn-plus-design" style="width:67%;">거 래 수 락</button><br>
 					                      <button class="btn btn-primary btn-lg btn-plus-design" style="margin-left:0;">재 요청</button>
 					                      <button class="btn btn-default btn-lg btn-plus-design">거래 취소</button>
 					                </div>
+								</td> -->
+							</tr>
+							<tr>
+								<td colspan="5">
+									<div class="btn-center stmtBtn">
+										<button class="btn btn-primary btn-mg btn-plus-design" type="submit" style="width:50%;">거 래 수 락</button> <br><br />
+									  <% if(loginUser.getWriter_right()==0) { %>
+										<button class="btn btn-primary btn-mg btn-plus-design" style="margin-left:0;" type="button" onclick = "change()">재 요청</button>
+									  <%}else{ %>
+										<button class="btn btn-primary btn-mg btn-plus-design" style="margin-left:0;" type="button" onclick = "req()">재 요청</button>
+									  <%} %>
+										<button class="btn btn-danger btn-mg btn-plus-design">거래 취소</button>
+										<button class="btn btn-default btn-mg btn-plus-design" type="button" onclick="stmtDisplayNone();">목록으로</button>
+									</div>
 								</td>
 							</tr>
 						</table>
 					</div>
 				</div>
 			</form>
-			<%} %>
+			<% } %>
+
+			<script>
+				function change(){
+<%-- 				location.href="<%= request.getContextPath()%>/detailedList.pg?orderno=<%= t.getOrders_no()%>"; --%>
+				}
+				function req(){
+					
+				}
+			</script>
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 
 <!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
@@ -427,23 +467,39 @@
 						</thead>
 						
 						<tbody>		
-							<% if(transList != null){
+<%-- 							<% if(transList != null){
 								for(int i = 0; i < transList.size(); i++){ 
 								  if(transList.get(i).getDivRole_no() == 0){ %>
 									<tr id="" class="seller-list transInfo-list">
 										<td>판매</td>
 										<td><a onclick="stmtDisplayBlock(<%= transList.get(i).getOrders_no() %>);" id="orderNo" class="btn"><%= transList.get(i).getOrders_no() %></a></td>
 										<td><%= transList.get(i).getCusId() %></td>
-										<td class="txt-fl"><a href="#"><%= transList.get(i).getBoard_title() %></a></td>
-										
-										<td><%= transList.get(i).getOrders_activity() %></td>
-										
+										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= transList.get(i).getBoard_no() %>"><%= transList.get(i).getBoard_title() %></a></td>
+									 	
+									  <% if(transList.get(i).getOrders_activity() == 1){ %>										
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 2){ %>
+									    <td><button onclick="confirmReq();" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">1단계 컨펌</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 3){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 4){ %>
+									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">2단계 컨펌</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 5){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 6){ %>
+									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">최종 컨펌</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 7){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 8){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
+									  <% } %>
+									  										
 										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-										<td><%= transList.get(i).getOd_startDate() %></td>
-									  <% if(transList.get(i).getOd_endDate() == null){ %>
+										<td><%= transList.get(i).getO_date() %></td>
+									  <% if(transList.get(i).getO_final_date() == null){ %>
 									    <td>-</td>
 									  <% }else{ %>
-										<td><%= transList.get(i).getOd_endDate() %></td>
+										<td><%= transList.get(i).getO_final_date() %></td>
 									  <% } %>	
 	<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
 	<!-- 										<div class="btn-center btn-outer-style"> -->
@@ -454,18 +510,114 @@
 								  <% } else if(transList.get(i).getDivRole_no() == 1){ %>
 									<tr id="" class="buyer-list transInfo-list">
 										<td>구매</td>
-										<td><a onclick="stmtDisplayBlock(<%= transList.get(i).getOrders_no() %>);" id="orderNo" class="btn"><%= transList.get(i).getOrders_no() %></a></td>
+										<td><a onclick="stmtDisplayBlock('<%= transList.get(i).getOrders_no() %>');" id="orderNo" class="btn"><%= transList.get(i).getOrders_no() %></a></td>
 										<td><%= transList.get(i).getWrtNick() %></td>
-										<td class="txt-fl"><a href="#"><%= transList.get(i).getBoard_title() %></a></td>
+										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= transList.get(i).getBoard_no() %>"><%= transList.get(i).getBoard_title() %></a></td>
 										
-										<td><%= transList.get(i).getOrders_activity() %></td>
+									  <% if(transList.get(i).getOrders_activity() == 1){ %>										
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 2){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 3){ %>
+									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 1단계</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 4){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 5){ %>
+									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 2단계</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 6){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">최종 작업중</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 7){ %>
+									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">작품 확인</button></td>
+									  <% }else if(transList.get(i).getOrders_activity() == 8){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
+									  <% } %>										
 										
 										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-										<td><%= transList.get(i).getOd_startDate() %></td>
-									  <% if(transList.get(i).getOd_endDate() == null){ %>
+										<td><%= transList.get(i).getO_date() %></td>
+									  <% if(transList.get(i).getO_final_date() == null){ %>
 									    <td>-</td>
 									  <% }else{ %>
-										<td><%= transList.get(i).getOd_endDate() %></td>
+										<td><%= transList.get(i).getO_final_date() %></td>
+									  <% } %>	
+	<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
+	<!-- 										<div class="btn-center btn-outer-style"> -->
+	<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">환불요청</button> -->
+	<!-- 						                </div> -->
+	<!-- 									</td> -->
+									  </tr>
+									<% } } } %> --%>
+							<% if(transList != null){
+								for(Transaction tr : transList){ 
+								  if(tr.getDivRole_no() == 0){ %>
+									<tr id="" class="seller-list transInfo-list">
+										<td>판매</td>
+										<td><a onclick="stmtDisplayBlock(<%= tr.getOrders_no() %>);" id="orderNo" class="btn"><%= tr.getOrders_no() %></a></td>
+										<td><%= tr.getCusId() %></td>
+										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= tr.getBoard_no() %>"><%= tr.getBoard_title() %></a></td>
+									 	
+									  <% if(tr.getOrders_activity() == 1){ %>										
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button></td>
+									  <% }else if(tr.getOrders_activity() == 2){ %>
+									    <td><button onclick="confirmReq();" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">1단계 컨펌</button></td>
+									  <% }else if(tr.getOrders_activity() == 3){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
+									  <% }else if(tr.getOrders_activity() == 4){ %>
+									    <td><button onclick="confirmReq();" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">2단계 컨펌</button></td>
+									  <% }else if(tr.getOrders_activity() == 5){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
+									  <% }else if(tr.getOrders_activity() == 6){ %>
+									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">최종 컨펌</button></td>
+									  <% }else if(tr.getOrders_activity() == 7){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
+									  <% }else if(tr.getOrders_activity() == 8){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
+									  <% } %>
+									  <input type="text" name="" style="display:none;"/>
+									  										
+										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
+										<td><%= tr.getO_date() %></td>
+									  <% if(tr.getO_final_date() == null){ %>
+									    <td>-</td>
+									  <% }else{ %>
+										<td><%= tr.getO_final_date() %></td>
+									  <% } %>	
+	<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
+	<!-- 										<div class="btn-center btn-outer-style"> -->
+	<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">거래취소</button> -->
+	<!-- 						                </div> -->
+	<!-- 									</td> -->
+									  </tr>
+								  <% } else if(tr.getDivRole_no() == 1){ %>
+									<tr id="" class="buyer-list transInfo-list">
+										<td>구매</td>
+										<td><a onclick="stmtDisplayBlock('<%= tr.getOrders_no() %>');" id="orderNo" class="btn"><%= tr.getOrders_no() %></a></td>
+										<td><%= tr.getWrtNick() %></td>
+										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= tr.getBoard_no() %>"><%= tr.getBoard_title() %></a></td>
+										
+									  <% if(tr.getOrders_activity() == 1){ %>										
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button></td>
+									  <% }else if(tr.getOrders_activity() == 2){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>
+									  <% }else if(tr.getOrders_activity() == 3){ %>
+									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 1단계</button></td>
+									  <% }else if(tr.getOrders_activity() == 4){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>
+									  <% }else if(tr.getOrders_activity() == 5){ %>
+									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 2단계</button></td>
+									  <% }else if(tr.getOrders_activity() == 6){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">최종 작업중</button></td>
+									  <% }else if(tr.getOrders_activity() == 7){ %>
+									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">작품 확인</button></td>
+									  <% }else if(tr.getOrders_activity() == 8){ %>
+										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
+									  <% } %>										
+										
+										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
+										<td><%= tr.getO_date() %></td>
+									  <% if(tr.getO_final_date() == null){ %>
+									    <td>-</td>
+									  <% }else{ %>
+										<td><%= tr.getO_final_date() %></td>
 									  <% } %>	
 	<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
 	<!-- 										<div class="btn-center btn-outer-style"> -->
@@ -623,8 +775,8 @@
 					</table>
 					
 					<div class="btn-center btn-outer-style">
-	                      <button class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button>
-	                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">삭제</button>
+<!-- 	                      <button class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button> -->
+	                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">쪽지 보내기</button>
 	                </div>
 	                    
 				<br><br><br><br>	
@@ -633,13 +785,99 @@
 <!-- 		//2. 마이페이지 탭 메뉴 - 쪽지함 탭 -->
 
 <!--      		* 2-1. 마이페이지 탭 바디 - 쪽지함 탭 / 쪽지별 세부 화면 --> 				<!-- id를 msg-detail-view 로 만든 버튼에 연결 -->  
-				<form action="" method="get"class="msg-detail-view tab-menu-content-form" style="display:none;">
-					<div class="msg-detail-view">
-						
+				<!-- <form onsubmit="return formCheck(this)" action="/artBridge/insertSend.msg" method="post" id="goForm" class="msg-detail-view tab-menu-content-form" style="display:none;">
+					<div class="msg-detail-view">					
+						<table class="tbl-type02">
+							<colgroup>
+								<col style="width: 15%;">
+								<col style="width: *;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td style="background: lightgray;">*받는 사람 넘버<input type="hidden" name="mem_id" value =""></td>
+									<td><input id="receive_mem_no" name="receive_mem_no" type="text" style="width: 99%;" placeholder="받는 사람 넘버"></td>
+								</tr>
+								<tr>
+									<td style="background: lightgray;">*제목</td>
+									<td><input id="title" name="title"  type="text" style="width: 99%;" placeholder="제목 작성"></td>
+								</tr>
+								<tr>
+									<td style="background: lightgray;">*내용</td>
+									<td>
+										<textarea id='editor' name="editor" style="height: 550px;"></textarea>
+										<script>
+											$(function() {
+												$('#editor').froalaEditor()
+											});
+										</script>
+									</td>
+								</tr>
+							</tbody>
+						</table>	
 					
 					<br><br><br><br>
 					</div>
-				</form>			
+				</form> -->
+				
+<!-- 			<form onsubmit="return formCheck(this)" action="/artBridge/insertSend.msg" method="post" id="goForm" class="msg-detail-view tab-menu-content-form" style="display:none;">					 -->
+				<form onsubmit="return formCheck(this)" method="post" id="goForm" class="msg-detail-view tab-menu-content-form" style="display:;">					
+					<div class="send-msg-view">
+						<table class="tbl-type02">
+							<colgroup>
+								<col style="width: 15%;">
+								<col style="width: *;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td style="background: lightgray;">*받는 사람 넘버<input type="hidden" name="mem_id" value =""></td>
+									<td><input id="receive_mem_no" name="receive_mem_no" type="text" style="width: 99%;" placeholder="받는 사람 넘버"></td>
+								</tr>
+								<tr>
+									<td style="background: lightgray;">*제목</td>
+									<td><input id="title" name="title"  type="text" style="width: 99%;" placeholder="제목 작성"></td>
+								</tr>
+								<tr>
+									<td style="background: lightgray;">*내용</td>
+									<td>
+										<textarea id='editor' name="editor" style="height: 550px;"></textarea>
+										<script>
+											$(function() {
+												$('#editor').froalaEditor()
+											});
+										</script>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="btn-center btn-outer-style">
+	                      <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design" onclick="sendMsgCancel();">작성 취소</button>
+	                      <button type="submit" class="btn btn-primary btn-lg btn-plus-design">쪽지 보내기</button>
+						</div>
+					<br><br><br><br>
+					</div>
+				</form>
+				
+				<script>
+                   	function formCheck(frm){
+                   		console.log("실행");
+                   		var title = $("#title");
+                   		var editor = $("#editor");
+                   		var re_no = $("#re_no");
+						
+						if(frm.title.value == "" || frm.editor.value == "" || frm.receive_mem_no.value == ""){
+							console.log();
+							alert("필수 입력 사항을 전부 입력해주세요.");
+							frm.title.focus();
+							return false;
+						}
+						
+						location.href="<%= request.getContextPath() %>/insertSend.msg"
+
+                   	}
+                   	function sendMsgCancel(){
+<%-- 						location.href="/artBridge/selectList.my?memberNo=<%= loginUser.getMember_no() %>	 --%>
+                   	}
+                </script>
 <!--      		//2-1. 마이페이지 탭 바디 - 쪽지함 탭 / 쪽지별 세부 화면 -->
 
 <!-- 		* 3. 마이페이지 탭 메뉴 - 관심작가 탭 -->    <!-- id를 bookmark-detail-view 로 만든 버튼에 연결       onclick="selfHidden();"  ,   "bookmarkDel()"  구현하기 -->
@@ -1189,7 +1427,7 @@
 		$(function(){
 // 			select orders_no from orders where member_no = ? or writer_no = ?
 			var pageName = "<%= (String)request.getParameter("pageName") %>";
-<%-- 			location.href="<%= request.getContextPath() %>/selectTransList.ts"; --%>
+<%-- 			location.href="<%= request.getContextPath() %>/selectTransList2.ts"; --%>
 			
 			$('.order-menu, .bookmark-menu, .msg-menu, .memberinfo-menu, .mywork-menu, .qna-menu').css({"display":"none"});
 			
@@ -1210,7 +1448,7 @@
 			<%-- switch(pageName){
 			case 'order-menu' : alert("에이작스로 들어왔어?");					
 								$.ajax({									
-									url : "<%= request.getContextPath() %>/selectTransList.ts",
+									url : "<%= request.getContextPath() %>/selectTransList2.ts",
 									type : "post",
 									success : function(data){
 										<%
@@ -1320,22 +1558,22 @@
 	   		$('#stmtArea').css({"display":"block"});
 	   		
 	   		//var orderNoo = $('#orderNo').val();
-	   		var orderNoo = t
+	   		<%-- var orderNoo = t
 	   		console.log(orderNoo);
 			if(orderNoo != null && orderNoo != ""){
 				$.ajax({
 					url : "<%= request.getContextPath() %>/selectTransOne.ts",
 					type : "post",
 					data : {orderNoo : orderNoo},
-					success : function(){
-						
-						
+					success : function(data){
+						console.log(data);
+						return data;
 					},
 					error:function(request,status,error){
 			        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			        }
 				});
-			}  		
+			} --%>  		
 	  	};							
 	// 	* 명세표 모달 닫기
 		function stmtDisplayNone(){
@@ -1344,6 +1582,12 @@
 			/* document.getElementById('stmtArea').style.display='none';
 			document.getElementById('stmtModalArea').style.display='none'; */
 		};
+		
+	// 	* 컨펌 받기
+		function confirmReq(){
+			location.href = "<%= request.getContextPath() %>/insertSend.msg"		
+		};
+		
 	</script>
 <!-- //1. 주문관리 탭 스크립트 -->
 
