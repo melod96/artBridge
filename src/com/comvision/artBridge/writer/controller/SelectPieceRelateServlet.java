@@ -24,7 +24,7 @@ public class SelectPieceRelateServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//작가 작품등록 폼에서 연관검색어 노출
 		ArrayList<Relate> relate = new WriterService().relateWord();
-		System.out.println(relate);
+		//System.out.println(relate);
 		
 		String page = "";
 		if(relate != null){
