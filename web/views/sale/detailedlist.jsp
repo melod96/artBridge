@@ -75,7 +75,7 @@
 							주문 날짜 <span id="right"><%=t.getO_date() %></span>
 						</h4>
 						<h4 class="cf">
-							구매자 <span id="right"><%=m.getNick_name() %></span>
+							구매자 <span id="right"><%=t.getCusName() %></span>
 						</h4>
 						<h4 class="cf">
 							판매자<span id="right"><%=t.getWrtNick() %></span>

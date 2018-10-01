@@ -221,6 +221,7 @@ public class SaleService {
 		int result = new SaleDao().insertPayment(con, customer_no, orders_no, totalPrice,imp_uid,apply_num);
 		int currval = new SaleDao().selectPaymentCurrval(con);
 		int detailresult = new SaleDao().insertPaymentDetail(con, currval);
+		int update  = new SaleDao().updateorderActivity(con, orders_no);
 		close(con);
 		return result;
 	}
@@ -274,6 +275,37 @@ public class SaleService {
 		
 		close(con);
 		return result;
+	}
+
+	//연관검색어 관련 게시글 출력 갯수
+	public int getRelateListCount(int relateNo) {
+		Connection con = getConnection();
+		
+		int result = new SaleDao().getRelateListCount(con, relateNo);
+		
+		close(con);
+		return result;
+	}
+
+	//해당 연관검색어 번호
+	public int selectRelateNo(String relate) {
+		Connection con = getConnection();
+		
+		int result = new SaleDao().selectRelateNo(con, relate);
+		
+		close(con);
+		return result;
+	}
+
+	//해당하는 연관검색어 리스트
+	public ArrayList<Board> searchRelateList(int currentPage, int limit, int relateNo) {
+		Connection con = getConnection();
+		
+		ArrayList<Board> list= new SaleDao().searchRelateList(con, currentPage, limit, relateNo);
+		
+		close(con);
+		
+		return list;
 	}
 
 	

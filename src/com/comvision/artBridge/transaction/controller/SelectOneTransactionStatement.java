@@ -39,6 +39,8 @@ public class SelectOneTransactionStatement extends HttpServlet {
 		int orderNoo = Integer.parseInt(request.getParameter("orderNoo"));
 		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
 		
+	
+		
 		Transaction t = new TransactionService().selectTransOne(mNo, orderNoo);
 		ArrayList<Requirements> rlist = new SaleService().selectsaleRequirementsList(orderNoo, mNo);
 		//작가 코멘트 출력
@@ -47,9 +49,6 @@ public class SelectOneTransactionStatement extends HttpServlet {
 		
 		String page = "";
 		if(t != null){
-//			response.getWriter().print(t);
-			/*HttpSession session = request.getSession();
-			session.setAttribute("t", t);*/
 			page= "views/myPage/paymentmodel.jsp";
 			request.setAttribute("t", t);
 			request.setAttribute("rlist", rlist);

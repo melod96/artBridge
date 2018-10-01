@@ -82,7 +82,7 @@
 									<tr>
 										<td></td>
 										<td class="stmt-title">구 매 자 :</td>
-										<td width="230px"><%=m.getNick_name()%></td>
+										<td width="230px"><%=t.getCusName()%></td>
 										<td width="80px" class="stmt-title">판 매 자 :</td>
 										<td width="150px"><%=t.getWrtNick()%></td>
 									</tr>
@@ -150,11 +150,13 @@
 									<tr>
 										<td colspan="5">
 											<div class="btn-center stmtBtn">
+											<%if(m.getMember_no() == t.getCusNo()){ %>
 												<button class="btn btn-primary btn-mg btn-plus-design"
 													type="submit" style="width: 50%;">거 래 수 락</button>
 												<br>
 												<br />
-												<%if(m.getWriter_right()==1){ %>
+													<%} %>
+												<%if(t.getWrtNo()== m.getMember_no()){ %>
 												<button class="btn btn-primary btn-mg btn-plus-design"
 													style="margin-left: 0;" type="button" onclick = "change()">재 요청</button>
 													<%}else{ %>

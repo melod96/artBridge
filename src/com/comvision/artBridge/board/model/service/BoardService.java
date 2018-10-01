@@ -26,6 +26,16 @@ public class BoardService {
 		
 		return listCount;
 	}
+	//페이징처리
+		public int getListpgCount() {
+			Connection con = getConnection();
+			
+			int listCount = new BoardDao().getListpgCount(con);
+			
+			close(con);
+			
+			return listCount;
+		}
 
 	//판매글 출력
 	public ArrayList<Board> selectSaleList(int currentPage, int limit) {

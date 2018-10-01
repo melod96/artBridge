@@ -418,23 +418,6 @@
 						</thead>
 						
 						<tbody>
-<%-- 						<% for(transInfo n : list){  --%>		<!-- ***수정사항 : 조건에 따라 항목 구분하기 -->
-<%-- 								if(role.equals("seller"){ %> --%>
-<!-- 						<tr id="" class="seller-list transInfo-list"> -->
-<!-- 							<td>판매</td> -->
-<%-- 								<% }else{ %> --%>
-<!-- 						<tr id="buyer" class="buyer-list transInfo-list"> -->
-<!-- 							<td>구매</td> -->
-<%-- 								<% } %> --%>
-<!-- 							<td><a onclick="stmtDisplayBlock();" class="btn">18083001</a></td> -->
-<!-- 							<td>소나나</td> -->
-<!-- 							<td class="txt-fl"><a href="#">커미션은 소나나에게 맡겨주세요~!<br>귀여운 일러스트/캐릭터/방송화면/커미션</a></td> -->
-<!-- 							<td>컨펌 1단계</td> -->
-<!-- 							<td><img src='/artBridge/web/image/common/mypage/msg.png'></td> -->
-<!-- 							<td>2018-00-00</td> -->
-<!-- 							<td>2018-00-00</td> -->
-<!-- 						</tr> -->
-<%-- 						 <% } %>  --%>
 							
 							<% if(transList != null){for(Transaction ts : transList){ 
 							  if(ts.getDivRole_no() == 0){ %>	 
@@ -442,7 +425,7 @@
 									<td>판매</td>
 									<td><a onclick="stmtDisplayBlock(this.text);" id="orderNo" class="btn"><%= ts.getOrders_no() %></a></td>
 									<td><%= ts.getCusId() %></td>
-									<td class="txt-fl"><a href="#"><%= ts.getBoard_title() %></a></td>
+									<td class="txt-fl"><a onclick ="boardDetail(this)" name = "<%=ts.getBoard_no() %>"><input type="hidden" value = "<%=ts.getBoard_no() %>" /><%= ts.getBoard_title() %></a></td>
 									<td><%= ts.getPay_status() %></td>
 									<td><img src='/artBridge/image/common/mypage/msg.png'></td>
 									<td><%= ts.getOd_startDate() %></td>
@@ -453,7 +436,7 @@
 									<td>구매</td>
 									<td><a onclick="stmtDisplayBlock(this.text);" id="orderNo" class="btn"><%= ts.getOrders_no() %></a></td>
 									<td><%= ts.getWrtNick() %></td>
-									<td class="txt-fl"><a href="#"><%= ts.getBoard_title() %></a></td>
+									<td class="txt-fl"><a onclick ="boardDetail(this)" name = "<%=ts.getBoard_no() %>"><%= ts.getBoard_title() %></a></td>
 									<td><%= ts.getPay_status() %></td>
 									<td><img src='/artBridge/image/common/mypage/msg.png'></td>
 									<td><%= ts.getOd_startDate() %></td>
@@ -683,6 +666,11 @@
 			/* document.getElementById('stmtArea').style.display='none';
 			document.getElementById('stmtModalArea').style.display='none'; */
 		};
+		
+		function boardDetail(t){
+			var name = t.getAttribute("name");
+			console.log(name);
+		}
 	</script>
 <!-- //1. 주문관리 탭 스크립트 -->
 

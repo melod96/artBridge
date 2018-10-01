@@ -58,7 +58,7 @@ public class SelectSaleListServlet extends HttpServlet {
 		}
 
 
-		int listCount = new BoardService().getListCount();
+		int listCount = new BoardService().getListpgCount();
 
 
 		maxPage = (int)((double)listCount/limit + 0.9);
@@ -98,7 +98,7 @@ public class SelectSaleListServlet extends HttpServlet {
 		ArrayList<Relate> rlist = new BoardService().selectRelateList();
 		String page = "";
 
-		if(list.size()> 0){
+		if(list.size()> 0 && alist!=null && opmap !=null){
 			page = "views/sale/salepage.jsp";
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
