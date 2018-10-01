@@ -44,6 +44,9 @@ public class DetailedListServlet extends HttpServlet {
 		ArrayList<Requirements> rlist = new SaleService().selectsaleRequirementsList(orderno, mNo);
 		
 		int price = new SaleService().totalPrice(orderno, mNo);
+		System.out.println(t);
+		System.out.println(rlist);
+		System.out.println(price);
 		
 		String page = "";
 		if(t != null){

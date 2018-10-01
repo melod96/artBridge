@@ -260,7 +260,7 @@
 
 							<%for(Relate r : rlist){ %>
 							<ol>
-								<a href="" class="tag21">#<%= r.getRelate_name() %></a>
+								<a>#</a><a class="tag21" onclick= "relatesearch(this.text)"><%= r.getRelate_name() %></a>
 							</ol>
 							<%} %>
 
@@ -268,6 +268,12 @@
 						</ul>
 
 					</div>
+					
+					<script>
+						function relatesearch(t){
+							location.href="<%=request.getContextPath()%>/searchRelate.pg?relate="+t;
+						}
+					</script>
 					<div class="clear" style="height: 30px;">&nbsp;</div>
 
 

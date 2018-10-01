@@ -471,6 +471,32 @@ public class BoardDao {
 		
 	}
 
+	public int getListpgCount(Connection con) {
+		Statement stmt= null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("listCount");
+		
+		int listCount = 0;
+		
+		try {
+			stmt = con.createStatement();
+			rset = stmt.executeQuery(query);
+			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(stmt);
+			close(rset);
+		}
+		
+		return listCount;
+	}
+
 
 
 	

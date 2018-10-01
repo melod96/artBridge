@@ -140,7 +140,8 @@ public class TransactionDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, mNo);
-			pstmt.setInt(2, orderNo);
+			pstmt.setInt(2, mNo);
+			pstmt.setInt(3, orderNo);
 			
 			rset = pstmt.executeQuery();
 			
@@ -152,10 +153,10 @@ public class TransactionDao {
 				t.setWrtNick(rset.getString("wrinick"));
 				t.setBoard_title(rset.getString("board_title"));
 				t.setWrtNo(rset.getInt("writer_no"));
+				t.setCusNo(rset.getInt("member_no"));
 			}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}finally{
 			close(pstmt);

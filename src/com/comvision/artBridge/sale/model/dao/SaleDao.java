@@ -115,46 +115,6 @@ public class SaleDao {
 		return b;
 	}
 
-	//해당하는 이미지 조회
-	/*public ArrayList<Files> selectFileList(Connection con, int num) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Files> flist = null;
-		
-		String query = prop.getProperty("selectFileList");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			pstmt.setInt(1, num);
-			
-			rset = pstmt.executeQuery();
-			
-			flist = new ArrayList<Files>();
-			while(rset.next()){
-				Files f= new Files();
-				
-				f.setFiles_no(rset.getInt("files_no"));
-				f.setF_reference_no(rset.getInt("f_reference_no"));
-				f.setFiles_title(rset.getString("files_title"));
-				f.setChange_title(rset.getString("change_title"));
-				f.setFiles_type(rset.getInt("files_type"));
-				f.setFiles_root(rset.getString("files_root"));
-				f.setFiles_date(rset.getDate("files_date"));
-				f.setFiles_secession(rset.getInt("files_secession"));
-				
-				flist.add(f);
-				
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally{
-			close(pstmt);
-			close(rset);
-		}
-		
-		return flist;
-	}*/
 
 	//해당하는 판매글의 연관검색어
 	public ArrayList<Relate> selectRelateList(Connection con, int num) {
@@ -664,7 +624,6 @@ public class SaleDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, orders_no);
-			pstmt.setInt(2, customer_no);
 			
 			rset = pstmt.executeQuery();
 			
@@ -768,7 +727,6 @@ public class SaleDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, orderNoo);
-			pstmt.setInt(2, mNo);
 			
 			rset = pstmt.executeQuery();
 			
@@ -797,8 +755,7 @@ public class SaleDao {
 			pstmt= con.prepareStatement(query);
 			pstmt.setString(1, price);
 			pstmt.setInt(2, orderno);
-			pstmt.setInt(3, mNo);
-			pstmt.setString(4, content);
+			pstmt.setString(3, content);
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
@@ -884,6 +841,125 @@ public class SaleDao {
 		}
 		
 		return result;
+	}
+
+	public int updateorderActivity(Connection con, int orders_no) {
+		PreparedStatement pstmt= null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateorderActivity");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, orders_no);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return result;
+	}
+
+	public int getRelateListCount(Connection con, int relateNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("getRelateListCount");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, relateNo);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return result;
+	}
+
+	public int selectRelateNo(Connection con, String relate) {
+		PreparedStatement pstmt = null;
+		ResultSet rset  = null;
+		int result = 0;
+		
+		String query= prop.getProperty("selectRelateNo");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, relate);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result= rset.getInt("relate_no");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		return result;
+	}
+
+	public ArrayList<Board> searchRelateList(Connection con, int currentPage, int limit, int relateNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Board> list = null;
+		
+		
+		String query = prop.getProperty("searchRelateList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			pstmt.setInt(1, relateNo);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
+			
+			rset = pstmt.executeQuery();
+			
+			list = new ArrayList<Board>();
+			
+			while(rset.next()){
+				Board b= new Board();
+				
+				b.setBoard_no(rset.getInt("board_no"));
+				b.setBoard_type(rset.getInt("board_type"));
+				b.setBoard_title(rset.getString("board_title"));
+				b.setBoard_content(rset.getString("board_content"));
+				b.setNick_name(rset.getString("nick_name"));
+				b.setBoard_date(rset.getDate("board_date"));
+				b.setBoard_status(rset.getInt("board_status"));
+				b.setBoard_count(rset.getInt("board_count"));
+				
+				list.add(b);
+			}
+//			System.out.println("dao: " + list);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return list;
 	}
 
 	
