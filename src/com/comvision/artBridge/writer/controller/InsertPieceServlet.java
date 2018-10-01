@@ -89,27 +89,44 @@ public class InsertPieceServlet extends HttpServlet {
 			
 			
 			//options테이블에 저장할 데이터 가져오기
-			int optionstNum = Integer.parseInt(request.getParameter("insertNum"));
-			String option1 = request.getParameter("option1");
-			String option2 = request.getParameter("option2");
-			String option3 = request.getParameter("option3");
-			String option4 = request.getParameter("option4");
-			/*int price1 = Integer.parseInt(request.getParameter("price1"));
-			int price2 = Integer.parseInt(request.getParameter("price2"));
-			int price3 = Integer.parseInt(request.getParameter("price3"));
-			int price4 = Integer.parseInt(request.getParameter("price4"));*/
-			System.out.println("옵션 넘버는 들어왔니?" + optionstNum);
-			System.out.println("아 옵션들어와라1" + option1);
-			System.out.println("아 옵션들어와라2" + option2);
-			System.out.println("아 옵션들어와라3" + option3);
-			System.out.println("아 옵션들어와라4" + option4);
-			/*System.out.println("가격은 들어오니1" + price1);
-			System.out.println("가격은 들어오니2" + price2);
-			System.out.println("가격은 들어오니3" + price3);
-			System.out.println("가격은 들어오니4" + price4);*/
+			int optionCount = Integer.parseInt(multiRequest.getParameter("optionCount"));
+			System.out.println("옵션 넘버는 들어왔니?" + optionCount);
+			
+			String[] option = multiRequest.getParameterValues("option");
+			String[] price = multiRequest.getParameterValues("price");
+				
+				for(String s : price){
+					System.out.println(s);
+				}
+			
+			int[] intArr = null;
+			if(price != null){
+				//intArr = new int[price.length];
+				for(int i= 0; i < price.length; i++){
+					if(price[i] != null || price[i] != ""){
+						System.out.println("arr :  " + price[i]);
+					/*intArr[i] = Integer.parseInt(price[i]);
+					System.out.println(intArr[i]);*/
+					}
+				}
+			}
+			
 			ArrayList<Options> optionsList = new ArrayList<Options>();
 			
-			for(int i = 0; i < optionstNum; i++){
+			if(option != null && price != null){
+				for(int i = 0; i < option.length; i++){
+					Options op = new Options();
+					op.setOptions_name(option[i]);
+					op.setOptions_price(intArr[i]);
+
+					optionsList.add(op);
+					System.out.println(optionsList);
+				}
+			} 
+			
+			
+			
+			/*for(int i = 0; i < optionCount; i++){
 				Options o = new Options();
 				if(request.getParameter("option" + i) != null){
 					o.setOptions_name(request.getParameter("option" + i));
@@ -120,8 +137,11 @@ public class InsertPieceServlet extends HttpServlet {
 				if(o.getOptions_name() != null){
 					optionsList.add(o);
 				}
-			}
-			System.out.println("옵션리스트 값은?" + optionsList);
+			}*/
+			//System.out.println("옵션리스트 값은?" + optionsList);
+			
+			
+			
 			
 			//연관검색어 R_N_LIST테이블에 저장할 데이터 가져오기
 			String[] relateCk = multiRequest.getParameterValues("relateCk");
