@@ -103,8 +103,6 @@ public class SelectMemberListServlet extends HttpServlet {
 			}
 		}
 		
-		System.out.println("추가되는 Query : " + addQuery);
-		
 		ArrayList<Member> list = new AdminService().selectList(currentPage, limit, addQuery);
 		
 		String page = "";

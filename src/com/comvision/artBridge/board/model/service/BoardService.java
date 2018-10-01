@@ -17,10 +17,10 @@ import com.comvision.artBridge.sale.model.vo.Options;
 public class BoardService {
 
 	//페이징처리
-	public int getListCount() {
+	public int getListCount(String addQuery) {
 		Connection con = getConnection();
 		
-		int listCount = new BoardDao().getListCount(con);
+		int listCount = new BoardDao().getListCount(con, addQuery);
 		
 		close(con);
 		
