@@ -74,7 +74,7 @@
 						  </script>
                           <!-- // 에디터 영역 -->
                         <div class="btn-center">
-                          <button type="reset" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no?pageName=noticeList&'">목록</button>
+                          <button type="reset" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no'">목록</button>
                           <button type="submit" class="btn btn-primary btn-lg" >저장</button>
                         </div>
                     </form>

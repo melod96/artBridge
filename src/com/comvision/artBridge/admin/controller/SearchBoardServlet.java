@@ -17,18 +17,26 @@ import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.relate.model.vo.Relate;
 
 
-@WebServlet("/selectCommision.ad")
-public class SelectCommissionServlet extends HttpServlet {
-       
+@WebServlet("/searchBoard.ad")
+public class SearchBoardServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
 
-	public SelectCommissionServlet() {
+    public SearchBoardServlet() {
         super();
-  
+   
     }
 
 
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String value = request.getParameter("value");
+		
+		String[] arr = value.split(",");
+		String kind = arr[0];
+		String keyword = arr[1];
+		
 		//페이징 처리
 				int currentPage;
 				int limit;
@@ -45,7 +53,7 @@ public class SelectCommissionServlet extends HttpServlet {
 				}
 
 
-				int listCount = new BoardService().getListCount("");
+				int listCount = new BoardService().getListCount();
 
 
 				maxPage = (int)((double)listCount/limit + 0.9);
@@ -61,20 +69,24 @@ public class SelectCommissionServlet extends HttpServlet {
 				}
 
 				PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
-			
-				//출력
+		
+				int num  = 0;
+				
+				
+				//판매글 출력
 				ArrayList<Relate> list = new AdminService().selectRelate();
-				ArrayList<Board> blist = new AdminService().selectBoard( currentPage,  limit);
+				ArrayList<Board> blist = new AdminService().selectBoardList(currentPage, limit, kind, keyword);
 				
 				String page = "";
-				int num = 1;
-				if(list != null){
+				if(blist != null){
 					page = "views/admin/commissionAdmin.jsp";
 					request.setAttribute("list", list);
 					request.setAttribute("blist", blist);
 					request.setAttribute("pi", pi);
-					request.setAttribute("pageName", request.getParameter("pageName"));
 					request.setAttribute("num", num);
+					request.setAttribute("value", value);
+					request.setAttribute("kind", kind);
+					request.setAttribute("keyword", keyword);
 				}else{
 					page = "views/common/errorPage.jsp";
 					request.setAttribute("msg", "게시판 조회 실패");
@@ -83,31 +95,75 @@ public class SelectCommissionServlet extends HttpServlet {
 				view.forward(request, response);
 		
 		
-		/*//연관검색어 출력
-				ArrayList<Relate> list = new AdminService().selectRelate();
-				ArrayList<Board> blist = new AdminService().selectBoard();
+		
+		
+		/*String value = request.getParameter("value");
+		
+		String[] arr = value.split(",");
+		String kind = arr[0];
+		String keyword = arr[1];
+		
+		//페이징 처리
+		int currentPage;
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+		
+		currentPage = 1;
+		
+		limit = 5;
+		
+		if(request.getParameter("currentPage")!= null){
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		}
+
+
+		int listCount = new BoardService().getListCount();
+
+
+		maxPage = (int)((double)listCount/limit + 0.9);
+
+
+		startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
+
+
+		endPage = startPage + limit -1;
+
+		if(maxPage<endPage){
+			endPage = maxPage;
+		}
+
+		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
+		*/
+				
+				
+				/*//판매글 출력
+				ArrayList<Board> list = new AdminService().selectBoard(currentPage, limit, kind, keyword);
 				
 				String page = "";
-
+				int num  = 2;
 				if(list != null){
 					page = "views/admin/commissionAdmin.jsp";
 					request.setAttribute("list", list);
-					request.setAttribute("blist", blist);
-
+					request.setAttribute("pi", pi);
+					request.setAttribute("num", num);
+					request.setAttribute("value", value);
+					request.setAttribute("kind", kind);
+					request.setAttribute("keyword", keyword);
 				}else{
 					page = "views/common/errorPage.jsp";
 					request.setAttribute("msg", "게시판 조회 실패");
 				}
 				RequestDispatcher view = request.getRequestDispatcher(page);
 				view.forward(request, response);*/
-				
-			
+		
 		
 	}
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

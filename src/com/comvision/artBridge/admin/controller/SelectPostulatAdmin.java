@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.admin.model.service.AdminService;
-import com.comvision.artBridge.admin.model.vo.Files;
+import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
 
 
@@ -30,9 +30,13 @@ public class SelectPostulatAdmin extends HttpServlet {
 
 		
 		int num = Integer.parseInt(request.getParameter("member_no"));
+		System.out.println(num);
 		
 		Member m = new AdminService().selectPostulat(num);
 		ArrayList<Files> flist = new AdminService().selectFilelist(num);
+		
+		/*Member m = new AdminService().selectPostulat(num);*/
+		
 		
 		String page = "";
 		if(m != null){

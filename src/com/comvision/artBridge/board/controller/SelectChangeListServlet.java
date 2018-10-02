@@ -41,7 +41,7 @@ public class SelectChangeListServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 
 		int changenum = Integer.parseInt(request.getParameter("sel_val"));
-		
+
 
 		//페이징 처리
 		int currentPage;
@@ -61,7 +61,7 @@ public class SelectChangeListServlet extends HttpServlet {
 		}
 
 
-		int listCount = new BoardService().getListCount();
+		int listCount = new BoardService().getListpgCount();
 
 
 
@@ -80,176 +80,60 @@ public class SelectChangeListServlet extends HttpServlet {
 
 		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 
+		String query = "";
 		//최저가 정렬
 		if(changenum==1){
-			//판매글 출력
-			ArrayList<Board> list = new BoardService().selectCheapList(currentPage, limit);
-			System.out.println("페이징 처리 : " + list);
-			
-			//해당하는 판매글의 옵션
-			ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
-			for(Board bb : list){
-				ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(bb.getBoard_no());
-				
-				opmap.addAll(oplist);
-			}
-			
-			//한 게시글 마다 해당하는 이미지 파일 불러오기
-			ArrayList<HashMap<String, Object>> alist = new ArrayList<HashMap<String,Object>>();
-			for(Board b : list){
-				ArrayList<HashMap<String, Object>> hlist = 	new SaleService().selectFileAllList(b.getBoard_no());
-				
-				alist.addAll(hlist);
-			}
-			
-			//연관 검색어 출력
-			ArrayList<Relate> rlist = new BoardService().selectRelateList();
-			String page = "";
-			
-			if(list != null){
-				page = "views/sale/salepage.jsp";
-				request.setAttribute("list", list);
-				request.setAttribute("alist", alist);
-				request.setAttribute("pi", pi);
-				request.setAttribute("rlist", rlist);
-				request.setAttribute("oplist", opmap);
-			}else{
-				page = "views/common/errorPage.jsp";
-				request.setAttribute("msg", "게시판 조회 실패");
-			}
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
-			
+			query=" OPTIONS_PRICE ";	
 		}
 		//최고가 정렬
 		else if(changenum==2){
-			//판매글 출력
-			ArrayList<Board> list = new BoardService().selectExpensiveList(currentPage, limit);
-			System.out.println("페이징 처리 : " + list);
-			
-			//해당하는 판매글의 옵션
-			ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
-			for(Board bb : list){
-				ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(bb.getBoard_no());
-				
-				opmap.addAll(oplist);
-			}
-			
-			//한 게시글 마다 해당하는 이미지 파일 불러오기
-			ArrayList<HashMap<String, Object>> alist = new ArrayList<HashMap<String,Object>>();
-			for(Board b : list){
-				ArrayList<HashMap<String, Object>> hlist = 	new SaleService().selectFileAllList(b.getBoard_no());
-				
-				alist.addAll(hlist);
-			}
-			
-			//연관 검색어 출력
-			ArrayList<Relate> rlist = new BoardService().selectRelateList();
-			String page = "";
-			
-			if(list != null){
-				page = "views/sale/salepage.jsp";
-				request.setAttribute("list", list);
-				request.setAttribute("alist", alist);
-				request.setAttribute("pi", pi);
-				request.setAttribute("rlist", rlist);
-				request.setAttribute("oplist", opmap);
-			}else{
-				page = "views/common/errorPage.jsp";
-				request.setAttribute("msg", "게시판 조회 실패");
-			}
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
-			
+			query=" OPTIONS_PRICE DESC ";
 		}
-		//거래 완료율 정렬
-		else if(changenum==3){
-			//판매글 출력
-			ArrayList<Board> list = new BoardService().selectCredibilityList(currentPage, limit);
-			System.out.println("페이징 처리 : " + list);
-			
-			//해당하는 판매글의 옵션
-			ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
-			for(Board bb : list){
-				ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(bb.getBoard_no());
-				
-				opmap.addAll(oplist);
-			}
-			
-			//한 게시글 마다 해당하는 이미지 파일 불러오기
-			ArrayList<HashMap<String, Object>> alist = new ArrayList<HashMap<String,Object>>();
-			for(Board b : list){
-				ArrayList<HashMap<String, Object>> hlist = 	new SaleService().selectFileAllList(b.getBoard_no());
-				
-				alist.addAll(hlist);
-			}
-			
-			//연관 검색어 출력
-			ArrayList<Relate> rlist = new BoardService().selectRelateList();
-			String page = "";
-			
-			if(list != null){
-				page = "views/sale/salepage.jsp";
-				request.setAttribute("list", list);
-				request.setAttribute("alist", alist);
-				request.setAttribute("pi", pi);
-				request.setAttribute("rlist", rlist);
-				request.setAttribute("oplist", opmap);
-			}else{
-				page = "views/common/errorPage.jsp";
-				request.setAttribute("msg", "게시판 조회 실패");
-			}
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
-			
-		}
-		//별점순 정렬
+		//인기수(조회수) 정렬
 		else{
-			//판매글 출력
-			ArrayList<Board> list = new BoardService().selectStarList(currentPage, limit);
-			System.out.println("페이징 처리 : " + list);
-			
-			//해당하는 판매글의 옵션
-			ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
-			for(Board bb : list){
-				ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(bb.getBoard_no());
-				
-				opmap.addAll(oplist);
-			}
-			
-			//한 게시글 마다 해당하는 이미지 파일 불러오기
-			ArrayList<HashMap<String, Object>> alist = new ArrayList<HashMap<String,Object>>();
-			for(Board b : list){
-				ArrayList<HashMap<String, Object>> hlist = 	new SaleService().selectFileAllList(b.getBoard_no());
-				
-				alist.addAll(hlist);
-			}
-			
-			//연관 검색어 출력
-			ArrayList<Relate> rlist = new BoardService().selectRelateList();
-			String page = "";
-			
-			if(list != null){
-				page = "views/sale/salepage.jsp";
-				request.setAttribute("list", list);
-				request.setAttribute("alist", alist);
-				request.setAttribute("pi", pi);
-				request.setAttribute("rlist", rlist);
-				request.setAttribute("oplist", opmap);
-			}else{
-				page = "views/common/errorPage.jsp";
-				request.setAttribute("msg", "게시판 조회 실패");
-			}
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
-			
+			query = " board_count desc ";
+		}
+		//판매글 출력
+		ArrayList<Board> list = new BoardService().selectSaleChangeList(currentPage, limit,query);
+		System.out.println(list);
+
+		//해당하는 판매글의 옵션
+		ArrayList<HashMap<String,Object>> opmap = new ArrayList<HashMap<String,Object>>();
+		for(Board b : list){
+			ArrayList<HashMap<String, Object>> oplist = new SaleService().selectOptionList(b.getBoard_no());
+
+			opmap.addAll(oplist);
+		}
+
+		//한 게시글 마다 해당하는 이미지 파일 불러오기
+		ArrayList<HashMap<String, Object>> alist = new ArrayList<HashMap<String,Object>>();
+		for(Board b : list){
+			ArrayList<HashMap<String, Object>> hlist = 	new SaleService().selectFileAllList(b.getBoard_no());
+
+			alist.addAll(hlist);
 		}
 		
+		//연관 검색어 출력
+		ArrayList<Relate> rlist = new BoardService().selectRelateList();
+		String page = "";
+
+		if(list.size()> 0 && alist!=null && opmap !=null){
+			page = "views/sale/salepage.jsp";
+			request.setAttribute("list", list);
+			request.setAttribute("pi", pi);
+			request.setAttribute("rlist", rlist);
+			request.setAttribute("oplist", opmap);
+			request.setAttribute("alist", alist);
+			request.setAttribute("changenum", changenum);
+		}else{
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "게시판 조회 실패");
+		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
+
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

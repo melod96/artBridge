@@ -76,7 +76,7 @@
                     </table>
                     <div class="btn-center">
                     	<button type="submit" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/updateViewNotice.no?num=<%= n.getnNo() %>'">수정</button>
-                   		<button type="reset" class="btn btn-primary btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no?pageName=noticeList&'">목록</button>
+                   		<button type="reset" class="btn btn-primary btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectNoticeList.no'">목록</button>
                     </div>
 
                 </div>
