@@ -429,8 +429,7 @@
 <!-- 	   	//마이페이지 탭 제목 -->
 					
 <!--        * 1. 마이페이지 탭 메뉴 - 주문관리 탭 -->
-<!-- 			<form action="" method="post"class="order-menu tab-menu-content-form"> -->
-			<div class="order-menu tab-menu-content-form">
+			<form action="" method="post"class="order-menu tab-menu-content-form">
 				<div class="order-menu">	<!-- ***수정사항 : 구매자(buyer) 판매자(seller) 입장에 따른 필터링, 행 색 속성, DB처리 등  -->
 					<select id="stmt-Filter" class="form-control input-xshort selectBox">
 						<option>전체 보기</option>
@@ -440,7 +439,6 @@
 						<option>거래 완료 내역</option> -->
 					</select>
 
-				<form action="<%= request.getContextPath() %>/confirmReq.ts" method="post">
 					<table class="tbl-type02">
 						<colgroup>
 							<col style="width: 4.5%;">
@@ -474,7 +472,7 @@
 								  <% if(tr.getDivRole_no() == 0){ %>
 									<tr id="" class="seller-list transInfo-list">
 										<td>판매<input type="hidden" name="roleNo" value="<%= tr.getDivRole_no() %>"/></td>
-										<td><a onclick="stmtDisplayBlock();" name="ordersNo" class="btn"><%= tr.getOrders_no() %></a></td>
+										<td><a onclick="stmtDisplayBlock();" class="btn"><%= tr.getOrders_no() %></a></td>
 										<td><%= tr.getCusId() %><input type="hidden" name="cusId" value="<%= tr.getCusId() %>" /></td>
 										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= tr.getBoard_no() %>"><%= tr.getBoard_title() %></a></td>
 
@@ -494,16 +492,22 @@
 										<% } %>
 									  <% }else if(tr.getOrders_activity() == 4){
 											if(tr.getOd_endDate() == null){ %>
-									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">최종 컨펌</button></td>
+									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">3단계 컨펌</button></td>
 										<% }else{ %>
 										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>										  
 										<% } %>
+									  <% }else if(tr.getOrders_activity() == 5){
+											if(tr.getOd_endDate() == null){ %>
+									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">최종 전송</button></td>
+										<% }else{ %>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">미수령</button></td>										  
+										<% } %>
 										
 <!-- 									   구매자는 수령(6) 후 거래 종료/판매자는 대금 지급(7)까지 완료되면 거래 완료 -->
-									  <% }else if(tr.getOrders_activity() == 5){ %>  
+									  <% }else if(tr.getOrders_activity() == 6){ %>  
 										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">지급 대기</button></td>
-									  <% }else if(tr.getOrders_activity() == 6){
-											if("대금 지급 이력이 있다면"== "ㅁㅁ"){ %>
+									  <% }else if(tr.getOrders_activity() == 7){
+											if("대금 지급 이력이 있다면"== "ㅁㅁ 대금이 지급되면 활동번호 7로 insert (OD 테이블 start, end date 한꺼번에 생성 & oders 테이블 거래 완료 날짜 update )"){ %>
 										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
 										<% }else{ %>
 										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">지급 대기</button></td>
@@ -525,8 +529,8 @@
 									</tr>
 									<tr>
 										<td colspan="8" style="padding:0; border:0;">
-									 		<input type="hidden" name="activityNo" value="<%= tr.getOrders_activity() %>" />
-									 		<input type="hidden" name="ordersNo" value="<%= tr.getOrders_no() %>" />									 		
+									 		<input type="hidden" id="activityNo" name="activityNo" value="<%= tr.getOrders_activity() %>" />
+									 		<input type="hidden" id="ordersNo" name="ordersNo" value="<%= tr.getOrders_no() %>" />									 		
 										 	<input type="hidden" name="oFinDate" value="<%= tr.getO_final_date() %>" />
 										 	<input type="hidden" name="odStartDate" value="<%= tr.getOd_startDate() %>" />
 										 	<input type="hidden" name="odEndDate" value="<%= tr.getOd_endDate() %>" />
@@ -557,21 +561,28 @@
 									  <% }else if(tr.getOrders_activity() == 4){
 											if(tr.getOd_endDate() == null){ %>
 										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>										  
-										<% }else{ %>    <!-- 작품 확인 되면 order_detail endDate만 날짜 update하기 -->
+										<% }else{ %>
+									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 3단계</button></td>
+										<% } %>
+									  <% }else if(tr.getOrders_activity() == 5){
+											if(tr.getOd_endDate() == null){ %>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>										  
+										<% }else{ %>    <!-- 작품 확인 되면 order_detail 활동번호(6으로) 기존번호 + 1 한 새로운 행 삽입 -->
 									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">작품 확인</button></td>
 										<% } %>
-									  <% }else if(tr.getOrders_activity() == 5){ %>     <!-- 수령 완료 버튼 누르면 거래 최종 종료 / 작품 확인 날짜로부터 일주?이주 후에 자동으로 수령 완료 상태로 바꾸고 최종 작업 완료 날짜 update & 활동번호 올려서 거래 완료로 변경하기 -->
+									  <% }else if(tr.getOrders_activity() >= 6){     /*  <!-- 수령 완료 버튼 누르면 거래 최종 종료 / 작품 확인 날짜로부터 일주?이주 후에 자동으로 수령 완료 상태로 바꾸고 최종 작업 완료 날짜 update & 활동번호 올려서 거래 완료로 변경하기 --> */
+											if(tr.getOd_endDate() == null){ %>
 										<td><button class="btn btn-primary btn-lg btn-del btn-plus-design">수령 완료</button></td>
-									  <% }else if(tr.getOrders_activity() == 6){ %>  <!-- 구매자는 수령(6) 후 거래 종료/판매자는 대금 지급까지 완료되면 거래 완료 -->
+										<% }else{ %>
 										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
-									  <% } %>									  									
+									  <% } } %>									  									
 										
 										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
 										<td><%= tr.getO_date() %></td>
 									  <% if(tr.getO_final_date() == null){ %>
 									    <td>-</td>
-									  <% }else{ %>
-										<td><%= tr.getO_final_date() %></td>
+									  <% }else if(tr.getOrders_activity() >= 6 && tr.getOd_endDate() != null){ %>
+										<td><%= tr.getOd_endDate() %></td>     <!-- 활동번호 6번의 OD테이블 endDate로 기입 되도록 -->
 									  <% } %>	
 										<!-- <td>	
 											<div class="btn-center btn-outer-style">
@@ -581,8 +592,8 @@
 									</tr>
 									<tr>
 										<td colspan="8" style="padding:0; border:0;">
-									 		<input type="hidden" name="activityNo" value="<%= tr.getOrders_activity() %>" />
-									 		<input type="hidden" name="ordersNo" value="<%= tr.getOrders_no() %>" />
+									 		<input type="hidden" id="activityNo" name="activityNo" value="<%= tr.getOrders_activity() %>" />
+									 		<input type="hidden" id="ordersNo" name="ordersNo" value="<%= tr.getOrders_no() %>" />
 										 	<input type="hidden" name="oFinDate" value="<%= tr.getO_final_date() %>" />
 										 	<input type="hidden" name="odStartDate" value="<%= tr.getOd_startDate() %>" />
 										 	<input type="hidden" name="odEndDate" value="<%= tr.getOd_endDate() %>" />
@@ -641,10 +652,9 @@
 <!-- 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a> -->
 <!-- 					</div> -->
 <!--                    // 페이징 영역 -->
-				</form>	
 				<br><br><br><br>
 				</div>
-			</div>
+			</form>
 <!-- 		//1. 마이페이지 탭 메뉴 - 주문관리 탭 -->
 
 <!-- 		* 2. 마이페이지 탭 메뉴 - 쪽지함 탭 -->
@@ -1548,10 +1558,23 @@
 		
 	// 	* 컨펌 받기
 		function confirmReq(){
-			console.log(data);
-			alert(data);
+// 			이미지 전송하는거 메시지 서블릿에 연결하기 후에 컨펌 리퀘스트.ts 불러서 업데이트 되도록 만들기
+			
+			/* console.log(data);
+			alert(data); */
+			
+			var activityNo = $('#activityNo').val();
+			var ordersNo = $('#ordersNo').val();
 
-<%-- 			location.href = "<%= request.getContextPath() %>/confirmReq.ts"; --%>
+			$.ajax({
+				url : "<%= request.getContextPath() %>/confirmReq.ts",
+				type : "post",
+				data : {activityNo : activityNo, ordersNo:ordersNo},
+				success : function(data){
+					
+					
+				}
+			});
 		};
 		
 	</script>

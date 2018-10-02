@@ -108,8 +108,8 @@ public class TransactionDao {
 				
 				t.setOd_startDate(rset.getDate("od_start_date"));
 				t.setOd_endDate(rset.getDate("od_end_date"));		
-				t.setOrders_activity(rset.getInt("orders_activity"));
 				t.setBoard_no(rset.getInt("board_no"));
+				t.setOrders_activity(rset.getInt("orders_activity"));
 				
 				//쿼리에 아직 처리 안 돼있음
 //				t.setPay_status(rset.getInt("pay_status"));
@@ -163,6 +163,29 @@ public class TransactionDao {
 			close(rset);
 		}
 		return t;
+	}
+
+	public int confirmRequest(Connection con, int oNo, int actNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+//		UPDATE ORDERS_DETAIL SET OD_END_DATE = SYSDATE WHERE ORDERS_NO = ? AND ORDERS_ACTIVITY = ?;
+		String query = prop.getProperty("updateOdEndDate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, 5);
+			pstmt.setInt(2, 4);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	
