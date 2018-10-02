@@ -4,7 +4,8 @@
     com.comvision.artBridge.relate.model.vo.RelateNumList,
     com.comvision.artBridge.member.model.vo.Member,
     com.comvision.artBridge.board.model.vo.Board,
-    com.comvision.artBridge.files.model.vo.Files"%>
+    com.comvision.artBridge.files.model.vo.Files,
+    com.comvision.artBridge.sale.model.vo.Options"%>
 <% 
 	Member m = null;
 	if(session.getAttribute("loginUser") != null){
@@ -25,6 +26,10 @@
 	ArrayList<Relate> relateCk = null;
 	if(request.getAttribute("relateCk") != null){
 		relateCk = (ArrayList<Relate>)request.getAttribute("relateCk");
+	}
+	ArrayList<Options> optionsList = null;
+	if(request.getAttribute("optionsList") != null){
+		optionsList = (ArrayList<Options>)request.getAttribute("optionsList");
 	}
 	
 %>
@@ -55,7 +60,7 @@
     .img-area li p{overflow:hidden; height:140px;}
     .img-area img{width:100%;}
 
-    .option-tbl{height:320px; overflow-y:scroll; }
+    .option-tbl{max-height:320px; overflow-y:scroll; }
     .option-tbl table{/*width:680px;*/ margin-top:15px;}
     .option-tbl table td{padding:12px;}
 
@@ -67,7 +72,7 @@
     
     .fr-box.fr-basic .fr-element{height:600px !important;}
     </style>
-    <script>
+   <script>
     //썸네일 사진 넣기
     $(function(){
       function readURL(input, type) {
@@ -95,15 +100,12 @@
   		optionCk();				//옵션체크시
   		optionAdd();			//옵션추가버튼
   		optionDel();			//옵션삭제버튼
-  		optionName();			//옵션테이블 name추가
   		relateWorld();			//연관검색어
   		relateCheckedDate();	//연관검색어 수정페이지 에서 체크된 데이터 매칭
   		submitBtn();			//저장버튼 클릭시 서블릿 이동
   		$('#editor').froalaEditor(); //에디터 API
   	});
 
-  	//옵션 기본 노출
-	var num = 3;
   	//옵션체크시
 	function optionCk(){
 	 $(".option-tbl input").click(function(){
@@ -118,8 +120,7 @@
 	//옵션추가버튼
 	function optionAdd(){
 		$("#opt-add").click(function(){
-			$('<tr><td><input type="checkbox"></td><td><input type="text" class="form-control" placeholder="옵션명 입력"></td><td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)"></td></tr>').appendTo('.option-tbl tbody');
-			optionName();
+			$('<tr><td><input type="checkbox"></td><td><input type="text" class="form-control" placeholder="옵션명 입력" name="option"></td><td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)" name="price"></td></tr>').appendTo('.option-tbl tbody');
 			optionCk();
 		});
 	}
@@ -127,25 +128,7 @@
 	function optionDel(){
 		$("#opt-del").click(function(){
      		$('input[checked=checked]').parent().parent().remove();
- 			optionName();
  		});
-	}
-	//옵션테이블 name추가
-	function optionName(){
- 		var input1 = $(".option-tbl input[type=text]");
- 		var input2 = $(".option-tbl input[type=number]");
- 		
- 		for(var i = 0; i < input1.length; i++){
- 			input1.eq(i).each(function(){
- 				$(this).attr('name', 'option' + (i + 1));
- 			});
- 			
- 			input2.eq(i).each(function(){
- 				$(this).attr('name', 'price' + (i + 1));
- 			});
- 		}
- 		
- 		num++;
 	}
 	
 	//연관검색어
@@ -196,13 +179,42 @@
   			}
   		}
   	}
-    
-   //저장버튼 클릭시 서블릿 이동
+
+	//입력된 값이 없을 경우 안내문구 노출
+	function saveAlert(){
+		/* var ipt1 = $("input[name='title']"); 
+		var ipt2 = $("input[name='option1']");
+		var ipt3 = $("input[name='price1']"); */
+	}
+	
+   	//저장버튼 클릭시 서블릿 이동
 	function submitBtn(){
 		var theForm = document.frmSubmit;
 		$("#addBtn").click(function(){
+			
+			//서블릿으로 옵션 전달시 입력한 갯수를 전달
+			var tableTr = $(".option-tbl tbody tr"); //옵션 테이블 tr
+	   		var option = $(".option-tbl input[type='text']"); //옵션 input
+	   		var price = $(".option-tbl input[type='number']"); //가격 input
+	   		var optionCount = 0;
+	   		var priceCount = 0;
+	   		
+	   		for(var i = 0; i < tableTr.length; i++){
+	   			if($(option).eq(i).val() != ""){
+	   				optionCount++;
+	   			}
+	   			if($(price).eq(i).val() != ""){
+	   				priceCount++;
+	   			}
+	   		}
+	   		
+	   		//옵션,가격 입력 갯수 불일치시 안내문구 노출
+	   		/* if(optionCount != priceCount){
+	   			alert("옵션 및 금액을 정확히 입력하세요");
+	   		} */
+	   		
 			theForm.method = "post";
-			theForm.action = "<%=request.getContextPath()%>/updatePiece.wr?insertNum=" + num;
+	   		theForm.action = "<%=request.getContextPath()%>/updatePiece.wr?insertNum=" + num;
 			theForm.submit();
 		});
 	};
@@ -260,7 +272,6 @@
                                           <input type="file" name="thumb01"  id="file-btn1">
                                           <label for="file-btn1" class="btn btn-primary">썸네일 이미지 선택1</label>
                                           <p><img class="img1" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(2).getChange_title()%>"></p>
-                                          <!-- <p><img class="img1" src="/artBridge/image/common/no_thumb.jpg" /></p> -->
                                       </li>
                                       <li>
                                           <input type="file" name="thumb02" id="file-btn2">
@@ -289,18 +300,12 @@
                                       <div class="row-inp">
                                           <label>사이즈(단위 필수)</label><input type="text" name="file_size" class="form-control input-short" placeholder="ex) 가로 3000px, A4..." value="<%=board.getSubmit_size()%>">
                                           <label>작업 소요 일 수</label><input type="number" name="working_period" class="form-control input-xshort" min="1" value="<%=board.getWorking_period()%>">
-                                          <!-- <select class="form-control input-xshort" name="working_period">
-                                            <option value="0">선택</option>
-                                            <option value="1">1일</option>
-                                            <option value="2">2일</option>
-                                            <option value="3">3일</option>
-                                          </select> -->
                                       </div>
                                   </td>
                               </tr>
                               <tr>
                                   <th>옵션 및 금액 *</th>
-                                  <td>
+                                  <td style="padding:12px 18px 22px;">
                                       <input type="button" id="opt-add" class="btn btn-primary" value="╉ 옵션 추가">
                                       <input type="button" id="opt-del" class="btn btn-danger" value="─ 옵션 삭제">
                                       <!-- 옵션및금액 테이블 -->
@@ -319,21 +324,15 @@
                                               </tr>
                                           </thead>
                                           <tbody>
+                                         	 <% if(optionsList != null){ 
+                                         			for(Options op : optionsList){%>
                                               <tr>
                                                   <td><input type="checkbox"></td>
-                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력" value=""></td>
-                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)"></td>
+                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력" value="<%= op.getOptions_name() %>"></td>
+                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)" value="<%=op.getOptions_price()%>"></td>
                                               </tr>
-                                              <tr>
-                                                  <td><input type="checkbox"></td>
-                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력"></td>
-                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)"></td>
-                                              </tr>
-                                              <tr>
-                                                  <td><input type="checkbox"></td>
-                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력"></td>
-                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)"></td>
-                                              </tr>
+                                          	<% 		}
+                                         	 	} %>
                                           </tbody>
                                       </table>
                                     </div>

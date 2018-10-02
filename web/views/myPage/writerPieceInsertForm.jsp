@@ -4,13 +4,14 @@
     com.comvision.artBridge.member.model.vo.Member,
     com.comvision.artBridge.board.model.vo.Board"%>
 <% 
-	ArrayList<Relate> relate = (ArrayList<Relate>)request.getAttribute("relate");
-	
+	ArrayList<Relate> relate = null;
+	if(request.getAttribute("relate") != null){
+		relate = (ArrayList<Relate>)request.getAttribute("relate");
+	}
 	Member m = null;
 	if(session.getAttribute("loginUser") != null){
 		m = (Member)session.getAttribute("loginUser");
 	}
-	
 	Board b = new Board();
 %>
 
@@ -40,7 +41,7 @@
     .img-area li p{overflow:hidden; height:140px;}
     .img-area img{width:100%;}
 
-    .option-tbl{height:320px; overflow-y:scroll; }
+    .option-tbl{max-height:320px; overflow-y:scroll; }
     .option-tbl table{/*width:680px;*/ margin-top:15px;}
     .option-tbl table td{padding:12px;}
 
@@ -80,15 +81,11 @@
   		optionCk();		//옵션체크시
   		optionAdd();	//옵션추가버튼
   		optionDel();	//옵션삭제버튼
-  		//optionName();	//옵션테이블 name추가
   		relateWorld();	//연관검색어
   		submitBtn();	//저장버튼 클릭시 서블릿 이동
-  		optionCount();	//옵션 입력 갯수  카운트
   		$('#editor').froalaEditor(); //에디터 API
   	});
 
-  	//옵션 기본 노출
-	//var num = 0;
   	//옵션체크시
 	function optionCk(){
 	 $(".option-tbl input").click(function(){
@@ -103,8 +100,7 @@
 	//옵션추가버튼
 	function optionAdd(){
 		$("#opt-add").click(function(){
-			$('<tr><td><input type="checkbox"></td><td><input type="text" class="form-control" placeholder="옵션명 입력"></td><td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)"></td></tr>').appendTo('.option-tbl tbody');
-			//optionName();
+			$('<tr><td><input type="checkbox"></td><td><input type="text" class="form-control" placeholder="옵션명 입력" name="option"></td><td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)" name="price"></td></tr>').appendTo('.option-tbl tbody');
 			optionCk();
 		});
 	}
@@ -112,53 +108,8 @@
 	function optionDel(){
 		$("#opt-del").click(function(){
      		$('input[checked=checked]').parent().parent().remove();
- 			//optionName();
  		});
 	}
-	//옵션테이블 name추가
-	/* function optionName(){
- 		var input1 = $(".option-tbl input[type=text]");
- 		var input2 = $(".option-tbl input[type=number]");
- 		
- 		for(var i = 0; i < input1.length; i++){
- 			input1.eq(i).each(function(){
- 				$(this).attr('name', 'option' + (i + 1));
- 			});
- 			
- 			input2.eq(i).each(function(){
- 				$(this).attr('name', 'price' + (i + 1));
- 			});
- 		}
- 		
- 		//num++;
-	} */
-	
-    //옵션 입력 갯수  카운트 
-   	function optionCount(){
-   		var tableTr = $(".option-tbl tbody tr"); //옵션 테이블 tr
-   		var option = $(".option-tbl input[type='text']"); //옵션 input
-   		var price = $(".option-tbl input[type='number']"); //가격 input
-   		var optionCount = 0;
-   		var priceCount = 0;
-   		var result11 = 0;
-   		
-   		for(var i = 0; i < tableTr.length; i++){
-   			if($(option).eq(i).val() != ""){
-   				optionCount++;
-   			}
-   			if($(price).eq(i).val() != ""){
-   				priceCount++;
-   			}
-   		}
-   		//옵션,가격 입력 갯수 불일치시 안내문구 노출
-   		/* if(optionCount != priceCount){
-   			alert("옵션 및 금액을 정확히 입력하세요");
-   		} */
-   		
-   		$(".option-tbl input").focusout(function(){
-   			console.log(result11);
-   		});
-   	}
 	
 	//연관검색어
 	function relateWorld(){
@@ -201,8 +152,30 @@
 	function submitBtn(){
 		var theForm = document.frmSubmit;
 		$("#addBtn").click(function(){
+			
+			//서블릿으로 옵션 전달시 입력한 갯수를 전달
+			var tableTr = $(".option-tbl tbody tr"); //옵션 테이블 tr
+	   		var option = $(".option-tbl input[type='text']"); //옵션 input
+	   		var price = $(".option-tbl input[type='number']"); //가격 input
+	   		var optionCount = 0;
+	   		var priceCount = 0;
+	   		
+	   		for(var i = 0; i < tableTr.length; i++){
+	   			if($(option).eq(i).val() != ""){
+	   				optionCount++;
+	   			}
+	   			if($(price).eq(i).val() != ""){
+	   				priceCount++;
+	   			}
+	   		}
+	   		
+	   		//옵션,가격 입력 갯수 불일치시 안내문구 노출
+	   		/* if(optionCount != priceCount){
+	   			alert("옵션 및 금액을 정확히 입력하세요");
+	   		} */
+	   		
 			theForm.method = "post";
-			theForm.action = "<%=request.getContextPath()%>/insertPiece.wr?optionCount=" + optionCount();
+			theForm.action = "<%=request.getContextPath()%>/insertPiece.wr?optionCount=" + optionCount;
 			theForm.submit();
 		});
 	};
@@ -289,12 +262,6 @@
                                       <div class="row-inp">
                                           <label>사이즈(단위 필수)</label><input type="text" name="file_size" class="form-control input-short" placeholder="ex) 가로 3000px, A4...">
                                           <label>작업 소요 일 수</label><input type="number" name="working_period" class="form-control input-xshort" min="1">
-                                          <!-- <select class="form-control input-xshort" name="working_period">
-                                            <option value="0">선택</option>
-                                            <option value="1">1일</option>
-                                            <option value="2">2일</option>
-                                            <option value="3">3일</option>
-                                          </select> -->
                                       </div>
                                   </td>
                               </tr>

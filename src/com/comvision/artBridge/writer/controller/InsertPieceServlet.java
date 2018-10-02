@@ -89,65 +89,38 @@ public class InsertPieceServlet extends HttpServlet {
 			
 			
 			//options테이블에 저장할 데이터 가져오기
-			int optionCount = Integer.parseInt(multiRequest.getParameter("optionCount"));
-			System.out.println("옵션 넘버는 들어왔니?" + optionCount);
+			int optionCount = Integer.parseInt(multiRequest.getParameter("optionCount")); //사용자가 입력한 옵션갯수
+			//System.out.println("입력한 옵션 갯수 들어왔니?" + optionCount);
 			
 			String[] option = multiRequest.getParameterValues("option");
 			String[] price = multiRequest.getParameterValues("price");
-				
-				for(String s : price){
-					System.out.println(s);
-				}
 			
 			int[] intArr = null;
 			if(price != null){
-				//intArr = new int[price.length];
-				for(int i= 0; i < price.length; i++){
-					if(price[i] != null || price[i] != ""){
-						System.out.println("arr :  " + price[i]);
-					/*intArr[i] = Integer.parseInt(price[i]);
-					System.out.println(intArr[i]);*/
-					}
+				intArr = new int[price.length];
+				for(int i= 0; i < optionCount; i++){
+					intArr[i] += Integer.parseInt(price[i]);
 				}
 			}
 			
 			ArrayList<Options> optionsList = new ArrayList<Options>();
 			
 			if(option != null && price != null){
-				for(int i = 0; i < option.length; i++){
+				for(int i = 0; i < optionCount; i++){
 					Options op = new Options();
 					op.setOptions_name(option[i]);
 					op.setOptions_price(intArr[i]);
 
 					optionsList.add(op);
-					System.out.println(optionsList);
+					//System.out.println("ArrayList에 담긴것 : " + optionsList);
 				}
 			} 
-			
-			
-			
-			/*for(int i = 0; i < optionCount; i++){
-				Options o = new Options();
-				if(request.getParameter("option" + i) != null){
-					o.setOptions_name(request.getParameter("option" + i));
-				}
-				if(request.getParameter("price" + i) != null && request.getParameter("price" + i) != ""){
-					o.setOptions_price(Integer.parseInt(request.getParameter("price" + i)));
-				}
-				if(o.getOptions_name() != null){
-					optionsList.add(o);
-				}
-			}*/
-			//System.out.println("옵션리스트 값은?" + optionsList);
-			
-			
-			
 			
 			//연관검색어 R_N_LIST테이블에 저장할 데이터 가져오기
 			String[] relateCk = multiRequest.getParameterValues("relateCk");
 			
 			//service 전송
-			int result = new WriterService().insertPiece(b, fileList, relateCk, optionsList);
+			int result = new WriterService().insertPiece(b, fileList, relateCk, optionsList, memberNo);
 			
 			//System.out.println("결과 : " + result);
 			

@@ -82,14 +82,38 @@ public class UpdatePieceServlet extends HttpServlet {
 			
 			
 			//options테이블에 저장할 데이터 가져오기
-			//int optionstNum = Integer.parseInt(request.getParameter("insertNum"));
+			int optionCount = Integer.parseInt(multiRequest.getParameter("optionCount")); //사용자가 입력한 옵션갯수
+			//System.out.println("입력한 옵션 갯수 들어왔니?" + optionCount);
 			
+			String[] option = multiRequest.getParameterValues("option");
+			String[] price = multiRequest.getParameterValues("price");
+			
+			int[] intArr = null;
+			if(price != null){
+				intArr = new int[price.length];
+				for(int i= 0; i < optionCount; i++){
+					intArr[i] += Integer.parseInt(price[i]);
+				}
+			}
+			
+			ArrayList<Options> optionsList = new ArrayList<Options>();
+			
+			if(option != null && price != null){
+				for(int i = 0; i < optionCount; i++){
+					Options op = new Options();
+					op.setOptions_name(option[i]);
+					op.setOptions_price(intArr[i]);
+
+					optionsList.add(op);
+					//System.out.println("ArrayList에 담긴것 : " + optionsList);
+				}
+			} 
 			
 			//연관검색어 R_N_LIST테이블에 저장할 데이터 가져오기
 			String[] relateCk = multiRequest.getParameterValues("relateCk");
 			
 			//service 전송
-			int result = new WriterService().updatePiece(b, fileList, relateCk);
+			int result = new WriterService().updatePiece(b, fileList, relateCk, optionsList, memberNo);
 			
 			//System.out.println("결과 : " + result);
 			

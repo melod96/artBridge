@@ -287,7 +287,7 @@ public class WriterDao {
 	}
 	
 	//작품 등록시 옵션 및 가격 저장용 메소드
-	public int insertOptions(Connection con, Options options, int currval) {
+	public int insertOptions(Connection con, Options options, int currval, int memberNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -296,9 +296,11 @@ public class WriterDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, currval);
-			pstmt.setInt(2, options.getMember_no());
+			pstmt.setInt(2, memberNo);
 			pstmt.setString(3, options.getOptions_name());
 			pstmt.setInt(4, options.getOptions_price());
+			
+			result = pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -470,17 +472,15 @@ public class WriterDao {
 		return list;
 	}
 	
-	//작품 수정하기 폼 메소드
+	//작품 수정하기 폼 메소드(board데이터 + 썸네일)
 	public HashMap<String, Object> selectPieceData(Connection con, int memberNo, int pieceNo) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		HashMap<String, Object> hmap = null;
 		Board b = null;
 		Files f = null;
-		//RelateNumList rn = null;
 		Relate rc = null;
 		ArrayList<Files> selectThumbImg = null;
-		//ArrayList<RelateNumList> selectRelateWord = null;
 		ArrayList<Relate> relateCk = null;
 		
 		String query = prop.getProperty("selectPieceData");
@@ -493,7 +493,6 @@ public class WriterDao {
 			rset = pstmt.executeQuery();
 			
 			selectThumbImg = new ArrayList<Files>();
-			//selectRelateWord = new ArrayList<RelateNumList>();
 			relateCk = new ArrayList<Relate>();
 			
 			while(rset.next()){
@@ -513,10 +512,6 @@ public class WriterDao {
 				f.setFiles_root(rset.getString("files_root"));
 				selectThumbImg.add(f);
 				
-				/*rn = new RelateNumList();
-				rn.setRelate_no(rset.getInt("relate_no"));
-				selectRelateWord.add(rn);*/
-				
 				rc = new Relate();
 				rc.setRelate_no(rset.getInt("relate_no"));
 				rc.setRelate_name(rset.getString("relate_name"));
@@ -525,7 +520,6 @@ public class WriterDao {
 			}
 			hmap.put("board", b);
 			hmap.put("selectThumbImg", selectThumbImg);
-			//hmap.put("selectRelateWord", selectRelateWord);
 			hmap.put("relateCk", relateCk);
 			
 		} catch (SQLException e) {
@@ -536,6 +530,71 @@ public class WriterDao {
 		}
 		
 		return hmap;
+	}
+
+	//작품 수정하기 폼 메소드(옵션 가져오기)
+	public ArrayList<Options> selectOptionsList(Connection con, int memberNo, int pieceNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		ArrayList<Options> selectOptionsList = null;
+		Options op = null;
+		
+		String query = prop.getProperty("selectOptionsList");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, pieceNo);
+			pstmt.setInt(2, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			selectOptionsList = new ArrayList<Options>();
+			
+			while(rset.next()){
+				op = new Options();
+				op.setOptions_price(rset.getInt("options_price"));
+				op.setOptions_name(rset.getString("options_name"));
+				
+				selectOptionsList.add(op);
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+
+		return selectOptionsList;
+	}
+
+	//작품 수정용 메소드(데이터)
+	public int updatePiece(Connection con, Board b) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updatePiece");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, b.getBoard_title());
+			pstmt.setString(2, b.getBoard_content());
+			//pstmt.setInt(3, b.getMember_no());
+			pstmt.setInt(3, b.getResolution());
+			pstmt.setString(4, b.getSubmit_file_type());
+			pstmt.setString(5, b.getSubmit_size());
+			pstmt.setInt(6, b.getWorking_period());
+			pstmt.setInt(7, b.getBoard_no());
+			pstmt.setInt(8, b.getMember_no());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		return result;
 	}
 
 	

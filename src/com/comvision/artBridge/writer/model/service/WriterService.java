@@ -32,7 +32,7 @@ public class WriterService {
 	}
 
 	//작가 작품등록 메소드
-	public int insertPiece(Board b, ArrayList<Files> fileList, String[] relateCk, ArrayList<Options> optionsList) {
+	public int insertPiece(Board b, ArrayList<Files> fileList, String[] relateCk, ArrayList<Options> optionsList, int memberNo) {
 		Connection con = getConnection();
 		int result = 0;  //제목 등 데이터 저장용
 		int result2 = 0; //썸네일 파일 저장용
@@ -48,16 +48,13 @@ public class WriterService {
 		}
 		
 		for(int i = 0; i < optionsList.size(); i++){
-			result3 += new WriterDao().insertOptions(con, optionsList.get(i), currval);
+			result3 += new WriterDao().insertOptions(con, optionsList.get(i), currval, memberNo);
 		}
 		
 		for(int i = 0; i < relateCk.length; i++){
 			result4 += new WriterDao().relateNumList(con, relateCk[i], currval);
 		}
-		System.out.println(result1);
-		System.out.println(result2);
-		System.out.println(result3);
-		System.out.println(result4);
+
 		if(result1 > 0 && result2 == fileList.size() && result3 == optionsList.size() && result4 == relateCk.length){
 			commit(con);
 			result = 1;
@@ -175,7 +172,7 @@ public class WriterService {
 		return list;
 	}
 
-	//작품 수정하기 폼 메소드
+	//작품 수정하기 폼 메소드(board데이터 + 썸네일)
 	public HashMap<String, Object> selectPieceData(int memberNo, int pieceNo) {
 		Connection con = getConnection();
 		
@@ -187,34 +184,44 @@ public class WriterService {
 		
 		return hamp;
 	}
+	
+	//작품 수정하기 폼 메소드(옵션 가져오기)
+	public ArrayList<Options> selectOptionsList(int memberNo, int pieceNo) {
+		Connection con = getConnection();
+		
+		ArrayList<Options> optionsList = null;
+		
+		optionsList = new WriterDao().selectOptionsList(con, memberNo, pieceNo);
+		
+		close(con);
+		
+		return optionsList;
+	}
 
 	//작품 수정용 메소드
-	public int updatePiece(Board b, ArrayList<Files> fileList, String[] relateCk) {
-		/*Connection con = getConnection();
+	public int updatePiece(Board b, ArrayList<Files> fileList, String[] relateCk, ArrayList<Options> optionsList, int memberNo) {
+		Connection con = getConnection();
 		int result = 0;  //제목 등 데이터 저장용
 		int result2 = 0; //썸네일 파일 저장용
 		int result3 = 0; //옵션 및 가격 저장용
 		int result4 = 0; //연관검색어 저장용
 		
-		int result1 = new WriterDao().insertPiece(con, b);
+		int result1 = new WriterDao().updatePiece(con, b);
 		
 		int currval = new WriterDao().selectBoardCurrval(con);
 		
-		for(int i = 0; i < fileList.size(); i++){
-			result2 += new WriterDao().insertAttachment(con, fileList.get(i), currval, i + 2);
+		/*for(int i = 0; i < fileList.size(); i++){
+			result2 += new WriterDao().updateAttachment(con, fileList.get(i), currval, i + 2);
 		}
 		
 		for(int i = 0; i < optionsList.size(); i++){
-			result3 += new WriterDao().insertOptions(con, optionsList.get(i), currval);
+			result3 += new WriterDao().updateOptions(con, optionsList.get(i), currval, memberNo);
 		}
 		
 		for(int i = 0; i < relateCk.length; i++){
-			result4 += new WriterDao().relateNumList(con, relateCk[i], currval);
-		}
-		System.out.println(result1);
-		System.out.println(result2);
-		System.out.println(result3);
-		System.out.println(result4);
+			result4 += new WriterDao().updateNumList(con, relateCk[i], currval);
+		}*/
+
 		if(result1 > 0 && result2 == fileList.size() && result3 == optionsList.size() && result4 == relateCk.length){
 			commit(con);
 			result = 1;
@@ -222,10 +229,13 @@ public class WriterService {
 			rollback(con);
 		}
 		
-		close(con);*/
+		close(con);
 		
-		return 0;
+		return result;
 	}
 
+	
+
+	
 	
 }

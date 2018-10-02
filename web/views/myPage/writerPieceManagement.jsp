@@ -250,9 +250,9 @@
 	                              <span class="txt-on" title="접수중">ON</span>
                               </div>
                               <ul class="info">
-                              	  <li>- [ON] 커미션 접수가능 / [OFF] 커미션 접수 불가능</li>
                                   <li>- 신입작가 : 작가전환 후 30일 동안 슬롯 갯수 10개 제한</li>
                                   <li>- 일반/인기작가 : 슬롯 갯수 무제한</li>
+                              	  <li>- [ON] 커미션 접수가능 / [OFF] 커미션 접수 불가능</li>
                                   <!-- <li>- 의뢰 접수가 불가능한 기간에는 <strong>[OFF]</strong>상태로 변경하세요.</li> -->
                                   <!-- <li>- 의뢰 접수가 가능할 경우 <strong>[ON]</strong>상태로 변경하세요.</li> -->
                               </ul>
