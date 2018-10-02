@@ -39,6 +39,8 @@ body{padding:none;}
 			$("#imp_id").val(rsp.imp_uid);
 			$("#apply").val(rsp.apply_num);
 			document.getElementById("payb").click();
+			System.out.println(rsp.imp_uid);
+			System.out.println(rsp.apply_num);
 	    } else {
 	    	alert("결제 취소");
 	        location.href="<%= request.getContextPath()%>/selectTransList.ts";
