@@ -91,6 +91,7 @@ public class SelectCommissionServlet extends HttpServlet {
 			request.setAttribute("boardList", boardList);
 			request.setAttribute("pi", pi);
 			request.setAttribute("pageName", "commissionAdmin");
+			request.setAttribute("value", value);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 조회 실패");

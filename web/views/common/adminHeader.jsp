@@ -10,6 +10,8 @@ ul.tab-menu li>a:hover {
 	String pageName = "";
 	if(request.getParameter("pageName") != null){
 		pageName = request.getParameter("pageName");
+	}else if(request.getAttribute("pageName") != null){
+		pageName = (String)request.getAttribute("pageName");
 	}
 %>
 

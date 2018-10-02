@@ -25,6 +25,16 @@
 		startPage = pi.getStartPage();
 		endPage = pi.getEndPage(); 
 	}
+	
+	String value = "";
+	String kind = "";
+	String keyword = "";
+	if(request.getAttribute("value") != null){
+		value = (String)request.getAttribute("value");
+		String[] arr = value.split(",");
+		kind = arr[0];
+		keyword = arr[1];
+	}
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -115,16 +125,28 @@ border-color:darkgray;
 								<td style="background: lightgray;">검색옵션</td>
 								<td>
 									<select name="national2" style="float: left; width: 200px;" id="selectBox">
+										<% if(kind.equals("BOARD_NO")){ %>
+										<option value="no" selected>글번호</option>
+										<% }else{ %>
 										<option value="no">글번호</option>
+										<% } %>
+										<% if(kind.equals("NICK_NAME")){ %>
+										<option value="name" selected>작가명</option>
+										<% }else{ %>
 										<option value="name">작가명</option>
+										<% } %>
+										<% if(kind.equals("BOARD_TITLE")){ %>
+										<option value="title"selected>제목</option>
+										<% }else{ %>
 										<option value="title">제목</option>
+										<% } %>
 									</select>
 								</td>
 							</tr>
 							<tr>
 								<td style="background: lightgray">검색어 입력</td>
 								<td>
-									<input type="text" style="float: left; width: 400px;" id="searchText">
+									<input type="text" style="float: left; width: 400px;" id="searchText" value="<%= keyword %>">
 									<button type="submit" id="searchBtn" name="searchBtn" class="btn btn-primary btn-sm" style="padding: 5px 22px; float: right;" onclick="search();">검색</button>
 								</td>
 							</tr>
@@ -201,11 +223,11 @@ border-color:darkgray;
 
 	            <!--페이징 normal -->
 				<div class="paginate">
-					<a onclick="location.href='<%=request.getContextPath()%>/selectCommision.ad?pageName=commissionAdmin&currentPage=1'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+					<a onclick="location.href='<%=request.getContextPath()%>/selectCommision.ad?pageName=commissionAdmin&currentPage=1&value=<%= value %>'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
 					<% if(currentPage <=1){ %>
 						<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
 					<%}else{ %>
-						<a onclick = "location.href='<%= request.getContextPath()%>/selectCommision.ad?pageName=commissionAdmin&currentPage=<%=currentPage -1%>'" class="btn-prev" title="이전">
+						<a onclick = "location.href='<%= request.getContextPath()%>/selectCommision.ad?pageName=commissionAdmin&currentPage=<%=currentPage -1%>&value=<%= value %>'" class="btn-prev" title="이전">
 						<em class="blind">목록에서 이전 페이지 이동</em></a>
 					<%} %>
 					<span class="paging-numbers">
@@ -213,18 +235,18 @@ border-color:darkgray;
 							if(p==currentPage){%>
 								<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
 							<%}else{ %>
-								<a onclick= "location.href='<%= request.getContextPath()%>/selectCommision.ad?pageName=commissionAdmin&currentPage=<%=p%>'"><%= p %><span class="blind">페이지로 이동</span></a>
+								<a onclick= "location.href='<%= request.getContextPath()%>/selectCommision.ad?pageName=commissionAdmin&currentPage=<%=p%>&value=<%= value %>'"><%= p %><span class="blind">페이지로 이동</span></a>
 							<%} %>
 						<%} %>
 					</span>
 					<% if(currentPage >= maxPage){ %>
 						<a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 					<%}else{ %>
-						<a onclick = "location.href = '<%= request.getContextPath()%>/selectCommision.ad?pageName=commissionAdmin&currentPage=<%=currentPage +1%>'" class="btn-next" title="다음">
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectCommision.ad?pageName=commissionAdmin&currentPage=<%=currentPage +1%>&value=<%= value %>'" class="btn-next" title="다음">
 						<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 					<%} %>
 						
-					<a onclick = "location.href = '<%= request.getContextPath()%>/selectCommision.ad?pageName=commissionAdmin&currentPage=<%=maxPage%>'" class="btn-last" title="끝">
+					<a onclick = "location.href = '<%= request.getContextPath()%>/selectCommision.ad?pageName=commissionAdmin&currentPage=<%= maxPage %>&value=<%= value %>'" class="btn-last" title="끝">
 					<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 				</div>
 	              <!--//페이징 normal -->

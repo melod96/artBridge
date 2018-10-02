@@ -77,10 +77,6 @@
 								<% } %>
 								<li><a href="<%= request.getContextPath() %>/logout.me">로그아웃</a></li>
 							</ul></li>
-						<li><a href="#" class="msg"> <span
-								class="glyphicon glyphicon-envelope"></span> <span
-								class="msg-num on">1</span>
-						</a></li>
 						<% } %>
 						<!-- //로그인시 노출 -->
 					</ul>
