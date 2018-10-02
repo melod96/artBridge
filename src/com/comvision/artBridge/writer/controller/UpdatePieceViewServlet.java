@@ -15,6 +15,7 @@ import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.relate.model.vo.RelateNumList;
+import com.comvision.artBridge.sale.model.vo.Options;
 import com.comvision.artBridge.writer.model.service.WriterService;
 
 @WebServlet("/updatePieceView.wr")
@@ -34,17 +35,19 @@ public class UpdatePieceViewServlet extends HttpServlet {
 		Board board = (Board)hmap.get("board");
 		ArrayList<Files> pieceData = (ArrayList<Files>)hmap.get("selectThumbImg");
 		ArrayList<Relate> relateCks = (ArrayList<Relate>)hmap.get("relateCk");
-
+		
+		//저장된 연관검색어 노출
 		ArrayList<Relate> relateCk = new ArrayList<Relate>();
-		for(int i = 0; i < relateCks.size(); i=i+3){
+		for(int i = 0; i < relateCks.size(); i++){
 			relateCk.add((Relate)relateCks.get(i)); 
 		}
-		System.out.print("등록된 연관검색어 노출!" + relateCk);
-		
+		//System.out.print("등록된 연관검색어 노출!" + relateCk);
 		
 		//default 연관검색어 노출
 		ArrayList<Relate> relate = new WriterService().relateWord();
 		
+		//옵션 및 가격 노출
+		ArrayList<Options> optionsList = new WriterService().selectOptionsList(memberNo, pieceNo);
 		
 		String page = "";
 		if(hmap != null){
@@ -53,6 +56,7 @@ public class UpdatePieceViewServlet extends HttpServlet {
 			request.setAttribute("pieceData", pieceData);
 			request.setAttribute("relateCk", relateCk);
 			request.setAttribute("relate", relate);
+			request.setAttribute("optionsList", optionsList);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "작품 수정보기 실패!");
