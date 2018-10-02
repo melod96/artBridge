@@ -65,7 +65,8 @@
 }
 
 #tagList {
-	border: solid 1px black;
+	border: solid 1px lightgray;
+	padding: 14px 0px 0px 24px;
 }
 
 #tagList .tag_box {
@@ -75,7 +76,7 @@
 }
 
 #tagList .tag_box ol {
-	margin: 0 20px 18px 0px;
+	margin: 0 20px 2px 0px;
 	float: left;
 }
 
@@ -103,7 +104,7 @@
 #list_img .list_img_box {
 	position: relative;
 	width: 534px;
-	height: 215px;
+	height: 180px;
 	margin-bottom: 42px;
 	border: 1px solid #d3d3d3;
 }
@@ -120,7 +121,11 @@
 #list_img .price {
 	float: right;
 	font-size: 24px;
-	margin-top: -55px;
+	margin-top: -38px;
+	margin-right:5px;
+}
+.tag21{
+	cursor:pointer;
 }
 </style>
 </head>
@@ -154,7 +159,7 @@
 									action="<%=request.getContextPath()%>/searchkeyword.bo"
 									method="get">
 									<input name="search" class="input-short form-inline"
-										type="text" placeholder="텍스트를 입력하세요">
+										type="text" placeholder="텍스트를 입력하세요" style = "height:32px;">
 
 									<button type="submit"
 										class="btn btn-default btn-sg form-inline">검색</button>
@@ -171,6 +176,7 @@
 									style="height: 42px; line-height: 42px; margin-left: 10px;"
 									onclick="location.href='<%=request.getContextPath()%>/selectPieceList.wr?memberNo=<%=m.getMember_no()%>'">작품
 									등록 / 수정</div>
+									<%-- <button type="button" class="btn btn-dark sBtn1" onclick="location.href='<%=request.getContextPath()%>/selectPieceList.wr?memberNo=<%=m.getMember_no()%>'">작품 등록 / 수정</button> --%>
 							</ul>
 							<%
 								}
@@ -297,7 +303,7 @@
 					%>
 
 					<div id="list_img" style="display: block;">
-						<div class="list_img_box both left" id="test">
+						<div class="list_img_box both left" id="test" style= "margin-left: 15px;">
 							<ul>
 								<ol style="height: 145px;">
 									<%
@@ -305,7 +311,7 @@
 												HashMap<String, Object> hhmap = alist.get(j);
 												if (hhmap.get("board_no").equals(b.getBoard_no())) {
 									%>
-									<dl class="thumb3" style="margin: 5px; display: inline-block;">
+									<dl class="thumb3" style="display: inline-block; margin-left:10px;">
 										<li style="display: inline-block;" id="thumbnail"><input
 											type="hidden" value="<%=b.getBoard_no()%>" /> <img
 											src="<%=hhmap.get("files_root")%>" alt=""
@@ -317,23 +323,17 @@
 									%>
 								</ol>
 								<ol style="height: 28px;">
-									<dl class="left ellip" style="padding-left: 6px; width: 360px;">
-										<a href="" title="이작가의 다른 작품보기"><%=b.getNick_name()%></a>&nbsp;&nbsp;/&nbsp;&nbsp;<%=b.getBoard_title()%>
+									<dl class="left ellip" style="padding-left: 7px; width: 360px;">
+										<a href="<%=request.getContextPath() %>/selectPieceList.wr?memberNo=<%=b.getMember_no() %>" title="이작가의 다른 작품보기"><%=b.getNick_name()%></a>&nbsp;&nbsp;/&nbsp;&nbsp;<%=b.getBoard_title()%>
 									</dl>
 								</ol>
 								<ol>
-									<dl class="starBg_list">
-										<div style="width: 101%; overflow: hidden">
-											<img src="">
-										</div>
-									</dl>
 									<%
 										for (int k = 0; k < oplist.size(); k++) {
 												HashMap<String, Object> hmap = oplist.get(k);
 												if (hmap.get("board_no").equals(b.getBoard_no())) {
 									%>
-									<dl class="price"><%=hmap.get("options_price")%>~
-									</dl>
+									<dl class="price"><%=hmap.get("options_price")%>~ </dl>
 									<%
 										break;
 												}
@@ -433,6 +433,8 @@
 							class="btn-last" title="끝"> <span class="spr"><em
 								class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
+					
+					<div style = "height:50px;"></div>
 
 					<!-- // 이 영역에서 작업하세요 -->
 				</div>

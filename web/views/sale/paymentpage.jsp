@@ -307,6 +307,7 @@
 				</div>
 			</div>
 		</div>
+		<div style = "height:50px;"></div>
 
 		<%@ include file="/views/common/footer.jsp"%>
 </body>

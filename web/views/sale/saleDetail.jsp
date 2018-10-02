@@ -68,7 +68,6 @@
 .right #text {
 	background: #8cbae8;
 	height: 50px;
-	margin-bottom: 30px;
 	font-size: 18px;
 	color: black;
 	line-height: 50px;
@@ -111,14 +110,13 @@
 					<!-- 이 영역에서 작업하세요 -->
 
 
-					<div class="clear" style="height: 50px;">&nbsp;</div>
 
 					<div class="left_title">
 						<h5>
 							작품 번호 :
 							<%=b.getBoard_no()%></h5>
 						<h2>
-							<a href=""><%=b.getNick_name()%></a> -
+							<a href="<%=request.getContextPath() %>/selectPieceList.wr?memberNo=<%=b.getMember_no() %>"><%=b.getNick_name()%></a> -
 							<%=b.getBoard_title()%>
 						</h2>
 					</div>
@@ -135,11 +133,29 @@
 						<div class="right">
 						<ul style = "float:right; margin:10px;">
 						<!-- <i class="far fa-heart fa-3x"></i> -->
-						<i class="fab fa-gratipay fa-3x"></i>
+						<i class="fab fa-gratipay fa-3x" onclick = "fav()"></i>
 						</ul>
+						<script>
+							function fav(){
+								var member_noo = $("#member_no").val();
+								var writer_noo = $("#writer_no").val();
+								var num= <%=b.getBoard_no()%>;
+								$.ajax({
+									url:"favUpdate.sp",
+									data:{member_noo:member_noo,writer_noo:writer_noo,num:num},
+									type:"post",
+									success:function(data){
+										alert("관심작가 업데이트 성공!");
+									},
+									error:function(status, msg){
+										alert("관심작가 업데이트 실패!");
+									}
+								});
+							}
+						</script>
 							<img src="<%=prof.getFiles_root() %>" id="img">
 							<p align="center">
-								<a href=""><%=b.getNick_name()%></a>
+								<a href="<%=request.getContextPath() %>/selectPieceList.wr?memberNo=<%=b.getMember_no() %>"><%=b.getNick_name()%></a>
 							</p>
 							<ol id="receive" align="center">접수중
 							</ol>
@@ -157,7 +173,7 @@
 									쪽지보내기</button>
 							</div>
 							<div align="center" id="text">상세옵션</div>
-							<div>
+							<div style = "margin:20px;">
 								<p>
 									<span>제출 파일 유형</span><span style="float: right;"><%=b.getSubmit_file_type()%></span>
 								</p>
@@ -176,7 +192,8 @@
 								</p>
 							</div>
 							<div align="center" id="text">가격옵션</div>
-							<label>옵션</label> <select style="width: 200px; float: right;"
+							<div style = "margin:20px;">
+							<label style = "margin-top:5px;">옵션</label> <select style="width: 170px; float: right; height:30px;"
 								onchange="changeSelect()" name="sel">
 								<option value="0">옵션을 선택해주세요</option>
 								<%
@@ -189,11 +206,12 @@
 								<%
 										}
 									%>
-							</select><br> <label>요구사항 추가</label>
+							</select><br><br /> <label style = "margin-top:5px;">요구사항 추가</label>
 							<button type="button" class="btn btn-primary btn-sm"
 								onclick="add()" style="float: right;">추가</button>
+								<br /><br />
 							<div id="requirement">
-								<input type="text" style="width: 320px;"
+								<input type="text" style="width: 290px; margin-bottom:10px;"
 									class="requirmentcontent" id="rid0" name="rname0">
 							</div>
 							<script>
@@ -209,7 +227,7 @@
 							<div id="payment">
 								<ul align="right">
 									<div class="totalTitle">
-										최소 결제 금액 : <span id="totals"></span><font
+										최소 결제 금액 : <span id="totals" style="font-size: 24px"></span><font
 											style="font-size: 24px">원</font>
 									</div>
 								</ul>
@@ -223,6 +241,7 @@
 									<button data-toggle="modal" data-target="#login-modal" class="btn btn-primary btn-mg">명세표 보내기</button>
 								</ul>
 								<%} %>
+							</div>
 							</div>
 							<script>
 									function changeSelect() {
@@ -256,7 +275,7 @@
 									}
 								</script>
 							<div align="center" id="text">information</div>
-							<div>
+							<div style = "margin:20px;">
 								<ul class="cf">
 
 									<p>
@@ -265,7 +284,7 @@
 									<p>
 										<span>게시글 카테고리</span>
 										<%for (Relate r : rlist) {%>
-										<span style="float: right;">#<%=r.getRelate_name()%>&nbsp;
+										<span style="float: right;">#<%=r.getRelate_name()%>
 										</span>
 										<%}%>
 									</p>
@@ -337,6 +356,8 @@
 							%>
 						</table>
 					</div>
+					
+					<div style = "height:50px;"></div>
 					<!-- // 이 영역에서 작업하세요 -->
 				</div>
 			</div>

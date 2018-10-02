@@ -99,7 +99,7 @@ public class SearchRelateServlet extends HttpServlet {
 						}
 
 					String page = "";
-
+					int changenum = 0;
 					if(list != null && alist != null && pi !=null && rlist !=null && opmap !=null){
 						page = "views/sale/salepage.jsp";
 						request.setAttribute("list", list);
@@ -107,6 +107,7 @@ public class SearchRelateServlet extends HttpServlet {
 						request.setAttribute("pi", pi);
 						request.setAttribute("rlist", rlist);
 						request.setAttribute("oplist", opmap);
+						request.setAttribute("changenum", changenum);
 					}else{
 						page = "views/common/errorPage.jsp";
 						request.setAttribute("msg", "게시판 조회 실패");
