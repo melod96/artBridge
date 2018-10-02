@@ -270,6 +270,9 @@ public class WriterDao {
 		
 		String query = prop.getProperty("insertRelate");
 		
+		System.out.println("연관검색어 번호 : " + relateCk);
+		System.out.println("보드 번호 : " + currval);
+		
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, currval);
@@ -499,6 +502,7 @@ public class WriterDao {
 				hmap = new HashMap<String, Object>();
 
 				b = new Board();
+				b.setBoard_no(rset.getInt("board_no"));
 				b.setBoard_title(rset.getString("board_title"));
 				b.setBoard_content(rset.getString("board_content"));
 				b.setResolution(rset.getInt("resolution"));
@@ -507,6 +511,7 @@ public class WriterDao {
 				b.setWorking_period(rset.getInt("working_period"));
 				
 				f = new Files();
+				f.setFiles_title(rset.getString("files_title"));
 				f.setChange_title(rset.getString("change_title"));
 				f.setFiles_type(rset.getInt("files_type"));
 				f.setFiles_root(rset.getString("files_root"));
@@ -569,7 +574,7 @@ public class WriterDao {
 	}
 
 	//작품 수정용 메소드(데이터)
-	public int updatePiece(Connection con, Board b) {
+	public int updatePiece(Connection con, Board b, int memberNo) {
 		PreparedStatement pstmt = null;
 		int result = 0;
 		
@@ -579,13 +584,12 @@ public class WriterDao {
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, b.getBoard_title());
 			pstmt.setString(2, b.getBoard_content());
-			//pstmt.setInt(3, b.getMember_no());
 			pstmt.setInt(3, b.getResolution());
 			pstmt.setString(4, b.getSubmit_file_type());
 			pstmt.setString(5, b.getSubmit_size());
 			pstmt.setInt(6, b.getWorking_period());
 			pstmt.setInt(7, b.getBoard_no());
-			pstmt.setInt(8, b.getMember_no());
+			pstmt.setInt(8, memberNo);
 			
 			result = pstmt.executeUpdate();
 			
@@ -597,7 +601,73 @@ public class WriterDao {
 		return result;
 	}
 
+	//작품 수정용 메소드(첨부파일)
+	public int updateAttachment(Connection con, Files files, int pieceNo, int file_type) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("updateThumb");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, files.getFiles_title());
+			pstmt.setString(2, files.getChange_title());
+			pstmt.setInt(3, pieceNo);
+			pstmt.setInt(4, file_type);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
 	
+		return result;
+	}
+
+	//작품 수정용 메소드(옵션삭제)
+	public int updateOptions(Connection con, int pieceNo, int memberNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteOptions");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, pieceNo);
+			pstmt.setInt(2, memberNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+
+	//작품 수정용 메소드(연관검색어삭제)
+	public int updateRelate(Connection con, int pieceNo) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteRelate");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, pieceNo);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
 
 
 }

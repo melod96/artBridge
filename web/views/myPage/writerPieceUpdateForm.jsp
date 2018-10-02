@@ -15,6 +15,9 @@
 	if(request.getAttribute("board") != null){
 		board = (Board)request.getAttribute("board");
 	}
+	
+	System.out.println("view에서 board_no : " + board.getBoard_no());
+	
 	ArrayList<Files> pieceData = null;
 	if(request.getAttribute("pieceData") != null){
 		pieceData = (ArrayList<Files>)request.getAttribute("pieceData");
@@ -127,7 +130,7 @@
 	//옵션삭제버튼
 	function optionDel(){
 		$("#opt-del").click(function(){
-     		$('input[checked=checked]').parent().parent().remove();
+     		$('.option-tbl input[checked=checked]').parent().parent().remove();
  		});
 	}
 	
@@ -214,7 +217,7 @@
 	   		} */
 	   		
 			theForm.method = "post";
-	   		theForm.action = "<%=request.getContextPath()%>/updatePiece.wr?insertNum=" + num;
+	   		theForm.action = "<%=request.getContextPath()%>/updatePiece.wr?optionCount=" + optionCount;
 			theForm.submit();
 		});
 	};
@@ -249,6 +252,7 @@
                     
                     <form name="frmSubmit" encType="multipart/form-data">
                    	 	<input type="hidden" name="memberNo" value="<%= m.getMember_no() %>">
+                   	 	<input type="hidden" name="pieceNo" value="<%= board.getBoard_no() %>">
                         <div class="heading">
                             <h2 class="tit1">내 작품 수정</h2>
                           </div>
@@ -269,17 +273,17 @@
                                   <td>
                                     <ul class="img-area">
                                       <li>
-                                          <input type="file" name="thumb01"  id="file-btn1">
+                                          <input type="file" name="thumb01" id="file-btn1" value=<%= pieceData.get(2).getFiles_title() %>>
                                           <label for="file-btn1" class="btn btn-primary">썸네일 이미지 선택1</label>
-                                          <p><img class="img1" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(2).getChange_title()%>"></p>
+                                          <p><img class="img1" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(2).getChange_title()%>"></p>	
                                       </li>
                                       <li>
-                                          <input type="file" name="thumb02" id="file-btn2">
+                                          <input type="file" name="thumb02" id="file-btn2" value=<%= pieceData.get(1).getFiles_title() %>>
                                            <label for="file-btn2" class="btn btn-primary">썸네일 이미지 선택2</label>
                                           <p><img class="img2" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(1).getChange_title()%>"></p>
                                       </li>
                                       <li>
-                                          <input type="file" name="thumb03" id="file-btn3">
+                                          <input type="file" name="thumb03" id="file-btn3" value=<%= pieceData.get(0).getFiles_title() %>>
                                            <label for="file-btn3" class="btn btn-primary">썸네일 이미지 선택3</label>
                                           <p><img class="img3" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(0).getChange_title()%>"></p>
                                       </li>
@@ -328,8 +332,8 @@
                                          			for(Options op : optionsList){%>
                                               <tr>
                                                   <td><input type="checkbox"></td>
-                                                  <td><input type="text" class="form-control" placeholder="옵션명 입력" value="<%= op.getOptions_name() %>"></td>
-                                                  <td><input type="number" min="0" step="100" class="form-control" placeholder="금액(원)" value="<%=op.getOptions_price()%>"></td>
+                                                  <td><input type="text" class="form-control" name="option" placeholder="옵션명 입력" value="<%= op.getOptions_name() %>"></td>
+                                                  <td><input type="number" min="0" step="100" name="price" class="form-control" placeholder="금액(원)" value="<%=op.getOptions_price()%>"></td>
                                               </tr>
                                           	<% 		}
                                          	 	} %>
