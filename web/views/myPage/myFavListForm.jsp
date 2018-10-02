@@ -1,5 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.fav.model.vo.*"%>
+	<%
+	ArrayList<HashMap<String, Object>> hlist = null;
+	if ((ArrayList<HashMap<String, Object>>) request.getAttribute("hlist") != null) {
+		hlist = (ArrayList<HashMap<String, Object>>) request.getAttribute("hlist");
+	}
+	ArrayList<Fav> flist = null;
+	if ((ArrayList<Fav>) request.getAttribute("flist") != null) {
+		flist = (ArrayList<Fav>) request.getAttribute("flist");
+	}
+	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -344,194 +354,64 @@ div.btn-right.add-some button {
 					<form action="" method="get" class="bookmark-menu tab-menu-content-form">
 						<div class="bookmark-menu">
 							<div id="bookmark-list-wrap" class="bookmark-menu bookmark-list-wrap">
+							<%if(hlist!=null){
+								for (int k = 0; k < flist.size(); k++) {
+									HashMap<String, Object> hmap = hlist.get(k); %>
 								<div class="frofile-box bookmark-list" style="width: 300px; padding: 5px 15px 15px 15px;">
-									<a onclick="bookmarkDel();" class="on bookmark-del-btn">★</a>
+									<a onclick="fav(this.id);" class="on bookmark-del-btn" id="<%=flist.get(k).getWriter_no()%>">★</a>
 									<table style="margin-right: auto; margin-left: auto;">
 										<tr>
 											<td colspan="2" align="center" height="170px" style="padding-top: 15px; padding-bottom: 10px">
 												<div class="img-in">
-													<img src="/artBridge/image/common/img_profile.png" alt="default frofile image">
+													<img src="<%=hmap.get("profile")%>" alt="default frofile image">
 												</div>
 											</td>
 										</tr>
 										<tr>
 											<td colspan="2" style="text-align: center;">
-											<a onclick="selfHidden();" class="bookmark-detailView-btn">소나나</a></td>
+											<a href="<%=request.getContextPath() %>/selectPieceList.wr?memberNo=<%=flist.get(k).getWriter_no()%>"class="bookmark-detailView-btn"><%=hmap.get("nick")%> 작가</a></td>
 										</tr>
+										<script>
+											function fav(i){
+												$.ajax({
+													url:"favUpdate.sp",
+													data:{writer_noo:i},
+													type:"post",
+													success:function(data){
+														alert("관심작가 업데이트 성공!");
+													},
+													error:function(status, msg){
+														alert("관심작가 업데이트 실패!");
+													}
+												});
+											}
+										</script>
 										<tr>
 											<td>
 												<div class="state-area"
 													style="margin-left: 0px; padding-left: 15px; padding-right: 15px;">
 													<ul>
-														<li>작품리스트 <span>1개</span></li>
+														<li>작품리스트 <span><%=hmap.get("bcount")%>개</span></li>
 														<li>평점 <span>
 																<p class="star_rating">
 																	<!-- 별 갯수 평균으로 반영하기 -->
 																	<a href="#" class="on">★</a> <a href="#" class="on">★</a>
 																	<a href="#" class="on">★</a> <a href="#">★</a> 
 																	<a href="#">★</a>
-																</p> 0.0점
+																</p> <%=hmap.get("grade")%>점
 														</span>
 														</li>
-														<li>진행중인 의뢰 <span>0건</span></li>
-														<li>슬롯 갯수 <span>0개</span></li>
+														<li>진행중인 의뢰 <span><%=hmap.get("orcount")%>건</span></li>
+														<li>슬롯 갯수 <span><%=hmap.get("slot")%>개</span></li>
 													</ul>
 												</div>
 											</td>
 										</tr>
 									</table>
 								</div>
-								<div class="frofile-box bookmark-list" style="width: 300px; padding: 5px 15px 15px 15px;">
-									<a onclick="bookmarkDel();" class="on bookmark-del-btn">★</a>
-									<table style="margin-right: auto; margin-left: auto;">
-										<tr>
-											<td colspan="2" align="center" height="170px" style="padding-top: 15px; padding-bottom: 10px">
-												<div class="img-in">
-													<img src="/artBridge/image/common/img_profile.png" alt="default frofile image">
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2" style="text-align: center;"><a
-												onclick="selfHidden();" class="bookmark-detailView-btn">소나나</a></td>
-										</tr>
-										<tr>
-											<td>
-												<div class="state-area"
-													style="margin-left: 0px; padding-left: 15px; padding-right: 15px;">
-													<ul>
-														<li>작품리스트 <span>1개</span></li>
-														<li>평점 <span>
-																<p class="star_rating">
-																	<!-- 별 갯수 평균으로 반영하기 -->
-																	<a href="#" class="on">★</a> <a href="#" class="on">★</a>
-																	<a href="#" class="on">★</a> <a href="#">★</a> 
-																	<a href="#">★</a>
-																</p> 0.0점
-														</span>
-														</li>
-														<li>진행중인 의뢰 <span>0건</span></li>
-														<li>슬롯 갯수 <span>0개</span></li>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div class="frofile-box bookmark-list" style="width: 300px; padding: 5px 15px 15px 15px;">
-									<a onclick="bookmarkDel();" class="on bookmark-del-btn">★</a>
-									<table style="margin-right: auto; margin-left: auto;">
-										<tr>
-											<td colspan="2" align="center" height="170px" style="padding-top: 15px; padding-bottom: 10px">
-												<div class="img-in">
-													<img src="/artBridge/image/common/img_profile.png" alt="default frofile image">
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2" style="text-align: center;">
-											<a onclick="selfHidden();" class="bookmark-detailView-btn">소나나</a></td>
-										</tr>
-										<tr>
-											<td>
-												<div class="state-area" style="margin-left: 0px; padding-left: 15px; padding-right: 15px;">
-													<ul>
-														<li>작품리스트 <span>1개</span></li>
-														<li>평점 <span>
-																<p class="star_rating">
-																	<!-- 별 갯수 평균으로 반영하기 -->
-																	<a href="#" class="on">★</a> <a href="#" class="on">★</a>
-																	<a href="#" class="on">★</a> <a href="#">★</a> 
-																	<a href="#">★</a>
-																</p> 0.0점
-														</span>
-														</li>
-														<li>진행중인 의뢰 <span>0건</span></li>
-														<li>슬롯 갯수 <span>0개</span></li>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div class="frofile-box bookmark-list" style="width: 300px; padding: 5px 15px 15px 15px;">
-									<a onclick="bookmarkDel();" class="on bookmark-del-btn">★</a>
-									<table style="margin-right: auto; margin-left: auto;">
-										<tr>
-											<td colspan="2" align="center" height="170px"
-												style="padding-top: 15px; padding-bottom: 10px">
-												<div class="img-in">
-													<img src="/artBridge/image/common/img_profile.png" alt="default frofile image">
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2" style="text-align: center;">
-											<a onclick="selfHidden();" class="bookmark-detailView-btn">소나나</a></td>
-										</tr>
-										<tr>
-											<td>
-												<div class="state-area"
-													style="margin-left: 0px; padding-left: 15px; padding-right: 15px;">
-													<ul>
-														<li>작품리스트 <span>1개</span></li>
-														<li>평점 <span>
-																<p class="star_rating">
-																	<!-- 별 갯수 평균으로 반영하기 -->
-																	<a href="#" class="on">★</a> <a href="#" class="on">★</a>
-																	<a href="#" class="on">★</a> <a href="#">★</a> <a
-																		href="#">★</a>
-																</p> 0.0점
-														</span>
-														</li>
-														<li>진행중인 의뢰 <span>0건</span></li>
-														<li>슬롯 갯수 <span>0개</span></li>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div>
-								<div class="frofile-box bookmark-list"
-									style="width: 300px; padding: 5px 15px 15px 15px;">
-									<a onclick="bookmarkDel();" class="on bookmark-del-btn">★</a>
-									<table style="margin-right: auto; margin-left: auto;">
-										<tr>
-											<td colspan="2" align="center" height="170px"
-												style="padding-top: 15px; padding-bottom: 10px">
-												<div class="img-in">
-													<img src="/artBridge/image/common/img_profile.png"
-														alt="default frofile image">
-												</div>
-											</td>
-										</tr>
-										<tr>
-											<td colspan="2" style="text-align: center;"><a
-												onclick="selfHidden();" class="bookmark-detailView-btn">소나나</a></td>
-										</tr>
-										<tr>
-											<td>
-												<div class="state-area"
-													style="margin-left: 0px; padding-left: 15px; padding-right: 15px;">
-													<ul>
-														<li>작품리스트 <span>1개</span></li>
-														<li>평점 <span>
-																<p class="star_rating">
-																	<!-- 별 갯수 평균으로 반영하기 -->
-																	<a href="#" class="on">★</a> <a href="#" class="on">★</a>
-																	<a href="#" class="on">★</a> <a href="#">★</a> 
-																	<a href="#">★</a>
-																</p> 0.0점
-														</span>
-														</li>
-														<li>진행중인 의뢰 <span>0건</span></li>
-														<li>슬롯 갯수 <span>0개</span></li>
-													</ul>
-												</div>
-											</td>
-										</tr>
-									</table>
-								</div>
+								<%} }else{%>
+									<h1>관심 작가가 없습니다</h1>
+								<%} %>
 							</div>
 							<br><br><br><br>
 						</div>
