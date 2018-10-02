@@ -16,6 +16,7 @@ import java.util.Properties;
 import com.comvision.artBridge.board.model.dao.BoardDao;
 import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.comments.model.vo.Comments;
+import com.comvision.artBridge.fav.model.vo.Fav;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.grade.model.vo.Grade;
 import com.comvision.artBridge.member.model.vo.Rating;
@@ -960,6 +961,81 @@ public class SaleDao {
 		}
 		
 		return list;
+	}
+
+	public Fav selectFavList(Connection con, int member_no, int writer_no) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Fav f = null;
+		int result = 0;
+		
+		String query = prop.getProperty("selectFavList");
+		
+		try {
+			pstmt =con.prepareStatement(query);
+			pstmt.setInt(1, member_no);
+			pstmt.setInt(2, writer_no);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				f = new Fav();
+				f.setFav_no(rset.getInt("fav_no"));
+				f.setMember_no(rset.getInt("member_no"));
+				f.setWriter_no(rset.getInt("writer_no"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return f;
+	}
+
+	public int insertFavUpdate(Connection con, int member_no, int writer_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("insertFavUpdate");
+		
+		try {
+			pstmt =con.prepareStatement(query);
+			pstmt.setInt(1, member_no);
+			pstmt.setInt(2, writer_no);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int deleteFavUpdate(Connection con, int member_no, int writer_no) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("deleteFavUpdate");
+		
+		try {
+			pstmt =con.prepareStatement(query);
+			pstmt.setInt(1, member_no);
+			pstmt.setInt(2, writer_no);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
 	}
 
 	

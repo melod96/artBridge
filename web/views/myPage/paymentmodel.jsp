@@ -141,7 +141,7 @@
 											<table align="right">
 												<tr>
 													<td>총 금 액 :</td>
-													<td><strong style="font-size: 20px;"><%=totalPrice%>
+													<td><strong style="font-size: 20px;margin-right:65px;"><%=totalPrice%>
 															원</strong></td>
 												</tr>
 											</table>
@@ -192,6 +192,7 @@
 				</div>
 			</div>
 		</div>
+		<div style = "height:50px;"></div>
 		<!-- // contents area -->
 
 		<%@ include file="/views/common/footer.jsp"%>
