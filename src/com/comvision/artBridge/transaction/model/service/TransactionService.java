@@ -50,4 +50,35 @@ public class TransactionService {
 		return t;
 	}
 
+	public int confirmRequest(int mNo, int oNo, int actNo) {
+		Connection con= getConnection();
+		
+//		UPDATE ORDERS_DETAIL SET OD_END_DATE = SYSDATE WHERE ORDERS_NO = ? AND ORDERS_ACTIVITY = ?;
+		int result = new TransactionDao().confirmRequest(con, oNo, actNo);
+		
+		if(result > 0){
+			System.out.println("리스트 수정했어");
+			close(con);
+		}
+		
+		return result;
+	}
+/*	public ArrayList<Transaction> confirmRequest(int mNo, int oNo, int actNo) {
+		Connection con= getConnection();
+		
+//		UPDATE ORDERS_DETAIL SET OD_END_DATE = SYSDATE WHERE ORDERS_NO = ? AND ORDERS_ACTIVITY = ?;
+		int result = new TransactionDao().confirmRequest(con, oNo, actNo);
+		
+		if(result > 0){
+			System.out.println("리스트 수정했어");
+			close(con);
+			
+			return selectTransList2(mNo);
+		}else {
+			close(con);
+			
+			return null;
+		}
+	}
+*/
 }
