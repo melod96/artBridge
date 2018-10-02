@@ -203,26 +203,178 @@
 		body{background:linear-gradient(#3446d1 5%, #FBB0FF 45%, #F7FFB0 90%);}
 		.name{color:white;}
 		.txt{color:white;}
+		
+		
+		
+		.twingkle1{
+		animation-name:trans1;
+		animation-duration:0.7s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+ 		animation-direction: alternate;
+		}
+		
+		.twingkle2{
+		animation-name:trans1;
+		animation-duration:1s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+ 		animation-direction: alternate;
+		}
+		
+		.twingkle3{
+		animation-name:trans1;
+		animation-duration:1.2s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+ 		animation-direction: alternate;
+		}
+			.movingStar{
+		animation-name: moving1;
+		animation-delay:2s;
+		animation-duration:10s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+ 		animation-direction: nomal;
+ 		opacity:0;
+ 		}
+ 		
+ 		.movingStar2{
+		animation-name: moving2;
+		animation-delay:3s;
+		animation-duration:10s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+ 		animation-direction: nomal;
+ 		opacity:0;
+ 		}
+ 		
+ 		.movingStar3{
+		animation-name: moving3;
+		animation-delay:5s;
+		animation-duration:10s;
+		animation-iteration-count: infinite;
+		animation-timing-function: linear;
+ 		animation-direction: nomal;
+ 		opacity:0;
+ 		}
+ 		
+		
+		@keyframes trans1 {
+			  0% {
+			    opacity: 1;
+			  }
+			  100% {
+			    opacity: 0;
+			  }
+		}
+		
+		@keyframes moving1 {
+			  0% {
+			  opacity: 1;
+			  }
+			  7% {
+		  	 	 transform:translate(-1600px, 900px);
+		  	 	 
+			  }
+			  8%{
+			  opacity:0;
+			  }
+			  100%{
+			  opacity:0;
+			  }
+		}
+		
+		@keyframes moving2 {
+			  0% {
+			  opacity: 1;
+			  }
+			  11% {
+		  	 	 transform:translate(-1600px, 900px);
+		  	 	 
+			  }
+			  12%{
+			  opacity:0;
+			  }
+			  100%{
+			  opacity:0;
+			  }
+		}
+		
+		@keyframes moving3 {
+			  0% {
+			  opacity: 1;
+			  }
+			  15% {
+		  	 	 transform:translate(-1600px, 900px);
+			  }
+			  16%{
+			  opacity:0;
+			  }
+			  100%{
+			  opacity:0;
+			  } 
+		}
+		
 </style>
 	
 </head>
 <body>
 
 
-<!--fixed side-->
-		<!-- <div class = "left-fixed-area">
-		</div> -->
-		
-		
-<!--//fixed area-->	
-	
+
 
 
     <div id="all">
-       
+
         <!-- Header -->
         <%@ include file="/views/common/header.jsp" %>
         <!-- // Header -->
+<img class="movingStar" style="position: absolute;top : 0px; left:1400px; width:150px; height:75px;" src='/artBridge/image/mainContent/movingStar.png' >
+<img class="movingStar2" style="position: absolute;top : 0px; left:800px; width:150px; height:75px;" src='/artBridge/image/mainContent/movingStar.png' >
+<img class="movingStar3" style="position: absolute;top : 500px; left:1200px; width:150px; height:75px;" src='/artBridge/image/mainContent/movingStar.png' >
+ 
+<img class="twingkle1" style="position: relative;top : 100px; left:100px;width:30px; height:30px;" src='/artBridge/image/mainContent/star.png'>
+
+<img style="position: relative;top : 500px; left:150px;width:15px; height:15px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 300px; left:120px;width:14px; height:14px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 720px; left:80px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 200px; left:200px;width:13px; height:13px;" src='/artBridge/image/mainContent/star.png'>
+
+<img class="twingkle1" style="position: relative;top : 620px; left:200px;width:12px; height:12px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle3" style="position: relative;top : 400px; left:180px;width:17px; height:17px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 220px; left:350px;width:14px; height:14px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 680px; left:250px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle2" style="position: relative;top : 560px; left:300px;width:13px; height:13px;" src='/artBridge/image/mainContent/star.png'>
+
+<img style="position: relative;top : 580px; left:400px;width:15px; height:15px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 300px; left:370px;width:14px; height:14px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle3" style="position: relative;top : 150px; left:500px;width:12px; height:12px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 50px; left:700px;width:17px; height:17px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle1" style="position: relative;top : 100px; left:340px;width:13px; height:13px;" src='/artBridge/image/mainContent/star.png'>
+
+<img style="position: relative;top : 480px; left:970px;width:14px; height:14px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 100px; left:840px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle3" style="position: relative;top : 210px; left:720px;width:12px; height:12px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle1" style="position: relative;top : 180px; left:900px;width:14px; height:14px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 300px; left:950px;width:15px; height:15px;" src='/artBridge/image/mainContent/star.png'>
+
+<img style="position: relative;top : 200px; left:1000px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 600px; left:1010px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle2" style="position: relative;top : 400px; left:1020px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 300px; left:1030px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle3" style="position: relative;top : 500px; left:1040px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+
+<img style="position: relative;top : 700px; left:850px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle2" style="position: relative;top : 640px; left:520px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle1" style="position: relative;top : 700px; left:560px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 600px; left:650px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle3" style="position: relative;top : 500px; left:420px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+
+<img class="twingkle3" style="position: relative;top : 80px; left:880px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle2" style="position: relative;top : 120px; left:-170px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img class="twingkle3" style="position: relative;top : 30px; left:-250px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
+<img style="position: relative;top : 30px; left:690px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
 
 <br><br><br><br>
 <!--
@@ -268,7 +420,7 @@
 
 		<div class="slider-area1">
 			<!-- <h2 class="bestH" style="margin-left: 75px; margin-bottom: 25px;">Best 작품 추천</h2> -->
-			<img style="margin-left:400px;" src='/artBridge/image/mainContent/best5.png'>
+			<img style="margin-left:385px;" src='/artBridge/image/mainContent/best5.png'>
 
 			<div class="slider-area">
 
