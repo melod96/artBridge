@@ -10,34 +10,24 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import com.comvision.artBridge.admin.model.dao.AdminDao;
-import com.comvision.artBridge.admin.model.vo.Notice;
 import com.comvision.artBridge.admin.model.vo.Rating;
-import com.comvision.artBridge.board.model.dao.BoardDao;
-import com.comvision.artBridge.board.model.vo.Board;
-import com.comvision.artBridge.files.model.vo.Files;
-import com.comvision.artBridge.member.model.dao.MemberDao;
+import com.comvision.artBridge.admin.model.vo.Board;
+import com.comvision.artBridge.admin.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
-import com.comvision.artBridge.message.model.dao.MessageDao;
-import com.comvision.artBridge.message.model.vo.Message;
-import com.comvision.artBridge.nBoard.model.dao.NBoardDao;
-import com.comvision.artBridge.relate.model.vo.Relate;
-import com.comvision.artBridge.sale.model.dao.SaleDao;
-import com.comvision.artBridge.transaction.model.vo.Transaction;
+import com.comvision.artBridge.admin.model.vo.Relate;
+import com.comvision.artBridge.admin.model.vo.Transaction;
 
 public class AdminService {
 
 	//관리자 판매글 목록 조회(select)
 	public ArrayList<Board> selectSaleList(int currentPage, int limit, String kind, String keyword) {
-	Connection con = getConnection();
+		Connection con = getConnection();
 		
 		ArrayList<Board> list = new AdminDao().selectSaleList(con,currentPage, limit,kind,keyword);
 		
 		close(con);
 
-		
 		return list;
-		
-		
 	}
 
 	//관리자 메인 insert
@@ -81,15 +71,12 @@ public class AdminService {
 
 	//추가된 연관검색어 모두 출력
 	public ArrayList<Relate> selectRelate() {
-		
 		Connection con = getConnection();
 		
 		ArrayList<Relate> list = new AdminDao().selectRelate(con);
 		
 		close(con);
-		
 
-		
 		return list;
 
 	}
@@ -113,28 +100,8 @@ public class AdminService {
 		return blist;
 	}
 	
-	//게시글 전체 출력
-	public ArrayList<Board> selectBoard(int currentPage, int limit) {
-		
-		Connection con = getConnection();
-		
-		ArrayList<Board> list = new BoardDao().selectSaleList(con,currentPage, limit);
-		
-		close(con);
-		
-		return list;
-	/*Connection con = getConnection();
-		
-		ArrayList<Board> list = new AdminDao().selectBoard(con);
-		
-		close(con);
-		
-		return list;*/
-	}
 	
 	//게시글 선택 출력
-	
-	
 	public ArrayList<Board> selectBoardList(int currentPage, int limit, String kind, String keyword) {
 		Connection con = getConnection();
 			
@@ -144,7 +111,7 @@ public class AdminService {
 
 		return list;
 
-}
+	}
 
 	public ArrayList<Rating> selectRating() {
 		Connection con = getConnection();
@@ -205,10 +172,10 @@ public class AdminService {
 		return result;
 	}
 		//거래내역 관리 전체 출력
-	public ArrayList<Transaction> selectTrs(int currentPage, int limit) {
+	public ArrayList<Transaction> selectTrs(int currentPage, int limit, String addQuery) {
 		Connection con = getConnection();
 		
-		ArrayList<Transaction> list = new AdminDao().selectTrs(con,currentPage, limit);
+		ArrayList<Transaction> list = new AdminDao().selectTrs(con,currentPage, limit, addQuery);
 		
 		close(con);
 		
@@ -217,10 +184,10 @@ public class AdminService {
 	}
 	
 	//회원관리
-	public int getListCount() {
+	public int getMemberListCount(String addQuery) {
 		Connection con = getConnection();
 		
-		int listCount = new AdminDao().getListCount(con);
+		int listCount = new AdminDao().getMemberListCount(con, addQuery);
 		
 		close(con);
 		
@@ -228,10 +195,10 @@ public class AdminService {
 	}
 	
 	//회원관리
-	public ArrayList<Member> selectList(int currentPage, int limit, String addQuery) {
+	public ArrayList<Member> selectMemberList(int currentPage, int limit, String addQuery) {
 		Connection con = getConnection();
 		
-		ArrayList<Member> list = new AdminDao().selectList(con, currentPage, limit, addQuery);
+		ArrayList<Member> list = new AdminDao().selectMemberList(con, currentPage, limit, addQuery);
 		
 		close(con);
 		
@@ -346,6 +313,70 @@ public class AdminService {
 		}
 		
 		return result;
+	}
+
+	//saleListCount
+	public int getSaleListCount(String addQuery) {
+		Connection con = getConnection();
+		
+		int listCount = new AdminDao().getSaleListCount(con, addQuery);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	//mainAdmin-saleList
+	public ArrayList<Board> selectSaleList(int currentPage, int limit, String addQuery) {
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new AdminDao().selectSaleList(con, currentPage, limit, addQuery);
+		
+		close(con);
+		
+		return list;
+	}
+
+	//boardListCount
+	public int getSaleListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new AdminDao().getSaleListCount(con);
+		
+		close(con);
+		
+		return listCount;
+	}
+
+	//commissionAdmin-boardList
+	public ArrayList<Board> selectBoardList(int currentPage, int limit) {
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new AdminDao().selectBoardList(con, currentPage, limit);
+		
+		close(con);
+		
+		return list;
+	}
+
+	public ArrayList<Board> selectBoardList(int currentPage, int limit, String addQuery) {
+		Connection con = getConnection();
+		
+		ArrayList<Board> list = new AdminDao().selectSaleList(con, currentPage, limit, addQuery);
+		
+		close(con);
+
+		return list;
+	}
+
+	public int getTrsListCount() {
+		Connection con = getConnection();
+		
+		int listCount = new AdminDao().getTrsListCount(con);
+		
+		close(con);
+		
+		return listCount;
 	}
 
 

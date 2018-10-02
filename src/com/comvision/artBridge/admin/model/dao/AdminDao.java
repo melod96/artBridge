@@ -6,7 +6,6 @@ import static com.comvision.artBridge.common.JDBCTemplate.close;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,17 +13,12 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Properties;
 
-import com.comvision.artBridge.admin.model.vo.Notice;
 import com.comvision.artBridge.admin.model.vo.Rating;
-import com.comvision.artBridge.board.model.vo.Board;
-import com.comvision.artBridge.files.model.vo.Files;
+import com.comvision.artBridge.admin.model.vo.Board;
+import com.comvision.artBridge.admin.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
-import com.comvision.artBridge.message.model.vo.Message;
-import com.comvision.artBridge.relate.model.vo.Relate;
-import com.comvision.artBridge.transaction.model.vo.Transaction;
-
-
-
+import com.comvision.artBridge.admin.model.vo.Relate;
+import com.comvision.artBridge.admin.model.vo.Transaction;
 
 public class AdminDao {
 	
@@ -439,24 +433,28 @@ public class AdminDao {
 		return result;
 	}
 	//거래내역 관리 전체 출력
-		public ArrayList<Transaction> selectTrs(Connection con, int currentPage, int limit) {
-			PreparedStatement pstmt = null;
+		public ArrayList<Transaction> selectTrs(Connection con, int currentPage, int limit, String addQuery) {
+			Statement stmt = null;
 			ResultSet rset = null;
 			ArrayList<Transaction> list = null;
 			
-			
 			String query = prop.getProperty("selectTrs");
 			
+			query += " " + addQuery;
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			String rnumQuery = " ORDER BY O.ORDERS_NO DESC)) where rnum between " + startRow + " and " + endRow ;
+			
+			query += rnumQuery;
+			
+			System.out.println(query);
+			
 			try {
-				pstmt = con.prepareStatement(query);
+				stmt = con.createStatement();
 				
-				int startRow = (currentPage -1) * limit +1;
-				int endRow= startRow +limit -1;
-				
-				pstmt.setInt(1, startRow);
-				pstmt.setInt(2, endRow);
-				
-				rset = pstmt.executeQuery();
+				rset = stmt.executeQuery(query);
 				
 				list = new ArrayList<Transaction>();
 				
@@ -479,7 +477,7 @@ public class AdminDao {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}finally{
-				close(pstmt);
+				close(stmt);
 				close(rset);
 			}
 			
@@ -487,11 +485,12 @@ public class AdminDao {
 		}
 		
 		//회원관리
-		public int getListCount(Connection con) {
+		public int getMemberListCount(Connection con, String addQuery) {
 			Statement stmt = null;
 			ResultSet rset = null;
 			
 			String query = prop.getProperty("memberListCount");
+			query += addQuery;
 			
 			int listCount = 0;
 			
@@ -513,7 +512,7 @@ public class AdminDao {
 			return listCount;
 		}
 		//회원관리
-		public ArrayList<Member> selectList(Connection con, int currentPage, int limit, String addQuery) {
+		public ArrayList<Member> selectMemberList(Connection con, int currentPage, int limit, String addQuery) {
 			Statement stmt = null;
 			ResultSet rset = null;
 			ArrayList<Member> list = null;
@@ -856,6 +855,175 @@ public class AdminDao {
 			}
 			
 			return result;
+		}
+
+		public int getSaleListCount(Connection con, String addQuery) {
+			Statement stmt= null;
+			ResultSet rset = null;
+			
+			String query = prop.getProperty("mainAdmin_saleListCount");
+			query += addQuery;
+			
+			int listCount = 0;
+			
+			try {
+				stmt = con.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()){
+					listCount = rset.getInt(1);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(stmt);
+				close(rset);
+			}
+			
+			return listCount;
+		}
+
+		public ArrayList<Board> selectSaleList(Connection con, int currentPage, int limit, String addQuery) {
+			Statement stmt = null;
+			ResultSet rset = null;
+			ArrayList<Board> list = null;
+			
+			
+			String query = prop.getProperty("mainAdmin_selectSaleList");
+			query += addQuery;
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			query += " ORDER BY BOARD_NO DESC)) WHERE RNUM BETWEEN " + startRow + " AND " + endRow;
+			
+			try {
+				stmt = con.createStatement();
+				
+				rset = stmt.executeQuery(query);
+				
+				list = new ArrayList<Board>();
+				
+				while(rset.next()){
+					Board b= new Board();
+					
+					b.setBoard_no(rset.getInt("board_no"));
+					b.setBoard_type(rset.getInt("board_type"));
+					b.setBoard_title(rset.getString("board_title"));
+					b.setBoard_content(rset.getString("board_content"));
+					b.setMember_no(rset.getInt("member_no"));
+					b.setNick_name(rset.getString("nick_name"));
+					b.setBoard_date(rset.getDate("board_date"));
+					b.setBoard_status(rset.getInt("board_status"));
+					b.setBoard_count(rset.getInt("board_count"));
+					b.setMain_view(rset.getInt("main_view"));
+					
+					list.add(b);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(stmt);
+				close(rset);
+			}
+			
+			return list;
+		}
+
+		public int getSaleListCount(Connection con) {
+			Statement stmt= null;
+			ResultSet rset = null;
+			
+			String query = prop.getProperty("commissionAdmin_boardListCount");
+			
+			int listCount = 0;
+			
+			try {
+				stmt = con.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()){
+					listCount = rset.getInt(1);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(stmt);
+				close(rset);
+			}
+			
+			return listCount;
+		}
+
+		public ArrayList<Board> selectBoardList(Connection con, int currentPage, int limit) {
+			PreparedStatement pstmt = null;
+			ResultSet rset = null;
+			ArrayList<Board> list = null;
+			
+			
+			String query = prop.getProperty("commissionAdmin_selectBoardList");
+			
+			int startRow = (currentPage -1) *limit +1;
+			int endRow= startRow +limit -1;
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, startRow);
+				pstmt.setInt(2, endRow);
+				
+				rset = pstmt.executeQuery();
+				
+				list = new ArrayList<Board>();
+				
+				while(rset.next()){
+					Board b= new Board();
+					
+					b.setBoard_no(rset.getInt("board_no"));
+					b.setBoard_type(rset.getInt("board_type"));
+					b.setBoard_title(rset.getString("board_title"));
+					b.setBoard_content(rset.getString("board_content"));
+					b.setMember_no(rset.getInt("member_no"));
+					b.setNick_name(rset.getString("nick_name"));
+					b.setBoard_date(rset.getDate("board_date"));
+					b.setBoard_status(rset.getInt("board_status"));
+					b.setBoard_count(rset.getInt("board_count"));
+					b.setMain_view(rset.getInt("main_view"));
+					
+					list.add(b);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(pstmt);
+				close(rset);
+			}
+			
+			return list;
+		}
+
+		public int getTrsListCount(Connection con) {
+			Statement stmt= null;
+			ResultSet rset = null;
+			
+			String query = prop.getProperty("TrsAdmin_TrsListCount");
+			
+			int listCount = 0;
+			
+			try {
+				stmt = con.createStatement();
+				rset = stmt.executeQuery(query);
+				
+				if(rset.next()){
+					listCount = rset.getInt(1);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally{
+				close(stmt);
+				close(rset);
+			}
+			
+			return listCount;
 		}
 
 	
