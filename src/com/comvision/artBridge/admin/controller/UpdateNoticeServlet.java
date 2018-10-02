@@ -26,8 +26,6 @@ public class UpdateNoticeServlet extends HttpServlet {
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");
 		
-		//System.out.println(title + ", " + content);
-		
 		Notice n = new Notice();
 		n.setnNo(Integer.parseInt(num));
 		n.setnTitle(title);
@@ -37,14 +35,13 @@ public class UpdateNoticeServlet extends HttpServlet {
 		
 		String page = "";
 		if(result > 0){
-			page = "/views/admin/noticeDetail.jsp";
-			request.setAttribute("n", new NoticeService().selectOne(num));
+			response.sendRedirect("/artBridge/noticeDetail.no?pageName=noticeList&num=" + num);
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "공지사항 수정 실패!");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 		
 	}
 

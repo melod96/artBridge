@@ -23,6 +23,9 @@ public class SelectNoticeListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String search = request.getParameter("search");
+		
 		//페이징 처리
 		int currentPage;
 		int limit;		
@@ -51,7 +54,7 @@ public class SelectNoticeListServlet extends HttpServlet {
 		
 		//공지사항 리스트 출력
 		//ArrayList<Notice> list = new NoticeService().selectList();
-		ArrayList<Notice> list = new NoticeService().selectList(currentPage, limit);
+		ArrayList<Notice> list = new NoticeService().selectList(currentPage, limit, search);
 		//System.out.println(list);
 	
 		String page = "";
@@ -60,6 +63,7 @@ public class SelectNoticeListServlet extends HttpServlet {
 			request.setAttribute("list", list);
 			//request.setAttribute("list", new NoticeService().selectList());
 			request.setAttribute("pi", pi);
+			request.setAttribute("pageName", "noticeList");
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "공지사항 보기 실패!");

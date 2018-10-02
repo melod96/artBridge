@@ -53,20 +53,21 @@ public class NoticeDao {
 	}
 	
 	//공지사항 리스트 출력용 메소드
-	public ArrayList<Notice> selectList(Connection con, int currentPage, int limit) {
+	public ArrayList<Notice> selectList(Connection con, int currentPage, int limit, String search) {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		ArrayList<Notice> list = null;
 		Notice n = null;
 
-		String query = prop.getProperty("selectNoticeList2");
+		String query = prop.getProperty("searchNotice");
 		
 		try {
 			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, search);
 			int startRow = (currentPage -1) *limit +1;
 			int endRow= startRow +limit -1;
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(2, startRow);
+			pstmt.setInt(3, endRow);
 			
 			rset = pstmt.executeQuery();
 			
