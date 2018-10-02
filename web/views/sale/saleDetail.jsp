@@ -86,6 +86,9 @@
 	margin-left: auto;
 	margin-right: auto;
 }
+.fab:hover{
+	cursor:pointer;
+}
 </style>
 </head>
 <body>
@@ -131,7 +134,8 @@
 						</div>
 						<div class="right">
 						<ul style = "float:right; margin:10px;">
-						<i class="far fa-heart fa-3x"></i>
+						<!-- <i class="far fa-heart fa-3x"></i> -->
+						<i class="fab fa-gratipay fa-3x"></i>
 						</ul>
 							<img src="<%=prof.getFiles_root() %>" id="img">
 							<p align="center">

@@ -111,23 +111,22 @@ public class BoardDao {
 	}
 
 	//최저가 정렬
-	public ArrayList<Board> selectCheapList(Connection con, int currentPage, int limit) {
-		PreparedStatement pstmt = null;
+	public ArrayList<Board> selectSaleChangeList(Connection con, int currentPage, int limit, String query2) {
+//		PreparedStatement pstmt = null;
+		Statement stmt = null;
 		ResultSet rset = null;
 		ArrayList<Board> list = null;
 		
-		String query = prop.getProperty("selectCheapList");
+		String query = prop.getProperty("selectSaleChangeList");
 		
 		try {
-			pstmt = con.prepareStatement(query);
-			
+			stmt = con.createStatement();
 			int startRow = (currentPage -1) *limit +1;
 			int endRow= startRow +limit -1;
+//			?))WHERE RNUM BETWEEN ? AND ?
+			query += query2 + ")) WHERE RNUM BETWEEN " + startRow + " and " + endRow;
 			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			
-			rset = pstmt.executeQuery();
+			rset = stmt.executeQuery(query);
 			
 			list = new ArrayList<Board>();
 			
@@ -137,148 +136,6 @@ public class BoardDao {
 				b.setBoard_no(rset.getInt("board_no"));
 				b.setBoard_type(rset.getInt("board_type"));
 				b.setBoard_title(rset.getString("board_title"));
-				b.setBoard_content(rset.getString("board_content"));
-				b.setNick_name(rset.getString("nick_name"));
-				b.setBoard_date(rset.getDate("board_date"));
-				b.setBoard_status(rset.getInt("board_status"));
-				b.setBoard_count(rset.getInt("board_count"));
-				b.setMain_view(rset.getInt("main_view"));
-				
-				list.add(b);
-			}
-//			System.out.println("dao: " + list);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-			close(pstmt);
-			close(rset);
-		}
-		
-		return list;
-	}
-	
-	//최고가 정렬
-	public ArrayList<Board> selectExpensiveList(Connection con, int currentPage, int limit) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Board> list = null;
-		
-		String query = prop.getProperty("selectExpensiveList");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			
-			int startRow = (currentPage -1) *limit +1;
-			int endRow= startRow +limit -1;
-			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			
-			rset = pstmt.executeQuery();
-			
-			list = new ArrayList<Board>();
-			
-			while(rset.next()){
-				Board b= new Board();
-				
-				b.setBoard_no(rset.getInt("board_no"));
-				b.setBoard_type(rset.getInt("board_type"));
-				b.setBoard_title(rset.getString("board_title"));
-				b.setBoard_content(rset.getString("board_content"));
-				b.setNick_name(rset.getString("nick_name"));
-				b.setBoard_date(rset.getDate("board_date"));
-				b.setBoard_status(rset.getInt("board_status"));
-				b.setBoard_count(rset.getInt("board_count"));
-				b.setMain_view(rset.getInt("main_view"));
-				
-				list.add(b);
-			}
-//			System.out.println("dao: " + list);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-			close(pstmt);
-			close(rset);
-		}
-		
-		return list;
-	}
-	
-	//거래완료율 정렬
-	public ArrayList<Board> selectCredibilityList(Connection con, int currentPage, int limit) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Board> list = null;
-		
-		String query = prop.getProperty("selectCredibilityList");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			
-			int startRow = (currentPage -1) *limit +1;
-			int endRow= startRow +limit -1;
-			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			
-			rset = pstmt.executeQuery();
-			
-			list = new ArrayList<Board>();
-			
-			while(rset.next()){
-				Board b= new Board();
-				
-				b.setBoard_no(rset.getInt("board_no"));
-				b.setBoard_type(rset.getInt("board_type"));
-				b.setBoard_title(rset.getString("board_title"));
-				b.setBoard_content(rset.getString("board_content"));
-				b.setNick_name(rset.getString("nick_name"));
-				b.setBoard_date(rset.getDate("board_date"));
-				b.setBoard_status(rset.getInt("board_status"));
-				b.setBoard_count(rset.getInt("board_count"));
-				b.setMain_view(rset.getInt("main_view"));
-				
-				list.add(b);
-			}
-//			System.out.println("dao: " + list);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally{
-			close(pstmt);
-			close(rset);
-		}
-		
-		return list;
-	}
-
-	//별점 정렬
-	public ArrayList<Board> selectStarList(Connection con, int currentPage, int limit) {
-		PreparedStatement pstmt = null;
-		ResultSet rset = null;
-		ArrayList<Board> list = null;
-		
-		String query = prop.getProperty("selectStarList");
-		
-		try {
-			pstmt = con.prepareStatement(query);
-			
-			int startRow = (currentPage -1) *limit +1;
-			int endRow= startRow +limit -1;
-			
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
-			
-			rset = pstmt.executeQuery();
-			
-			list = new ArrayList<Board>();
-			
-			while(rset.next()){
-				Board b= new Board();
-				
-				b.setBoard_no(rset.getInt("board_no"));
-				b.setBoard_type(rset.getInt("board_type"));
-				b.setBoard_title(rset.getString("board_title"));
-				b.setBoard_content(rset.getString("board_content"));
 				b.setMember_no(rset.getInt("member_no"));
 				b.setNick_name(rset.getString("nick_name"));
 				b.setBoard_date(rset.getDate("board_date"));
@@ -292,12 +149,14 @@ public class BoardDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally{
-			close(pstmt);
+			close(stmt);
 			close(rset);
 		}
 		
 		return list;
 	}
+	
+	
 	//연관검색어 출력
 	public ArrayList<Relate> selectRelateList(Connection con) {
 		Statement stmt = null;

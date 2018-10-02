@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.admin.model.service.AdminService;
-import com.comvision.artBridge.admin.model.vo.Board;
+import com.comvision.artBridge.admin.model.service.NoticeService;
+import com.comvision.artBridge.admin.model.vo.Notice;
+import com.comvision.artBridge.board.model.vo.Board;
 
 @WebServlet("/insertMain.ad")
 public class InsertMainAdminServlet extends HttpServlet {
@@ -34,13 +36,14 @@ public class InsertMainAdminServlet extends HttpServlet {
 		
 		String page = "";
 		if(result > 0){
-			response.sendRedirect("/artBridge/selectMain.ad");
+			page = "/views/admin/mainAdmin.jsp";
+			/*request.setAttribute("list", new AdminService().insertMain());*/
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "공지사항 등록 실패!");
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
 		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

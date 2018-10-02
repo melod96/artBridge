@@ -1,4 +1,4 @@
-package com.comvision.artBridge.message.controller;
+package com.comvision.artBridge.admin.controller;
 
 import java.io.IOException;
 import java.sql.Date;
@@ -11,21 +11,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.comvision.artBridge.admin.model.vo.PageInfo;
+import com.comvision.artBridge.admin.model.service.AdminService;
+import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.message.model.service.MessageService;
 import com.comvision.artBridge.message.model.vo.Message;
+import com.comvision.artBridge.transaction.model.vo.Transaction;
 
-@WebServlet("/selectList.msg")
-public class SelectMSGListServlet extends HttpServlet {
-	
+
+@WebServlet("/searchTrs.ad")
+public class SearchTrsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
 
-	public SelectMSGListServlet() {
+    public SearchTrsServlet() {
         super();
+ 
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
 		String date1 = null;
 		String date2 = null;
 		Date date11 = null;
@@ -40,7 +43,7 @@ public class SelectMSGListServlet extends HttpServlet {
 		
 		}
 		
-		//옵션 1 : 답변상태
+		/*//옵션 1 : 답변상태
 		String searchSelect1 = null;
 		if(request.getParameter("searchSelect1") != null){
 			searchSelect1 = request.getParameter("searchSelect1");
@@ -50,9 +53,9 @@ public class SelectMSGListServlet extends HttpServlet {
 			case "se1Option2" : addQuery += "and check_date is null "; break;
 			case "se1Option3" : addQuery += "and check_date is not null "; break;
 			}
-		}
+		}*/
 		
-		//옵션 2 : 이름 or 제목
+		//옵션 1 : 이름 or 닉네임 or 아이디
 		
 		String searchWords = null;
 		String searchSelect2 = null;
@@ -63,13 +66,16 @@ public class SelectMSGListServlet extends HttpServlet {
 			if (request.getParameter("searchSelect2") != null) {
 				searchSelect2 = request.getParameter("searchSelect2");
 				switch (searchSelect2) {
-				case "se2Option1": addQuery += "and (name || message_title ) like '%" + searchWords + "	%' ";
+				case "se2Option1": addQuery += "and name like '%" + searchWords + "%' or nick_name like '%" + searchWords + "%' or id like '%" + searchWords + "%' ";
 					break;
 				case "se2Option2":
 					addQuery += "and name like '%" + searchWords + "%' ";
 					break;
 				case "se2Option3":
-					addQuery += "and message_title like '%" + searchWords + "%' ";
+					addQuery += "and nick_name like '%" + searchWords + "%' ";
+					break;
+				case "se2Option4":
+					addQuery += "and id like '%" + searchWords + "%' ";
 					break;
 				}
 
@@ -107,29 +113,28 @@ public class SelectMSGListServlet extends HttpServlet {
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
 		
 		
-		//메세지 리스트 출력
-		ArrayList<Message> mlist = new MessageService().SelectList(currentPage, limit, addQuery);
+		//거래내역 리스트 출력
+		ArrayList<Transaction> list = new AdminService().searchTrs(currentPage, limit, addQuery);
 		
 		String page = "";
 		
-		if(mlist != null){
-			page = "views/admin/customerAdmin.jsp";
-			request.setAttribute("mlist", mlist);
+		if(list != null){
+			page = "views/admin/transactionAdmin.jsp";
+			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
 			request.setAttribute("num", num);
 		}else{
 			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "에러러ㅓ러ㅓ러!");
+			request.setAttribute("msg", "에러!");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
 		
-		
-		
-		
 	}
 
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		doGet(request, response);
 	}
 

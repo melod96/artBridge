@@ -53,17 +53,19 @@ public class UpdateNoticeDeleteServlet extends HttpServlet {
 		//삭제할 게시물의 고유 넘버를 가져옴(체크박스 체크한 만큼을 배열로 가져옴)
 		String[] contCheck = request.getParameterValues("contCheck"); 
 		
-		int result = new NoticeService().delNotice(contCheck, currentPage, limit);
+		ArrayList<Notice> list = new NoticeService().delNotice(contCheck, currentPage, limit);
 		
 		String page = "";
-		if(result > 0){
-			response.sendRedirect("/artBridge/selectNoticeList.no");
+		if(list != null){
+			page = "selectNoticeList.no";
+			//request.setAttribute("list", list);
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "공지사항 삭제 실패!");
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
 		}
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

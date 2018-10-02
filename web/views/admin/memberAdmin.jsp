@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*"%>
+	pageEncoding="UTF-8" import="java.util.ArrayList, com.comvision.artBridge.member.model.vo.Member, com.comvision.artBridge.board.model.vo.PageInfo"%>
 <%
 	ArrayList<Member> list = null;
 	if(request.getAttribute("list") != null){

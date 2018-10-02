@@ -50,7 +50,7 @@
 	.noticeArea h5{padding-left:25px;padding-top:14px;background:#3446d1;color:white;height:40px;
 					border-radius:30px;}
 	
-	.notice1 li{border-bottom:0.1em solid white; ;padding-top:10px;}
+	.notice1 li{border-bottom:1px solid #ddd; solid #ddd;padding-top:10px;}
 	.ntTitle{color:black;width:70%;height:20px;text-overflow: ellipsis;display:inline-block;overflow: hidden;white-space: nowrap}
 	.ntTitle a{color:black;}
 	.ntDate{color:gray;font-size:0.9em;float:right;}
@@ -65,6 +65,7 @@
 	.container{width:1100px;}
 	#carousel-example-generic{width:1110px;}
 	.item{margin-right:auto;margin-left:auto;width:1110px;height:480px;}	
+	body{background-image:url("/artBridge/image/mainContent/slide/back02.png");/* background-size:contain; */background-size:100% 100%;background-repeat: no-repeat}
 	.item img{margin-top:0px;margin-bottom:40px;margin-right:auto;margin-left:auto;
 	width: auto; height: auto;
     max-width: 1110px;
@@ -190,31 +191,17 @@
 			  transform: scale(0);
 			} */
 			
-		.slick-dots li button:before{/* background-image:url("/artBridge/image/mainContent/slide/back02.png"); */ background:#FAEEC5;font-size:0px; border-radius : 75%; width:12px; height:12px;}
+		.slick-dots li button:before{background-image:url("/artBridge/image/mainContent/slide/back02.png");font-size:0px; border-radius : 75%; width:12px; height:12px;}
 		.slick-prev:before{font-size:50px; content:"◀";position:relative; left:-30px;}
 		.slick-next:before{font-size:50px; content:"▶";}
 		
-		/*fixed area*/
-		/* .left-fixed-area{ width : 150px; height: 200px; position: fixed;top:250px; left:10px; border:3px solid darkgray;}
-		button[name='left-menu-btn']{margin-left:24%;margin-top:5px;} */
-		
-		/*background*/
-		/* body{background-image:url("/artBridge/image/mainContent/slide/back02.png");/* background-size:contain; *//*background-size:100% 100%;background-repeat: no-repeat} */
-		body{background:linear-gradient(#3446d1 5%, #FBB0FF 45%, #F7FFB0 90%);}
 </style>
 	
 </head>
 <body>
 
 
-<!--fixed side-->
-		<!-- <div class = "left-fixed-area">
-		</div> -->
-		
-		
-<!--//fixed area-->	
-	
-
+<!--  -->
 
     <div id="all">
        
@@ -265,8 +252,8 @@
 	  <!-- // 180929 sona 추가 -->
 
 		<div class="slider-area1">
-			<!-- <h2 class="bestH" style="margin-left: 75px; margin-bottom: 25px;">Best 작품 추천</h2> -->
-			<img style="margin-left:400px;" src='/artBridge/image/mainContent/best5.png'>
+			<h2 class="bestH" style="margin-left: 75px; margin-bottom: 25px;">Best 작품 추천</h2>
+
 
 			<div class="slider-area">
 
@@ -297,8 +284,7 @@
 		<!--인기 작가 영역-->
 <section name="bbox">
 <div class="bestArtist">
-		<!-- <h3 style="margin-left:155px; margin-bottom:-75px;">인기작가추천</h3> -->
-		<img style="margin-left:155px; margin-bottom:-75px;" src='/artBridge/image/mainContent/bestWriter.png'>
+		<h3 style="margin-left:155px; margin-bottom:-75px;">인기작가추천</h3>
 
 <div class="box-wrap">
 	<% if((ArrayList<Files>)request.getAttribute("bestWriterList") != null){
@@ -330,8 +316,7 @@
 <!--최신 글 영역-->
 <section name="bbox">
 <div class="newContent">
-	<!-- <h3 style="margin-left:155px; margin-bottom:-75px;">최신글</h3> -->
-	<img style="margin-left:155px; margin-bottom:-75px; margin-top:50px;" src='/artBridge/image/mainContent/newContent.png'>
+	<h3 style="margin-left:155px; margin-bottom:-75px;">최신글</h3>
 <div class="box-wrap">
 			<%if((ArrayList<Files>)request.getAttribute("newList") != null){
 				for (Files nl : newList) {
@@ -392,36 +377,22 @@
                               
               <!--공지사항 : 주석처리 해제하면 됨.--> 
                   <div class="noticeArea">
-                 
-                      <h5> <img style="width:160px; margin-top:-12px;margin-left:-15px;" src='/artBridge/image/mainContent/noticeTitle.png'><a class="noticeMore" style="float:right;font-size:0.8em;margin-top:-1px;margin-right:15px;color:#F2F2F2;">more</a></h5>
+                      <h5>아트브릿지 공지사항<a class="noticeMore" style="float:right;font-size:0.8em;margin-top:auto;margin-bottom:auto;margin-right:15px;color:#F2F2F2;">more</a></h5>
                       <ul class="notice1">
 						
-							<!-- for (Notice ntl : noticeList) -->
+
 						<%if((ArrayList<Notice>)request.getAttribute("noticeList") != null){
-                      		for(int i = 0 ; i < 5; i++) {
-                      			if(i < noticeList.size()){
+                      		for (Notice ntl : noticeList) {
                      	 %>
 						
 						<li>
-							<input type="hidden" value=<%=noticeList.get(i).getnNo() %>>
+							<input type="hidden" value=<%=ntl.getnNo() %>>
 							<span class="ntTitle">
-									<a class="ntTitleTag"><%=noticeList.get(i).getnTitle() %><input type="hidden" value="<%=noticeList.get(i).getnNo()%>"></a></span><span class="ntDate"><%=noticeList.get(i).getnDate()%>
+									<a class="ntTitleTag"><%=ntl.getnTitle() %><input type="hidden" value="<%=ntl.getnNo()%>"></a></span><span class="ntDate"><%=ntl.getnDate()%>
 							</span>
 						</li>
 						
-						<%}else{%>
-							
-							<li>
-							<span class="ntTitle">
-									<a class="ntTitleTag"> <input type="hidden" value=""></a>
-							</span>
-							<span class="ntDate"></span>
-						</li>
-							
-							
-							
-						<% }
-                      			
+						<%
 							}}
 						%>
 

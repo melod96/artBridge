@@ -26,25 +26,61 @@ public class UpdateSaleDeleteServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		String str = request.getParameter("str");
-		String[] arr = str.split(",");
-		int result = 0;
 		
-		for (int i = 0; i < arr.length; i++) {
-			result += new AdminService().updateMainDelete(arr[i]);
+		int currentPage;
+		int limit;
+		int maxPage;
+		int startPage;
+		int endPage;
+
+		currentPage = 1;
+
+		limit = 5;
+
+		if (request.getParameter("currentPage") != null) {
+			currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		}
+
+		int listCount = new BoardService().getListCount();
+
+		maxPage = (int) ((double) listCount / limit + 0.9);
+
+		startPage = (((int) ((double) currentPage / limit + 0.9)) - 1) * limit + 1;
+
+		endPage = startPage + limit - 1;
+
+		if (maxPage < endPage) {
+			endPage = maxPage;
+		}
+
+		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
+
+		ArrayList<Board> list = new BoardService().selectSaleList(currentPage, limit);
 
 		String page = "";
+		int num = 1;
 
-		if (result == arr.length) {
-			response.sendRedirect("/artBridge/selectMain.ad");
-		} else {
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "실패실패!");
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
+		String str2 = request.getParameter("str2");
+		String[] arr = str2.split(",");
+
+		for (int i = 0; i < arr.length; i++) {
+			int b = new AdminService().updateMainDelete(arr[i]);
 		}
+
+		String page1 = "";
+
+		if (list != null) {
+			page1 = "views/admin/mainAdmin.jsp";
+			request.setAttribute("num", num);
+			request.setAttribute("list", list);
+			request.setAttribute("pi", pi);
+
+		} else {
+			page1 = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "실패실패!");
+		}
+		RequestDispatcher view = request.getRequestDispatcher(page1);
+		view.forward(request, response);
 		
 	}
 
