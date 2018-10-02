@@ -42,9 +42,9 @@ public class UpdatePieceServlet extends HttpServlet {
 			ArrayList<String> originFiles = new ArrayList<String>();
 			Enumeration<String> filesName = multiRequest.getFileNames();
 			
+			int j = 0;
 			while(filesName.hasMoreElements()){
 				String name = filesName.nextElement();
-				
 				saveFiles.add(multiRequest.getFilesystemName(name));
 				originFiles.add(multiRequest.getOriginalFileName(name));
 			}
@@ -54,14 +54,16 @@ public class UpdatePieceServlet extends HttpServlet {
 			for(int i = originFiles.size() -1; i >= 0; i--){
 				Files at = new Files();
 				at.setFiles_root(savePath);
-				at.setFiles_title(originFiles.get(i));
+				if(originFiles.get(i) != null && originFiles.get(i).length() > 0){
+					at.setFiles_title(originFiles.get(i));
+				}
 				at.setChange_title(saveFiles.get(i));
-				
+
 				fileList.add(at);
 			}
 		
-			
 			//Board테이블에 저장할 데이터 가져오기
+			int pieceNo = Integer.parseInt(multiRequest.getParameter("pieceNo"));
 			int memberNo = Integer.parseInt(multiRequest.getParameter("memberNo"));
 			String title = multiRequest.getParameter("title");
 			int resolution = Integer.parseInt(multiRequest.getParameter("resolution"));
@@ -72,6 +74,7 @@ public class UpdatePieceServlet extends HttpServlet {
 			
 			//Board객체 생성
 			Board b = new Board();
+			b.setBoard_no(pieceNo);
 			b.setMember_no(memberNo);
 			b.setBoard_title(title);
 			b.setResolution(resolution);
@@ -88,15 +91,22 @@ public class UpdatePieceServlet extends HttpServlet {
 			String[] option = multiRequest.getParameterValues("option");
 			String[] price = multiRequest.getParameterValues("price");
 			
-			int[] intArr = null;
+			ArrayList<Options> optionsList = new ArrayList<Options>();
+			
+			for(int i = 0; i < optionCount; i++){
+				Options o = new Options();
+				o.setOptions_name(option[i]);
+				o.setOptions_price(Integer.parseInt(price[i]));
+				optionsList.add(o);
+			}
+			
+			/*int[] intArr = null;
 			if(price != null){
 				intArr = new int[price.length];
 				for(int i= 0; i < optionCount; i++){
 					intArr[i] += Integer.parseInt(price[i]);
 				}
 			}
-			
-			ArrayList<Options> optionsList = new ArrayList<Options>();
 			
 			if(option != null && price != null){
 				for(int i = 0; i < optionCount; i++){
@@ -107,11 +117,11 @@ public class UpdatePieceServlet extends HttpServlet {
 					optionsList.add(op);
 					//System.out.println("ArrayList에 담긴것 : " + optionsList);
 				}
-			} 
+			}*/ 
 			
 			//연관검색어 R_N_LIST테이블에 저장할 데이터 가져오기
 			String[] relateCk = multiRequest.getParameterValues("relateCk");
-			
+				
 			//service 전송
 			int result = new WriterService().updatePiece(b, fileList, relateCk, optionsList, memberNo);
 			

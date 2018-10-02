@@ -107,7 +107,7 @@
 	//옵션삭제버튼
 	function optionDel(){
 		$("#opt-del").click(function(){
-     		$('input[checked=checked]').parent().parent().remove();
+     		$('.option-tbl input[checked=checked]').parent().parent().remove();
  		});
 	}
 	

@@ -34,12 +34,13 @@ public class WriterService {
 	//작가 작품등록 메소드
 	public int insertPiece(Board b, ArrayList<Files> fileList, String[] relateCk, ArrayList<Options> optionsList, int memberNo) {
 		Connection con = getConnection();
-		int result = 0;  //제목 등 데이터 저장용
+		int result = 0;  
+		int result1 = 0;//제목 등 데이터 저장용
 		int result2 = 0; //썸네일 파일 저장용
 		int result3 = 0; //옵션 및 가격 저장용
 		int result4 = 0; //연관검색어 저장용
 		
-		int result1 = new WriterDao().insertPiece(con, b);
+		result1 = new WriterDao().insertPiece(con, b);
 		
 		int currval = new WriterDao().selectBoardCurrval(con);
 		
@@ -201,27 +202,28 @@ public class WriterService {
 	//작품 수정용 메소드
 	public int updatePiece(Board b, ArrayList<Files> fileList, String[] relateCk, ArrayList<Options> optionsList, int memberNo) {
 		Connection con = getConnection();
-		int result = 0;  //제목 등 데이터 저장용
+		int result = 0;  
+		int result1 = 0; //제목 등 데이터 저장용
 		int result2 = 0; //썸네일 파일 저장용
 		int result3 = 0; //옵션 및 가격 저장용
 		int result4 = 0; //연관검색어 저장용
 		
-		int result1 = new WriterDao().updatePiece(con, b);
+		result1 = new WriterDao().updatePiece(con, b, memberNo);
 		
-		int currval = new WriterDao().selectBoardCurrval(con);
-		
-		/*for(int i = 0; i < fileList.size(); i++){
-			result2 += new WriterDao().updateAttachment(con, fileList.get(i), currval, i + 2);
+		for(int i = 0; i < fileList.size(); i++){
+			result2 += new WriterDao().updateAttachment(con, fileList.get(i), b.getBoard_no(), (i + 2));
 		}
 		
 		for(int i = 0; i < optionsList.size(); i++){
-			result3 += new WriterDao().updateOptions(con, optionsList.get(i), currval, memberNo);
+			new WriterDao().updateOptions(con, b.getBoard_no(), memberNo);
+			result3 += new WriterDao().insertOptions(con, optionsList.get(i), b.getBoard_no(), memberNo);
 		}
 		
 		for(int i = 0; i < relateCk.length; i++){
-			result4 += new WriterDao().updateNumList(con, relateCk[i], currval);
-		}*/
-
+			new WriterDao().updateRelate(con, b.getBoard_no());
+			result4 += new WriterDao().relateNumList(con, relateCk[i], b.getBoard_no());
+		}
+		
 		if(result1 > 0 && result2 == fileList.size() && result3 == optionsList.size() && result4 == relateCk.length){
 			commit(con);
 			result = 1;
