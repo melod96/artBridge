@@ -429,7 +429,8 @@
 <!-- 	   	//마이페이지 탭 제목 -->
 					
 <!--        * 1. 마이페이지 탭 메뉴 - 주문관리 탭 -->
-			<form action="" method="post"class="order-menu tab-menu-content-form">
+<!-- 			<form action="" method="post"class="order-menu tab-menu-content-form"> -->
+			<div class="order-menu tab-menu-content-form">
 				<div class="order-menu">	<!-- ***수정사항 : 구매자(buyer) 판매자(seller) 입장에 따른 필터링, 행 색 속성, DB처리 등  -->
 					<select id="stmt-Filter" class="form-control input-xshort selectBox">
 						<option>전체 보기</option>
@@ -438,7 +439,8 @@
 						<!-- <option>진행중인 거래내역</option>
 						<option>거래 완료 내역</option> -->
 					</select>
-	
+
+				<form action="<%= request.getContextPath() %>/confirmReq.ts" method="post">
 					<table class="tbl-type02">
 						<colgroup>
 							<col style="width: 4.5%;">
@@ -467,112 +469,46 @@
 						</thead>
 						
 						<tbody>		
-<%-- 							<% if(transList != null){
-								for(int i = 0; i < transList.size(); i++){ 
-								  if(transList.get(i).getDivRole_no() == 0){ %>
-									<tr id="" class="seller-list transInfo-list">
-										<td>판매</td>
-										<td><a onclick="stmtDisplayBlock(<%= transList.get(i).getOrders_no() %>);" id="orderNo" class="btn"><%= transList.get(i).getOrders_no() %></a></td>
-										<td><%= transList.get(i).getCusId() %></td>
-										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= transList.get(i).getBoard_no() %>"><%= transList.get(i).getBoard_title() %></a></td>
-									 	
-									  <% if(transList.get(i).getOrders_activity() == 1){ %>										
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 2){ %>
-									    <td><button onclick="confirmReq();" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">1단계 컨펌</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 3){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 4){ %>
-									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">2단계 컨펌</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 5){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 6){ %>
-									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">최종 컨펌</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 7){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 8){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
-									  <% } %>
-									  										
-										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-										<td><%= transList.get(i).getO_date() %></td>
-									  <% if(transList.get(i).getO_final_date() == null){ %>
-									    <td>-</td>
-									  <% }else{ %>
-										<td><%= transList.get(i).getO_final_date() %></td>
-									  <% } %>	
-	<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
-	<!-- 										<div class="btn-center btn-outer-style"> -->
-	<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">거래취소</button> -->
-	<!-- 						                </div> -->
-	<!-- 									</td> -->
-									  </tr>
-								  <% } else if(transList.get(i).getDivRole_no() == 1){ %>
-									<tr id="" class="buyer-list transInfo-list">
-										<td>구매</td>
-										<td><a onclick="stmtDisplayBlock('<%= transList.get(i).getOrders_no() %>');" id="orderNo" class="btn"><%= transList.get(i).getOrders_no() %></a></td>
-										<td><%= transList.get(i).getWrtNick() %></td>
-										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= transList.get(i).getBoard_no() %>"><%= transList.get(i).getBoard_title() %></a></td>
-										
-									  <% if(transList.get(i).getOrders_activity() == 1){ %>										
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 2){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 3){ %>
-									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 1단계</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 4){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 5){ %>
-									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 2단계</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 6){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">최종 작업중</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 7){ %>
-									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">작품 확인</button></td>
-									  <% }else if(transList.get(i).getOrders_activity() == 8){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
-									  <% } %>										
-										
-										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-										<td><%= transList.get(i).getO_date() %></td>
-									  <% if(transList.get(i).getO_final_date() == null){ %>
-									    <td>-</td>
-									  <% }else{ %>
-										<td><%= transList.get(i).getO_final_date() %></td>
-									  <% } %>	
-	<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
-	<!-- 										<div class="btn-center btn-outer-style"> -->
-	<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">환불요청</button> -->
-	<!-- 						                </div> -->
-	<!-- 									</td> -->
-									  </tr>
-									<% } } } %> --%>
 							<% if(transList != null){
-								for(Transaction tr : transList){ 
-								  if(tr.getDivRole_no() == 0){ %>
+								for(Transaction tr : transList){ %>
+								  <% if(tr.getDivRole_no() == 0){ %>
 									<tr id="" class="seller-list transInfo-list">
-										<td>판매</td>
-										<td><a onclick="stmtDisplayBlock(<%= tr.getOrders_no() %>);" id="orderNo" class="btn"><%= tr.getOrders_no() %></a></td>
-										<td><%= tr.getCusId() %></td>
+										<td>판매<input type="hidden" name="roleNo" value="<%= tr.getDivRole_no() %>"/></td>
+										<td><a onclick="stmtDisplayBlock();" name="ordersNo" class="btn"><%= tr.getOrders_no() %></a></td>
+										<td><%= tr.getCusId() %><input type="hidden" name="cusId" value="<%= tr.getCusId() %>" /></td>
 										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= tr.getBoard_no() %>"><%= tr.getBoard_title() %></a></td>
-									 	
+
 									  <% if(tr.getOrders_activity() == 1){ %>										
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button></td>
-									  <% }else if(tr.getOrders_activity() == 2){ %>
-									    <td><button onclick="confirmReq();" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">1단계 컨펌</button></td>
-									  <% }else if(tr.getOrders_activity() == 3){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
-									  <% }else if(tr.getOrders_activity() == 4){ %>
-									    <td><button onclick="confirmReq();" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">2단계 컨펌</button></td>
-									  <% }else if(tr.getOrders_activity() == 5){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
-									  <% }else if(tr.getOrders_activity() == 6){ %>
-									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">최종 컨펌</button></td>
-									  <% }else if(tr.getOrders_activity() == 7){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>
-									  <% }else if(tr.getOrders_activity() == 8){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button></td>
+									  <% }else if(tr.getOrders_activity() == 2){
+											if(tr.getOd_endDate() == null){ %>
+									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">1단계 컨펌</button></td>
+										<% }else{ %>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>										  
+										<% } %>
+									  <% }else if(tr.getOrders_activity() == 3){
+											if(tr.getOd_endDate() == null){ %>
+									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">2단계 컨펌</button></td>
+										<% }else{ %>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>										  
+										<% } %>
+									  <% }else if(tr.getOrders_activity() == 4){
+											if(tr.getOd_endDate() == null){ %>
+									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">최종 컨펌</button></td>
+										<% }else{ %>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">확인중</button></td>										  
+										<% } %>
+										
+<!-- 									   구매자는 수령(6) 후 거래 종료/판매자는 대금 지급(7)까지 완료되면 거래 완료 -->
+									  <% }else if(tr.getOrders_activity() == 5){ %>  
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">지급 대기</button></td>
+									  <% }else if(tr.getOrders_activity() == 6){
+											if("대금 지급 이력이 있다면"== "ㅁㅁ"){ %>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
+										<% }else{ %>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">지급 대기</button></td>
+										<% } %>
 									  <% } %>
-									  <input type="text" name="" style="display:none;"/>
 									  										
 										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
 										<td><%= tr.getO_date() %></td>
@@ -580,37 +516,55 @@
 									    <td>-</td>
 									  <% }else{ %>
 										<td><%= tr.getO_final_date() %></td>
-									  <% } %>	
-	<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
-	<!-- 										<div class="btn-center btn-outer-style"> -->
-	<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">거래취소</button> -->
-	<!-- 						                </div> -->
-	<!-- 									</td> -->
-									  </tr>
+									  <% } %>
+										<!-- <td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐
+											<div class="btn-center btn-outer-style">
+							                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">거래취소</button>
+							                </div>
+										</td> -->
+									</tr>
+									<tr>
+										<td colspan="8" style="padding:0; border:0;">
+									 		<input type="hidden" name="activityNo" value="<%= tr.getOrders_activity() %>" />
+									 		<input type="hidden" name="ordersNo" value="<%= tr.getOrders_no() %>" />									 		
+										 	<input type="hidden" name="oFinDate" value="<%= tr.getO_final_date() %>" />
+										 	<input type="hidden" name="odStartDate" value="<%= tr.getOd_startDate() %>" />
+										 	<input type="hidden" name="odEndDate" value="<%= tr.getOd_endDate() %>" />
+										</td>
+									</tr>
+
 								  <% } else if(tr.getDivRole_no() == 1){ %>
-									<tr id="" class="buyer-list transInfo-list">
-										<td>구매</td>
-										<td><a onclick="stmtDisplayBlock('<%= tr.getOrders_no() %>');" id="orderNo" class="btn"><%= tr.getOrders_no() %></a></td>
-										<td><%= tr.getWrtNick() %></td>
+									<tr id="" class="buyer-list transInfo-list">									
+										<td>구매<input type="hidden" name="roleNo" value="<%= tr.getDivRole_no() %>"/></td>
+											<td><a onclick="stmtDisplayBlock();" class="btn"><%= tr.getOrders_no() %></a></td>
+										<td><%= tr.getWrtNick() %><input type="hidden" name="wrtId" value="<%= tr.getWrtId() %>" /></td>
 										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= tr.getBoard_no() %>"><%= tr.getBoard_title() %></a></td>
-										
+									  
 									  <% if(tr.getOrders_activity() == 1){ %>										
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button></td>
-									  <% }else if(tr.getOrders_activity() == 2){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>
-									  <% }else if(tr.getOrders_activity() == 3){ %>
-									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 1단계</button></td>
-									  <% }else if(tr.getOrders_activity() == 4){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>
-									  <% }else if(tr.getOrders_activity() == 5){ %>
-									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 2단계</button></td>
-									  <% }else if(tr.getOrders_activity() == 6){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">최종 작업중</button></td>
-									  <% }else if(tr.getOrders_activity() == 7){ %>
-									    <td><button onclick="" name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">작품 확인</button></td>
-									  <% }else if(tr.getOrders_activity() == 8){ %>
-										<td><button disabled name="odActivity" class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
-									  <% } %>										
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button></td>
+									  <% }else if(tr.getOrders_activity() == 2){
+											if(tr.getOd_endDate() == null){ %>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>										  
+										<% }else{ %>
+									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 1단계</button></td>
+										<% } %>
+									  <% }else if(tr.getOrders_activity() == 3){
+											if(tr.getOd_endDate() == null){ %>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>										  
+										<% }else{ %>
+									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">컨펌 2단계</button></td>
+										<% } %>
+									  <% }else if(tr.getOrders_activity() == 4){
+											if(tr.getOd_endDate() == null){ %>
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">작업중</button></td>										  
+										<% }else{ %>    <!-- 작품 확인 되면 order_detail endDate만 날짜 update하기 -->
+									    <td><button onclick="confirmReq();" class="btn btn-primary btn-lg btn-del btn-plus-design confirmBtn">작품 확인</button></td>
+										<% } %>
+									  <% }else if(tr.getOrders_activity() == 5){ %>     <!-- 수령 완료 버튼 누르면 거래 최종 종료 / 작품 확인 날짜로부터 일주?이주 후에 자동으로 수령 완료 상태로 바꾸고 최종 작업 완료 날짜 update & 활동번호 올려서 거래 완료로 변경하기 -->
+										<td><button class="btn btn-primary btn-lg btn-del btn-plus-design">수령 완료</button></td>
+									  <% }else if(tr.getOrders_activity() == 6){ %>  <!-- 구매자는 수령(6) 후 거래 종료/판매자는 대금 지급까지 완료되면 거래 완료 -->
+										<td><button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn" style="color:black;">거래 완료</button></td>
+									  <% } %>									  									
 										
 										<td><img src='/artBridge/image/common/mypage/msg.png'></td>
 										<td><%= tr.getO_date() %></td>
@@ -619,13 +573,22 @@
 									  <% }else{ %>
 										<td><%= tr.getO_final_date() %></td>
 									  <% } %>	
-	<!-- 									<td>	if 구매자가 결제 한 이후에 취소 -> 취소하면 작품 완성률이 떨어짐 -->
-	<!-- 										<div class="btn-center btn-outer-style"> -->
-	<!-- 						                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">환불요청</button> -->
-	<!-- 						                </div> -->
-	<!-- 									</td> -->
-									  </tr>
-									<% } } } %>
+										<!-- <td>	
+											<div class="btn-center btn-outer-style">
+							                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">환불요청</button>
+							                </div>
+										</td> -->
+									</tr>
+									<tr>
+										<td colspan="8" style="padding:0; border:0;">
+									 		<input type="hidden" name="activityNo" value="<%= tr.getOrders_activity() %>" />
+									 		<input type="hidden" name="ordersNo" value="<%= tr.getOrders_no() %>" />
+										 	<input type="hidden" name="oFinDate" value="<%= tr.getO_final_date() %>" />
+										 	<input type="hidden" name="odStartDate" value="<%= tr.getOd_startDate() %>" />
+										 	<input type="hidden" name="odEndDate" value="<%= tr.getOd_endDate() %>" />
+										</td>
+									</tr>										
+							<% } } } %>	
 						</tbody>
 					</table>
 	
@@ -678,10 +641,10 @@
 <!-- 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a> -->
 <!-- 					</div> -->
 <!--                    // 페이징 영역 -->
-
+				</form>	
 				<br><br><br><br>
 				</div>
-			</form>
+			</div>
 <!-- 		//1. 마이페이지 탭 메뉴 - 주문관리 탭 -->
 
 <!-- 		* 2. 마이페이지 탭 메뉴 - 쪽지함 탭 -->
@@ -1585,7 +1548,10 @@
 		
 	// 	* 컨펌 받기
 		function confirmReq(){
-			location.href = "<%= request.getContextPath() %>/insertSend.msg"		
+			console.log(data);
+			alert(data);
+
+<%-- 			location.href = "<%= request.getContextPath() %>/confirmReq.ts"; --%>
 		};
 		
 	</script>
