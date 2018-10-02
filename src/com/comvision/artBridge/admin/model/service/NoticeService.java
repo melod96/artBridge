@@ -29,11 +29,11 @@ public class NoticeService {
 
 	//공지사항 리스트 출력용 메소드
 	//public ArrayList<Notice> selectList() {
-	public ArrayList<Notice> selectList(int currentPage, int limit) {
+	public ArrayList<Notice> selectList(int currentPage, int limit, String search) {
 		Connection con = getConnection();
 		
 		//ArrayList<Notice> list = new NoticeDao().selectList(con);
-		ArrayList<Notice> list = new NoticeDao().selectList(con, currentPage, limit);
+		ArrayList<Notice> list = new NoticeDao().selectList(con, currentPage, limit, search);
 		
 		close(con);
 		
@@ -99,25 +99,24 @@ public class NoticeService {
 	}
 
 	//공지사항 삭제용 메소드
-	public ArrayList<Notice> delNotice(String[] contCheck, int currentPage, int limit) {
+	public int delNotice(String[] contCheck, int currentPage, int limit) {
 		Connection con = getConnection();
-		ArrayList<Notice> list = null;
+		
 		int result = 0;
 		
 		for(int i = 0; i < contCheck.length; i++){
 			result += new NoticeDao().delNotice(con, contCheck[i]);
-			System.out.println(result);
 		}
+		
 		if(result == contCheck.length){
 			commit(con);
-			list = new NoticeDao().selectList(con, currentPage, limit);
 		}else{
 			rollback(con);
 		}
 		
 		close(con);
 		
-		return list;
+		return result;
 	}
 
 	

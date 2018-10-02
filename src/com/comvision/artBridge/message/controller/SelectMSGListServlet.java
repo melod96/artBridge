@@ -33,11 +33,10 @@ public class SelectMSGListServlet extends HttpServlet {
 		String addQuery ="";
 		//날짜로 검색.
 		if(request.getParameter("date1") != null && request.getParameter("date2") != null){
-		date1 = request.getParameter("date1");
-		date2 = request.getParameter("date2");
+			date1 = request.getParameter("date1");
+			date2 = request.getParameter("date2");
 		
-		addQuery += "and message_date between '" +date1+"' and '"+date2 + "' ";
-		
+			addQuery += "and message_date between '" +date1+"' and '"+date2 + "' ";
 		}
 		
 		//옵션 1 : 답변상태
@@ -123,10 +122,7 @@ public class SelectMSGListServlet extends HttpServlet {
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
-		
-		
-		
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

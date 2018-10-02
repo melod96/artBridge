@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.transaction.model.vo.*,com.comvision.artBridge.board.model.vo.*"%>
+	pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*"%>
 	<%
 	ArrayList<Transaction> list = null; 
 	if((ArrayList<Transaction>)request.getAttribute("list") != null){
@@ -75,7 +75,7 @@ ul.tab-menu li>a:hover {
 					</script> 
 					
 						<div>
-						<form action="<%= request.getContextPath() %>/searchTrs.ad?pageName=transaction&currentPage=1" method="post">
+						<form action="<%= request.getContextPath() %>/selectTrs.ad?pageName=transaction" method="post">
 							<table class="tbl-type02">
 
 								<tbody>
