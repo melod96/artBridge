@@ -84,13 +84,10 @@
    .img-in{overflow:hidden; width:150px; height:150px; border:1px solid #ddd; border-radius:50%; /* background:url("/artBridge/image/common/img_profile.png") 50% no-repeat; background-size:100%; */}
    .img-in img{width:100%;}
    .img-area{float:left; text-align:center;}
-   .img-area .file-btn{margin-top:15px;}
-   .img-area .file-btn input[type=file]{display:none;}
-   .img-area .file-btn label{width:150px;}
 
    .input-area{margin-left:40px; float:left; width:585px;}
    .input-area label{vertical-align:top; font-weight:bold;}
-   .input-area input[type="text"], .input-area textarea{display:inline-block; height:154px; width:500px; resize:none; margin-left:15px; line-height:1.6;}
+   .input-area input[type="text"], .input-area textarea{display:inline-block; height:104px; width:500px; resize:none; margin-left:15px; line-height:1.6; border:none; padding:0; background:#fff !important;}
    .input-area input[type="number"]{display:inline-block; margin-bottom:20px; margin-left:30px;}
    .input-area .info{margin-top:5px; position:absolute; bottom:15px; left:570px;}
    .input-area .info li{font-size:14px; margin-bottom:3px; color:#428bca;}
@@ -170,10 +167,6 @@
                               	<img id="img-change" src="/artBridge/image/common/img_profile.png" alt="프로필 이미지">
                               <% } %>
                             </div>
-                            <div class="file-btn">
-                              <input type="file" id="sel-img" name="profileImg" value="이미지 선택">
-                              <label for="sel-img" class="btn btn-warning">이미지 선택</label>
-                            </div>
                         </div>
                    
                         <div class="input-area">
@@ -182,7 +175,7 @@
                             <span class="nick-name">[ <%= m.getNick_name() %> ]</span>
                             
                             <label for="introtxt">소개글</label>
-                            <textarea id="introtxt" name="introtxt" class="form-control" rows="3"><%= m.getIntroduction() %></textarea> 
+                            <textarea readonly id="introtxt" name="introtxt" class="form-control" rows="3"><%= m.getIntroduction() %></textarea> 
                         </div>
                         
                         <div class="state-area">

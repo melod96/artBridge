@@ -214,13 +214,13 @@ public class WriterService {
 			result2 += new WriterDao().updateAttachment(con, fileList.get(i), b.getBoard_no(), (i + 2));
 		}
 		
+		new WriterDao().updateOptions(con, b.getBoard_no(), memberNo);
 		for(int i = 0; i < optionsList.size(); i++){
-			new WriterDao().updateOptions(con, b.getBoard_no(), memberNo);
 			result3 += new WriterDao().insertOptions(con, optionsList.get(i), b.getBoard_no(), memberNo);
 		}
 		
+		new WriterDao().updateRelate(con, b.getBoard_no());
 		for(int i = 0; i < relateCk.length; i++){
-			new WriterDao().updateRelate(con, b.getBoard_no());
 			result4 += new WriterDao().relateNumList(con, relateCk[i], b.getBoard_no());
 		}
 		
