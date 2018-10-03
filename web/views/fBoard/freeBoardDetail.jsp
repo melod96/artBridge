@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.comvision.artBridge.fBoard.model.vo.FreeBoard"%>
-<% FreeBoard f = (FreeBoard)request.getAttribute("f"); %>
+<%
+Member m = null;
+if (session.getAttribute("loginUser") != null) {
+	m = (Member) session.getAttribute("loginUser");
+}
+FreeBoard f = (FreeBoard)request.getAttribute("f"); %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -24,14 +29,16 @@
 
         <!-- 주석 영역 -->
 
-
+	<form action="<%=request.getContextPath()%>/updateFree.fb?num=<%= f.getBoard_no() %>" method="post">
+	<input type = "hidden" value= "<%= f.getBoard_title() %>" name="board_title">
+	<input type = "hidden" value= "<%= f.getBoard_content() %>" name="board_content">
         <!-- contents area -->
         <div class="contents">
             <div class="container">
                 <div class="col-md-12">
                     
                     <div class="heading">
-                      <h2 class="tit1">공지사항</h2>
+                      <h2 class="tit1">자유게시판</h2>
                     </div>
                     <table class="tbl-type01">
                         <colgroup>
@@ -65,15 +72,21 @@
                         </tbody>
                     </table>
                     <div class="btn-center">
-                    	<button type="submit" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/updateFree.fb?num=<%= f.getBoard_no() %>'">수정</button>
-                   		<button type="reset" class="btn btn-primary btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectFreeBoardList.fb'">목록</button>
+                    <%if(m!=null && m.getMember_no()==f.getMember_no()){ %>
+                    	<button type="submit" class="btn btn-primary btn-lg" style="float:left">수정</button>
+                    	<button type="button" class="btn btn-danger btn-lg" onclick="location.href='<%=request.getContextPath()%>/deleteFree.fb?num=<%=f.getBoard_no() %>'" style="float:left">삭제</button>
+                    	<%} %>
+                   		<button type="reset" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectFreeBoardList.fb'" style="float:right">목록</button>
                     </div>
 
                 </div>
             </div>
         </div>
+        </form>
         <!-- // contents area -->
         <!-- // 주석 영역 -->
+        <br>
+        <br>
 
         <!-- Footer -->
         <%@ include file="/views/common/footer.jsp" %>

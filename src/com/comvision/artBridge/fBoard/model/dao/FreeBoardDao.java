@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.comvision.artBridge.admin.model.dao.NoticeDao;
-import com.comvision.artBridge.admin.model.vo.Notice;
 import com.comvision.artBridge.fBoard.model.vo.FreeBoard;
 
 public class FreeBoardDao {
@@ -42,6 +41,7 @@ private Properties prop = new Properties();
 			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, f.getBoard_title());
 			pstmt.setString(2, f.getBoard_content());
+			pstmt.setInt(3, f.getMember_no());
 			
 			result = pstmt.executeUpdate();
 			
@@ -266,25 +266,53 @@ private Properties prop = new Properties();
 		return list;
 	}
 
-/*	//자유게시판 삭제
-	public ArrayList<FreeBoard> delNotice(Connection con, int currentPage, int limit) {
-		PreparedStatement pstmt = null;
-		int result = 0;
+	//자유게시판 삭제
+	public int delFreeBoard(Connection con, int board_no) {
+	PreparedStatement pstmt = null;
+	int result = 0;
+	
+	String query = prop.getProperty("deleteFreeBoard");
+	
+	try {
+		pstmt=con.prepareStatement(query);
+		pstmt.setInt(1, board_no);
 		
-		String query = prop.getProperty("deleteNotice");
+		result=pstmt.executeUpdate();
+	} catch (SQLException e) {
+		e.printStackTrace();
+	}finally{
+		close(pstmt);
+	}
+		
+		return result;
+	}
+
+	//검색시 페이징
+	public int getListCount(Connection con, String search) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		
+		String query = prop.getProperty("listCountSearch");
+		
+		int listCount = 0;
 		
 		try {
 			pstmt = con.prepareStatement(query);
-			pstmt.setString(1, delCk);
+			pstmt.setString(1, search);
 			
-			result = pstmt.executeUpdate();
+			rset= pstmt.executeQuery();
 			
+			if(rset.next()){
+				listCount = rset.getInt(1);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally{
+		}finally{
 			close(pstmt);
+			close(rset);
 		}
 		
-		return result;
-	}*/
+		return listCount;
+	}
+
 }

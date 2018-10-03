@@ -2,6 +2,10 @@
     pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.fBoard.model.vo.*"%>
 <% 
 /* 	ArrayList<FreeBoard> list= (ArrayList<FreeBoard>)request.getAttribute("list"); */
+Member m = null;
+if (session.getAttribute("loginUser") != null) {
+	m = (Member) session.getAttribute("loginUser");
+}
 ArrayList<FreeBoard> list = null; 
 if(request.getAttribute("list") != null){
 	list = (ArrayList<FreeBoard>)request.getAttribute("list");
@@ -76,7 +80,13 @@ if(request.getAttribute("list") != null){
 		                            <th>제목검색</th>
 		                            <td>
 		                              <input name="search" class="form-control input-mid" type="text" placeholder="검색할 제목을 입력하세요">
-		                              <button type="submit" class="btn btn-primary" style="display:inline-block; margin-top:0px;">검색</button>
+		                              <button type="submit" class="btn btn-info" style="display:inline-block; margin-top:0px;">검색</button>
+	                </form>
+	                <%if(m!=null){ %>
+	                <form action="<%=request.getContextPath()%>/views/fBoard/freeBoardInsertForm.jsp" method="get">
+		                              <button type="submit" class="btn btn-primary" style="display:inline-block; margin-top:-33px; float:right;">작성</button>
+	                </form>
+	                <%} %>
 		                            </td>
 		                        </tr>
 		                    </tbody>
@@ -107,7 +117,7 @@ if(request.getAttribute("list") != null){
 								<tr>
 								<td><%=f.getBoard_no()%></td>
 								<td id="freeTit" class="tit"
-										onclick="location.href='<%=request.getContextPath()%>/selectFreeBoardDetail.fb?num=<%=f.getBoard_no()%>'"><%=f.getBoard_title()%></td>
+										onclick="location.href='<%=request.getContextPath()%>/FreeBoardDetail.fb?num=<%=f.getBoard_no()%>'"><%=f.getBoard_title()%></td>
 								<td><%=f.getNick_name()%></td>
 								<td><%=f.getBoard_count()%></td>
 								<td><%=f.getBoard_date()%></td>
@@ -125,7 +135,6 @@ if(request.getAttribute("list") != null){
 
 							</tbody>
 		                </table>
-	                </form>
 	                
 	                <!-- // 공지사항 리스트  -->
 	                

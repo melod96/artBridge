@@ -104,27 +104,25 @@ public class FreeBoardService {
 					return list;
 				}
 				
-/*				//자유게시판 삭제
-				public ArrayList<FreeBoard> delFreeBoard(String[] contCheck, int currentPage, int limit) {
+				//자유게시판 삭제
+				public int delFreeBoard(int board_no) {
 					Connection con = getConnection();
-					ArrayList<FreeBoard> list = null;
-					int result = 0;
+					int list = new FreeBoardDao().delFreeBoard(con, board_no);
 					
-					for(int i = 0; i < contCheck.length; i++){
-						result += new NoticeDao().delNotice(con, contCheck[i]);
-						System.out.println(result);
-					}
-					if(result == contCheck.length){
-						commit(con);
-						list = new FreeBoardDao().selectFreeList(con, currentPage, limit);
-					}else{
-						rollback(con);
-					}
+					close(con);
+					return list;
+				}
+				
+				//검색시 페이징
+				public int getListCount(String search) {
+					Connection con = getConnection();
+					
+					int listCount = new FreeBoardDao().getListCount(con,search);
 					
 					close(con);
 					
-					return list;
-				}*/
-	
+					return listCount;
+				}
+				
 		
 }

@@ -10,11 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.comvision.artBridge.admin.model.service.NoticeService;
-import com.comvision.artBridge.admin.model.vo.Notice;
-import com.comvision.artBridge.admin.model.vo.PageInfo;
 import com.comvision.artBridge.fBoard.model.service.FreeBoardService;
 import com.comvision.artBridge.fBoard.model.vo.FreeBoard;
+import com.comvision.artBridge.fBoard.model.vo.PageInfo;
 
 
 @WebServlet("/searchFree.fb")
@@ -29,6 +27,8 @@ public class SelecetSearchFreeBoardServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//자유게시판 검색
+		String search = request.getParameter("search");
 		//페이징 처리
 				int currentPage;
 				int limit;		
@@ -37,13 +37,13 @@ public class SelecetSearchFreeBoardServlet extends HttpServlet {
 				int endPage; 	
 
 				currentPage = 1;
-				limit = 10;
+				limit = 5;
 
 				if(request.getParameter("currentPage")!= null){
 					currentPage = Integer.parseInt(request.getParameter("currentPage"));
 				}
 
-				int listCount = new FreeBoardService().getListCount();
+				int listCount = new FreeBoardService().getListCount(search);
 
 				maxPage = (int)((double)listCount/limit + 0.9);
 				startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
@@ -56,8 +56,6 @@ public class SelecetSearchFreeBoardServlet extends HttpServlet {
 				PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 				
 				
-				//자유게시판 검색
-				String search = request.getParameter("search");
 				
 				System.out.println(search);
 						

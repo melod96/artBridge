@@ -28,40 +28,11 @@ public class UpdateFreeDeleteServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//페이징 처리
-		int currentPage;
-		int limit;		
-		int maxPage; 	
-		int startPage;	
-		int endPage; 	
-
-		currentPage = 1;
-		limit = 10;
-
-		if(request.getParameter("currentPage")!= null){
-			currentPage = Integer.parseInt(request.getParameter("currentPage"));
-		}
-
-		int listCount = new FreeBoardService().getListCount();
-
-		maxPage = (int)((double)listCount/limit + 0.9);
-		startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
-		
-		endPage = startPage + limit -1;
-		if(maxPage<endPage){
-			endPage = maxPage;
-		}
-
-		PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
-		
-		
-		//삭제할 게시물의 고유 넘버를 가져옴(체크박스 체크한 만큼을 배열로 가져옴)
-		String[] contCheck = request.getParameterValues("contCheck"); 
-		
-		ArrayList<FreeBoard> list = new FreeBoardService().delFreeBoard(contCheck, currentPage, limit);
+		int board_no = Integer.parseInt(request.getParameter("num"));
+		int list = new FreeBoardService().delFreeBoard(board_no);
 		
 		String page = "";
-		if(list != null){
+		if(list > 0){
 			page = "selectFreeBoardList.fb";
 			//request.setAttribute("list", list);
 		}else{

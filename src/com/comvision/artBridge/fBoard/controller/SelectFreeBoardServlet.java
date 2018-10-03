@@ -34,7 +34,7 @@ public class SelectFreeBoardServlet extends HttpServlet {
 		
 		String page = "";
 		if(f != null){
-			page = "views/FreeBoard/freeBoardDetail.jsp";
+			page = "views/fBoard/freeBoardDetail.jsp";
 			request.setAttribute("f", f);
 		}else{
 			page = "views/common/errorPage.jsp";
