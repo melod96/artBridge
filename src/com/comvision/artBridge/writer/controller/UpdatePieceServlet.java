@@ -54,9 +54,7 @@ public class UpdatePieceServlet extends HttpServlet {
 			for(int i = originFiles.size() -1; i >= 0; i--){
 				Files at = new Files();
 				at.setFiles_root(savePath);
-				if(originFiles.get(i) != null && originFiles.get(i).length() > 0){
-					at.setFiles_title(originFiles.get(i));
-				}
+				at.setFiles_title(originFiles.get(i));
 				at.setChange_title(saveFiles.get(i));
 
 				fileList.add(at);
@@ -122,6 +120,22 @@ public class UpdatePieceServlet extends HttpServlet {
 			//연관검색어 R_N_LIST테이블에 저장할 데이터 가져오기
 			String[] relateCk = multiRequest.getParameterValues("relateCk");
 				
+			
+			
+			///////////////////////////////////////////////////////////////////////////
+			for(String s : saveFiles){
+			System.out.println("saveFiles" + s);
+			}
+			
+			for(String s : originFiles){
+			System.out.println("saveFiles" + s);
+			}
+			
+			System.out.println(filesName);
+			//////////////////////////////////////////////////////////////////////////////
+			
+			
+			
 			//service 전송
 			int result = new WriterService().updatePiece(b, fileList, relateCk, optionsList, memberNo);
 			

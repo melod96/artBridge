@@ -636,7 +636,6 @@ public class WriterDao {
 		try {
 			pstmt = con.prepareStatement(query);
 			pstmt.setInt(1, pieceNo);
-			pstmt.setInt(2, memberNo);
 			
 			result = pstmt.executeUpdate();
 			

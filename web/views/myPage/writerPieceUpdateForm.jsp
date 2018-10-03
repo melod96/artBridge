@@ -16,8 +16,6 @@
 		board = (Board)request.getAttribute("board");
 	}
 	
-	System.out.println("view에서 board_no : " + board.getBoard_no());
-	
 	ArrayList<Files> pieceData = null;
 	if(request.getAttribute("pieceData") != null){
 		pieceData = (ArrayList<Files>)request.getAttribute("pieceData");
