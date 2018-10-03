@@ -54,7 +54,6 @@ public class selectListFreeBoardServlet extends HttpServlet {
 				PageInfo pi = new PageInfo(currentPage, listCount,limit, maxPage, startPage, endPage);
 				
 				//자유게시판 리스트 출력
-				//ArrayList<Notice> list = new NoticeService().selectList();
 				ArrayList<FreeBoard> list = new FreeBoardService().selectFreeList(currentPage, limit);
 				System.out.println(list);
 			
@@ -62,11 +61,10 @@ public class selectListFreeBoardServlet extends HttpServlet {
 				if(list != null){
 					page = "/views/fBoard/freeBoard.jsp";
 					request.setAttribute("list", list);
-					//request.setAttribute("list", new NoticeService().selectList());
 					request.setAttribute("pi", pi);
 				}else{
 					page = "/views/common/errorPage.jsp";
-					request.setAttribute("msg", "공지사항 보기 실패!");
+					request.setAttribute("msg", "자유게시판 목록 조회 실패!");
 				}
 				RequestDispatcher view = request.getRequestDispatcher(page);
 				view.forward(request, response);

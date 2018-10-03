@@ -38,7 +38,7 @@ public class SelectFreeBoardServlet extends HttpServlet {
 			request.setAttribute("f", f);
 		}else{
 			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "게시글 상세보기 실패!");
+			request.setAttribute("msg", "자유게시판 상세보기 실패!");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

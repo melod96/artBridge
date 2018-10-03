@@ -35,8 +35,6 @@ public class UpdateFreeBoardServlet extends HttpServlet {
 		f.setBoard_title(board_title);
 		f.setBoard_content(board_content);
 		
-//		int result = new FreeBoardService().updateFreeBoard(f);
-		
 		String page = "";
 		if(f!=null){
 			page = "views/fBoard/freeBoardUpdateForm.jsp";
@@ -53,7 +51,6 @@ public class UpdateFreeBoardServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

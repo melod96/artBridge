@@ -27,12 +27,16 @@ FreeBoard f = (FreeBoard)request.getAttribute("f"); %>
         <%@ include file="/views/common/header.jsp" %>
         <!-- // Header -->
 
-        <!-- 주석 영역 -->
+			<section class="tit-area" style="background:#bb85cf">
+            <div class="container">
+                <h2 class="tit1">자유게시판</h2>
+            </div>
+        </section>
 
 	<form action="<%=request.getContextPath()%>/updateFree.fb?num=<%= f.getBoard_no() %>" method="post">
 	<input type = "hidden" value= "<%= f.getBoard_title() %>" name="board_title">
 	<input type = "hidden" value= "<%= f.getBoard_content() %>" name="board_content">
-        <!-- contents area -->
+
         <div class="contents">
             <div class="container">
                 <div class="col-md-12">
@@ -73,18 +77,17 @@ FreeBoard f = (FreeBoard)request.getAttribute("f"); %>
                     </table>
                     <div class="btn-center">
                     <%if(m!=null && m.getMember_no()==f.getMember_no()){ %>
-                    	<button type="submit" class="btn btn-primary btn-lg" style="float:left">수정</button>
-                    	<button type="button" class="btn btn-danger btn-lg" onclick="location.href='<%=request.getContextPath()%>/deleteFree.fb?num=<%=f.getBoard_no() %>'" style="float:left">삭제</button>
+                    	<button type="submit" class="btn btn-primary btn-lg" style="float:left; padding-left:25px; padding-right:25px; padding-top:5px; padding-bottom:5px; font-size:15px;">수정</button>
+                    	<button type="button" class="btn btn-danger btn-lg" onclick="location.href='<%=request.getContextPath()%>/deleteFree.fb?num=<%=f.getBoard_no() %>'" style="float:left;padding-left:25px; padding-right:25px; padding-top:5px; padding-bottom:5px; font-size:15px;">삭제</button>
                     	<%} %>
-                   		<button type="reset" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectFreeBoardList.fb'" style="float:right">목록</button>
+                   		<button type="reset" class="btn btn-default btn-lg" onclick="location.href='<%=request.getContextPath()%>/selectFreeBoardList.fb'" style="float:right;padding-left:25px; padding-right:25px; padding-top:5px; padding-bottom:5px; font-size:15px;">목록</button>
                     </div>
 
                 </div>
             </div>
         </div>
         </form>
-        <!-- // contents area -->
-        <!-- // 주석 영역 -->
+
         <br>
         <br>
 

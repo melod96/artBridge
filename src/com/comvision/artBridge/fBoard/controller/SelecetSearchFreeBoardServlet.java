@@ -29,6 +29,8 @@ public class SelecetSearchFreeBoardServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//자유게시판 검색
 		String search = request.getParameter("search");
+		System.out.println("2:"+search);
+		
 		//페이징 처리
 				int currentPage;
 				int limit;		
@@ -37,11 +39,12 @@ public class SelecetSearchFreeBoardServlet extends HttpServlet {
 				int endPage; 	
 
 				currentPage = 1;
-				limit = 5;
+				limit = 10;
 
 				if(request.getParameter("currentPage")!= null){
 					currentPage = Integer.parseInt(request.getParameter("currentPage"));
 				}
+				System.out.println(currentPage);
 
 				int listCount = new FreeBoardService().getListCount(search);
 
@@ -60,15 +63,20 @@ public class SelecetSearchFreeBoardServlet extends HttpServlet {
 				System.out.println(search);
 						
 				ArrayList<FreeBoard> list = new FreeBoardService().searchFreeBoard(search, currentPage, limit);
+				
+				String urlurl = "searchFree.fb";
+				
 				 
 				String page = "";
 				if(list != null){
 					page = "/views/fBoard/freeBoard.jsp";
 					request.setAttribute("list", list);
 					request.setAttribute("pi", pi);
+					request.setAttribute("urlurl", urlurl);
+					request.setAttribute("search", search);
 				}else{
 					page = "/views/common/errorPage.jsp";
-					request.setAttribute("msg", "공지사항 검색 실패!");
+					request.setAttribute("msg", "자유게시판 검색 실패!");
 				}
 				RequestDispatcher view = request.getRequestDispatcher(page);
 				view.forward(request, response);

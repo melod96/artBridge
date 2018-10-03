@@ -44,10 +44,9 @@ public class insertFreeBoardServlet extends HttpServlet {
 		String page = "";
 		if(result > 0){
 			page = "selectFreeBoardList.fb";
-			//request.setAttribute("list", new NoticeService().selectList());
 		}else{
 			page = "/views/common/errorPage.jsp";
-			request.setAttribute("msg", "공지사항 등록 실패!");
+			request.setAttribute("msg", "자유게시판 등록 실패!");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
