@@ -68,14 +68,13 @@ public class UpdateMSGDetailServlet extends HttpServlet {
 		
 		String page = "";
 		if(result > 0 && result2 > 0){
-			page = "/selectList.msg?pageName=customerAdmin";
-			
+			response.sendRedirect("/artBridge/selectList.msg?pageName=customerAdmin");
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "업뎃 실패!");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 		
 	}
 

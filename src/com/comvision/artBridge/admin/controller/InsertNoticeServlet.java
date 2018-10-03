@@ -37,14 +37,13 @@ public class InsertNoticeServlet extends HttpServlet {
 		
 		String page = "";
 		if(result > 0){
-			page = "selectNoticeList.no";
-			//request.setAttribute("list", new NoticeService().selectList());
+			response.sendRedirect("/artBridge/selectNoticeList.no");
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "공지사항 등록 실패!");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -26,6 +26,17 @@
 		startPage = pi.getStartPage();
 		endPage = pi.getEndPage();
 	}
+	
+	String kind = "";
+	if(request.getAttribute("kind") != null){
+		kind = (String)request.getAttribute("kind");
+	}
+	
+	String keyword = "";
+	if(request.getAttribute("keyword") != null){
+		keyword = (String)request.getAttribute("keyword");
+	}
+	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -58,11 +69,23 @@
 					<h3 style="margin-left:25%;">판매글 목록</h3>
 					<div class="boardSelect" style="margin-left:23%; margin-bottom:0.6%">
 					<select id="selectBox" name="selectBox">
+						<% if(kind.equals("BOARD_NO")){ %>
+						<option value="no" selected>작품번호</option>
+						<% }else{ %>
 						<option value="no">작품번호</option>
+						<% } %>
+						<% if(kind.equals("NICK_NAME")){ %>
+						<option value="name" selected>작가명</option>
+						<% }else{ %>
 						<option value="name">작가명</option>
+						<% } %>
+						<% if(kind.equals("BOARD_TITLE")){ %>
+						<option value="title"selected>작품이름</option>
+						<% }else{ %>
 						<option value="title">작품이름</option>
+						<% } %>
 					</select>
-					<input id="searchText" type="text">
+					<input id="searchText" type="text" value="<%= keyword %>">
 					<button type="submit" name="mainBtn" class="btn btn-primary btn-sm" onclick="search();">검색</button>
 					<script>
 						function search(){

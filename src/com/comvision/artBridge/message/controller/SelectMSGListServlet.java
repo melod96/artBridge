@@ -117,6 +117,7 @@ public class SelectMSGListServlet extends HttpServlet {
 			request.setAttribute("mlist", mlist);
 			request.setAttribute("pi", pi);
 			request.setAttribute("num", num);
+			request.setAttribute("pageName", "customerAdmin");
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "에러러ㅓ러ㅓ러!");

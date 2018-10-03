@@ -57,14 +57,13 @@ public class InsertRatingServlet extends HttpServlet {
 		
 		String page = "";
 		if(result > 0){
-			page = "views/admin/ratingAdmin.jsp";
-			request.setAttribute("list", new AdminService().selectRating());
+			response.sendRedirect("/artBridge/selectRating.ad");
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "등급 조회 실패!");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 		
 	}
 

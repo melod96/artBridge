@@ -41,6 +41,7 @@ public class SelectRatingServlet extends HttpServlet {
 		if(list != null){
 			page = "views/admin/ratingAdmin.jsp";
 			request.setAttribute("list", list);
+			request.setAttribute("pageName", "ratingAdmin");
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "등급 조회 실패!");
