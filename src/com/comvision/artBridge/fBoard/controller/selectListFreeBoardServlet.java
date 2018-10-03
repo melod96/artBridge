@@ -10,11 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.comvision.artBridge.admin.model.service.NoticeService;
-import com.comvision.artBridge.admin.model.vo.Notice;
-import com.comvision.artBridge.admin.model.vo.PageInfo;
 import com.comvision.artBridge.fBoard.model.service.FreeBoardService;
 import com.comvision.artBridge.fBoard.model.vo.FreeBoard;
+import com.comvision.artBridge.fBoard.model.vo.PageInfo;
 
 @WebServlet("/selectFreeBoardList.fb")
 public class selectListFreeBoardServlet extends HttpServlet {
