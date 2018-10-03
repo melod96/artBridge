@@ -20,6 +20,7 @@ import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.dao.SaleDao;
 import com.comvision.artBridge.sale.model.vo.Options;
+import com.comvision.artBridge.sale.model.vo.Payment;
 import com.comvision.artBridge.sale.model.vo.Requirements;
 
 public class SaleService {
@@ -337,6 +338,30 @@ public class SaleService {
 
 		close(con);
 		return deleteFavUpdate;
+	}
+
+	public int refundUpdate(int orderno) {
+		Connection con = getConnection();
+
+		int activity = new SaleDao().ordersActivity(con, orderno);
+		int paymentno = new SaleDao().paymentnosearch(con, orderno);
+		int result = new SaleDao().refundUpdate(con, paymentno,activity);
+		int r = 0;
+		if(activity >0 && paymentno>0&&result >0){
+			r++;
+		}
+
+		close(con);
+		return r;
+	}
+
+	public Payment selectPaymentinfo(int orderno) {
+		Connection con = getConnection();
+		
+		Payment p = new SaleDao().selectPaymentinfo(con, orderno);
+		
+		close(con);
+		return p;
 	}
 
 

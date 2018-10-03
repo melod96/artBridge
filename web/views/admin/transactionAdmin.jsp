@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*"%>
+	pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.admin.model.vo.*, com.comvision.artBridge.sale.model.vo.*"%>
 	<%
 	ArrayList<Transaction> list = null; 
 	if((ArrayList<Transaction>)request.getAttribute("list") != null){
@@ -20,6 +20,11 @@
 	int maxPage = pi.getMaxPage();
 	int startPage = pi.getStartPage();
 	int endPage = pi.getEndPage(); 
+	
+	Payment pinfo = null;
+	if((Payment)request.getAttribute("p") != null){
+		pinfo = (Payment)request.getAttribute("p");
+	}
 	%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -252,8 +257,9 @@ ul.tab-menu li>a:hover {
 								<td><label><%= t.getO_date() %></label></td>
 								<td><label><%= t.getPayment() %></label></td>
 								<td><label><%= t.getBoard_title() %></label></td>
-								<td><button type="submit" name="refundBtn"
-											class="btn btn-success btn-sm"  data-toggle="modal" data-target="#myModal">환불하기</button>
+								<td>
+									<button type="button" name="refundBtn" id = "<%= t.getOrders_no()%>"
+									class="btn btn-success btn-sm"  data-toggle="modal" data-target="#myModal" onclick ="oNo(this.id)">환불하기</button>
 								</td>
 							</tr>
 				<% }} %> 
@@ -348,6 +354,7 @@ ul.tab-menu li>a:hover {
 
 	</div>
 	<!-- The Modal -->
+	<form action="<%=request.getContextPath()%>/refund.pg" method="post">
 <div class="modal" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -355,40 +362,40 @@ ul.tab-menu li>a:hover {
       <!-- Modal Header -->
       <div class="modal-header">
         <h4 class="modal-title">환불</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
 
       <!-- Modal body -->
       <div class="modal-body">
-        <!-- <table border="1">
-        <tr>
-        	<th>번호</th>
-								<th>평점</th>
-								<th>내용</th>
-								<th>작성자</th>
-								<th>작성일</th>
-        </tr>
-        	<tr>
-        		<th>이야아야밥</th>
-        		<th>ㄲ로로로로</th>
-        		<th>이야아야밥</th>
-        		<th>ㄲ로로로로</th>
-        		<th>이야아야밥</th>
-        	</tr>
-        	
-        </table> -->
-        환불 하시겠습니까?
-        <img src = "/artBridge/web/image/sale/illtest2.jpg" style="width:auto; height:140px;">
+	<input type="hidden" name = "refundorderno" id = "refundno" />
+     	   환불 하시겠습니까?
       </div>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-      	<button type="button" class="btn btn-primary" data-dismiss="modal">확인</button>
+      	<button type="button" class="btn btn-primary oNodata" data-dismiss="modal" onclick = "refund(this.id)" >확인</button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
       </div>
+      <script>
+      	function oNo(i){
+      		$(".oNodata").attr("id",i);
+      	}
+      	function refund(idchange){
+      		$("#refundno").val(idchange);
+      		$("#refundno").attr("type", "submit");
+      		$("#refundno").click();
+      	}
+      </script>
 
     </div>
   </div>
 </div>
+	</form>
+	<%if(pinfo != null){%>
+		<script>
+			$(function(){
+				alert("imp_id : <%= pinfo.getImp_no()%>, pg_id : +<%=pinfo.getPg_id()%>");
+			});
+		</script>
+	<%} %>
 </body>
 </html>
