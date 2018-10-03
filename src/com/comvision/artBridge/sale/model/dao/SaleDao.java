@@ -1074,17 +1074,17 @@ public class SaleDao {
 		int plusquery = 0;
 		switch (activity) {
 		case 1:
+			plusquery = 100;
+			break;
 		case 2:
-		case 3:
 			plusquery = 70;
 			break;
-		case 4:
+		case 3:
 			plusquery = 50;
 			break;
+		case 4:
 		case 5:
 		case 6:
-		case 7:
-		case 8:
 			plusquery = 0;
 			break;
 
