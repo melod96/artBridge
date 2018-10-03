@@ -1,4 +1,4 @@
-package com.comvision.artBridge.sale.controller;
+package com.comvision.artBridge.fav.controller;
 
 import java.io.IOException;
 
@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.fav.model.vo.Fav;
+import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.sale.model.service.SaleService;
 
 
@@ -32,10 +33,13 @@ public class FavUpdateServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int member_no = Integer.parseInt(request.getParameter("member_noo"));
+		int member_no = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
 		int writer_no = Integer.parseInt(request.getParameter("writer_noo"));
-		int num = Integer.parseInt(request.getParameter("num"));
-		System.out.println("???");
+		
+		int num = 0;
+		if(request.getParameter("num") != null){
+			num = Integer.parseInt(request.getParameter("num"));
+		}
 
 		//관심작가 존재 유무 확인
 		Fav selectfavlist = new SaleService().selectFavList(member_no, writer_no);
@@ -49,17 +53,6 @@ public class FavUpdateServlet extends HttpServlet {
 			deletefavupdate = new SaleService().deleteFavUpdate(member_no, writer_no);
 		}
 
-		String page = null;
-
-		if(insertfavupdate >0 ||deletefavupdate>0){
-			page = "selectOneSalepage.bo?num="+num;
-		}else{
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "게시판 상세 조회 실패");
-		}
-
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 
 
 	}

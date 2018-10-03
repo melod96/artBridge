@@ -137,12 +137,11 @@
 						</ul>
 						<script>
 							function fav(){
-								var member_noo = $("#member_no").val();
 								var writer_noo = $("#writer_no").val();
 								var num= <%=b.getBoard_no()%>;
 								$.ajax({
 									url:"favUpdate.sp",
-									data:{member_noo:member_noo,writer_noo:writer_noo,num:num},
+									data:{writer_noo:writer_noo,num:num},
 									type:"post",
 									success:function(data){
 										alert("관심작가 업데이트 성공!");
