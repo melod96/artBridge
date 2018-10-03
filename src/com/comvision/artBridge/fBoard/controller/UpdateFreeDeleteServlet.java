@@ -34,10 +34,9 @@ public class UpdateFreeDeleteServlet extends HttpServlet {
 		String page = "";
 		if(list > 0){
 			page = "selectFreeBoardList.fb";
-			//request.setAttribute("list", list);
 		}else{
 			page = "/views/common/errorPage.jsp";
-			request.setAttribute("msg", "공지사항 삭제 실패!");
+			request.setAttribute("msg", "자유게시판 삭제 실패!");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

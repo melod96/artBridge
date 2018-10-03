@@ -24,10 +24,13 @@ String board_content = request.getParameter("board_content");
         <!-- Header -->
         <%@ include file="/views/common/header.jsp" %>
         <!-- // Header -->
+        
+        <section class="tit-area" style="background:#bb85cf">
+            <div class="container">
+                <h2 class="tit1">자유게시판</h2>
+            </div>
+        </section>
 
-     
-
-        <!-- contents area -->
         <div class="contents">
             <div class="container">
                 <div class="col-md-12">
@@ -70,8 +73,6 @@ String board_content = request.getParameter("board_content");
                 </div>
             </div>
         </div>
-        <!-- // contents area -->
-        <!-- // 주석 영역 -->
 
         <!-- Footer -->
         <%@ include file="/views/common/footer.jsp" %>
