@@ -185,6 +185,19 @@
 	  			$('.txt-off').css('color','#ff5722');
 	  		}
 	  }
+	  
+	  //일반작가일경우 슬롯갯수 10개 제한
+	  $(function(){
+		  var slot = <%= m.getRating_no() %>
+		  var slotInput = $("input#slot");
+		  $(".pro-save").click(function(){
+			  if(slot == 1 && slotInput.val() > 10){
+				  alert("일반작가는 최대 10개 슬롯을 지정해 주세요!")
+				  slotInput.focus();
+				  return false;
+			  }
+		  });
+	  });
    </script>
 </head>
 <body>
@@ -243,7 +256,7 @@
                               <label for="slot">슬롯 갯수 변경</label>
                               <input id="slot" name="slot" class="form-control input-xshort" type="number" min="1" value="<%= slot %>"><br>
                               <ul class="info info-txt1">
-                                  <li>신입작가 : 작가전환 후 30일 동안 슬롯 갯수 10개 제한<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일반/인기작가 : 슬롯 갯수 무제한</li>
+                                  <li>신입작가 : 슬롯 갯수 10개 제한<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일반/인기작가 : 슬롯 갯수 무제한</li>
                               </ul>
                               
                               <label>커미션 접수 상태</label>
