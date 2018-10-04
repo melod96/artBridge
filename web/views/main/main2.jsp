@@ -50,12 +50,12 @@
    
    .notice1 li{border-bottom:0.1em solid white; ;padding-top:10px;}
    .ntTitle{color:black;width:70%;height:20px;text-overflow: ellipsis;display:inline-block;overflow: hidden;white-space: nowrap}
-   .ntTitle a{color:black;}
-   .ntDate{color:gray;font-size:0.9em;float:right;}
+   .ntTitle a{color:black; font-weight:bold;}
+   .ntDate{color:gray;font-size:0.9em;float:right;font-weight:bold;}
    
    #faqDiv{ padding-right:70px;float:right;padding-top:78px;}
-   .faq{width:450px; height:45px; border:2px solid white;cursor: pointer; margin:40px;margin-left:20px;text-align:center;padding-top:13px;
-         border-radius:50px;}
+   .faq{width:450px; height:45px; border:5px solid white;cursor: pointer; margin:40px;margin-left:20px;text-align:center;padding-top:12px;
+         border-radius:50px; font-weight:bold;}
    #testRadius{border-radius:50%;}
    .faqtt{padding-left:30px;}
    
@@ -374,6 +374,8 @@
 <img class="twingkle3" style="position: relative;top : 30px; left:-250px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
 <img style="position: relative;top : 30px; left:690px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
 
+
+
 <br><br><br><br>
 <!--
    180929 sona 추가
@@ -599,7 +601,7 @@
              </div>
              </div>
         </section>
-
+	<img style="position: absolute; bottom : -1350px; left:auto; right:auto; width:1550px; height:350px; opacity: 0.08;" src='/artBridge/image/mainContent/mainBottom.png'>
         <!-- Footer -->
         <%@ include file="/views/common/footer.jsp" %>
        <!-- // Footer -->

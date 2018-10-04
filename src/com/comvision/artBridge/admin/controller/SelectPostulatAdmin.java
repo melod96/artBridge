@@ -32,7 +32,9 @@ public class SelectPostulatAdmin extends HttpServlet {
 		int num = Integer.parseInt(request.getParameter("member_no"));
 		
 		Member m = new AdminService().selectPostulat(num);
+		System.out.println(m);
 		ArrayList<Files> flist = new AdminService().selectFilelist(num);
+		
 		
 		String page = "";
 		if(m != null){
