@@ -9,10 +9,7 @@
 <title>Art Bridge</title>
 <%@ include file="/views/common/head.jsp"%>
 <style>
-ul.tab-menu li>a:hover {
-	background: darkgray;
-}
-
+ul.tab-menu li>a:hover { background: darkgray; }
 </style>
 </head>
 <body>
@@ -32,11 +29,9 @@ ul.tab-menu li>a:hover {
 		<br>
 		<br>
 		
-		<button type="reset" id="backPageBtn" name="searchBtn"
-						class="btn btn-primary btn-lg"
-						style="padding: 2px 30px; background: gray;  margin-right: 10px; margin-bottom:30px;"
-						onclick = 'location.href="/artBridge/selectList.my?memberNo=<%= loginUser.getMember_no() %>"'>목록으로 이동</button>
-						</div>
+			<button type="reset" id="backPageBtn" name="searchBtn" class="btn btn-primary btn-lg" style="padding: 2px 30px; background: gray;  margin-right: 10px; margin-bottom:30px;"
+				onclick = 'location.href="/artBridge/selectList.my?memberNo=<%= loginUser.getMember_no() %>"'>목록으로 이동</button>
+		</div>
 		<!-- // 주석 영역 -->
 
 		<!-- Footer -->

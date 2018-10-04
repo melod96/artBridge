@@ -1,4 +1,4 @@
-package com.comvision.artBridge.transaction.controller;
+package com.comvision.artBridge.message.controller;
 
 import java.io.IOException;
 
@@ -10,40 +10,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.message.model.service.MessageService;
+import com.comvision.artBridge.message.model.vo.Message;
 
-@WebServlet("/insertSendConfirmPic.ts")
-public class InsertSendMsgConfirmPic extends HttpServlet {
+@WebServlet("/selectDetail.my")
+public class MySelectMsgDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public InsertSendMsgConfirmPic() {
+    public MySelectMsgDetail() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String mem_id = request.getParameter("mem_id");
-		String receive_mem_no = request.getParameter("receive_mem_no");
-		String title = request.getParameter("title");
-		String editor = request.getParameter("editor");
-		System.out.println(request.getAttributeNames());
 		
-		System.out.println("mem_id :" + mem_id + ", receive_no : " + receive_mem_no + ", title : " + title + ", editor : " + editor); 
+		int msg_no = Integer.parseInt((String)request.getParameter("msg_no"));
 		
-		int result = new MessageService().sendMSG(mem_id, receive_mem_no, title, editor);
+		Message m = new MessageService().SelectOneMSG(msg_no);
+		
 		
 		String page = "";
-		if(result > 0){
-			page = "/views/myPage/successSendMSG.jsp";
+		if( m != null){
+			page = "/views/myPage/responMessageForm.jsp";
+			request.setAttribute("m", m);
 		}else{
 			page = "/views/common/errorPage.jsp";
-			request.setAttribute("msg", "공지사항 등록 실패!");
+			request.setAttribute("msg", "고객문의 답변 작성페이지 로드 실패!");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
 	}
 		
-	
+		
+		
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

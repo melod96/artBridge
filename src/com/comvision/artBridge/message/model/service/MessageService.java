@@ -155,11 +155,9 @@ public class MessageService {
 
 		ArrayList<Message> msgList = new MessageDao().selectMyMsgList(con, mNo);
 		
-		
 		close(con);
 		
 		return msgList;
-
 	}
 	
 
@@ -176,6 +174,28 @@ public class MessageService {
 		
 		
 	}
-
+	public int sendMyMsg(int mNo, String receiverNo, String title, String editor) {
+		Connection con = getConnection();
+		
+		int result = 0;
+		
+//		INSERT INTO MESSAGE VALUES(SEQ_MESSAGE_NO, TITLE, EDITOR, SYSDATE, MNO, RECEIVERNO, NULL);
+		
+		result = new MessageDao().sendMyMsg(con, mNo, receiverNo, title, editor);
+		
+		System.out.println("��� �?" + result);
+		
+		if(result > 0){
+			System.out.println("�μ�Ʈ �����߾�");
+			commit(con);
+		}else{
+			rollback(con);
+		}
+		
+		close(con);
+		
+		return result;
+	}
+	
 
 }

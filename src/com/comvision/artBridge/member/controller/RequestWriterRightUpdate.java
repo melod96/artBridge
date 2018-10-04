@@ -105,6 +105,8 @@ public class RequestWriterRightUpdate extends HttpServlet {
 					File failedFile = new File(savePath + saveFilesNameList.get(i));
 				
 					failedFile.delete();
+					request.setAttribute("msg", "작가신청양식 전달이 실패하였습니다");
+					request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 				}
 				/*response.getWriter().print(result);*/
 			}

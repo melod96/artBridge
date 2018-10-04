@@ -1,4 +1,4 @@
-package com.comvision.artBridge.member.controller;
+package com.comvision.artBridge.message.controller;
 
 import java.io.IOException;
 
@@ -9,37 +9,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.message.model.service.MessageService;
 
-@WebServlet("/insertSend.msg")
-public class InsertSendMSGServlet extends HttpServlet {
+@WebServlet("/insertSendMsg.my")
+public class MyInsertSendMsg extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public InsertSendMSGServlet() {
+    public MyInsertSendMsg() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String mem_id = request.getParameter("mem_id");
-		String receive_mem_no = request.getParameter("receive_mem_no");
+		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
+		String receiverNo = request.getParameter("receiverNo");
 		String title = request.getParameter("title");
 		String editor = request.getParameter("editor");
 		System.out.println(request.getAttributeNames());
 		
-		System.out.println("mem_id :" + mem_id + ", receive_no : " + receive_mem_no + ", title : " + title + ", editor : " + editor); 
+		System.out.println("mem_no :" + mNo + ", receive_no : " + receiverNo + ", title : " + title + ", editor : " + editor); 
 		
-		int result = new MessageService().sendMSG(mem_id, receive_mem_no, title, editor);
+		int result = new MessageService().sendMyMsg(mNo, receiverNo, title, editor);
 		
-		String page = "";
 		if(result > 0){
-			page = "/views/myPage/successSendMSG.jsp";
+			response.sendRedirect("/artBridge/views/myPage/myPageForm.jsp?pageName=msg-menu");
 		}else{
-			page = "/views/common/errorPage.jsp";
-			request.setAttribute("msg", "공지사항 등록 실패!");
+			request.setAttribute("msg", "메시지 전송 실패!");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
-		RequestDispatcher view = request.getRequestDispatcher(page);
-		view.forward(request, response);
 		
 	}
 		

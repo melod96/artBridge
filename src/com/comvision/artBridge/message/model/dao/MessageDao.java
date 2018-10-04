@@ -345,7 +345,7 @@ public class MessageDao {
 		ResultSet rset = null;
 		ArrayList<Message> msgList = new ArrayList<Message>();
 		
-		System.out.println("2. 트랜젝션 DAO야 오니?");
+		System.out.println("2. DAO야 오니?");
 		
 		String query = prop.getProperty("selectMyPageMsgList");
 		
@@ -429,6 +429,31 @@ public class MessageDao {
 		
 	}
 	
-
+		public int sendMyMsg(Connection con, int mNo, String receiverNo, String title, String editor) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+//		INSERT INTO MESSAGE VALUES(SEQ_MESSAGE_NO, TITLE, EDITOR, SYSDATE, MNO, RECEIVERNO, NULL);
+		String query = prop.getProperty("insertMyMsgTo");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setString(1, title);
+			pstmt.setString(2, editor);
+			pstmt.setInt(3, mNo);
+			pstmt.setString(4, receiverNo);
+			
+			result = pstmt.executeUpdate();
+			System.out.println("업데이트 결과야 : " + result);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			close(pstmt);
+		}
+				
+		return result;
+	
+		}
 
 }
