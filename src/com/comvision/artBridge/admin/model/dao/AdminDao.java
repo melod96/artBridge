@@ -445,7 +445,7 @@ public class AdminDao {
 			int startRow = (currentPage -1) *limit +1;
 			int endRow= startRow +limit -1;
 			
-			String rnumQuery = " ORDER BY O.ORDERS_NO DESC)) where rnum between " + startRow + " and " + endRow ;
+			String rnumQuery = ")) where rnum between " + startRow + " and " + endRow ;
 			
 			query += rnumQuery;
 			
@@ -748,8 +748,9 @@ public class AdminDao {
 
 			
 			String query = prop.getProperty("selectPostulat");
-			
+			System.out.println("넘어가기전");
 			try {
+				System.out.println("넘어감");
 				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, num);
 				
@@ -757,6 +758,7 @@ public class AdminDao {
 				
 
 				if(rset.next()){
+					System.out.println("if넘어감ㅁ");
 					m = new Member();
 					
 					m.setMember_no(rset.getInt("member_no"));
@@ -767,7 +769,6 @@ public class AdminDao {
 					m.setAccount(rset.getString("account"));
 					m.setFiles_no(rset.getInt("files_no"));
 
-					
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -785,7 +786,7 @@ public class AdminDao {
 			Files f = null;
 			ArrayList<Files> flist = null;
 			
-			String query = prop.getProperty("selectFilelsit");
+			String query = prop.getProperty("selectFilelist");
 			
 			try {
 				pstmt = con.prepareStatement(query);
@@ -798,8 +799,10 @@ public class AdminDao {
 					f = new Files();
 					
 					f.setFiles_root(rset.getString("files_root"));
+					f.setChange_title(rset.getString("change_title"));
 					
 					flist.add(f);
+					
 					
 				}
 			} catch (SQLException e) {

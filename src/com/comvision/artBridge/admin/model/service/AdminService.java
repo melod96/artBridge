@@ -279,7 +279,6 @@ public class AdminService {
 		
 		return m;
 		
-		
 	}
 	//작가 신청 첨부파일 불러오기
 	public ArrayList<Files> selectFilelist(int num) {

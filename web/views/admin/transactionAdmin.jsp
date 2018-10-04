@@ -244,7 +244,8 @@ ul.tab-menu li>a:hover {
 								switch(t.getPay_status()){
 								case 1 : trs = "대기";break;
 								case 2 : trs = "환불";break;
-								case 3 : trs = "지급";break;
+								case 3 : trs = "환불요청";break;
+								case 4 : trs = "지급";break;
 								}
 							%>
 							<tr style="height: 50px;">
