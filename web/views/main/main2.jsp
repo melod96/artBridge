@@ -24,8 +24,6 @@
 		noticeList= (ArrayList<Notice>)request.getAttribute("noticeList");
 	}
 
-
-
 %>
     
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -428,19 +426,18 @@
 						
 					<%
 						if ((ArrayList<Files>) request.getAttribute("slidelist") != null) {
-							for (Files f : slidelist) {
+							for (int i = 0 ; i < 5 ; i++) {
 					%>
-					<li class="bestH" onclick="selectOneSale(this);">
-						<input type="hidden" value=<%=f.getBoard_no()%>>
-						<img src="/artBridge/image/mainContent/slide/<%=f.getChange_title()%>">
-						<p class="name"><%=f.getMem_name()%></p>
-						<p class="txt"><%=f.getBoard_title()%></p>
-					</li>
+						<li class="bestH" onclick="selectOneSale(this);">
+							<input type="hidden" value=<%=slidelist.get(i).getBoard_no()%>>
+							<img src="/artBridge/image/thumbnail_upload/<%=slidelist.get(i).getChange_title()%>">
+							<p class="name"><%=slidelist.get(i).getMem_name()%></p>
+							<p class="txt"><%=slidelist.get(i).getBoard_title()%></p>
+						</li>
 					<%
 							}
 						}
 					%>
-					
 						
 				</ul>
 			</div>
@@ -456,15 +453,15 @@
 
 <div class="box-wrap">
 	<% if((ArrayList<Files>)request.getAttribute("bestWriterList") != null){
-		for(Files bf : bestWriterList){
+		for(int i = 0 ; i < 3 ; i++){
 		
 	%>
 			<div class="box" onclick="bestArtist(this);">
-				<input type = "hidden" value = <%= bf.getMem_no()%>>
-				<div class="img"><img src="/artBridge/image/profile/<%=bf.getChange_title()%>" alt=""></div>
+				<input type = "hidden" value = <%=bestWriterList.get(i).getMem_no()%>>
+				<div class="img"><img src="/artBridge/image/profile/<%=bestWriterList.get(i).getChange_title()%>" alt=""></div>
 				<div class="info">
-					<h3><%=bf.getMem_name() %></h3>
-					<p class="goProfile">작가프로필로 이동<input type="hidden" value=<%=bf.getMem_no()%>></p>
+					<h3><%=bestWriterList.get(i).getMem_name() %></h3>
+					<p class="goProfile">작가프로필로 이동<input type="hidden" value=<%=bestWriterList.get(i).getMem_no()%>></p>
 					<!-- 스크립트로 goProfile click 시 location.href로 작가 프로필로 연결 해당 사진의 member_no까지 전달-->
 				</div>
 			</div>
@@ -488,20 +485,19 @@
 	<img style="margin-left:155px; margin-bottom:-75px; margin-top:50px;" src='/artBridge/image/mainContent/newContent.png'>
 <div class="box-wrap">
 			<%if((ArrayList<Files>)request.getAttribute("newList") != null){
-				for (Files nl : newList) {
+				for (int i = 0 ; i < 3 ; i++) {
 			%>
 			<div class="box" onclick="newContent(this);">
-				<input type = "hidden" value = <%= nl.getBoard_no()%>>
-				<div class="img"><img src="/artBridge/image/thumbnail_upload/<%=nl.getChange_title()%>"	alt="">	</div>
+				<input type = "hidden" value = <%=newList.get(i).getBoard_no()%>>
+				<div class="img"><img src="/artBridge/image/thumbnail_upload/<%=newList.get(i).getChange_title()%>"	alt="">	</div>
 				<div class="info">
-						<h3><%=nl.getBoard_title()%></h3>
+						<h3><%=newList.get(i).getBoard_title()%></h3>
 						<p class="goBoard">
-							작가 글로 이동<input type="hidden" value=<%=nl.getBoard_no()%>>
+							작가 글로 이동<input type="hidden" value=<%=newList.get(i).getBoard_no()%>>
 						</p>
 					<!-- 스크립트로 goProfile click 시 location.href로 작가 프로필로 연결 해당 사진의 member_no까지 전달-->
 				</div>
 			</div>
-
 			<%}} %>
 
 	</div>	
