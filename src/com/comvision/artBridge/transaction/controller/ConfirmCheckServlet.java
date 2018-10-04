@@ -1,6 +1,7 @@
 package com.comvision.artBridge.transaction.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,14 +17,14 @@ import com.comvision.artBridge.transaction.model.service.TransactionService;
 /**
  * Servlet implementation class InsertConfirmRequest
  */
-@WebServlet("/confirmReq.ts")
-public class ConfirmRequest extends HttpServlet {
+@WebServlet("/confirmCheck.ts")
+public class ConfirmCheckServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ConfirmRequest() {
+    public ConfirmCheckServlet() {
         super();
     }
 
@@ -31,38 +32,46 @@ public class ConfirmRequest extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("컨펌 받으려고 서블릿 왔엉");
+		System.out.println("컨펌 체크하려고 서블릿 왔엉");
 		
-/**체크하기**/		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
+		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
 
-		int actNo = Integer.parseInt(request.getParameter("wrtActNo"));
-		int oNo = Integer.parseInt(request.getParameter("wrtONo"));
-		
+		int oNo = Integer.parseInt(request.getParameter("cusONo"));
+		int actNo = Integer.parseInt(request.getParameter("cusActNo"));
 		
 		System.out.println("mNo : " + mNo + ", oNo : " + oNo + ", actNo : " + actNo);
 		
-		int result = new TransactionService().updateOdEndDate(mNo, oNo, actNo);
+		int result = new TransactionService().insertOdActNo(mNo, oNo, actNo);
+//		ArrayList result = new TransactionService().insertOdActNo(mNo, oNo, actNo);
 //		ArrayList<Transaction> result = new TransactionService().confirmRequest(mNo, oNo, actNo);
 		
+		System.out.println("서비스에서 돌아온 결과야 : " + result);
 		String page = "";
 		if(result > 0){
 			System.out.println("성공 결과야 : " + result);
 			
 			response.getWriter();
-			
-/*			if(result != null){
-				System.out.println("성공 결과야 : " + result);
-				response.setContentType("application/json");
-				response.setCharacterEncoding("UTF-8");
-//			new Gson().toJson(transList, response.getWriter());  이것도 가능 gson 개념 확인 다시 하기
-				response.getWriter().print(new Gson().toJson(result));
-				System.out.println(new Gson().toJson(result));
-*/		}else{
+		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "컨펌 요청 실패");
 			RequestDispatcher view = request.getRequestDispatcher(page);
 			view.forward(request, response);
 		}
+/*		if((int)result.get(0) > 0){
+			System.out.println("성공 결과야 : " + result);
+			
+			if(result.get(1) != null){				
+				response.getWriter().println(result.get(1));
+				System.out.println("1. 여기야 : " + response.getWriter());
+			}
+			System.out.println("2. 여기야 : " + response.getWriter());
+			response.getWriter();
+		}else{
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "컨펌 요청 실패");
+			RequestDispatcher view = request.getRequestDispatcher(page);
+			view.forward(request, response);
+		}*/
 		
 	}
 

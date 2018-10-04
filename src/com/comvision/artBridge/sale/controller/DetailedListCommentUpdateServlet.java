@@ -50,7 +50,7 @@ public class DetailedListCommentUpdateServlet extends HttpServlet {
 		}
 		String page= "";
 		if(update>0 && insertcomment>0){
-			page = "/selectTransListlhm.ts";
+			page = "/selectTransList.ts";
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "작가코멘트 작성 실패");

@@ -2,8 +2,7 @@
     pageEncoding="UTF-8" %>
 <%@ page import="java.util.*, com.comvision.artBridge.transaction.model.vo.Transaction,
 				 com.comvision.artBridge.board.model.vo.*, com.comvision.artBridge.files.model.vo.*,
-				 com.comvision.artBridge.sale.model.vo.*, com.comvision.artBridge.message.model.vo.*,
-				 com.comvision.artBridge.comments.model.vo.*" %>  
+				 com.comvision.artBridge.sale.model.vo.*, com.comvision.artBridge.message.model.vo.Message" %>  
  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -152,7 +151,7 @@
         <%@ include file="/views/common/header.jsp" %>
         <!-- // Header -->
 
-<%  /* 구매목록 메뉴 / 명세표 */
+<% 
 	ArrayList<Transaction> transList = null;
 	if(request.getAttribute("transList")!= null){
 		transList = (ArrayList<Transaction>)request.getAttribute("transList");
@@ -160,8 +159,21 @@
 	
  	System.out.println("상단부" + transList);
 	
+	Transaction t = null;
+	if(request.getAttribute("t") != null){
+		t = (Transaction)request.getAttribute("t");
+	}
 	
-/* 	PageInfo pi = null;
+	ArrayList<Requirements> rlist = null;
+	if (request.getAttribute("rlist") != null) {
+		rlist = (ArrayList<Requirements>) request.getAttribute("rlist");
+	}
+	int totalPrice = 0;
+	if (request.getAttribute("totalprice") != null) {
+		totalPrice = (int) (request.getAttribute("totalprice"));
+	}
+	
+	PageInfo pi = null;
 	int listCount = 0;
 	int currentPage = 0;
 	int maxPage = 0;
@@ -174,13 +186,6 @@
 		maxPage = pi.getMaxPage();
 		startPage = pi.getStartPage();
 		endPage = pi.getEndPage();
-	} */
-%>
-
-<% /* 2. 쪽지함 변수 코드 */
-	ArrayList<Message> msgList = null;
-	if(request.getAttribute("transList")!= null){
-		msgList = (ArrayList<Message>)request.getAttribute("msgList");
 	}
 %>
 
@@ -213,7 +218,7 @@
 		<div class="container">
 			<h2>마이 페이지</h2>
 			<ul class="tab-menu">
-<%-- 				<li><a href="<%= request.getContextPath() %>/selectTransList.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li> --%>
+<%-- 				<li><a href="<%= request.getContextPath() %>/selectTransList2.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li> --%>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="msg-menu">쪽지함</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="bookmark-menu">관심작가</a></li>
@@ -229,13 +234,13 @@
 
 		<!-- 주석 영역 -->
 <!-- 	* 마이페이지 탭 영역 -->	
-		<div id="contentsArea" class="contents"><!-- contents 필수 사용 -->
-<%-- 
+		<div class="contents"><!-- contents 필수 사용 -->
+
 <!--      	* 1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
 			<% if(t != null) { %>
 			<form action="<%=request.getContextPath()%>/paymentpage.pg" method="post">
 				<input type="hidden" name = "orders_no" value = "<%=t.getOrders_no() %>" />
-				<input type="hidden" name = "customer_no" value = "<%= m.getMember_no() %>" />
+				<input type="hidden" name = "customer_no" value = "<%= loginUser.getMember_no() %>" />
 				<input type="hidden" name= "writer_no" value = "<%= t.getWrtNo()%>" />
 				<input type="hidden" name = "total" value = "<%=totalPrice %>" />
 				
@@ -258,8 +263,7 @@
 							<tr>
 								<td></td>
 								<td class="stmt-title">구 매 자  : </td>
-***							<td width="230px"><%=loginUser.getNick_name()%></td>
-								<td width="230px"><%=t.getCusName()%></td>
+								<td width="230px"><%=loginUser.getNick_name()%></td>
 								<td width="80px" class="stmt-title">판 매 자  : </td>
 								<td width="150px"><%= t.getWrtNick()%></td>
 							</tr>
@@ -279,37 +283,19 @@
 										<td width="380px">요 구 사 항</td>
 										<td width="87px">금 액</td>
 									</tr>
-								  <% for (Requirements r : rlist) {		int j = 1; %>
-									<tr height="23px">
-										<td align="center"><%= j %></td>
-										<td style="font-size: 12px; padding-left: 10px;"><%=r.getRequirements_content() %></td>
-										<td align="right"><%=r.getRequirement_price() %>원</td>
-									</tr>
-								  <% 	j++;	} %>
-								</table>
-								<br>
-								<% if(clist != null) { %>
-								<h5>작가 코멘트</h5>
-								<table border="1">
-									<tr class="form-inner-table-title" style="font-weight:bold; text-align:center;" height="25px">
-										<td width="35px">No</td>
-										<td width="467px">작가 코멘트</td>
-									</tr>
-								  <% int i = 1;for(Comments c : clist){ %>
+								  <% for (Requirements r : rlist) {		int i = 1; %>
 									<tr height="23px">
 										<td align="center"><%= i %></td>
-										<td style="font-size: 12px; padding-left: 10px;"><%=c.getComments_content() %></td>
+										<td style="font-size: 12px; padding-left: 10px;"><%=r.getRequirements_content()%></td>
+										<td align="right"><%=r.getRequirement_price()%>원</td>
 									</tr>
 								  <% 	i++;	} %>
 								</table>
-											
-								<%}else{} %>
-								<br />
-								
+								<br>
 								<table align="right">
 									<tr>
 										<td>총 금 액 :</td>
-										<td><strong style="font-size:20px; /* margin-right:65px; */"><%= totalPrice %>원</strong></td>
+										<td><strong style="font-size:20px;"><%= totalPrice %>원</strong></td>
 									</tr>
 								</table>
 							</td>
@@ -326,18 +312,14 @@
 							<tr>
 								<td colspan="5">
 									<div class="btn-center stmtBtn">
-									<% if(clist != null){if(m.getMember_no() == t.getCusNo()){ %>
-										<button type="submit" class="btn btn-primary btn-mg btn-plus-design" style="width:50%;">거 래 수 락</button> <br><br />
-									<% } } %>
-<!-- ***				  					  <% if(loginUser.getWriter_right() == 0) { %> -->
-										<% if(t.getWrtNo() == m.getMember_no()){ %>
-										<button type="button" onclick = "change()" class="btn btn-primary btn-mg btn-plus-design" style="margin-left:0;">재 요청</button>
-									  <% }else{ %>
-										<button type="button" onclick = "req()" class="btn btn-primary btn-mg btn-plus-design" style="margin-left:0;">재 요청</button>
-									  <% } %>
-										<button type="button" onclick="cancel()" class="btn btn-danger btn-mg btn-plus-design">거래 취소</button>
-<!--***		 							<button class="btn btn-default btn-mg btn-plus-design" type="button" onclick="stmtDisplayNone();">목록으로</button> -->
-										<button type="button" onclick="location.href='<%=request.getContextPath()%>/selectTransList.ts'"class="btn btn-default btn-mg btn-plus-design">목록으로</button>
+										<button class="btn btn-primary btn-mg btn-plus-design" type="submit" style="width:50%;">거 래 수 락</button> <br><br />
+									  <% if(loginUser.getWriter_right()==0) { %>
+										<button class="btn btn-primary btn-mg btn-plus-design" style="margin-left:0;" type="button" onclick = "change()">재 요청</button>
+									  <%}else{ %>
+										<button class="btn btn-primary btn-mg btn-plus-design" style="margin-left:0;" type="button" onclick = "req()">재 요청</button>
+									  <%} %>
+										<button class="btn btn-danger btn-mg btn-plus-design">거래 취소</button>
+										<button class="btn btn-default btn-mg btn-plus-design" type="button" onclick="stmtDisplayNone();">목록으로</button>
 									</div>
 								</td>
 							</tr>
@@ -346,8 +328,16 @@
 				</div>
 			</form>
 			<% } %>
+
+			<script>
+				function change(){
+
+				}
+				function req(){
+					
+				}
+			</script>
 <!--      	//1-1. 마이페이지 탭 바디 - 주문관리 탭 / 구매목록 - 명세표 모달 창 -->
- --%>
 
 <!--      	* 4-1. 마이페이지 탭 바디 - 회원정보수정 탭 / 작가신청 버튼 클릭 - 제출 양식 모달 창 -->
 			<form action="<%= request.getContextPath() %>/reqWriterRight.me" method="post" id="callReqWriterRightServlet" onsubmit="return reqWriterRight();" encType="multipart/form-data">
@@ -479,11 +469,9 @@
 								  <% if(tr.getDivRole_no() == 0){ %>
 									<tr id="" class="seller-list transInfo-list">
 										<td>판매	</td>
-										<td><a onclick="stmtDisplayBlock(this.text);" class="btn"><%= tr.getOrders_no() %></a></td>
+										<td><a onclick="stmtDisplayBlock(this);" class="btn"><%= tr.getOrders_no() %></a></td>
 										<td><%= tr.getCusId() %><input type="hidden" name="cusId" value="<%= tr.getCusId() %>" /></td>
-<%-- 										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= tr.getBoard_no() %>"><%= tr.getBoard_title() %></a></td> --%>
-<!-- *** -->							<td class="txt-fl"><a onclick ="boardDetail(this)" name = "<%=tr.getBoard_no() %>" class="btn"><input type="hidden" value = "<%=tr.getBoard_no() %>" /><%= tr.getBoard_title() %></a></td>
-
+										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= tr.getBoard_no() %>"><%= tr.getBoard_title() %></a></td>
 									  	<td>
 										  <% if(tr.getOrders_activity() == 1){ %>										
 											<button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button>
@@ -534,8 +522,7 @@
 										<td>구매</td>
 										<td><a onclick="stmtDisplayBlock();" class="btn"><%= tr.getOrders_no() %></a></td>
 										<td><%= tr.getWrtNick() %><input type="hidden" name="wrtId" value="<%= tr.getWrtId() %>" /></td>
-<%-- 										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= tr.getBoard_no() %>"><%= tr.getBoard_title() %></a></td> --%>
-<!-- *** -->							<td class="txt-fl"><a onclick ="boardDetail(this)" name = "<%=tr.getBoard_no() %>" class="btn"><input type="hidden" value = "<%=tr.getBoard_no() %>" /><%= tr.getBoard_title() %></a></td>
+										<td class="txt-fl"><a href="<%= request.getContextPath() %>/selectOneSalepage.bo?num=<%= tr.getBoard_no() %>"><%= tr.getBoard_title() %></a></td>
 									  	<td>									  	  
 										  <% if(tr.getOrders_activity() == 1){ %>										
 											<button disabled class="btn btn-primary btn-lg btn-del btn-plus-design disabledBtn">조율중</button>
@@ -592,16 +579,16 @@
 
 <!-- 		* 2. 마이페이지 탭 메뉴 - 쪽지함 탭 -->
 			<form action="" method="get"class="msg-menu tab-menu-content-form">
-				<div class="msg-menu msg-menu-list">
+				<div class="msg-menu">
 					<select id="msg-select" class="form-control input-xshort selectBox msg-Filter">
 						<option>전체 보기</option>
 						<option>보낸 쪽지</option>
 						<option>받은 쪽지</option>
 					</select>			
 					
-					<table class="tbl-type02 msg-table">
+					<table class="tbl-type02">
 						<colgroup>
-<!-- 						<col style="width: 4%;"> -->
+							<col style="width: 4%;">
 							<col style="width: 4%;">
 							<col style="width: 5%;">
 							<col style="width: 40%;">
@@ -610,7 +597,7 @@
 						</colgroup>
 						<thead>
 							<tr>
-<!-- 							<th scope="col"><input type="checkbox" name="checkAll" id="checkAllMsg"></th> -->
+								<th scope="col"><input type="checkbox" name="checkAll" id="checkAllMsg"></th>
 								<th scope="col">No</th>
 								<th scope="col">수신<br>확인</th>
 								<th scope="col">제목</th>
@@ -620,33 +607,69 @@
 						</thead>
 						
 						<tbody>
-						  <% if(msgList != null){
-							  for(int i = 0; i < msgList.size(); i++){
-								if(msgList.get(i).getSendWho() == 1){ %>	
-								<tr id="" class="send-list msg-list">
-							  <% }else{ %>
-								<tr id="" class="rec-list msg-list">
-							  <% } %>
-							  <!--** <td><input type="checkbox" name="checkMsg"></td> **-->
-								  <td><%= msgList.get(i).getMsg_no() %></td>
-								  <td>
-								  	<% if(msgList.get(i).getCheck_date() != null) {%>
-								  	<img src='/artBridge/image/common/mypage/openMsg.png'>
-								  	<% }else{ %>
-								  	<img src='/artBridge/image/common/mypage/msg.png'>
-								  	<% } %>
-								  </td>
-								  <td class="txt-fl"><a href="#"><%= msgList.get(i).getMsg_content() %></a></td>
-								  <td><span class="messenger"><%= msgList.get(i).getDispatch_member_name() %></span><br>/  <%= msgList.get(i).getMsg_date() %></td>
-								  <td><span class="messenger"><%= msgList.get(i).getReceive_member_name() %></span><br>/  <%= msgList.get(i).getCheck_date() %></td>
-								</tr>
-						  <% } } %>
+							<%-- <% if(보낸회원번호가 나와 같다면){ %>
+							<tr id="" class="send-list msg-list">
+							<% }else{ %>
+							<tr id="" class="rec-list  msg-list">
+							<% } %> --%>
+							<tr class="send-list msg-list">	<!-- ***수정사항 : 발신회원번호/수신회원번호 서블릿에서 받기 -->
+								<td><input type="checkbox" name="checkMsg"></td>
+								<td>1</td>
+								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
+								<%-- <% if(메시지를 열어서 확인했다면 ){ %>
+								<td><img src='/artBridge/image/common/mypage/openMsg.png'></td>
+								<% }else{ %>  확인전이라면
+								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
+								<% } %> --%>
+								<td class="txt-fl"><a href="#">안녕하세요 문의하신 작품 예상 견적 가격입니다^^</a></td>
+								<td><span class="messenger">나요</span><br>/  2018-00-00</td>
+								<td><span class="messenger">뽀시</span><br>/  2018-00-00</td>
+							</tr>
+							<tr class="rec-list  msg-list">
+								<td><input type="checkbox" name="checkMsg"></td>
+								<td>2</td>
+								<td><img src='/artBridge/image/common/mypage/openMsg.png'></td>
+								<%-- <% if(메시지를 열어서 확인했다면 ){ %>
+								<td><img src='/artBridge/web/image/common/mypage/openMsg.png'></td>
+								<% }else{ %>  확인전이라면
+								<td><img src='/artBridge/web/image/common/mypage/msg.png'></td>
+								<% } %> --%>
+								<td class="txt-fl"><a href="#">안녕하세요 캐리커쳐 가능하신가요?</a></td>
+								<td><span class="messenger">라기</span><br>/  2018-00-00</td>
+								<td><span class="messenger">나요</span><br>/  2018-00-00</td>
+							</tr>
+							<tr class="rec-list  msg-list">
+								<td><input type="checkbox" name="checkMsg"></td>
+								<td>3</td>
+								<td><img src='/artBridge/image/common/mypage/openMsg.png'></td>
+								<%-- <% if(메시지를 열어서 확인했다면 ){ %>
+								<td><img src='/artBridge/web/image/common/mypage/openMsg.png'></td>
+								<% }else{ %>  확인전이라면
+								<td><img src='/artBridge/web/image/common/mypage/msg.png'></td>
+								<% } %> --%>
+								<td class="txt-fl"><a href="#">죄송하지만 인물작화는 하지 않습니다~</a></td>
+								<td><span class="messenger">뽀시</span><br>/  2018-00-00</td>
+								<td><span class="messenger">나요</span><br>/  2018-00-00</td>
+							</tr>
+							<tr class="rec-list  msg-list">
+								<td><input type="checkbox" name="checkMsg"></td>
+								<td>4</td>
+								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
+								<%-- <% if(메시지를 열어서 확인했다면 ){ %>
+								<td><img src='/artBridge/web/image/common/mypage/openMsg.png'></td>
+								<% }else{ %>  확인전이라면
+								<td><img src='/artBridge/web/image/common/mypage/msg.png'></td>
+								<% } %> --%>
+								<td class="txt-fl"><a href="#">커미션 진행 하시나요~?</a></td>
+								<td><span class="messenger">소나나</span><br>/  2018-00-00</td>
+								<td><span class="messenger">나요</span><br>/  2018-00-00</td>
+							</tr>
 						</tbody>
 					</table>
 					
 					<div class="btn-center btn-outer-style">
 <!-- 	                      <button class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button> -->
-	                      <button onclick="showSendMsgForm();" class="btn btn-primary btn-lg btn-del btn-plus-design">쪽지 쓰기</button>
+	                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">쪽지 보내기</button>
 	                </div>
 	                    
 				<br><br><br><br>	
@@ -690,7 +713,7 @@
 				</form> -->
 				
 <!-- 			<form onsubmit="return formCheck(this)" action="/artBridge/insertSend.msg" method="post" id="goForm" class="msg-detail-view tab-menu-content-form" style="display:none;">					 -->
-				<form onsubmit="return formCheck(this)" method="post" id="goForm" class="msg-send-Form msg-detail-view tab-menu-content-form" style="display:none;">					
+				<form onsubmit="return formCheck(this)" method="post" id="goForm" class="msg-detail-view tab-menu-content-form" style="display:;">					
 					<div class="send-msg-view">
 						<table class="tbl-type02">
 							<colgroup>
@@ -1291,19 +1314,6 @@
     </div>
 
 
-
-	<script>
-// 		function change(){
-<%-- 			location.href="<%= request.getContextPath()%>/detailedList.pg?orderno=<%= t.getOrders_no()%>"; --%>
-// 		}
-// 		function req(){
-<%-- 			location.href="<%= request.getContextPath()%>/selectList.my?memberNo=<%=m.getMember_no()%>"; --%>
-// 		}
-// 		function cancel(){
-<%-- 			location.href="<%= request.getContextPath()%>/dealcancel.pg?orderno=<%= t.getOrders_no()%>"; --%>
-// 		}
-	</script>
-
 <!-- ** 마이페이지 호출 & 선택 탭 영역 보이기 스크립트 -->
 	<script>
 	//	* 페이지 호출
@@ -1340,26 +1350,26 @@
 			$('#' + thisMenu).css({"color":"black", "background":"white"});
 			
 			
-<%--  			switch(pageName){
+<%-- 			switch(pageName){
 			case 'order-menu' : alert("에이작스로 들어왔어?");		
 			
 								$.ajax({									
-									url : "<%= request.getContextPath() %>/selectTransList.ts",
+									url : "<%= request.getContextPath() %>/selectTransList2.ts",
 									type : "post",
 									success : function(data){
 										console.log(data);
 
 										if(data > 0){
-											location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu";
+// 											location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
 // 											location.href="/artBridge/views/myPage/myPageForm.jsp";
-// 											transList = (ArrayList<Transaction>)request.getAttribute("transList");
+											transList = (ArrayList<Transaction>)request.getAttribute("transList");
 										}
  											
 										
 										console.log(transList);
 										alert(transList);
 									}
-								}); /* break; */
+								}); break;
 			}  --%>
 					
 			if(thisMenu == "order-menu"){			//오더메뉴, 메시지 메뉴 둘 다 가능 할 듯 ( -list 선택자로  / filter선택자로)
@@ -1441,9 +1451,7 @@
 	   		$('#stmtArea').css({"display":"block"});
 	   		
 	   		//var orderNoo = $('#orderNo').val();
-	   		
-	   		//var orderNoo = $('#orderNo').val();
-	   		var orderNoo = t
+	   		<%-- var orderNoo = t
 	   		console.log(orderNoo);
 			if(orderNoo != null && orderNoo != ""){
 				$.ajax({
@@ -1452,21 +1460,14 @@
 					data : {orderNoo : orderNoo},
 					success : function(data){
 						console.log(data);
-						
-				   		$('#stmtModalArea').css({"display":"block"});
-				   		$('#stmtArea').css({"display":"block"});
-				   		
-				   		$('#contentsArea').html('<%@ include file="/views/myPage/statementModal.jsp" %>');
-				   		
-						
+						return data;
 					},
 					error:function(request,status,error){
 			        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			        }
 				});
-			}
-			
-	  	};
+			} --%>  		
+	  	};							
 	// 	* 명세표 모달 닫기
 		function stmtDisplayNone(){
 			$('#stmtArea').css({"display":"none"});
@@ -1474,20 +1475,20 @@
 			/* document.getElementById('stmtArea').style.display='none';
 			document.getElementById('stmtModalArea').style.display='none'; */
 		};
-		function boardDetail(t){
-			var name = t.getAttribute("name");
-			console.log(name);
-		}
 		
 	// 	* 컨펌 요청하기(작가입장)
 		function confirmReq(oNo, actNo){
 // 			이미지 전송하는거 메시지 서블릿에 연결하기 후에 컨펌 리퀘스트.ts 불러서 업데이트 되도록 만들기
+
+			alert("여기 와? : " + oNo);
+			alert("여기 와? : " + actNo);
 
 			$.ajax({
 				url : "<%= request.getContextPath() %>/confirmReq.ts",
 				type : "post",
 				data : { wrtActNo:actNo, wrtONo:oNo },
 				success : function(data){
+					
 					
 				}
 			});
@@ -1496,6 +1497,9 @@
 	// 	* 컨펌 체크하기(구매자 입장)
 		function confirmCheck(oNo, actNo){
 // 			이미지 전송하는거 메시지 서블릿에 연결하기 후에 컨펌 리퀘스트.ts 불러서 업데이트 되도록 만들기
+
+			alert("여기 와? : " + oNo);
+			alert("여기 와? : " + actNo);
 
 			$.ajax({
 				url : "<%= request.getContextPath() %>/confirmCheck.ts",
@@ -1553,10 +1557,44 @@
 	    	
 	    }); 
 	    
-	    function showSendMsgForm(){
-	    	$('.msg-menu-list').css({"display":"none"});
-	    	$('.msg-send-Form').css({"display":"block"});
-	    };
+	// 	* 쪽지 목록 전체/부분 선택 체크박스    
+		function allCheckFunc( obj ) {
+				$("[name=checkMsg]").prop("checked", $(obj).prop("checked") );
+		};	
+		function oneCheckFunc( obj ){
+			var allObj = $("[name=checkAll]");
+			var objName = $(obj).attr("name");
+		
+			if( $(obj).prop("checked")){
+				checkBoxLength = $("[name="+ objName +"]").length;
+				checkedLength = $("[name="+ objName +"]:checked").length;
+		
+				if(checkBoxLength == checkedLength){
+					allObj.prop("checked", true);
+				}else{
+					allObj.prop("checked", false);
+				}
+			}else{
+				allObj.prop("checked", false);
+			}
+		};		
+		$(function(){
+			$("[name=checkAll]").click(function(){
+				allCheckFunc( this );
+			});
+			$("[name=checkMsg]").each(function(){
+				$(this).click(function(){
+					oneCheckFunc( $(this) );
+				});
+			});
+		});
+		
+		//별점 매기기
+		$( ".star_rating a" ).click(function() {
+		     $(this).parent().children("a").removeClass("on");
+		     $(this).addClass("on").prevAll("a").addClass("on");
+		     return false;
+		});		
 	</script>
 <!-- //2. 쪽지함 탭 스크립트 -->
 
