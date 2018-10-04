@@ -476,6 +476,7 @@ public class SaleDao {
 				hmap.put("files_root", rset.getString("files_root"));
 				hmap.put("member_no", rset.getInt("member_no"));
 				hmap.put("nick_name", rset.getString("nick_name"));
+				hmap.put("change_title", rset.getString("change_title"));
 				
 				list.add(hmap);
 			}
@@ -513,6 +514,7 @@ public class SaleDao {
 				b.setBoard_title(rset.getString("board_title"));
 				b.setBoard_content(rset.getString("board_content"));
 				f.setFiles_root(rset.getString("files_root"));
+				f.setChange_title(rset.getString("change_title"));
 				b.setMember_no(rset.getInt("member_no"));
 				b.setNick_name(rset.getString("nick_name"));
 				
@@ -545,6 +547,7 @@ public class SaleDao {
 				f= new Files();
 				f.setF_reference_no(rset.getInt("F_REFERENCE_NO"));
 				f.setFiles_root(rset.getString("files_root"));
+				f.setChange_title(rset.getString("change_title"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

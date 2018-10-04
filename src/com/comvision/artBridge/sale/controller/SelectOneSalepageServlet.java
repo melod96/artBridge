@@ -71,6 +71,15 @@ public class SelectOneSalepageServlet extends HttpServlet {
 		int orderCount = new SaleService().selectOrderCount(b.getMember_no());
 		
 		String page = null;
+		System.out.println(b);
+		System.out.println(flist);
+		System.out.println(rlist);
+		System.out.println(r);
+		System.out.println(f);
+		System.out.println(slot);
+		System.out.println(orderCount);
+		System.out.println(glist);
+		System.out.println(avgGrade);
 		
 		if(b!=null){
 			page = "views/sale/saleDetail.jsp";

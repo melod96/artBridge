@@ -312,10 +312,10 @@
 												if (hhmap.get("board_no").equals(b.getBoard_no())) {
 									%>
 									<dl class="thumb3" style="display: inline-block; margin-left:10px;">
-										<li style="display: inline-block;" id="thumbnail"><input
-											type="hidden" value="<%=b.getBoard_no()%>" /> <img
-											src="<%=hhmap.get("files_root")%>" alt=""
-											style="width: 162px; height: 122px;" /></li>
+										<li style="display: inline-block;" id="thumbnail">
+											<input type="hidden" value="<%=b.getBoard_no()%>" /> 
+											<img src="<%=request.getContextPath() %><%=hhmap.get("files_root")%><%=hhmap.get("change_title") %>" alt="" style="width: 162px; height: 122px;" />
+										</li>
 									</dl>
 									<%
 										}
