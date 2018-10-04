@@ -385,5 +385,50 @@ public class MessageDao {
 		return msgList;
 	}
 
+	public ArrayList<Message> SelectmCount(Connection con, int currentPage, int limit, String addQuery) {
+		
+		Statement stmt = null;
+		ResultSet rset = null;
+		ArrayList<Message> list = null;
+		
+		String query = prop.getProperty("selectMCount");
+		System.out.println("dao실행1");
+		try {
+			stmt = con.createStatement();
+			
+			System.out.println("최종 실행되는 Query : " + query);
+			
+			rset = stmt.executeQuery(query);
+			
+			list = new ArrayList<Message>();
+			
+			
+			while(rset.next()){
+				Message m = new Message();
+				m.setMsg_no(rset.getInt("MESSAGE_NO"));
+				m.setMsg_title(rset.getString("MESSAGE_TITLE"));
+				m.setMsg_content(rset.getString("MESSAGE_CONTENT"));
+				m.setMsg_date(rset.getDate("MESSAGE_DATE"));
+				m.setDispatch_member_no(rset.getInt("DISPATCH_MEMBER_NO"));
+				m.setReceive_member_no(rset.getInt("RECEIVE_MEMBER_NO"));
+				m.setCheck_date(rset.getDate("CHECK_DATE"));
+				m.setMem_name(rset.getString("NAME"));
+				m.setWriter_right(rset.getInt("WRITER_RIGHT"));
+				
+				list.add(m);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			close(stmt);
+			close(rset);
+		}
+		
+		
+		return list;
+		
+	}
+	
+
 
 }

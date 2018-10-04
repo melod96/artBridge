@@ -110,6 +110,10 @@ public class SelectMSGListServlet extends HttpServlet {
 		//메세지 리스트 출력
 		ArrayList<Message> mlist = new MessageService().SelectList(currentPage, limit, addQuery);
 		
+		
+		//전체 카운트 리스트
+		ArrayList<Message> mCount = new MessageService().SelectmCount(currentPage, limit, addQuery);
+		
 		String page = "";
 		
 		if(mlist != null){
@@ -118,12 +122,14 @@ public class SelectMSGListServlet extends HttpServlet {
 			request.setAttribute("pi", pi);
 			request.setAttribute("num", num);
 			request.setAttribute("pageName", "customerAdmin");
+			request.setAttribute("mCount", mCount);
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "에러러ㅓ러ㅓ러!");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
+		
 		
 		
 		

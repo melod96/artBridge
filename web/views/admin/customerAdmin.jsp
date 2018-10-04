@@ -2,7 +2,9 @@
     pageEncoding="UTF-8" import="java.util.*, com.comvision.artBridge.message.model.vo.*, com.comvision.artBridge.admin.model.vo.*"%>
  <% 
 	ArrayList<Message> mlist= (ArrayList<Message>)request.getAttribute("mlist");
-	
+	 ArrayList<Message> mCount= (ArrayList<Message>)request.getAttribute("mCount");	
+ 
+ 
 	int num = (int)request.getAttribute("num");
 	
 	String search="";
@@ -123,17 +125,20 @@ ul.tab-menu li>a:hover {
 						</form>
 					</div>
 					
-						<%int no = 0; int yes =0; int result = 0;
+						<%int no = 0; int yes =0; int result = 0; int admin=0;
 						
-						if(mlist != null){for(Message m : mlist){
-							
-								if(m.getCheck_date() == null){
-									no++;
+						if(mCount != null){
+							for(Message mc : mCount){
+								if(!mc.getMem_name().equals("관리자")){
+									if(mc.getCheck_date() == null){
+										no++;
+									}else{
+										yes++;
+									}
 								}else{
-									yes++;
+									admin++;
 								}
-								
-						} result = no + yes;
+							} result = no + yes;
 						}
 								%>
 					<br> <br>
@@ -148,6 +153,10 @@ ul.tab-menu li>a:hover {
 
 						<p style="font-weight: bold; float: left;">답변완료 :
 						<p style="color: red; float: left; font-weight: bold"><%=yes %></p>
+						<p style="float: left;">건/</p>
+						
+						<p style="font-weight: bold; float: left;">관리자 답변 :
+						<p style="color: red; float: left; font-weight: bold"><%=admin %></p>
 						<p style="float: left;">건</p>
 
 					</div>
