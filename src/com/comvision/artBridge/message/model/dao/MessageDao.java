@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 import com.comvision.artBridge.message.model.vo.Message;
+import com.comvision.artBridge.transaction.model.vo.Transaction;
 
 
 public class MessageDao {
@@ -337,6 +338,51 @@ public class MessageDao {
 		
 		return result;
 		
+	}
+
+	public ArrayList<Message> selectMyMsgList(Connection con, int mNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		ArrayList<Message> msgList = new ArrayList<Message>();
+		
+		System.out.println("2. 트랜젝션 DAO야 오니?");
+		
+		String query = prop.getProperty("selectMyPageMsgList");
+		
+		try {
+
+			pstmt = con.prepareStatement(query);
+			
+			pstmt.setInt(1, mNo);
+			pstmt.setInt(2, mNo);
+			pstmt.setInt(3, mNo);
+
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				Message m = new Message();
+				
+				m.setSendWho(rset.getInt("sendwho"));
+				m.setMsg_no(rset.getInt("message_no"));
+				m.setMsg_title(rset.getString("message_title"));
+				m.setMsg_content(rset.getString("message_content"));
+				m.setDispatch_member_name(rset.getString("dispatcher"));
+				m.setReceive_member_name(rset.getString("receiver"));
+				m.setMsg_date(rset.getDate("send_date"));
+				m.setCheck_date(rset.getDate("check_date"));
+				
+				msgList.add(m);
+
+				System.out.println("3. 생성된 메시지 리스트야 : " + msgList + "\n");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return msgList;
 	}
 
 

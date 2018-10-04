@@ -12,10 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.admin.model.vo.PageInfo;
+import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.message.model.service.MessageService;
 import com.comvision.artBridge.message.model.vo.Message;
+import com.google.gson.Gson;
 
-@WebServlet("/selectList.my")
+@WebServlet("/selectMyMsgList.msg")
 public class SelectMyMSGListServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
@@ -26,67 +28,10 @@ public class SelectMyMSGListServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String date1 = null;
-		String date2 = null;
-		Date date11 = null;
+		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
+		System.out.println(mNo);
 		
-		String addQuery ="";
-		
-		//접속한 사람의 member_no
-		int memberNo = Integer.parseInt(request.getParameter("memberNo"));
-		addQuery += " and DISPATCH_MEMBER_NO = " + memberNo + " OR RECEIVE_MEMBER_NO = " + memberNo + " ";
-		
-		
-		
-		//날짜로 검색.
-		if(request.getParameter("date1") != null && request.getParameter("date2") != null){
-		date1 = request.getParameter("date1");
-		date2 = request.getParameter("date2");
-		
-		addQuery += " and message_date between '" +date1+"' and '"+date2 + "' ";
-		
-		}
-		
-		//옵션 1 : 답변상태
-		String searchSelect1 = null;
-		if(request.getParameter("searchSelect1") != null){
-			searchSelect1 = request.getParameter("searchSelect1");
-			
-			switch(searchSelect1){
-			case "se1Option1" : break;
-			case "se1Option2" : addQuery += "and check_date is null "; break;
-			case "se1Option3" : addQuery += "and check_date is not null "; break;
-			}
-		}
-		
-		//옵션 2 : 이름 or 제목
-		
-		String searchWords = null;
-		String searchSelect2 = null;
-		
-		if (request.getParameter("searchWords") != "") {
-			searchWords = request.getParameter("searchWords");
-			if (request.getParameter("searchSelect2") != null) {
-				searchSelect2 = request.getParameter("searchSelect2");
-				switch (searchSelect2) {
-				case "se2Option1": addQuery += "and (name || message_title ) like '%" + searchWords + "	%' ";
-					break;
-				case "se2Option2":
-					addQuery += "and name like '%" + searchWords + "%' ";
-					break;
-				case "se2Option3":
-					addQuery += "and message_title like '%" + searchWords + "%' ";
-					break;
-				}
-
-			}
-		}
-		
-		System.out.println("addQuery : " + addQuery);
-		
-		
-		
-		int num = 1;
+/*		int num = 1;
 		// 페이징 처리
 		int currentPage;
 		int limit;
@@ -113,28 +58,34 @@ public class SelectMyMSGListServlet extends HttpServlet {
 			endPage = maxPage;
 		}
 		PageInfo pi = new PageInfo(currentPage, listCount, limit, maxPage, startPage, endPage);
-		
+		*/
 		
 		//메세지 리스트 출력
-		ArrayList<Message> mlist = new MessageService().mySelectList(currentPage, limit, addQuery, memberNo);
+//		ArrayList<Message> mlist = new MessageService().mySelectList(currentPage, limit, addQuery, memberNo);
+		ArrayList<Message> msgList = new MessageService().selectMyMsgList(mNo);
 		
 		String page = "";
 		
-		if(mlist != null){
+		if(msgList != null){
 			page = "views/myPage/myPageForm.jsp?pageName=msg-menu";
-			request.setAttribute("mlist", mlist);
-			request.setAttribute("pi", pi);
-			request.setAttribute("num", num);
+			request.setAttribute("msgList", msgList);
+			
+			/*request.setAttribute("pi", pi);
+			request.setAttribute("num", num);*/
+			
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+//			new Gson().toJson(msgList, response.getWriter());
+			response.getWriter().print(new Gson().toJson(msgList));
+			System.out.println("gson이야 : " + new Gson().toJson(msgList));
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "에러러ㅓ러ㅓ러!");
 		}
+		
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
-		
-		
-		
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -37,7 +37,7 @@ public class DealCancelServlet extends HttpServlet {
 		String page = "";
 		
 		if(dealcancel>0){
-			page = "/selectTransListlhm.ts";
+			page = "/selectTransList.ts";
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "리스트를 불러올 수 없습니다");

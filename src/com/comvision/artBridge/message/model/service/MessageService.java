@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 import com.comvision.artBridge.message.model.dao.MessageDao;
 import com.comvision.artBridge.message.model.vo.Message;
+import com.comvision.artBridge.transaction.model.dao.TransactionDao;
+import com.comvision.artBridge.transaction.model.vo.Transaction;
 
 
 public class MessageService {
@@ -147,6 +149,19 @@ public class MessageService {
 		return result;
 		
 		
+	}
+
+	public ArrayList<Message> selectMyMsgList(int mNo) {
+		Connection con = getConnection();
+
+		ArrayList<Message> msgList = new MessageDao().selectMyMsgList(con, mNo);
+		
+		System.out.println("4. 다시 서비스로 왔니?");
+		
+		close(con);
+		
+		return msgList;
+
 	}
 
 

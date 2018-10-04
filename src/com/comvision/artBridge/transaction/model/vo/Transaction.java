@@ -21,12 +21,13 @@ public class Transaction implements Serializable{
 	private int wrtNo;//작가 번호
 	private int board_no; //판매글 번호
 	private int cusNo;	//판매자 번호
+	private int payment_no; //결제번호
 
 	public Transaction(){}
 
 	public Transaction(int divRole_no, int orders_no, String cusName, String cusId, String wrtNick, String wrtId,
 			int pay_status, Date o_date, Date o_final_date, int payment, String board_title, Date od_startDate,
-			Date od_endDate, int orders_activity, int wrtNo, int board_no, int cusNo) {
+			Date od_endDate, int orders_activity, int wrtNo, int board_no, int cusNo, int payment_no) {
 		super();
 		this.divRole_no = divRole_no;
 		this.orders_no = orders_no;
@@ -45,142 +46,151 @@ public class Transaction implements Serializable{
 		this.wrtNo = wrtNo;
 		this.board_no = board_no;
 		this.cusNo = cusNo;
+		this.payment_no = payment_no;
 	}
 
 	public int getDivRole_no() {
 		return divRole_no;
 	}
 
-	public int getOrders_no() {
-		return orders_no;
-	}
-
-	public String getCusName() {
-		return cusName;
-	}
-
-	public String getCusId() {
-		return cusId;
-	}
-
-	public String getWrtNick() {
-		return wrtNick;
-	}
-
-	public String getWrtId() {
-		return wrtId;
-	}
-
-	public int getPay_status() {
-		return pay_status;
-	}
-
-	public Date getO_date() {
-		return o_date;
-	}
-
-	public Date getO_final_date() {
-		return o_final_date;
-	}
-
-	public int getPayment() {
-		return payment;
-	}
-
-	public String getBoard_title() {
-		return board_title;
-	}
-
-	public Date getOd_startDate() {
-		return od_startDate;
-	}
-
-	public Date getOd_endDate() {
-		return od_endDate;
-	}
-
-	public int getOrders_activity() {
-		return orders_activity;
-	}
-
-	public int getWrtNo() {
-		return wrtNo;
-	}
-
-	public int getBoard_no() {
-		return board_no;
-	}
-
-	public int getCusNo() {
-		return cusNo;
-	}
-
 	public void setDivRole_no(int divRole_no) {
 		this.divRole_no = divRole_no;
+	}
+
+	public int getOrders_no() {
+		return orders_no;
 	}
 
 	public void setOrders_no(int orders_no) {
 		this.orders_no = orders_no;
 	}
 
+	public String getCusName() {
+		return cusName;
+	}
+
 	public void setCusName(String cusName) {
 		this.cusName = cusName;
+	}
+
+	public String getCusId() {
+		return cusId;
 	}
 
 	public void setCusId(String cusId) {
 		this.cusId = cusId;
 	}
 
+	public String getWrtNick() {
+		return wrtNick;
+	}
+
 	public void setWrtNick(String wrtNick) {
 		this.wrtNick = wrtNick;
+	}
+
+	public String getWrtId() {
+		return wrtId;
 	}
 
 	public void setWrtId(String wrtId) {
 		this.wrtId = wrtId;
 	}
 
+	public int getPay_status() {
+		return pay_status;
+	}
+
 	public void setPay_status(int pay_status) {
 		this.pay_status = pay_status;
+	}
+
+	public Date getO_date() {
+		return o_date;
 	}
 
 	public void setO_date(Date o_date) {
 		this.o_date = o_date;
 	}
 
+	public Date getO_final_date() {
+		return o_final_date;
+	}
+
 	public void setO_final_date(Date o_final_date) {
 		this.o_final_date = o_final_date;
+	}
+
+	public int getPayment() {
+		return payment;
 	}
 
 	public void setPayment(int payment) {
 		this.payment = payment;
 	}
 
+	public String getBoard_title() {
+		return board_title;
+	}
+
 	public void setBoard_title(String board_title) {
 		this.board_title = board_title;
+	}
+
+	public Date getOd_startDate() {
+		return od_startDate;
 	}
 
 	public void setOd_startDate(Date od_startDate) {
 		this.od_startDate = od_startDate;
 	}
 
+	public Date getOd_endDate() {
+		return od_endDate;
+	}
+
 	public void setOd_endDate(Date od_endDate) {
 		this.od_endDate = od_endDate;
+	}
+
+	public int getOrders_activity() {
+		return orders_activity;
 	}
 
 	public void setOrders_activity(int orders_activity) {
 		this.orders_activity = orders_activity;
 	}
 
+	public int getWrtNo() {
+		return wrtNo;
+	}
+
 	public void setWrtNo(int wrtNo) {
 		this.wrtNo = wrtNo;
+	}
+
+	public int getBoard_no() {
+		return board_no;
 	}
 
 	public void setBoard_no(int board_no) {
 		this.board_no = board_no;
 	}
 
+	public int getCusNo() {
+		return cusNo;
+	}
+
 	public void setCusNo(int cusNo) {
 		this.cusNo = cusNo;
+	}
+
+	public int getPayment_no() {
+		return payment_no;
+	}
+
+	public void setPayment_no(int payment_no) {
+		this.payment_no = payment_no;
 	}
 
 	@Override
@@ -189,11 +199,9 @@ public class Transaction implements Serializable{
 				+ ", cusId=" + cusId + ", wrtNick=" + wrtNick + ", wrtId=" + wrtId + ", pay_status=" + pay_status
 				+ ", o_date=" + o_date + ", o_final_date=" + o_final_date + ", payment=" + payment + ", board_title="
 				+ board_title + ", od_startDate=" + od_startDate + ", od_endDate=" + od_endDate + ", orders_activity="
-				+ orders_activity + ", wrtNo=" + wrtNo + ", board_no=" + board_no + ", cusNo=" + cusNo + "]";
+				+ orders_activity + ", wrtNo=" + wrtNo + ", board_no=" + board_no + ", cusNo=" + cusNo + ", payment_no="
+				+ payment_no + "]";
 	}
 
-	
-
-	
 
 }

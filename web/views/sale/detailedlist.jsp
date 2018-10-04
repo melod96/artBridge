@@ -110,7 +110,7 @@
 										onclick="updatebtn();" id = "wriupdate">재요청</button>
 										<button class="btn btn-default btn-lg btn-plus-design"
 													type="button"
-													onclick="location.href='<%=request.getContextPath()%>/selectTransListlhm.ts'">목록으로</button>
+													onclick="location.href='<%=request.getContextPath()%>/selectTransList.ts'">목록으로</button>
 								</div>
 						</form>
 						<div style="height: 50px;"></div>

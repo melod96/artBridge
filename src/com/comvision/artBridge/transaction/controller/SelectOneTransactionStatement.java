@@ -16,6 +16,7 @@ import com.comvision.artBridge.sale.model.service.SaleService;
 import com.comvision.artBridge.sale.model.vo.Requirements;
 import com.comvision.artBridge.transaction.model.service.TransactionService;
 import com.comvision.artBridge.transaction.model.vo.Transaction;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class SelectOneTransactionStatement
@@ -39,7 +40,7 @@ public class SelectOneTransactionStatement extends HttpServlet {
 		int orderNoo = Integer.parseInt(request.getParameter("orderNoo"));
 		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
 		
-	
+		System.out.println("셀렉트원이야 들어오니? : " + orderNoo);
 		
 		Transaction t = new TransactionService().selectTransOne(mNo, orderNoo);
 		ArrayList<Requirements> rlist = new SaleService().selectsaleRequirementsList(orderNoo, mNo);
@@ -48,15 +49,35 @@ public class SelectOneTransactionStatement extends HttpServlet {
 		
 		int price = new SaleService().totalPrice(orderNoo, mNo);
 		
+		System.out.println("t : " + t);
+		System.out.println("rlist : " + rlist);
+		System.out.println("clist : " + clist);
+		System.out.println("price : " + price);
+		
 		String page = "";
 		if(t != null){
-			page= "views/myPage/paymentmodel.jsp";
+			System.out.println("여기로 오니?");
+		
+			page= "views/myPage/statementModal.jsp";
 			request.setAttribute("t", t);
 			request.setAttribute("rlist", rlist);
 			request.setAttribute("totalprice", price);
 			if(clist.size() != 0){
 				request.setAttribute("clist", clist);
 			}
+			response.setContentType("application/json");
+			response.setCharacterEncoding("UTF-8");
+			
+			System.out.println("t gson이야 : " + new Gson().toJson(rlist));
+			System.out.println("rlist gson이야 : " + new Gson().toJson(rlist));
+			System.out.println("clist gson이야 : " + new Gson().toJson(clist));
+			System.out.println("price gson이야 : " + new Gson().toJson(price));
+			System.out.println(response.getWriter());
+			
+			response.getWriter().print(new Gson().toJson(t));
+			response.getWriter().print(new Gson().toJson(rlist));
+			response.getWriter().print(new Gson().toJson(clist));
+			response.getWriter().print(new Gson().toJson(price));
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg",  "명세표 상세 조회 실패!");
@@ -64,7 +85,6 @@ public class SelectOneTransactionStatement extends HttpServlet {
 
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);
-		
 	}
 
 	/**

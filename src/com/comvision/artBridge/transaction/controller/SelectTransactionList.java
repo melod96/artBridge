@@ -20,7 +20,7 @@ import com.sun.xml.internal.ws.client.ResponseContext;
 /**
  * Servlet implementation class SelectTransactionList
  */
-@WebServlet("/selectTransListlhm.ts")
+@WebServlet("/selectTransList.ts")
 public class SelectTransactionList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -67,28 +67,33 @@ public class SelectTransactionList extends HttpServlet {
 		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
 		System.out.println(mNo);
 		
+		System.out.println("0. 서블릿이야 들어오니?");
 		ArrayList<Transaction> transList = new TransactionService().selectTransList(mNo);
-		System.out.println(transList);
+		System.out.println("1. 서블릿이야 배열 잘 만들어졌니?" + transList);
 		
 		String page = "";
 		if(transList != null){
-			page= "views/myPage/mypagelhm2.jsp";
-//			request.getSession().setAttribute("transList", transList);
-//			page= "views/myPage/mypagelhm.jsp";
+			System.out.println("2. 여기로 들어오니?");
+//			page= "views/myPage/myPageForm.jsp";
+			page= "views/myPage/myPageForm.jsp?pageName=order-menu";
+//			page= "views/myPage/myPageForm.jsp"; 키 달아줘야 탭속성 변경됨
 			request.setAttribute("transList", transList);
-//			request.getSession().setAttribute("transList", transList);
+//			request.setAttribute("pageName", "order-menu");
 //			request.setAttribute("pi", pi);
 			
 			response.setContentType("application/json");
 			response.setCharacterEncoding("UTF-8");
-			new Gson().toJson(transList, response.getWriter());
+//			new Gson().toJson(transList, response.getWriter());  이것도 가능 gson 개념 확인 다시 하기
+			response.getWriter().print(new Gson().toJson(transList));
+			System.out.println("gson이야 : " + new Gson().toJson(transList));
+//			response.getWriter();
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "리스트를 불러올 수 없습니다");
 		}
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
-//			response.getWriter();
+
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 	}
 
 	/**

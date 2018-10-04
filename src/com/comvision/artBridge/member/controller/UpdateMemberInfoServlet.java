@@ -52,7 +52,6 @@ public class UpdateMemberInfoServlet extends HttpServlet {
 		
 		int result = new MemberService().updateMember(m);
 		
-		String Page = "";
 		if(result > 0){
 //			location.href="<%=request.getContextPath()%>/index.jsp";
 //			href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu"
