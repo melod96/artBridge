@@ -318,7 +318,7 @@
    
 </head>
 <body>
-
+<img style="position: absolute; bottom : -1500px; left:auto; right:auto; width:1800px; height:350px; opacity: 0.08; z-index:-5" src='/artBridge/image/mainContent/mainBottom.png'>
 
 
 
@@ -601,7 +601,7 @@
              </div>
              </div>
         </section>
-	<img style="position: absolute; bottom : -1350px; left:auto; right:auto; width:1550px; height:350px; opacity: 0.08;" src='/artBridge/image/mainContent/mainBottom.png'>
+	
         <!-- Footer -->
         <%@ include file="/views/common/footer.jsp" %>
        <!-- // Footer -->
