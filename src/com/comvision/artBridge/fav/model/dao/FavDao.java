@@ -204,6 +204,7 @@ public class FavDao {
 				f= new Files();
 				f.setF_reference_no(rset.getInt("F_REFERENCE_NO"));
 				f.setFiles_root(rset.getString("files_root"));
+				f.setChange_title(rset.getString("change_title"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
