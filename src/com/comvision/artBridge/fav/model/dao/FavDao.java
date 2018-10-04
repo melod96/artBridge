@@ -202,9 +202,10 @@ public class FavDao {
 			rset = pstmt.executeQuery();
 			if(rset.next()){
 				f= new Files();
-				f.setF_reference_no(rset.getInt("F_REFERENCE_NO"));
-				f.setFiles_root(rset.getString("files_root"));
+				f.setFiles_no(rset.getInt("files_no"));
 				f.setChange_title(rset.getString("change_title"));
+				f.setFiles_root(rset.getString("files_root"));
+				f.setFiles_date(rset.getDate("files_date"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

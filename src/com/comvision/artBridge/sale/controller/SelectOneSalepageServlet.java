@@ -53,7 +53,7 @@ public class SelectOneSalepageServlet extends HttpServlet {
 		ArrayList<Files> flist = new SaleService().selectFileList(num);
 		
 		//작가 프로필 사진
-		Files f = new SaleService().selectProfile(num);
+		Files f = new SaleService().selectProfile(b.getMember_no());
 		
 		//해당하는 작가의 등급
 		Rating r= new SaleService().selectRating(b.getMember_no());
