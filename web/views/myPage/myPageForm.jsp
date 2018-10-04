@@ -429,7 +429,7 @@
 <!-- 	   	* 마이페이지 탭 제목 -->
 			<div class="heading">
 				<h2 class="menuName tit1"></h2>
-				<!-- <h2 class="order-menu tit1">주문 관리</h2>
+				<!-- <h2 class="order-menu tit1"> 관리</h2>
 				<h2 class="msg-menu tit1">쪽지함</h2>
 				<h2 class="bookmark-menu tit1">관심 작가</h2>
 				<h2 class="memberinfo-menu tit1">회원정보 수정</h2>
@@ -438,7 +438,7 @@
 			</div>	<hr>
 <!-- 	   	//마이페이지 탭 제목 -->
 					
-<!--        * 1. 마이페이지 탭 메뉴 - 주문관리 탭 -->
+<!--        * 1. 마이페이지 탭 메뉴 - 관리 탭 -->
 			<form action="" method="post"class="order-menu tab-menu-content-form">
 				<div class="order-menu">	<!-- ***수정사항 : 구매자(buyer) 판매자(seller) 입장에 따른 필터링, 행 색 속성, DB처리 등  -->
 					<select id="stmt-Filter" class="form-control input-xshort selectBox">
@@ -463,7 +463,7 @@
 						<thead>
 							<tr>
 								<th scope="col">구분</th>
-								<th scope="col">거래번호<br>(주문번호)</th>	<!-- ***수정사항 : 명세표 보기 -->
+								<th scope="col">거래번호<br>(번호)</th>	<!-- ***수정사항 : 명세표 보기 -->
 								<th scope="col">거래자</th>
 								<th scope="col">게시글 제목</th>				<!-- ***수정사항 : 게시글로 링크 걸기 -->
 								<th scope="col">진행 현황</th>
@@ -588,7 +588,7 @@
 				<br><br><br><br>
 				</div>
 			</form>
-<!-- 		//1. 마이페이지 탭 메뉴 - 주문관리 탭 -->
+<!-- 		//1. 마이페이지 탭 메뉴 - 관리 탭 -->
 
 <!-- 		* 2. 마이페이지 탭 메뉴 - 쪽지함 탭 -->
 			<form action="" method="get"class="msg-menu tab-menu-content-form">
@@ -1156,7 +1156,7 @@
 						<div class="info-box">
 							<p class="tit">※ 회원 탈퇴 신청 전 확인하세요.</p>
 							* 진행중인 프로젝트가 있을 경우, 프로젝트가 완료 된 후에 탈퇴가 가능합니다. <br /><br />
-							* 주문하신 이력이 있는 경우, 주문 정보는 정책에 따라 일정기간 보존됩니다. <br /><br />
+							* 하신 이력이 있는 경우,  정보는 정책에 따라 일정기간 보존됩니다. <br /><br />
 							* 회원 정보는 탈퇴 신청 후 30일 간 보관됩니다. <br /><br />
 							* 동일한 아이디로는 재가입 하실 수 없습니다.
 						</div>
@@ -1363,7 +1363,7 @@
 			}  --%>
 					
 			if(thisMenu == "order-menu"){			//오더메뉴, 메시지 메뉴 둘 다 가능 할 듯 ( -list 선택자로  / filter선택자로)
-				$('.heading .menuName').html("주문 관리");
+				$('.heading .menuName').html(" 관리");
 				$('#stmt-Filter').val("전체 보기");
 				$('.transInfo-list').css({"display":""});
 				$("select option").prop("selected", false);
@@ -1437,36 +1437,9 @@
 	    
 	// 	* 명세표 모달 띄우기
 	   	function stmtDisplayBlock(t){
-	   		$('#stmtModalArea').css({"display":"block"});
-	   		$('#stmtArea').css({"display":"block"});
-	   		
-	   		//var orderNoo = $('#orderNo').val();
-	   		
-	   		//var orderNoo = $('#orderNo').val();
-	   		var orderNoo = t
-	   		console.log(orderNoo);
-			if(orderNoo != null && orderNoo != ""){
-				$.ajax({
-					url : "<%= request.getContextPath() %>/selectTransOne.ts",
-					type : "post",
-					data : {orderNoo : orderNoo},
-					success : function(data){
-						console.log(data);
-						
-				   		$('#stmtModalArea').css({"display":"block"});
-				   		$('#stmtArea').css({"display":"block"});
-				   		
-				   		$('#contentsArea').html('<%@ include file="/views/myPage/statementModal.jsp" %>');
-				   		
-						
-					},
-					error:function(request,status,error){
-			        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			        }
-				});
-			}
+		location.href = "<%= request.getContextPath() %>/selectTransOne.ts?orderNoo="+t;
+		}
 			
-	  	};
 	// 	* 명세표 모달 닫기
 		function stmtDisplayNone(){
 			$('#stmtArea').css({"display":"none"});
@@ -1477,6 +1450,7 @@
 		function boardDetail(t){
 			var name = t.getAttribute("name");
 			console.log(name);
+			
 		}
 		
 	// 	* 컨펌 요청하기(작가입장)
