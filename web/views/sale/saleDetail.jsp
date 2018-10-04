@@ -116,7 +116,7 @@
 							작품 번호 :
 							<%=b.getBoard_no()%></h5>
 						<h2>
-							<a href="<%=request.getContextPath() %>/selectPieceList.wr?memberNo=<%=b.getMember_no() %>"><%=b.getNick_name()%></a> -
+							<a href="<%=request.getContextPath() %>/selectWriterView.wr?memberNo=<%=b.getMember_no() %>"><%=b.getNick_name()%></a> -
 							<%=b.getBoard_title()%>
 						</h2>
 					</div>
@@ -154,7 +154,7 @@
 						</script>
 							<img src="<%=request.getContextPath() %><%=prof.getFiles_root() %><%=prof.getChange_title() %>" id="img">
 							<p align="center">
-								<a href="<%=request.getContextPath() %>/selectPieceList.wr?memberNo=<%=b.getMember_no() %>"><%=b.getNick_name()%></a>
+								<a href="<%=request.getContextPath() %>/selectWriterView.wr?memberNo=<%=b.getMember_no() %>"><%=b.getNick_name()%></a>
 							</p>
 							<ol id="receive" align="center">접수중
 							</ol>
