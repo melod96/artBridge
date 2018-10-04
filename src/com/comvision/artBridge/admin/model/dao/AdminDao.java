@@ -836,7 +836,8 @@ public class AdminDao {
 			}
 			return result;
 		}
-
+		
+		//메시지 전송
 		public int insertPostulat(Connection con, int member_no, String string) {
 			PreparedStatement pstmt = null;
 			int result = 0;
@@ -1027,6 +1028,31 @@ public class AdminDao {
 			}
 			
 			return listCount;
+		}
+
+		//작가 신청 업데이트
+		public int insertPostulat2(Connection con, int member_no, int writer_right) {
+			PreparedStatement pstmt = null;
+			int result = 0;
+			
+			String query = prop.getProperty("updateInsertPostulat2");
+			
+			try {
+				pstmt = con.prepareStatement(query);
+				pstmt.setInt(1, writer_right);
+				pstmt.setInt(2, member_no);
+			/*	pstmt.setString(2, string);
+				pstmt.setInt(3, member_no);*/
+				
+				result = pstmt.executeUpdate();
+				
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} finally {
+				close(pstmt);
+			}
+			
+			return result;
 		}
 
 	
