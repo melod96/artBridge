@@ -34,6 +34,7 @@ public class UpdatePieceViewServlet extends HttpServlet {
 		
 		Board board = (Board)hmap.get("board");
 		ArrayList<Files> pieceData = (ArrayList<Files>)hmap.get("selectThumbImg");
+		
 		ArrayList<Relate> relateCks = (ArrayList<Relate>)hmap.get("relateCk");
 		
 		//저장된 연관검색어 노출
@@ -48,7 +49,7 @@ public class UpdatePieceViewServlet extends HttpServlet {
 		
 		//옵션 및 가격 노출
 		ArrayList<Options> optionsList = new WriterService().selectOptionsList(memberNo, pieceNo);
-		
+
 		String page = "";
 		if(hmap != null){
 			page = "views/myPage/writerPieceUpdateForm.jsp";

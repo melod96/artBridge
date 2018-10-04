@@ -33,6 +33,8 @@
 		optionsList = (ArrayList<Options>)request.getAttribute("optionsList");
 	}
 	
+	
+	
 %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -327,7 +329,9 @@
                                           </thead>
                                           <tbody>
                                          	 <% if(optionsList != null){ 
-                                         			for(Options op : optionsList){%>
+                                         			for(Options op : optionsList){
+                                         				System.out.println("op" + op);
+                                         			%>
                                               <tr>
                                                   <td><input type="checkbox"></td>
                                                   <td><input type="text" class="form-control" name="option" placeholder="옵션명 입력" value="<%= op.getOptions_name() %>"></td>
