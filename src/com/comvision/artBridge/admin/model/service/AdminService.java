@@ -291,27 +291,23 @@ public class AdminService {
 	}
 
 	//작가 승인 버튼
-	public int updateInsertPostulat(String approval_content, int member_no, int writer_right, int pos ) {
+	public int updateInsertPostulat(String approval_content, int member_no, int pos) {
 		Connection con = getConnection();
 		int result = 0;
 		int update = 0;
+		int update2 = 0;
 		int insert = 0;
-		int insert2 = 0;
 		
 		update = new AdminDao().updateInsertPostulat(con, approval_content, member_no, pos);
 		if(pos == 1){
+			update2 = new AdminDao().updateInsertPostulat2(con, member_no, pos);
 			insert = new AdminDao().insertPostulat(con, member_no, "작가신청이 승인되었습니다.");
 		}else{
 			insert = new AdminDao().insertPostulat(con, member_no, "작가신청이 거절되었습니다.");
 		}
 		
-		if(writer_right == 0){
-			insert2 = new AdminDao().insertPostulat2(con, member_no, writer_right);
-		}else{
-			insert2 = new AdminDao().insertPostulat2(con, member_no, writer_right);
-		}
 		
-		if(update > 0 && insert > 0 && insert2 > 0){
+		if(update > 0 && insert > 0 && update2 > 0){
 			commit(con);
 			result = 1;
 		}else{

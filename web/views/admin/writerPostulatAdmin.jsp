@@ -99,7 +99,7 @@ hr {
 
 								<br> <br> 사유 :
 							</h4>
-							<input id="" name="" class="form-control input-lg" type="text"
+							<input id="" name="approval_content" class="form-control input-lg" type="text"
 								placeholder="텍스트를 입력하세요"> <br> <br> <br>
 							<br>				
 							<br>

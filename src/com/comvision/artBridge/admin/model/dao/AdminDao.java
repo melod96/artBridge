@@ -1030,8 +1030,9 @@ public class AdminDao {
 			return listCount;
 		}
 
+	
 		//작가 신청 업데이트
-		public int insertPostulat2(Connection con, int member_no, int writer_right) {
+		public int updateInsertPostulat2(Connection con, int member_no, int pos) {
 			PreparedStatement pstmt = null;
 			int result = 0;
 			
@@ -1039,19 +1040,16 @@ public class AdminDao {
 			
 			try {
 				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, writer_right);
+				pstmt.setInt(1, pos);
 				pstmt.setInt(2, member_no);
-			/*	pstmt.setString(2, string);
-				pstmt.setInt(3, member_no);*/
-				
+
 				result = pstmt.executeUpdate();
 				
 			} catch (SQLException e) {
 				e.printStackTrace();
-			} finally {
+			}finally{
 				close(pstmt);
 			}
-			
 			return result;
 		}
 
