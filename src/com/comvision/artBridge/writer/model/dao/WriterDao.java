@@ -354,13 +354,14 @@ public class WriterDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()){
-				result = rset.getInt(1);
+				result = rset.getInt(2);
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{
 			close(pstmt);
+			close(rset);
 		}
 
 		return result;
@@ -388,6 +389,7 @@ public class WriterDao {
 			e.printStackTrace();
 		} finally{
 			close(pstmt);
+			close(rset);
 		}
 
 		return result;
@@ -479,8 +481,8 @@ public class WriterDao {
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
 		HashMap<String, Object> hmap = null;
-		Board b = null;
-		Files f = null;
+		Board b = new Board();
+		Files f = new Files();
 		Relate rc = null;
 		ArrayList<Files> selectThumbImg = null;
 		ArrayList<Relate> relateCk = null;
@@ -496,9 +498,13 @@ public class WriterDao {
 			
 			selectThumbImg = new ArrayList<Files>();
 			relateCk = new ArrayList<Relate>();
+			hmap = new HashMap<String, Object>();
+			Files f1 = new Files();
+			Files f2 = new Files();
+			Files f3 = new Files();
+			
 			
 			while(rset.next()){
-				hmap = new HashMap<String, Object>();
 
 				b = new Board();
 				b.setBoard_no(rset.getInt("board_no"));
@@ -509,22 +515,40 @@ public class WriterDao {
 				b.setSubmit_size(rset.getString("submit_size"));
 				b.setWorking_period(rset.getInt("working_period"));
 				
-				f = new Files();
-				f.setFiles_title(rset.getString("files_title"));
-				f.setChange_title(rset.getString("change_title"));
-				f.setFiles_type(rset.getInt("files_type"));
-				f.setFiles_root(rset.getString("files_root"));
-				selectThumbImg.add(f);
+				if(rset.getInt("files_type") == 2) {
+					f1.setFiles_title(rset.getString("files_title"));
+					f1.setChange_title(rset.getString("change_title"));
+					f1.setFiles_type(rset.getInt("files_type"));
+					f1.setFiles_root(rset.getString("files_root"));
+				}
 				
+				if(rset.getInt("files_type") == 3) {
+					f2.setFiles_title(rset.getString("files_title"));
+					f2.setChange_title(rset.getString("change_title"));
+					f2.setFiles_type(rset.getInt("files_type"));
+					f2.setFiles_root(rset.getString("files_root"));
+				}
+				
+				if(rset.getInt("files_type") == 4) {
+					f3.setFiles_title(rset.getString("files_title"));
+					f3.setChange_title(rset.getString("change_title"));
+					f3.setFiles_type(rset.getInt("files_type"));
+					f3.setFiles_root(rset.getString("files_root"));
+				}
+			
 				rc = new Relate();
 				rc.setRelate_no(rset.getInt("relate_no"));
 				rc.setRelate_name(rset.getString("relate_name"));
 				relateCk.add(rc);
 
 			}
+			selectThumbImg.add(f1);
+			selectThumbImg.add(f2);
+			selectThumbImg.add(f3);
 			hmap.put("board", b);
 			hmap.put("selectThumbImg", selectThumbImg);
 			hmap.put("relateCk", relateCk);
+			
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -551,6 +575,9 @@ public class WriterDao {
 			pstmt.setInt(1, pieceNo);
 			pstmt.setInt(2, memberNo);
 			
+			System.out.println("pieceNo" + pieceNo);
+			System.out.println("memberNo" + memberNo);
+			
 			rset = pstmt.executeQuery();
 			
 			selectOptionsList = new ArrayList<Options>();
@@ -567,6 +594,7 @@ public class WriterDao {
 			e.printStackTrace();
 		} finally{
 			close(pstmt);
+			close(rset);
 		}
 
 		return selectOptionsList;
