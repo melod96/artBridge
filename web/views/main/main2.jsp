@@ -516,11 +516,11 @@
    };
    
    function bestArtist(is){
-      location.href = "/artBridge/selectPieceList.wr?memberNo=" + $(is).children().eq(0).val();
+      location.href = "/artBridge/selectWriterView.wr?memberNo=" + $(is).children().eq(0).val();
    };
    
    function newContent(is){
-      location.href = "/artBridge/selectPieceList.wr?memberNo=" + $(is).children().eq(0).val();
+      location.href = "/artBridge/selectOneSalepage.bo?num=" + $(is).children().eq(0).val();
    };
 
    $(function (){
