@@ -1,4 +1,4 @@
-package com.comvision.artBridge.transaction.controller;
+package com.comvision.artBridge.message.controller;
 
 import java.io.IOException;
 
@@ -16,14 +16,14 @@ import com.comvision.artBridge.transaction.model.service.TransactionService;
 /**
  * Servlet implementation class InsertConfirmRequest
  */
-@WebServlet("/selectThisMsg.ts")
-public class SelectOrdersMsgList extends HttpServlet {
+@WebServlet("/selectThisOrderMsg.my")
+public class MySelectOrdersMsgList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public SelectOrdersMsgList() {
+    public MySelectOrdersMsgList() {
         super();
     }
 

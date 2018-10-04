@@ -1,4 +1,4 @@
-package com.comvision.artBridge.member.controller;
+package com.comvision.artBridge.message.controller;
 
 import java.io.IOException;
 
@@ -11,11 +11,11 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.message.model.service.MessageService;
 
-@WebServlet("/updateDetail.my")
-public class UpdateMSGDetailServlet extends HttpServlet {
+@WebServlet("/updateMsgDetail.my")
+public class MyUpdateMsgDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public UpdateMSGDetailServlet() {
+    public MyUpdateMsgDetail() {
         super();
     }
 

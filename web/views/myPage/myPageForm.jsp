@@ -85,6 +85,7 @@
     .insert-img-area li p{overflow:hidden; height:140px;}
     .insert-img-area img{width:100%;}
 	strong{color:#e03939; font-weight:bold;}
+	ul.tab-menu li>a:hover { background: darkgray; }
 </style>
 
 <style>		/*  관심작가 탭 스타일 */
@@ -179,7 +180,7 @@
 
 <% /* 2. 쪽지함 변수 코드 */
 	ArrayList<Message> msgList = null;
-	if(request.getAttribute("transList")!= null){
+	if(request.getAttribute("msgList")!= null){
 		msgList = (ArrayList<Message>)request.getAttribute("msgList");
 	}
 %>
@@ -429,7 +430,7 @@
 <!-- 	   	* 마이페이지 탭 제목 -->
 			<div class="heading">
 				<h2 class="menuName tit1"></h2>
-				<!-- <h2 class="order-menu tit1"> 관리</h2>
+				<!-- <h2 class="order-menu tit1">주문 관리</h2>
 				<h2 class="msg-menu tit1">쪽지함</h2>
 				<h2 class="bookmark-menu tit1">관심 작가</h2>
 				<h2 class="memberinfo-menu tit1">회원정보 수정</h2>
@@ -438,7 +439,7 @@
 			</div>	<hr>
 <!-- 	   	//마이페이지 탭 제목 -->
 					
-<!--        * 1. 마이페이지 탭 메뉴 - 관리 탭 -->
+<!--        * 1. 마이페이지 탭 메뉴 - 주문관리 탭 -->
 			<form action="" method="post"class="order-menu tab-menu-content-form">
 				<div class="order-menu">	<!-- ***수정사항 : 구매자(buyer) 판매자(seller) 입장에 따른 필터링, 행 색 속성, DB처리 등  -->
 					<select id="stmt-Filter" class="form-control input-xshort selectBox">
@@ -463,7 +464,7 @@
 						<thead>
 							<tr>
 								<th scope="col">구분</th>
-								<th scope="col">거래번호<br>(번호)</th>	<!-- ***수정사항 : 명세표 보기 -->
+								<th scope="col">거래번호<br>(주문번호)</th>	<!-- ***수정사항 : 명세표 보기 -->
 								<th scope="col">거래자</th>
 								<th scope="col">게시글 제목</th>				<!-- ***수정사항 : 게시글로 링크 걸기 -->
 								<th scope="col">진행 현황</th>
@@ -520,7 +521,7 @@
 										  <% } } %>	
 										</td>
 									  										
-										<td><img onclick="selectThisMsg()'<%= tr.getOrders_no() %>');" class="btn" src='/artBridge/image/common/mypage/msg.png'></td>
+										<td><img onclick="selectThisMsg('<%= tr.getOrders_no() %>');" class="btn" src='/artBridge/image/common/mypage/msg.png'></td>
 										<td><%= tr.getO_date() %></td>
 									  <% if(tr.getO_final_date() == null){ %>
 									    <td>-</td>
@@ -572,7 +573,7 @@
 										  <% } } %>
 									  	</td>								  									
 										
-										<td><img onclick="selectThisMsg()'<%= tr.getOrders_no() %>');" class="btn" src='/artBridge/image/common/mypage/msg.png'></td>
+										<td><img onclick="selectThisMsg('<%= tr.getOrders_no() %>');" class="btn" src='/artBridge/image/common/mypage/msg.png'></td>
 										<td><%= tr.getO_date() %></td>
 									  <% if(tr.getO_final_date() == null){ %>
 									    <td>-</td>
@@ -588,7 +589,7 @@
 				<br><br><br><br>
 				</div>
 			</form>
-<!-- 		//1. 마이페이지 탭 메뉴 - 관리 탭 -->
+<!-- 		//1. 마이페이지 탭 메뉴 - 주문관리 탭 -->
 
 <!-- 		* 2. 마이페이지 탭 메뉴 - 쪽지함 탭 -->
 			<form action="" method="get"class="msg-menu tab-menu-content-form">
@@ -597,11 +598,11 @@
 						<option>전체 보기</option>
 						<option>보낸 쪽지</option>
 						<option>받은 쪽지</option>
+<%-- 						<option id="oNoFilter"style="display:none"><%= oNo %></option> --%>
 					</select>			
 					
 					<table class="tbl-type02 msg-table">
 						<colgroup>
-<!-- 						<col style="width: 4%;"> -->
 							<col style="width: 4%;">
 							<col style="width: 5%;">
 							<col style="width: 40%;">
@@ -610,7 +611,6 @@
 						</colgroup>
 						<thead>
 							<tr>
-<!-- 							<th scope="col"><input type="checkbox" name="checkAll" id="checkAllMsg"></th> -->
 								<th scope="col">No</th>
 								<th scope="col">수신<br>확인</th>
 								<th scope="col">제목</th>
@@ -622,13 +622,14 @@
 						<tbody>
 						  <% if(msgList != null){
 							  for(int i = 0; i < msgList.size(); i++){
+								System.out.println("여기는 jsp 오니? : " + msgList)  ;
+							  
 								if(msgList.get(i).getSendWho() == 1){ %>	
-								<tr id="" class="send-list msg-list">
+								<tr id="" class="send-list msg-list" >
 							  <% }else{ %>
 								<tr id="" class="rec-list msg-list">
 							  <% } %>
-							  <!--** <td><input type="checkbox" name="checkMsg"></td> **-->
-								  <td><%= msgList.get(i).getMsg_no() %></td>
+								  <td><%= msgList.get(i).getMsg_no() %><input type="hidden" name="msgNo" value ="<%= msgList.get(i).getMsg_no() %>"></%></td>
 								  <td>
 								  	<% if(msgList.get(i).getCheck_date() != null) {%>
 								  	<img src='/artBridge/image/common/mypage/openMsg.png'>
@@ -636,7 +637,7 @@
 								  	<img src='/artBridge/image/common/mypage/msg.png'>
 								  	<% } %>
 								  </td>
-								  <td class="txt-fl"><a href="#"><%= msgList.get(i).getMsg_content() %></a></td>
+								  <td class="txt-fl"><a onclick="msgDetailShow(this.text);"><%= msgList.get(i).getMsg_title() %></a></td>
 								  <td><span class="messenger"><%= msgList.get(i).getDispatch_member_name() %></span><br>/  <%= msgList.get(i).getMsg_date() %></td>
 								  <td><span class="messenger"><%= msgList.get(i).getReceive_member_name() %></span><br>/  <%= msgList.get(i).getCheck_date() %></td>
 								</tr>
@@ -645,8 +646,7 @@
 					</table>
 					
 					<div class="btn-center btn-outer-style">
-<!-- 	                      <button class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button> -->
-	                      <button onclick="showSendMsgForm();" class="btn btn-primary btn-lg btn-del btn-plus-design">쪽지 쓰기</button>
+	                      <button onclick="showSendMsgForm();" class="btn btn-primary btn-lg btn-del btn-plus-design">쪽지 보내기</button>
 	                </div>
 	                    
 				<br><br><br><br>	
@@ -655,7 +655,7 @@
 <!-- 		//2. 마이페이지 탭 메뉴 - 쪽지함 탭 -->
 
 <!--      		* 2-1. 마이페이지 탭 바디 - 쪽지함 탭 / 쪽지별 세부 화면 --> 				<!-- id를 msg-detail-view 로 만든 버튼에 연결 -->  
-				<!-- <form onsubmit="return formCheck(this)" action="/artBridge/insertSend.msg" method="post" id="goForm" class="msg-detail-view tab-menu-content-form" style="display:none;">
+				<!-- <form onsubmit="return formCheck(this)" action="/artBridge/insertSendMyMsg.msg.ts" method="post" id="goForm" class="msg-detail-view tab-menu-content-form" style="display:none;">
 					<div class="msg-detail-view">					
 						<table class="tbl-type02">
 							<colgroup>
@@ -689,8 +689,7 @@
 					</div>
 				</form> -->
 				
-<!-- 			<form onsubmit="return formCheck(this)" action="/artBridge/insertSend.msg" method="post" id="goForm" class="msg-detail-view tab-menu-content-form" style="display:none;">					 -->
-				<form onsubmit="return formCheck(this)" method="post" id="goForm" class="msg-send-Form msg-detail-view tab-menu-content-form" style="display:none;">					
+				<form action="<%= request.getContextPath() %>/insertSendMsg.my" method="post" onsubmit="return sendFormCheck();" method="post" id="goForm" class="msg-send-Form msg-menu msg-detail-view tab-menu-content-form">					
 					<div class="send-msg-view">
 						<table class="tbl-type02">
 							<colgroup>
@@ -700,16 +699,52 @@
 							<tbody>
 								<tr>
 									<td style="background: lightgray;">*받는 사람 넘버<input type="hidden" name="mem_id" value =""></td>
-									<td><input id="receive_mem_no" name="receive_mem_no" type="text" style="width: 99%;" placeholder="받는 사람 넘버"></td>
+									<td><input type="text" id="receive_mem_no" name="receive_mem_no" style="width: 99%;" placeholder="받는 사람 번호 입력"></td>
 								</tr>
 								<tr>
 									<td style="background: lightgray;">*제목</td>
-									<td><input id="title" name="title"  type="text" style="width: 99%;" placeholder="제목 작성"></td>
+									<td><input type="text" id="title" name="title" style="width: 99%;" placeholder="제목 작성"></td>
 								</tr>
 								<tr>
 									<td style="background: lightgray;">*내용</td>
 									<td>
-										<textarea id='editor' name="editor" style="height: 550px;"></textarea>
+										<textarea id="editor" name="editor" style="height: 550px;"></textarea>
+										<script>
+											$(function() {
+												$('#editor').froalaEditor()
+											});
+										</script>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="btn-center btn-outer-style">
+	                      <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design" onclick="sendMsgCancel();">작성 취소</button>
+	                      <button type="submit" class="btn btn-primary btn-lg btn-plus-design">쪽지 보내기</button>
+						</div>
+					<br><br><br><br>
+					</div>
+				</form>
+				<form action="<%= request.getContextPath() %>/insertSendMsg.my" method="post" onsubmit="return sendFormCheck();" method="post" id="goForm" class="msg-send-Form msg-menu msg-detail-view tab-menu-content-form">					
+					<div class="send-msg-view">
+						<table class="tbl-type02">
+							<colgroup>
+								<col style="width: 15%;">
+								<col style="width: *;">
+							</colgroup>
+							<tbody>
+								<tr>
+									<td style="background: lightgray;">*받는 사람 넘버<input type="hidden" name="mem_id" value =""></td>
+									<td><input type="text" id="receive_mem_no" name="receive_mem_no" style="width: 99%;" placeholder="받는 사람 번호 입력"></td>
+								</tr>
+								<tr>
+									<td style="background: lightgray;">*제목</td>
+									<td><input type="text" id="title" name="title" style="width: 99%;" placeholder="제목 작성"></td>
+								</tr>
+								<tr>
+									<td style="background: lightgray;">*내용</td>
+									<td>
+										<textarea id="editor" name="editor" style="height: 550px;"></textarea>
 										<script>
 											$(function() {
 												$('#editor').froalaEditor()
@@ -727,27 +762,7 @@
 					</div>
 				</form>
 				
-				<script>
-                   	function formCheck(frm){
-                   		console.log("실행");
-                   		var title = $("#title");
-                   		var editor = $("#editor");
-                   		var re_no = $("#re_no");
-						
-						if(frm.title.value == "" || frm.editor.value == "" || frm.receive_mem_no.value == ""){
-							console.log();
-							alert("필수 입력 사항을 전부 입력해주세요.");
-							frm.title.focus();
-							return false;
-						}
-						
-						location.href="<%= request.getContextPath() %>/insertSend.msg"
 
-                   	}
-                   	function sendMsgCancel(){
-<%-- 						location.href="/artBridge/selectList.my?memberNo=<%= loginUser.getMember_no() %>	 --%>
-                   	}
-                </script>
 <!--      		//2-1. 마이페이지 탭 바디 - 쪽지함 탭 / 쪽지별 세부 화면 -->
 	<%
 	ArrayList<HashMap<String, Object>> hlist = null;
@@ -923,7 +938,7 @@
 						<div class="info-box">
 							<p class="tit">※ 회원 탈퇴 신청 전 확인하세요.</p>
 							* 진행중인 프로젝트가 있을 경우, 프로젝트가 완료 된 후에 탈퇴가 가능합니다. <br /><br />
-							* 하신 이력이 있는 경우,  정보는 정책에 따라 일정기간 보존됩니다. <br /><br />
+							* 주문하신 이력이 있는 경우, 주문 정보는 정책에 따라 일정기간 보존됩니다. <br /><br />
 							* 회원 정보는 탈퇴 신청 후 30일 간 보관됩니다. <br /><br />
 							* 동일한 아이디로는 재가입 하실 수 없습니다.
 						</div>
@@ -954,93 +969,6 @@
 				</div>
 			</form>
 <!-- 		//5. 마이페이지 탭 메뉴 - 내작품관리 탭 -->
-
-<!-- 		* 6. 마이페이지 탭 메뉴 - 이용문의 탭 -->
-			<form action="" method="get"class="qna-menu tab-menu-content-form">
-				<div class="qna-menu">						
-					<select id="qna-select" class="form-control input-xshort selectBox msg-Filter">
-						<option>전체 보기</option>
-						<option>보낸 쪽지</option>
-						<option>받은 쪽지</option>
-					</select>
-					
-					<table class="tbl-type02">
-						<colgroup>
-							<col style="width: 4%;">
-							<col style="width: 4%;">
-							<col style="width: 5%;">
-							<col style="width: 40%;">
-							<col style="width: 15%;">
-							<col style="width: 15%;">
-						</colgroup>
-						<thead>
-							<tr>
-								<th scope="col"><input type="checkbox" name="checkAll" id="checkAllQnA"></th>
-								<th scope="col">No</th>
-								<th scope="col">수신<br>확인</th>
-								<th scope="col">제목</th>
-								<th scope="col" style="line-height:1.5em">보낸 날짜</th>
-								<th scope="col" style="line-height:1.5em">답변 날짜</th>
-							</tr>
-						</thead>
-						
-						<tbody>
-							<%-- <% if(보낸회원번호가 나와 같다면){ %>
-							<tr id="" class="send-list msg-list">
-							<% }else{ %>
-							<tr id="" class="rec-list  msg-list">
-							<% } %> --%>
-							<tr class="send-list msg-list">	<!-- ***수정사항 : 발신회원번호/수신회원번호 서블릿에서 받기 -->
-								<td><input type="checkbox" name="checkMsg"></td>
-								<td>1</td>
-								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-								<%-- <% if(메시지를 열어서 확인했다면 ){ %>
-								<td><img src='/artBridge/web/image/common/mypage/openMsg.png'></td>
-								<% }else{ %>  확인전이라면
-								<td><img src='/artBridge/web/image/common/mypage/msg.png'></td>
-								<% } %> --%>
-								<td class="txt-fl"><a href="#">계좌를 작품 거래 후에 등록해도 될까요?</a></td>
-								<td>2018-00-00</td>
-								<td>2018-00-00</td>
-							</tr>
-							<tr class="rec-list  msg-list">
-								<td><input type="checkbox" name="checkMsg"></td>
-								<td>2</td>
-								<td><img src='/artBridge/image/common/mypage/openMsg.png'></td>
-								<%-- <% if(메시지를 열어서 확인했다면 ){ %>
-								<td><img src='/artBridge/web/image/common/mypage/openMsg.png'></td>
-								<% }else{ %>  확인전이라면
-								<td><img src='/artBridge/web/image/common/mypage/msg.png'></td>
-								<% } %> --%>
-								<td class="txt-fl"><a href="#">문의하신 작가는 현재 활동하지 않는 작가입니다^^</a></td>
-								<td>2018-00-00</td>
-								<td>2018-00-00</td>
-							</tr>
-							<tr class="rec-list  msg-list">
-								<td><input type="checkbox" name="checkMsg"></td>
-								<td>3</td>
-								<td><img src='/artBridge/image/common/mypage/msg.png'></td>
-								<%-- <% if(메시지를 열어서 확인했다면 ){ %>
-								<td><img src='/artBridge/web/image/common/mypage/openMsg.png'></td>
-								<% }else{ %>  확인전이라면
-								<td><img src='/artBridge/web/image/common/mypage/msg.png'></td>
-								<% } %> --%>
-								<td class="txt-fl"><a href="#">은행명과 계좌를 입력하셔야 작가 활동이 가능합니다^^</a></td>
-								<td>2018-00-00</td>
-								<td>2018-00-00</td>
-							</tr>
-						</tbody>
-					</table>
-					
-					<div class="btn-center btn-outer-style">
-	                      <!-- <button type="reset" class="btn btn-default btn-lg btn-cancel btn-plus-design">취소</button> -->
-	                      <button type="submit" class="btn btn-primary btn-lg btn-del btn-plus-design">삭제</button>
-	                </div>
-	                    
-				<br><br><br><br>	
-				</div>
-			</form>
-<!-- 		//6. 마이페이지 탭 메뉴 - 이용문의 탭 -->
 
 
 		</div>	
@@ -1107,30 +1035,10 @@
 			$('#' + thisMenu).css({"color":"black", "background":"white"});
 			
 			
-<%--  			switch(pageName){
-			case 'order-menu' : alert("에이작스로 들어왔어?");		
-			
-								$.ajax({									
-									url : "<%= request.getContextPath() %>/selectTransList.ts",
-									type : "post",
-									success : function(data){
-										console.log(data);
 
-										if(data > 0){
-											location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu";
-// 											location.href="/artBridge/views/myPage/myPageForm.jsp";
-// 											transList = (ArrayList<Transaction>)request.getAttribute("transList");
-										}
- 											
-										
-										console.log(transList);
-										alert(transList);
-									}
-								}); /* break; */
-			}  --%>
 					
 			if(thisMenu == "order-menu"){			//오더메뉴, 메시지 메뉴 둘 다 가능 할 듯 ( -list 선택자로  / filter선택자로)
-				$('.heading .menuName').html(" 관리");
+				$('.heading .menuName').html("주문 관리");
 				$('#stmt-Filter').val("전체 보기");
 				$('.transInfo-list').css({"display":""});
 				$("select option").prop("selected", false);
@@ -1141,8 +1049,18 @@
 				$('.msg-Filter').val("전체 보기");
 				$('.msg-list').css({"display":""});
 				
+				$('#msg-select option:eq(0)').prop("selected", true)
+		/* 		document.getElementById('bar').selected = 'selected'
+ 				document.getElementById('bar').setAttribute('selected', 'selected') */
+				
 				if(thisMenu == "msg-menu"){
 					$('.heading .menuName').html("쪽지함");
+					$('.msg-menu-list').css({"display":"block"});
+			    	$('.msg-send-Form').css({"display":"none"});
+			    	$("#receive_mem_no").val("");
+		        	$("#title").val("");
+		        	$("#editor").val("");
+					
 				}else if(thisMenu == "qna-menu"){
 					$('.heading .menuName').html("이용 문의");
 				}
@@ -1257,20 +1175,24 @@
 		
 	// 	* 주문번호로 쪽지 리스트 호출
 		function selectThisMsg(oNo){
-
+<%-- 			<input type="hidden" name="cusId" value="<%= oNo %>" /> --%>
 			alert("여기 와? : " + oNo);
 			alert("여기 와? : " + actNo);
 
 			$.ajax({
-				url : "<%= request.getContextPath() %>/selectThisMsg.ts",
+				url : "<%= request.getContextPath() %>/selectThisOrderMsg.my",
 				type : "post",
 				data : { oNo:oNo },
 				success : function(data){
-					
-					
+		    		$('#oNoFilter').val(data);					
 				}
 			});
 		};
+		
+		function selectThisMsg(oNo){
+			selectThisMsg(oNo);
+		}
+		
 	</script>
 <!-- //1. 주문관리 탭 스크립트 -->
 
@@ -1298,6 +1220,67 @@
 	    	$('.msg-menu-list').css({"display":"none"});
 	    	$('.msg-send-Form').css({"display":"block"});
 	    };
+        function sendMsgCancel(){
+	    	$('.msg-menu-list').css({"display":"block"});
+	    	$('.msg-send-Form').css({"display":"none"});
+	    	$("#receive_mem_no").val("");
+        	$("#title").val("");
+        	$("#editor").val("");
+        };
+       	function sendFormCheck(){
+
+        	var receiverNoCheck = false;
+			var titleCheck = false;
+			var editorCheck = false;
+        	
+       		var receiverNo = $("#receive_mem_no").val();
+        	var title = $("#title").val();
+        	var editor = $("#editor").val();
+        	
+        	
+        	alert(receiverNo + ", " + title + ", " + editor);
+			alert( $("#receive_mem_no").val());
+			alert( $("#title").val());
+			alert( $("#editor").val());
+        	
+			if($("#receive_mem_no").val() == "" || $("#title").val() == "" || $("#editor").val() == ""
+					|| $("#receive_mem_no").val() == null || $("#title").val() == null || $("#editor").val() == null){
+				console.log();
+				alert("필수 입력 사항을 전부 입력해주세요.");
+				frm.title.focus();
+				return false;
+			}
+			if($("#receive_mem_no").val() != "" && $("#title").val() != "" && $("#editor").val() != ""
+				&& $("#receive_mem_no").val() != null && $("#title").val() != null && $("#editor").val() != null){
+				receiverNoCheck = true;
+				titleCheck = true;
+				editorCheck= true;
+			}
+				
+			if(receiverNoCheck == false){
+				return false;
+			}
+			if(titleCheck == false){
+				return false;
+			}
+			if(editorCheck == false){
+				return false;
+			}
+		
+        };
+        
+        function msgDetailShow(){
+        	
+        	$.ajax({
+				url : "<%= request.getContextPath() %>/selectDetail.my",
+				type : "post",
+				data : { msgNo:msgNo},
+				success : function(data){
+					
+				}
+			});
+        }
+
 	</script>
 <!-- //2. 쪽지함 탭 스크립트 -->
 
@@ -1615,59 +1598,23 @@
 			if(checkAccount == false){
 				return false;
 			}
-			/* if(checkImgType1 == false){
-				return false;
-			}
-			if(checkImgType2 == false){
-				return false;
-			}
-			if(checkImgType3 == false){
-				return false;
-			} */
+
 			if(insertImgTotalCnt < 3){
-				alert(insertImgTotalCnt);
 				alert("이미지 파일 세 개 모두 첨부 해주세요.");
 				checkImgTotalCnt = false;
 				return false;
 			}else{
-				alert(insertImgTotalCnt);
 				checkImgTotalCnt = true;
 			}
 			
 			var submit = confirm("신청 양식을 제출 하시겠습니까?");
 			 if(submit == true){
-		<%--	alert("submit 트루니?");
-				$("#callReqWriterRightServlet").attr("action", "<%= request.getContextPath() %>/reqWriterRight.me");
-				$.ajax({
-					url : "<%= request.getContextPath() %>/reqWriterRight.me",
-					type : "post",
-					success : function(data){
-						alert("데이터? : " + data);
-						if(data >= 4){
-							alert("넘어온 데이터 : " + data);
-							alert("작가 신청 양식이 정상적으로 전송 되었습니다.");
-							reqWriterDisplayNone();
-							$('#reqWriterBtn').attr('disabled', false);
-							
-							/* location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu"; */
-						}else{
-							alert(data);
-							alert("작가 신청 양식 전송이 실패 하였습니다.");
-							location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
-						}
-					},
-					error:function(request,status,error){
-			        	alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-			        }
-				});
-				alert("에이작스 뒤에 링크 가야되는딩"); --%>
 				
 				return true;
 			}else{
 				return false;
 			}
-// 			return true;
-//  			location.href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu";
+
 		};
 	</script>
 <!-- //4. 회원정보 수정 탭 스크립트 -->

@@ -1,4 +1,4 @@
-package com.comvision.artBridge.member.controller;
+package com.comvision.artBridge.message.controller;
 
 import java.io.IOException;
 
@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import com.comvision.artBridge.message.model.service.MessageService;
 import com.comvision.artBridge.message.model.vo.Message;
 
-@WebServlet("/responMSG.my")
-public class InsertResponMessageServlet extends HttpServlet {
+@WebServlet("/responMsg.my")
+public class MyInsertResponMsg extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public InsertResponMessageServlet() {
+    public MyInsertResponMsg() {
         super();
     }
 
