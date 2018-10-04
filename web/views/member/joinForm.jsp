@@ -104,7 +104,7 @@
 							
 						<br />
 							<div class="btns" align="center">
-								<button type="button" id="goMain" class="btn btn-default btn-lg" onclick="goMain();">취소</button>
+								<button type="button" id="goMain" class="btn btn-default btn-lg" onclick="location.href = '/artBridge/ContentLoad.main';">취소</button>
 								<button type="submit" id="joinBtn" class="btn btn-primary btn-lg">가입하기</button>
 							</div>
 						<script>

@@ -203,7 +203,7 @@
       .txt{color:white;}
       
       
-      
+       /*=====================star====================*/
       .twingkle1{
       animation-name:trans1;
       animation-duration:0.7s;
@@ -227,6 +227,9 @@
       animation-timing-function: linear;
        animation-direction: alternate;
       }
+      
+      
+       /*=====================movingStar====================*/
          .movingStar{
       animation-name: moving1;
       animation-delay:2s;
@@ -239,7 +242,7 @@
        
        .movingStar2{
       animation-name: moving2;
-      animation-delay:3s;
+      animation-delay:0s;
       animation-duration:10s;
       animation-iteration-count: infinite;
       animation-timing-function: linear;
@@ -256,6 +259,140 @@
        animation-direction: nomal;
        opacity:0;
        }
+       
+       
+       /*=====================blossom====================*/
+       .blossom1{
+       animation-name: blossom1;
+      animation-delay:2s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+       .blossom11{
+       animation-name: blossom2;
+      animation-delay:5s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+       .blossom111{
+       animation-name: blossom1;
+      animation-delay:7s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+        .blossom1111{
+       animation-name: blossom1;
+      animation-delay:10s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+        .blossom2{
+       animation-name: blossom2;
+      animation-delay:3s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+        .blossom22{
+       animation-name: blossom2;
+      animation-delay:15s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+        .blossom3{
+       animation-name: blossom1;
+      animation-delay:20s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+        .blossom4{
+       animation-name: blossom2;
+      animation-delay:25s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+       
+       .blossom5{
+       animation-name: blossom3;
+      animation-delay:30s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+       
+       
+       
+       
+        .blossom6{
+       animation-name: blossom1;
+      animation-delay:35s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+        .blossom7{
+       animation-name: blossom2;
+      animation-delay:40s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+        .blossom8{
+       animation-name: blossom1;
+      animation-delay:45s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+        .blossom9{
+       animation-name: blossom2;
+      animation-delay:50s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
+        .blossom0{
+       animation-name: blossom3;
+      animation-delay:55s;
+      animation-duration:40s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+       animation-direction: nomal;
+       opacity:0;}
+       
        
       
       @keyframes trans1 {
@@ -312,6 +449,87 @@
            100%{
            opacity:0;
            } 
+      }
+      
+      @keyframes blossom1 {
+           0% {
+           opacity: 1;
+           }
+           10% {
+           transform:translate(800px, 370px);
+           }
+           35%{
+           transform:translate(-800px, 740px);
+           }
+           75%{
+           transform:translate(800px, 1150px);
+           } 
+           97%{
+           transform:translate(-800px, 1500px);
+           opacity:1;
+           } 
+           98%{
+           transform:translate(-800px, 1500px);
+           opacity:0;
+           }
+           100%{
+           transform:translate(-800px, 1500px);
+           opacity:0;
+           }
+      }
+      
+       @keyframes blossom2 {
+           0% {
+           opacity: 1;
+           }
+           10% {
+           transform:translate(-800px, 370px);
+           }
+           35%{
+           transform:translate(800px, 740px);
+           }
+           75%{
+           transform:translate(-800px, 1150px);
+           } 
+           97%{
+           transform:translate(800px, 1500px);
+           opacity:1;
+           } 
+           98%{
+           transform:translate(800px, 1500px);
+           opacity:0;
+           }
+           100%{
+           transform:translate(800px, 1500px);
+           opacity:0;
+           }
+      }
+      
+       @keyframes blossom3 {
+           0% {
+           opacity: 1;
+           }
+           10% {
+           transform:translate(-400px, 370px);
+           }
+           35%{
+           transform:translate(400px, 740px);
+           }
+           75%{
+           transform:translate(-400px, 1150px);
+           } 
+           97%{
+           transform:translate(400px, 1500px);
+           opacity:1;
+           } 
+           98%{
+          transform:translate(400px, 1500px);
+           opacity:0;
+           }
+           100%{
+           transform:translate(400px, 1500px);
+           opacity:0;
+           }
       }
       
 </style>
@@ -374,8 +592,120 @@
 <img class="twingkle3" style="position: relative;top : 30px; left:-250px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
 <img style="position: relative;top : 30px; left:690px;width:16px; height:16px;" src='/artBridge/image/mainContent/star.png'>
 
+<!--Blossom선발-->
+<img class = "blossom1" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom1" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
 
 
+<img class = "blossom11" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom11" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+
+<img class = "blossom111" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom111" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+
+<img class = "blossom1111" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom1111" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+<img class = "blossom2" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom2" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+
+<img class = "blossom22" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom22" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+
+<img class = "blossom3" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom3" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+
+<img class = "blossom4" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom4" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+
+<!--후발-->
+<img class = "blossom6" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom0" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom6" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+
+
+<img class = "blossom7" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom0" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom7" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+
+
+<img class = "blossom8" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom0" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom8" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+
+<img class = "blossom9" style="position: absolute; top : 700px; left:150px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom0" style="position: absolute; top : 900px; left:300px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom9" style="position: absolute; top : 800px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+
+
+<!--격리-->
+<!-- 
+<img class = "blossom5" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom1" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom1" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom4" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom4" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom4" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom3" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom3" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom22" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom22" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom22" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom2" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom2" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom2" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom1111" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom1111" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom1111" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom111" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom111" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom111" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom11" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom11" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom5" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom11" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom9" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom0" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom9" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom9" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom8" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom0" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom8" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom8" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom7" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom0" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom7" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom7" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom6" style="position: absolute; top : 1100px; left:600px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom0" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom6" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
+<img class = "blossom6" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'> 
+-->
 <br><br><br><br>
 <!--
    180929 sona 추가
@@ -418,8 +748,9 @@
      
      <!-- // 180929 sona 추가 -->
 
+
+<!--Best 작품 추천-->
       <div class="slider-area1">
-         <!-- <h2 class="bestH" style="margin-left: 75px; margin-bottom: 25px;">Best 작품 추천</h2> -->
          <img style="margin-left:385px;" src='/artBridge/image/mainContent/best5.png'>
 
          <div class="slider-area">
@@ -432,7 +763,9 @@
                %>
                   <li class="bestH" onclick="selectOneSale(this);">
                      <input type="hidden" value=<%=slidelist.get(i).getBoard_no()%>>
-                     <img src="<%=request.getContextPath()%>/<%=slidelist.get(i).getFiles_root()%>/<%=slidelist.get(i).getChange_title()%>">
+                     
+                     <img src="<%=request.getContextPath()%><%=slidelist.get(i).getFiles_root()%><%=slidelist.get(i).getChange_title()%>">
+                     					
                      <p class="name"><%=slidelist.get(i).getMem_name()%></p>
                      <p class="txt"><%=slidelist.get(i).getBoard_title()%></p>
                   </li>
