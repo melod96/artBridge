@@ -214,9 +214,9 @@
 			<h2>마이 페이지</h2>
 			<ul class="tab-menu">
 <%-- 				<li><a href="<%= request.getContextPath() %>/selectTransList.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li> --%>
-				<li><a href="#" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li>
+				<li><a href="<%= request.getContextPath() %>/selectTransList.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="msg-menu">쪽지함</a></li>
-				<li><a href="#" onclick="anotherHidden(this.id);" id="bookmark-menu">관심작가</a></li>
+				<li><a href="<%= request.getContextPath() %>/selectFavList.fv" onclick="anotherHidden(this.id);" id="bookmark-menu">관심작가</a></li>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="memberinfo-menu">회원정보수정</a></li>
 <%-- 				<% if(loginUser.getWriter_right() == 1){ "%>" --%>
 				<li><a href="#" onclick="anotherHidden(this.id);" id="mywork-menu"">내작품관리</a></li>
@@ -778,7 +778,7 @@
 										</tr>
 										<tr>
 											<td colspan="2" style="text-align: center;">
-											<a href="<%=request.getContextPath() %>/selectPieceList.wr?memberNo=<%=flist.get(k).getWriter_no()%>"class="bookmark-detailView-btn"><%=hmap.get("nick")%> 작가</a></td>
+											<a href="<%=request.getContextPath() %>/selectWriterView.wr?memberNo=<%=flist.get(k).getWriter_no()%>"class="bookmark-detailView-btn"><%=hmap.get("nick")%> 작가</a></td>
 										</tr>
 										<script>
 											function fav(i){

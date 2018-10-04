@@ -72,12 +72,12 @@ public class SelectFavListServlet extends HttpServlet {
 		String page = null;
 		
 		if(hlist!=null){
-			page = "views/myPage/myFavListForm.jsp";
+			page = "views/myPage/myPageForm.jsp?pageName=bookmark-menu";
 			request.setAttribute("hlist", hlist);
 			request.setAttribute("flist",flist);
 			
 		}else{
-			page = "views/myPage/myFavListForm.jsp";
+			page = "views/myPage/myPageForm.jsp?pageName=bookmark-menu";
 		}
 		
 		RequestDispatcher view = request.getRequestDispatcher(page);

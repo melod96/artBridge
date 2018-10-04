@@ -2,6 +2,7 @@ package com.comvision.artBridge.transaction.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.comvision.artBridge.admin.model.vo.PageInfo;
+import com.comvision.artBridge.fav.model.service.FavService;
+import com.comvision.artBridge.fav.model.vo.Fav;
+import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.transaction.model.service.TransactionService;
 import com.comvision.artBridge.transaction.model.vo.Transaction;
@@ -70,6 +74,8 @@ public class SelectTransactionList extends HttpServlet {
 		System.out.println("0. 서블릿이야 들어오니?");
 		ArrayList<Transaction> transList = new TransactionService().selectTransList(mNo);
 		System.out.println("1. 서블릿이야 배열 잘 만들어졌니?" + transList);
+		
+		
 		
 		String page = "";
 		if(transList != null){

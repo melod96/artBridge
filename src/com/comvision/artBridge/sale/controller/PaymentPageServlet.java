@@ -46,9 +46,12 @@ public class PaymentPageServlet extends HttpServlet {
 		//사용자의 요구사항
 		ArrayList<Requirements> rlist = new SaleService().selectsaleRequirementsList(orders_no, customer_no);
 		//작가의 썸네일
-		Files f = new SaleService().selectProfile(board_no);
+		Files f = new SaleService().selectProfile(writer_no);
 
 		String page = "";
+		System.out.println(b);
+		System.out.println(rlist);
+		System.out.println(f);
 		if(b!=null && rlist != null && f != null){
 			page = "views/sale/paymentpage.jsp";
 			request.setAttribute("b", b);

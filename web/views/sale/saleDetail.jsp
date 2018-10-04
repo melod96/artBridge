@@ -10,8 +10,7 @@
 
 	Board b = (Board) request.getAttribute("b");
 	ArrayList<Files> flist = (ArrayList<Files>) request.getAttribute("flist");
-	ArrayList<HashMap<String, Object>> oplist = (ArrayList<HashMap<String, Object>>) request
-			.getAttribute("oplist");
+	ArrayList<HashMap<String, Object>> oplist = (ArrayList<HashMap<String, Object>>) request.getAttribute("oplist");
 	ArrayList<Relate> rlist = (ArrayList<Relate>) request.getAttribute("rlist");
 	Rating ra = (Rating) request.getAttribute("r");
 	ArrayList<Grade> glist = null;
@@ -106,7 +105,7 @@
 		<!-- contents area -->
 		<div class="contents">
 			<div class="container">
-				<div class="col-md-12">
+				<div class="col-md-12" style = "margin-bottom:90px;">
 					<!-- 이 영역에서 작업하세요 -->
 
 
@@ -119,6 +118,7 @@
 							<a href="<%=request.getContextPath() %>/selectWriterView.wr?memberNo=<%=b.getMember_no() %>"><%=b.getNick_name()%></a> -
 							<%=b.getBoard_title()%>
 						</h2>
+						<br /><br />
 					</div>
 					<div>
 						<div class="left" style="width: 740px;">
@@ -168,8 +168,7 @@
 								<font class="lsp0"><%=avgGrade.getGrade() %></font>
 							</ol>
 							<div align="center" style="margin-bottom: 15px;">
-								<button type="button" class="btn btn-primary">작가에게
-									쪽지보내기</button>
+								<button type="button" class="btn btn-primary" onclick = "location.href='<%=request.getContextPath()%>/selectMyMsgList.msg'">작가에게 쪽지보내기</button>
 							</div>
 							<div align="center" id="text">상세옵션</div>
 							<div style = "margin:20px;">
@@ -199,9 +198,8 @@
 										for (int i = 0; i < oplist.size(); i++) {
 											HashMap<String, Object> hmap = oplist.get(i);
 									%>
-								<option  id = "selop" value="<%=hmap.get("options_price")%>"><%=hmap.get("options_name")%>
-									-
-									<%=hmap.get("options_price")%></option>
+								<option  id = "selop<%=hmap.get("options_price")%>" value="<%=hmap.get("options_price")%>">
+								<%=hmap.get("options_name")%> - <%=hmap.get("options_price")%></option>
 								<%
 										}
 									%>
@@ -255,7 +253,7 @@
 											req += $("#rid"+i).val() + "@";
 										}
 										var price = document.all.sel.value;
-										var option = $("#selop").text();
+										var option = $("#selop"+price).text();
 										var member_no = $("#member_no").val();
 										var board_no = $("#board_no").val();
 										var writer_no = $("#writer_no").val();
@@ -281,7 +279,7 @@
 										<span>작가등급</span><span style="float: right;"><%=ra.getRating_name()%></span>
 									</p>
 									<p>
-										<span>게시글 카테고리</span>
+										<span>연관 검색어</span>
 										<%for (Relate r : rlist) {%>
 										<span style="float: right;">#<%=r.getRelate_name()%>
 										</span>
@@ -300,9 +298,9 @@
 					</div>
 
 				</div>
-				<div id="textinfo">
+				<div id="textinfo" style = "margin-top:100px;">
+				
 					<p align="center"><%=b.getBoard_content()%></p>
-				</div>
 				<div style="height: 30px"></div>
 				<p align="center">
 					<a href="/artBridge/views/info/infoUseOther.jsp">환불 규정 및 구매자
@@ -311,6 +309,7 @@
 
 				<div style="height: 30px"></div>
 				<p align="center">모든 이미지는 저작권이 있는 이미지 입니다. 무단 도용 및 복제를 금합니다.</p>
+				</div>
 				<div class="hugiheader">
 					<div>
 						<h4 style= "display:inline-block;">이용후기</h4>
@@ -359,7 +358,6 @@
 					<div style = "height:50px;"></div>
 					<!-- // 이 영역에서 작업하세요 -->
 				</div>
-			</div>
 		</div>
 		<!-- // contents area -->
 

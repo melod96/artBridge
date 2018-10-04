@@ -203,12 +203,12 @@ public class BoardDao {
 			int startRow = (currentPage -1) *limit +1;
 			int endRow= startRow +limit -1;
 			System.out.println("s" + startRow + "e" + endRow);
-			pstmt.setInt(1, startRow);
-			pstmt.setInt(2, endRow);
+			pstmt.setInt(4, startRow);
+			pstmt.setInt(5, endRow);
 			System.out.println("???"+search);
-			pstmt.setString(3, "%"+search+"%" );
-			pstmt.setString(4, "%"+search+"%");
-			pstmt.setString(5, "%"+search+"%");
+			pstmt.setString(1, "%"+search+"%" );
+			pstmt.setString(2, "%"+search+"%");
+			pstmt.setString(3, "%"+search+"%");
 			
 			rset= pstmt.executeQuery();
 			
