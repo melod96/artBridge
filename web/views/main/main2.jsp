@@ -584,7 +584,7 @@
 			
 			<!--고객센터-->
                   <div id="faqDiv">
-                      <div class="faqtt"><h3 style="display:inline;">고객센터</h3></div>
+                      <div class="faqtt"><h3 style="display:inline;"><img style="width:100px; margin-top:-12px;margin-left:-15px;" src='/artBridge/image/mainContent/customerCenter.png'></h3></div>
 					  <div class="faq" onclick="location.href='/artBridge/views/faq/faq_requester.jsp'">의뢰자 FAQ 바로 가기</div>
 					  <div class="faq" onclick="location.href='/artBridge/views/faq/faq_artist.jsp'">구매자 FAQ 바로 가기</div>
                   </div>
