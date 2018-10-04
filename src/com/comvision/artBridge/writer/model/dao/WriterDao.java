@@ -354,7 +354,7 @@ public class WriterDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()){
-				result = rset.getInt(1);
+				result = rset.getInt(2);
 			}
 			
 		} catch (SQLException e) {
