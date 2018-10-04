@@ -7,6 +7,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Art Bridge</title>
 	<%@ include file="/views/common/head.jsp" %>
+	
+	<style>
+	.tit-area.bg-yellow{background:#F797AF;}
+	
+	</style>
+	
 </head>
 <body>
     <div id="all">
@@ -58,8 +64,8 @@
 5. 환불규정 확인하기
 주문 전에 환불 규정을 확인하세요.
 이용안내 > 환불규정 및 유의사항에서 확인할 수 있습니다.
-6. 주문 완료 후 아트머그에 입금하기
-주문을 완료했다면 아트머그에 입금합니다. 입금 후 입금 확인 문자가 발송됩니다.
+6. 주문 완료 후 아트브릿지에 입금하기
+주문을 완료했다면 아트브릿지에 입금합니다. 입금 후 입금 확인 문자가 발송됩니다.
 입금 확인 시간 : 오전 9시 ~ 오후 12시
 
 7. 결제 후 작가와 소통하기
