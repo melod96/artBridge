@@ -136,7 +136,7 @@
 							<tr>
 								<td width="234">
 									<div class="thumb" style="cursor: default;" align="center">
-										<img src="<%=f.getFiles_root()%>" alt=""
+										<img src="<%=request.getContextPath() %><%=f.getFiles_root()%><%=f.getChange_title() %>" alt=""
 											style="width: 162px; height: 122px;" />
 									</div>
 								</td>

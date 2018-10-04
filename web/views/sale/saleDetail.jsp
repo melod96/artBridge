@@ -125,7 +125,7 @@
 							<%
 								for (Files f : flist) {
 							%>
-							<img src="<%=f.getFiles_root()%>" alt="" style="width: 732px;" />
+							<img src="<%=request.getContextPath() %><%=f.getFiles_root()%><%=f.getChange_title() %>" alt="" style="width: 732px;" />
 							<%
 								}
 							%>
@@ -152,7 +152,7 @@
 								});
 							}
 						</script>
-							<img src="<%=prof.getFiles_root() %>" id="img">
+							<img src="<%=request.getContextPath() %><%=prof.getFiles_root() %><%=prof.getChange_title() %>" id="img">
 							<p align="center">
 								<a href="<%=request.getContextPath() %>/selectPieceList.wr?memberNo=<%=b.getMember_no() %>"><%=b.getNick_name()%></a>
 							</p>
