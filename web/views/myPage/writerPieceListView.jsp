@@ -29,18 +29,12 @@
 	}
 	
 	Member m = null;
-	if(session.getAttribute("loginUser") != null){
-		m = (Member)session.getAttribute("loginUser");
+	if(request.getAttribute("writer") != null){
+		m = (Member)request.getAttribute("writer");
 	}
 	
 	//썸네일 이미지
 	Board b = new Board();
-	/* Board b = (Board)request.getAttribute("b");
-	ArrayList<Files> list = (ArrayList<Files>)request.getAttribute("list");
-	Files titleImg = list.get(0);
-	Files detailImg1 = list.get(1);
-	Files detailImg2 = list.get(2);
-	Files detailImg3 = list.get(3); */
 	
 	//프로필 이미지
 	ArrayList<Files> profileFile = null;
@@ -201,16 +195,9 @@
                         <div class="piece-list">
                        		<div class="info-area1">
                               <span><%= m.getNick_name() %>작가 &nbsp; / &nbsp; <%= b.getBoard_title() %></span>
-                              <ul class="seting-area">
-	                          	  <%-- <input type="hidden" name="boardNo" value="<%=b.getBoard_no()%>"> --%>
-	                              <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='updatePieceView.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>'"><label class="hide">수정</label></li>
-	                              <%-- <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='<%=request.getContextPath()%>/updatePieceView.wr?pieceNo=<%=b.getBoard_no()%>'"><label class="hide">수정</label></li> --%>
-	                              <!-- <li><input type="button" class="btn-del" title="작품 삭제" onclick="pieceDel()"><label class="hide">삭제</label></li> -->
-	                              <li><input type="button" class="btn-del" title="작품 삭제" onclick="location.href='<%=request.getContextPath()%>/deletePiece.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>'"><label class="hide">삭제</label></li>
-	                          </ul>
                           </div>
                           <div class="img-area">
-	                          <a href="#">
+	                          <a href="<%=request.getContextPath()%>/selectOneSalepage.bo?num=<%=b.getBoard_no()%>">
 	                          	  <% for(int j = 0; j < ((ArrayList<Files>)list.get(i).get("selectThumbImg")).size(); j++){ 
 	                          	  		Files f = ((ArrayList<Files>)list.get(i).get("selectThumbImg")).get(j);%>
 		                              <% if(f.getChange_title() != null){ %>

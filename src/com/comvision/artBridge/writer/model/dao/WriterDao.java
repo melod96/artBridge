@@ -668,5 +668,33 @@ public class WriterDao {
 		return result;
 	}
 
+	public Member selectWriter(Connection con, int memberNo) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member m = null;
+		
+		String query = prop.getProperty("selectWriter");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, memberNo);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()){
+				m = new Member();
+				
+				m.setNick_name(rset.getString("nick_name"));
+				m.setIntroduction(rset.getString("introduction"));	
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rset);
+		}
+		
+		return m;
+	}
 
 }

@@ -236,6 +236,18 @@ public class WriterService {
 		return result;
 	}
 
+	public Member selectWriter(int memberNo) {
+		Connection con = getConnection();
+		
+		Member m = null;
+		
+		m = new WriterDao().selectWriter(con, memberNo);
+
+		close(con);
+		
+		return m;
+	}
+
 	
 
 	

@@ -15,13 +15,14 @@ import com.comvision.artBridge.board.model.vo.Board;
 import com.comvision.artBridge.board.model.vo.PageInfo;
 import com.comvision.artBridge.files.model.vo.Files;
 import com.comvision.artBridge.grade.model.vo.Grade;
+import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.writer.model.service.WriterService;
 
-@WebServlet("/selectPieceList.wr")
-public class SelectPieceListServlet extends HttpServlet {
+@WebServlet("/selectWriterView.wr")
+public class SelectWriterViewServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public SelectPieceListServlet() {
+    public SelectWriterViewServlet() {
         super();
     }
 
@@ -46,7 +47,6 @@ public class SelectPieceListServlet extends HttpServlet {
 		int listCount = new WriterService().getListCount(memberNo);
 
 		listCount /= 3;
-		System.out.println("총 리스트 갯수 " + listCount);
 		
 		maxPage = (int)((double)listCount/limit + 0.9);
 		startPage = (((int)((double)currentPage/limit+0.9))-1)*limit+1; 
@@ -70,19 +70,11 @@ public class SelectPieceListServlet extends HttpServlet {
 		//작가 작품관리 리스트(썸네일 포함)
 		ArrayList<HashMap<String, Object>> list = new WriterService().selectBoardWithThumbImg(currentPage, limit, memberNo);
 		
-		/*for(int i = 0; i < list.size(); i++){
-			Board b = (Board) list.get(i).get("board");
-			System.out.println(b.getBoard_no());
-			
-			for(int j = 0; j < ((ArrayList<Files>)list.get(i).get("selectThumbImg")).size(); j++){
-				Files f = ((ArrayList<Files>)list.get(i).get("selectThumbImg")).get(j);
-				System.out.println(f.getChange_title());
-			}
-		}*/
+		Member writer = new WriterService().selectWriter(memberNo);
 		
 		String page = "";
 		if(list != null){
-			page = "/views/myPage/writerPieceManagement.jsp";
+			page = "/views/myPage/writerPieceListView.jsp";
 			if(profileFile.size() > 0){
 				request.setAttribute("profileFile", profileFile);
 			}
@@ -90,6 +82,7 @@ public class SelectPieceListServlet extends HttpServlet {
 			request.setAttribute("orderIngCount", orderIngCount);
 			request.setAttribute("list", list);
 			request.setAttribute("pi", pi);
+			request.setAttribute("writer", writer);
 		}else{
 			page = "/views/common/errorPage.jsp";
 			request.setAttribute("msg", "작품관리 보기 실패!");

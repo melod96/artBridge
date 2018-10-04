@@ -35,12 +35,6 @@
 	
 	//썸네일 이미지
 	Board b = new Board();
-	/* Board b = (Board)request.getAttribute("b");
-	ArrayList<Files> list = (ArrayList<Files>)request.getAttribute("list");
-	Files titleImg = list.get(0);
-	Files detailImg1 = list.get(1);
-	Files detailImg2 = list.get(2);
-	Files detailImg3 = list.get(3); */
 	
 	//프로필 이미지
 	ArrayList<Files> profileFile = null;
@@ -92,8 +86,11 @@
    .input-area label{vertical-align:top; font-weight:bold;}
    .input-area input[type="text"], .input-area textarea{display:inline-block; width:500px; resize:none; margin-bottom:10px; margin-left:15px;}
    .input-area input[type="number"]{display:inline-block; margin-bottom:20px; margin-left:30px;}
-   .input-area .info{margin-top:5px; position:absolute; bottom:15px; left:570px;}
+   .input-area .info{margin-top:5px; position:absolute; left:530px;}
    .input-area .info li{font-size:14px; margin-bottom:3px; color:#428bca;}
+   .input-area .info li:before{content:''; display:inline-block; width:14px; height:16px; margin-right:6px; opacity:0.8; background:url('/artBridge/image/common/ico_info.png')  50% 2px no-repeat; background-size:100%;}
+   .input-area .info.info-txt1{bottom:55px;}
+   .input-area .info.info-txt2{bottom:24px;}
    .input-area label[for=state1]{color:green; font-weight:bold;}
    .input-area label[for=state2]{color:red; font-weight:bold;}
    .pro-save{width:200px; height:40px; font-size:15px;}
@@ -239,6 +236,9 @@
                               
                               <label for="slot">슬롯 갯수 변경</label>
                               <input id="slot" name="slot" class="form-control input-xshort" type="number" min="1" value="<%= slot %>"><br>
+                              <ul class="info info-txt1">
+                                  <li>신입작가 : 작가전환 후 30일 동안 슬롯 갯수 10개 제한<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일반/인기작가 : 슬롯 갯수 무제한</li>
+                              </ul>
                               
                               <label>커미션 접수 상태</label>
                               <div class="state">
@@ -249,12 +249,8 @@
 								  </label>
 	                              <span class="txt-on" title="접수중">ON</span>
                               </div>
-                              <ul class="info">
-                                  <li>- 신입작가 : 작가전환 후 30일 동안 슬롯 갯수 10개 제한</li>
-                                  <li>- 일반/인기작가 : 슬롯 갯수 무제한</li>
-                              	  <li>- [ON] 커미션 접수가능 / [OFF] 커미션 접수 불가능</li>
-                                  <!-- <li>- 의뢰 접수가 불가능한 기간에는 <strong>[OFF]</strong>상태로 변경하세요.</li> -->
-                                  <!-- <li>- 의뢰 접수가 가능할 경우 <strong>[ON]</strong>상태로 변경하세요.</li> -->
+                              <ul class="info info-txt2">
+                              	  <li>[ON] 커미션 접수가능 / [OFF] 커미션 접수 불가능</li>
                               </ul>
                           </div>
                           
@@ -290,7 +286,6 @@
 	                       		<div class="info-area1">
 	                              <span><%= m.getNick_name() %>작가 &nbsp; / &nbsp; <%= b.getBoard_title() %></span>
 	                              <ul class="seting-area">
-		                          	  <%-- <input type="hidden" name="boardNo" value="<%=b.getBoard_no()%>"> --%>
 		                              <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='updatePieceView.wr?pieceNo=<%=b.getBoard_no()%>&memberNo=<%= loginUser.getMember_no() %>'"><label class="hide">수정</label></li>
 		                              <%-- <li><input type="button" class="btn-edit" title="작품 수정" onclick="location.href='<%=request.getContextPath()%>/updatePieceView.wr?pieceNo=<%=b.getBoard_no()%>'"><label class="hide">수정</label></li> --%>
 		                              <!-- <li><input type="button" class="btn-del" title="작품 삭제" onclick="pieceDel()"><label class="hide">삭제</label></li> -->
@@ -314,7 +309,7 @@
 		                          </script>
 	                          </div>
 	                          <div class="img-area">
-		                          <a href="#">
+		                          <a href="<%=request.getContextPath()%>/selectOneSalepage.bo?num=<%=b.getBoard_no()%>">
 		                          	  <% for(int j = 0; j < ((ArrayList<Files>)list.get(i).get("selectThumbImg")).size(); j++){ 
 		                          	  		Files f = ((ArrayList<Files>)list.get(i).get("selectThumbImg")).get(j);%>
 			                              <% if(f.getChange_title() != null){ %>
