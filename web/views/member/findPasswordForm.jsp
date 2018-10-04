@@ -67,6 +67,11 @@
 			</div>
 		</div>
         <!-- // 주석 영역 -->
+        <script>
+        function goMain(){
+        	location.href = '/artBridge/ContentLoad.main';
+        	} 
+        </script>
 
         <!-- Footer -->
         <%@ include file="/views/common/footer.jsp" %>

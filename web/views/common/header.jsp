@@ -44,9 +44,8 @@
 						<li class="dropdown"><a href="#" class="dropdown-toggle">고객센터</a>
 							<ul class="dropdown-menu">
 								<li><a href="/artBridge/views/faq/faq_requester.jsp">자주하는 질문</a></li>
-								<li><a href="/artBridge/views/notice/noticeBoard.jsp">공지사항</a></li>
+								<li><a href="/artBridge/selectList.nb">공지사항</a></li>
 							</ul></li>
-
 						<!-- 비로그인시 노출 -->
 						<% if(loginUser == null){ %>
 						<li><a href="#" data-toggle="modal"

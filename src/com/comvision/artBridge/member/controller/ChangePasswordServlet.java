@@ -35,7 +35,7 @@ public class ChangePasswordServlet extends HttpServlet {
 		int result = new MemberService().chagePassword(member_no, password);
 		
 		if(result > 0){
-			response.sendRedirect("views/main/main.jsp");
+			response.sendRedirect("/artBridge/ContentLoad.main"); 
 		}else{
 			request.setAttribute("msg", "비밀번호 변경 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
