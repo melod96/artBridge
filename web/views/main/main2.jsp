@@ -158,7 +158,7 @@
             margin-bottom:-50px;}
       #popA{margin-top:10px;}
       
-      .bestArtist{ width:1200px; height: 500px; margin-left:auto;margin-right:auto;margin-top:100px;}
+      .bestArtist{ width:1200px; height: 500px; margin-left:auto;margin-right:auto;margin-top:220px;}
       .newContent{ width:1200px; height: 500px; margin-left:auto;margin-right:auto;margin-top:-50px;}
       
       /* 180929 sona 추가 */
@@ -172,8 +172,8 @@
       .slick-slide.slick-current .name{font-size:20px;}
       /* // 180929 sona 추가 */
       
-      .draggable{height:550px;}
-      .ntNFaq{margin-top:-100px;}
+      .draggable{height:670px;}
+      .ntNFaq{margin-top:-40px;}
    /*    .slick-dots{position:relative; top:50px;} */
        .slider-area1{height:580px;}
       

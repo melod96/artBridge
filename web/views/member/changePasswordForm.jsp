@@ -79,6 +79,8 @@
 						
 						return true;
 					}
+                    
+                    function goMain(){ location.href = '/artBridge/ContentLoad.main';  }
                     </script>
 				</div>
 			</div>
