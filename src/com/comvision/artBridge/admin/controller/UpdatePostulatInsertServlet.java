@@ -28,23 +28,25 @@ public class UpdatePostulatInsertServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int pos = 0;
+		String approval_content = request.getParameter("approval_content"); 
 		int member_no = Integer.parseInt(request.getParameter("member_no"));
+		int pos = 0;
 		if(request.getParameter("pos") != null){
 			pos = Integer.parseInt(request.getParameter("pos")); //체크박스 승인
 		}
+
+		System.out.println(approval_content);
+		System.out.println(member_no);
+		System.out.println(pos);
 		
 		
-		int result = new AdminService().updateInsertPostulat(pos, member_no);
+		int result = new AdminService().updateInsertPostulat(approval_content, member_no, pos);
 		String page = "";
 		
 		if(result > 0){
 			response.sendRedirect("/artBridge/selectMemberList.ad?pageName=memberAdmin");
 		}else{
-			page = "views/common/errorPage.jsp";
-			request.setAttribute("msg", "작가 승인 실패");
-			RequestDispatcher view = request.getRequestDispatcher(page);
-			view.forward(request, response);
+			response.sendRedirect("/artBridge/selectMemberList.ad?pageName=memberAdmin");
 		}
 		
 		
