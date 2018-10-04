@@ -28,7 +28,6 @@ public class MessageService {
 
 	public ArrayList<Message> SelectList(int currentPage, int limit, String addQuery) {
 		
-		System.out.println("서비스 진입");
 		
 		Connection con = getConnection();
 		
@@ -156,12 +155,26 @@ public class MessageService {
 
 		ArrayList<Message> msgList = new MessageDao().selectMyMsgList(con, mNo);
 		
-		System.out.println("4. 다시 서비스로 왔니?");
 		
 		close(con);
 		
 		return msgList;
 
+	}
+	
+
+	public ArrayList<Message> SelectmCount(int currentPage, int limit, String addQuery) {
+		
+
+		Connection con = getConnection();
+		
+		ArrayList<Message> list = new MessageDao().SelectmCount(con,currentPage, limit,addQuery);
+		
+		close(con);
+		
+		return list;
+		
+		
 	}
 
 

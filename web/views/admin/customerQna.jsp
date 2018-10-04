@@ -94,6 +94,7 @@ div#editor {
 										<div style="float: left; font-size: 1em; color: darkgray;"><%=m.getMem_name() %></div>
 									</td>
 								</tr>
+								<%if(!m.getMem_name().equals("관리자")){ %>
 								<tr>
 									<td style="background: lightgray">답변상태</td>
 									<td><select id="sel1" name="sel1" style="float: left; width: 200px;">
@@ -101,7 +102,7 @@ div#editor {
 											<option value="sel1Op2" id="sel1Op2">답변완료</option>
 									</select></td>
 								</tr>
-
+								<%} %>	
 
 							</tbody>
 						</table>
