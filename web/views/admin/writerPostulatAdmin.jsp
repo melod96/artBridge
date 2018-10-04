@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
-	import="java.util.*,com.comvision.artBridge.member.model.vo.*, com.comvision.artBridge.files.model.vo.*"%>
+	import="java.util.*,com.comvision.artBridge.member.model.vo.*, com.comvision.artBridge.admin.model.vo.* "%>
 <%
 	Member list = null;
 	if (request.getAttribute("list") != null) {
@@ -69,6 +69,7 @@ hr {
 								<%
 									}
 								%>
+								
 							</div>
 							<br> <br> <br>
 							<hr>
@@ -76,14 +77,16 @@ hr {
 							<%
 								if (flist != null) {
 									for (Files f : flist) {
+							
 							%>
 							<div
 								style="height: 288px; width: 288px; border: 1px solid gray; float: left; margin-left: 10px;">
 								<img style="height: 288px; width: 288px;"
-									src="<%=f.getFiles_root()%>">
+									src="<%= request.getContextPath()%><%= f.getFiles_root()%><%=f.getChange_title() %>">
 							</div>
 							<%
 								}
+									
 							%>
 							<br>
 							<p style="color: gray;">* 작가 등록을 위한 관리자 승인용 이미지 파일
