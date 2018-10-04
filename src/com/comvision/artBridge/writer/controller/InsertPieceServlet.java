@@ -42,7 +42,7 @@ public class InsertPieceServlet extends HttpServlet {
 			int maxSize = 1024 * 1024 * 10;
 			
 			String root = request.getSession().getServletContext().getRealPath("/");
-			String savePath = root + "image/thumbnail_upload/";
+			String savePath = root + "/image/sale/";
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
 			ArrayList<String> saveFiles = new ArrayList<String>();
@@ -51,9 +51,11 @@ public class InsertPieceServlet extends HttpServlet {
 			
 			while(filesName.hasMoreElements()){
 				String name = filesName.nextElement();
+				System.out.println(name);
 				
 				saveFiles.add(multiRequest.getFilesystemName(name));
 				originFiles.add(multiRequest.getOriginalFileName(name));
+				
 			}
 			
 			ArrayList<Files> fileList = new ArrayList<Files>();
