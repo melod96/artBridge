@@ -28,18 +28,14 @@ public class UpdatePostulatInsertServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String approval_content = request.getParameter("approval_content"); 
-		int member_no = Integer.parseInt(request.getParameter("member_no"));
-		int writer_right = Integer.parseInt(request.getParameter("writer_right"));
 		int pos = 0;
+		int member_no = Integer.parseInt(request.getParameter("member_no"));
 		if(request.getParameter("pos") != null){
 			pos = Integer.parseInt(request.getParameter("pos")); //체크박스 승인
 		}
-
-		System.out.println(approval_content);
 		
 		
-		int result = new AdminService().updateInsertPostulat(approval_content, member_no, writer_right, pos);
+		int result = new AdminService().updateInsertPostulat(pos, member_no);
 		String page = "";
 		
 		if(result > 0){

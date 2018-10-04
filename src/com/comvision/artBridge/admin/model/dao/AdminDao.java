@@ -815,7 +815,7 @@ public class AdminDao {
 			return flist;
 		}
 
-		public int updateInsertPostulat(Connection con, String approval_content, int member_no, int pos) {
+		public int updateInsertPostulat(Connection con, int pos, int member_no) {
 			PreparedStatement pstmt = null;
 			int result = 0;
 			
@@ -824,8 +824,7 @@ public class AdminDao {
 			try {
 				pstmt = con.prepareStatement(query);
 				pstmt.setInt(1, pos);
-				pstmt.setString(2, approval_content);
-				pstmt.setInt(3, member_no);
+				pstmt.setInt(2, member_no);
 
 				result = pstmt.executeUpdate();
 				
@@ -1030,31 +1029,5 @@ public class AdminDao {
 			return listCount;
 		}
 
-		//작가 신청 업데이트
-		public int insertPostulat2(Connection con, int member_no, int writer_right) {
-			PreparedStatement pstmt = null;
-			int result = 0;
-			
-			String query = prop.getProperty("updateInsertPostulat2");
-			
-			try {
-				pstmt = con.prepareStatement(query);
-				pstmt.setInt(1, writer_right);
-				pstmt.setInt(2, member_no);
-			/*	pstmt.setString(2, string);
-				pstmt.setInt(3, member_no);*/
-				
-				result = pstmt.executeUpdate();
-				
-			} catch (SQLException e) {
-				e.printStackTrace();
-			} finally {
-				close(pstmt);
-			}
-			
-			return result;
-		}
-
-	
 
 }
