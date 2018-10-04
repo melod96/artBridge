@@ -136,7 +136,7 @@
 												<% i++;} %>
 											</table>
 											
-											<%} %>
+											<%}else{} %>
 											<br />
 											<table align="right">
 												<tr>
@@ -150,12 +150,12 @@
 									<tr>
 										<td colspan="5">
 											<div class="btn-center stmtBtn">
-											<%if(m.getMember_no() == t.getCusNo()){ %>
+											<%if(clist != null){if(m.getMember_no() == t.getCusNo()){%>
 												<button class="btn btn-primary btn-mg btn-plus-design"
 													type="submit" style="width: 50%;">거 래 수 락</button>
 												<br>
 												<br />
-													<%} %>
+													<%}} %>
 												<%if(t.getWrtNo()== m.getMember_no()){ %>
 												<button class="btn btn-primary btn-mg btn-plus-design"
 													style="margin-left: 0;" type="button" onclick = "change()">재 요청</button>

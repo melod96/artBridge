@@ -23,6 +23,7 @@ import com.comvision.artBridge.member.model.vo.Rating;
 import com.comvision.artBridge.relate.model.vo.Relate;
 import com.comvision.artBridge.sale.model.vo.Options;
 import com.comvision.artBridge.sale.model.vo.Orders;
+import com.comvision.artBridge.sale.model.vo.Payment;
 import com.comvision.artBridge.sale.model.vo.Requirements;
 
 public class SaleDao {
@@ -1037,6 +1038,135 @@ public class SaleDao {
 		
 		return result;
 	}
+
+	public int ordersActivity(Connection con, int orderno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("ordersActivity");
+		
+		try {
+			pstmt =con.prepareStatement(query);
+			pstmt.setInt(1, orderno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int refundUpdate(Connection con, int paymentno, int activity) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String query = prop.getProperty("refundUpdate");
+		
+		int plusquery = 0;
+		switch (activity) {
+		case 1:
+			plusquery = 100;
+			break;
+		case 2:
+			plusquery = 70;
+			break;
+		case 3:
+			plusquery = 50;
+			break;
+		case 4:
+		case 5:
+		case 6:
+			plusquery = 0;
+			break;
+
+		default:
+			break;
+		}
+		
+		try {
+			pstmt =con.prepareStatement(query);
+			pstmt.setInt(1, plusquery);
+			pstmt.setInt(2, paymentno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public int paymentnosearch(Connection con, int orderno) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		int result = 0;
+		
+		String query = prop.getProperty("paymentnosearch");
+		
+		try {
+			pstmt =con.prepareStatement(query);
+			pstmt.setInt(1, orderno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				result = rset.getInt(1);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+		}
+		
+		return result;
+	}
+
+	public Payment selectPaymentinfo(Connection con, int orderno) {
+		PreparedStatement pstmt= null;
+		ResultSet rset = null;
+		Payment p = null;
+		
+		String query = prop.getProperty("selectPaymentinfo");
+		
+		try {
+			pstmt = con.prepareStatement(query);
+			pstmt.setInt(1, orderno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()){
+				p =new Payment();
+				p.setPayment_no(rset.getInt("payment_no"));
+				p.setOrders_no(rset.getInt("orders_no"));
+				p.setMember_no(rset.getInt("member_no"));
+				p.setPayment(rset.getInt("payment"));
+				p.setImp_no(rset.getString("imp_no"));
+				p.setPg_id(rset.getString("pg_id"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally{
+			close(pstmt);
+			close(rset);
+		}
+		
+		return p;
+	}
+
 
 	
 

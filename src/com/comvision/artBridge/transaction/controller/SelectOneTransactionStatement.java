@@ -45,6 +45,7 @@ public class SelectOneTransactionStatement extends HttpServlet {
 		ArrayList<Requirements> rlist = new SaleService().selectsaleRequirementsList(orderNoo, mNo);
 		//작가 코멘트 출력
 		ArrayList<Comments> clist = new SaleService().selectcommentlist(orderNoo);
+		
 		int price = new SaleService().totalPrice(orderNoo, mNo);
 		
 		String page = "";
@@ -53,7 +54,9 @@ public class SelectOneTransactionStatement extends HttpServlet {
 			request.setAttribute("t", t);
 			request.setAttribute("rlist", rlist);
 			request.setAttribute("totalprice", price);
-			request.setAttribute("clist", clist);
+			if(clist.size() != 0){
+				request.setAttribute("clist", clist);
+			}
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg",  "명세표 상세 조회 실패!");
