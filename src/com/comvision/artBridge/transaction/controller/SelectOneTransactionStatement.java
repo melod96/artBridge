@@ -58,7 +58,7 @@ public class SelectOneTransactionStatement extends HttpServlet {
 		if(t != null){
 			System.out.println("여기로 오니?");
 		
-			page= "views/myPage/statementModal.jsp";
+			page= "views/myPage/paymentmodel.jsp";
 			request.setAttribute("t", t);
 			request.setAttribute("rlist", rlist);
 			request.setAttribute("totalprice", price);

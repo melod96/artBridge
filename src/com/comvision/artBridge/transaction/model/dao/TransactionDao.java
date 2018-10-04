@@ -39,17 +39,11 @@ public class TransactionDao {
 			System.out.println("2-1. rset만들자");
 			pstmt = con.prepareStatement(query);
 			
-//			pstmt.setInt(1, mNo);
-//			pstmt.setInt(2, mNo);
-//			pstmt.setInt(3, mNo);
-//			pstmt.setInt(4, mNo);
-//			pstmt.setInt(5, mNo);
-			
-			pstmt.setInt(1, 11);
-			pstmt.setInt(2, 11);
-			pstmt.setInt(3, 11);
-			pstmt.setInt(4, 11);
-			pstmt.setInt(5, 11);
+			pstmt.setInt(1, mNo);
+			pstmt.setInt(2, mNo);
+			pstmt.setInt(3, mNo);
+			pstmt.setInt(4, mNo);
+			pstmt.setInt(5, mNo);
 			
 			rset = pstmt.executeQuery();
 			

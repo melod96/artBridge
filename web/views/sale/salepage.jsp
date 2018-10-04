@@ -324,7 +324,7 @@
 								</ol>
 								<ol style="height: 28px;">
 									<dl class="left ellip" style="padding-left: 7px; width: 360px;">
-										<a href="<%=request.getContextPath() %>/selectPieceList.wr?memberNo=<%=b.getMember_no() %>" title="이작가의 다른 작품보기"><%=b.getNick_name()%></a>&nbsp;&nbsp;/&nbsp;&nbsp;<%=b.getBoard_title()%>
+										<a href="<%=request.getContextPath() %>/selectWriterView.wr?memberNo=<%=b.getMember_no() %>" title="이작가의 다른 작품보기"><%=b.getNick_name()%></a>&nbsp;&nbsp;/&nbsp;&nbsp;<%=b.getBoard_title()%>
 									</dl>
 								</ol>
 								<ol>

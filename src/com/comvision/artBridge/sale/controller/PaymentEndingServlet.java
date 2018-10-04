@@ -46,7 +46,7 @@ public class PaymentEndingServlet extends HttpServlet {
 		
 		String page= "";
 		if(result>0){
-			page = "views/myPage/myPageForm.jsp?pageName=order-menu";
+			page = "selectTransList.ts";
 		}else{
 			page = "views/common/errorPage.jsp";
 			request.setAttribute("msg", "게시판 상세 조회 실패");
