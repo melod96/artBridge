@@ -772,7 +772,7 @@
 										<tr>
 											<td colspan="2" align="center" height="170px" style="padding-top: 15px; padding-bottom: 10px">
 												<div class="img-in">
-													<img src="<%=hmap.get("profile")%>" alt="default frofile image">
+													<img src="<%=request.getContextPath() %><%=hmap.get("profile")%><%=hmap.get("change") %>" alt="default frofile image">
 												</div>
 											</td>
 										</tr>

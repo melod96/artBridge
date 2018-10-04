@@ -52,6 +52,8 @@ public class SelectFavListServlet extends HttpServlet {
 			int order = new FavService().wriOrderCount(f.getWriter_no());
 			Files file = new FavService().wriprofile(f.getWriter_no());
 			String profile = file.getFiles_root();
+			String change = file.getChange_title();
+			System.out.println(change);
 			String nick = m.getNick_name();
 			int slot = m.getWriter_slot();
 			
@@ -62,6 +64,7 @@ public class SelectFavListServlet extends HttpServlet {
 			hmap.put("profile", profile);
 			hmap.put("nick", nick);
 			hmap.put("slot", slot);
+			hmap.put("change", change);
 			
 			hlist.add(hmap);
 		}
