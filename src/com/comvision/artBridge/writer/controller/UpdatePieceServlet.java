@@ -34,15 +34,15 @@ public class UpdatePieceServlet extends HttpServlet {
 			//썸네일 파일 첨부 저장용
 			int maxSize = 1024 * 1024 * 10;
 			
-			String root = request.getSession().getServletContext().getRealPath("/");
-			String savePath = root + "image/thumbnail_upload/";
+			String root = request.getSession().getServletContext().getContextPath();
+			String savePath = root + "/image/sale/";
 			MultipartRequest multiRequest = new MultipartRequest(request, savePath, maxSize, "UTF-8", new MyFileRenamePolicy());
 			
 			ArrayList<String> saveFiles = new ArrayList<String>();
 			ArrayList<String> originFiles = new ArrayList<String>();
 			Enumeration<String> filesName = multiRequest.getFileNames();
 			
-			int j = 0;
+			//int j = 0;
 			while(filesName.hasMoreElements()){
 				String name = filesName.nextElement();
 				saveFiles.add(multiRequest.getFilesystemName(name));

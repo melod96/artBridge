@@ -156,7 +156,7 @@
                         <div class="img-area">
                             <div class="img-in">
                             	<%if(request.getAttribute("profileFile") != null){ %>
-                              	<img id="img-change" src="/artBridge/image/profile/<%=profileImg.getChange_title()%>">
+                              	<img id="img-change" src="<%=request.getContextPath()%><%=profileImg.getFiles_root()%><%=profileImg.getChange_title()%>">
                               <% }else{ %>
                               	<img id="img-change" src="/artBridge/image/common/img_profile.png" alt="프로필 이미지">
                               <% } %>
@@ -201,7 +201,7 @@
 	                          	  <% for(int j = 0; j < ((ArrayList<Files>)list.get(i).get("selectThumbImg")).size(); j++){ 
 	                          	  		Files f = ((ArrayList<Files>)list.get(i).get("selectThumbImg")).get(j);%>
 		                              <% if(f.getChange_title() != null){ %>
-		                              	<span class="tmb"><img src="/artBridge/image/thumbnail_upload/<%= f.getChange_title() %>"></span>
+		                              	<span class="tmb"><img src="<%=request.getContextPath()%><%=f.getFiles_root()%><%= f.getChange_title() %>"></span>
 		                              <% }else{ %>
 		                             	 <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
 	                              <% 	}

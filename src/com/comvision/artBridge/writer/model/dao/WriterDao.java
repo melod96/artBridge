@@ -102,7 +102,6 @@ public class WriterDao {
 			pstmt.setString(2, files.getFiles_title());
 			pstmt.setString(3, files.getChange_title());
 			pstmt.setInt(4, i);
-			pstmt.setString(5, files.getFiles_root());
 			
 			result = pstmt.executeUpdate();
 			
@@ -207,7 +206,7 @@ public class WriterDao {
 				pstmt.setInt(1, m.getMember_no());
 				pstmt.setString(2, fileList.get(i).getFiles_title());
 				pstmt.setString(3, fileList.get(i).getChange_title());
-				pstmt.setString(4, fileList.get(i).getFiles_root());
+				//pstmt.setString(4, fileList.get(i).getFiles_root());
 				
 				result += pstmt.executeUpdate();
 				System.out.println("여기서 결과 : " + result);

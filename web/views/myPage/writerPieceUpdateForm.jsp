@@ -273,17 +273,17 @@
                                       <li>
                                           <input type="file" name="thumb01" id="file-btn1" value=<%= pieceData.get(2).getFiles_title() %>>
                                           <label for="file-btn1" class="btn btn-primary">썸네일 이미지 선택1</label>
-                                          <p><img class="img1" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(2).getChange_title()%>"></p>	
+                                          <p><img class="img1" src="<%=request.getContextPath()%><%=pieceData.get(2).getFiles_root()%><%=pieceData.get(2).getChange_title()%>"></p>	
                                       </li>
                                       <li>
                                           <input type="file" name="thumb02" id="file-btn2" value=<%= pieceData.get(1).getFiles_title() %>>
                                            <label for="file-btn2" class="btn btn-primary">썸네일 이미지 선택2</label>
-                                          <p><img class="img2" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(1).getChange_title()%>"></p>
+                                          <p><img class="img2" src="<%=request.getContextPath()%><%=pieceData.get(1).getFiles_root()%><%=pieceData.get(1).getChange_title()%>"></p>
                                       </li>
                                       <li>
                                           <input type="file" name="thumb03" id="file-btn3" value=<%= pieceData.get(0).getFiles_title() %>>
                                            <label for="file-btn3" class="btn btn-primary">썸네일 이미지 선택3</label>
-                                          <p><img class="img3" src="/artBridge/image/thumbnail_upload/<%=pieceData.get(0).getChange_title()%>"></p>
+                                          <p><img class="img3" src="<%=request.getContextPath()%><%=pieceData.get(0).getFiles_root()%><%=pieceData.get(0).getChange_title()%>"></p>
                                       </li>
                                     </ul>
                                     <ul>

@@ -7,6 +7,8 @@
     		com.comvision.artBridge.grade.model.vo.*"
 %>
 <% 
+	
+
 	ArrayList<HashMap<String, Object>> list = null;
 	if(request.getAttribute("list") != null){
 		list = (ArrayList<HashMap<String, Object>>)request.getAttribute("list");
@@ -64,6 +66,10 @@
 		orderIngCount = (int)request.getAttribute("orderIngCount");
 	}
 	
+	
+	System.out.println(request.getContextPath());
+	System.out.println(profileImg.getFiles_root());
+	System.out.println(profileImg.getChange_title());
 	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -214,7 +220,7 @@
                           <div class="img-area">
                               <div class="img-in">
                               	<%if(request.getAttribute("profileFile") != null){ %>
-                                	<img id="img-change" src="/artBridge/image/profile/<%=profileImg.getChange_title()%>">
+                                	<img id="img-change" src="<%=request.getContextPath()%><%=profileImg.getFiles_root()%><%=profileImg.getChange_title()%>">
                                 <% }else{ %>
                                 	<img id="img-change" src="/artBridge/image/common/img_profile.png" alt="프로필 이미지">
                                 <% } %>
@@ -313,7 +319,7 @@
 		                          	  <% for(int j = 0; j < ((ArrayList<Files>)list.get(i).get("selectThumbImg")).size(); j++){ 
 		                          	  		Files f = ((ArrayList<Files>)list.get(i).get("selectThumbImg")).get(j);%>
 			                              <% if(f.getChange_title() != null){ %>
-			                              	<span class="tmb"><img src="/artBridge/image/thumbnail_upload/<%= f.getChange_title() %>"></span>
+			                              	<span class="tmb"><img src="<%=request.getContextPath()%><%=f.getFiles_root()%><%= f.getChange_title() %>"></span>
 			                              <% }else{ %>
 			                             	 <span class="tmb"><img src="/artBridge/image/common/no_thumb.jpg"></span>
 		                              <% 	}
