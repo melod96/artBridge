@@ -27,7 +27,7 @@ public class UpdateFreeBoardServlet extends HttpServlet {
 		int num = Integer.parseInt(request.getParameter("num"));
 		String board_title = request.getParameter("board_title");
 		String board_content = request.getParameter("board_content");
-		
+		System.out.println(num);
 		System.out.println(board_title + ", " + board_content);
 		
 		FreeBoard f = new FreeBoard();

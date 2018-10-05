@@ -78,12 +78,8 @@ public class MySelectAllMsg extends HttpServlet {
 					addQuery += "and message_title like '%" + searchWords + "%' ";
 					break;
 				}
-
 			}
 		}
-		
-		System.out.println("addQuery : " + addQuery);
-		
 		
 		
 		int num = 1;
