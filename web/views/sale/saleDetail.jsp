@@ -168,7 +168,7 @@
 								<font class="lsp0"><%=avgGrade.getGrade() %></font>
 							</ol>
 							<div align="center" style="margin-bottom: 15px;">
-								<button type="button" class="btn btn-primary" onclick = "location.href='<%=request.getContextPath()%>/selectMsgAll.my'">작가에게 쪽지보내기</button>
+								<button type="button" class="btn btn-primary" onclick = "location.href='<%=request.getContextPath()%>/selectMsgAll.my?memberNo=<%=loginUser.getMember_no()%>'">작가에게 쪽지보내기</button>
 							</div>
 							<div align="center" id="text">상세옵션</div>
 							<div style = "margin:20px;">
