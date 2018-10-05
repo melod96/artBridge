@@ -78,7 +78,7 @@ ul.tab-menu li>a:hover {
 				<!-- container 필수 사용 -->
 				<div class="col-md-12">
 					<div class="heading">
-						<h2>회원 관리</h2>
+						<h2 class="tit1">회원 관리</h2>
 					</div>
 					<hr>
 					<br>

@@ -72,7 +72,7 @@ border-color:darkgray;
 				<!-- container 필수 사용 -->
 				<div class="col-md-12">
 					<div class="heading">
-						<h2>연관검색어 관리</h2>
+						<h2 class="tit1">연관검색어 관리</h2>
 						<hr />
 					</div>
 					

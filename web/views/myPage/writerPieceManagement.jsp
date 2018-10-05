@@ -208,20 +208,10 @@
         <!-- // Header -->
 
         <!-- 주석 영역 -->
-         <section class="tit-area bg-yellow"><!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
-	         <div class="container">
-				<h2>마이 페이지</h2>
-				<ul class="tab-menu">
-					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu">주문관리</a></li>
-					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=msg-menu">쪽지함</a></li>
-					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=bookmark-menu">관심작가</a></li>
-					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu">회원정보수정</a></li>
-					<li><a href="<%=request.getContextPath()%>/selectPieceList.wr?memberNo=<%=m.getMember_no()%>" style="background:#fff; color:#000;">내작품관리</a></li>
-					<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=qna-menu">이용문의</a></li>
-				</ul>
-			</div>
-        </section>
-
+        <!--myHeader-->
+		<%@ include file="/views/common/myHeader.jsp"%>
+		<!--// myHeader-->
+		
         <!-- contents area -->
         <div class="contents">
             <div class="container">
@@ -390,5 +380,14 @@
        <!-- // Footer -->
 
     </div>
+    
+    <script>
+    
+		$(function(){
+			$("#mywork-menu").css({"background":"white", "color":"black"});
+			
+		});
+		
+		</script>
 </body>
 </html>

@@ -181,7 +181,7 @@
 							location.href="<%= request.getContextPath()%>/detailedList.pg?orderno=<%= t.getOrders_no()%>";
 						}
 						function req(){
-							location.href="<%= request.getContextPath()%>/selectList.my?memberNo=<%=m.getMember_no()%>";
+							location.href="<%= request.getContextPath()%>/selectMsgAll.my";
 						}
 						function cancel(){
 							location.href="<%= request.getContextPath()%>/dealcancel.pg?orderno=<%= t.getOrders_no()%>";

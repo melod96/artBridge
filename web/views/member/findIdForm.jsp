@@ -33,7 +33,7 @@
 					<br />
 			
 					<div class="heading">
-                        <h2 class="tit1">아이디를 잃어버리셧다구요?</h2>
+                        <h2 class="tit1">아이디를 잃어버리셨다구요?</h2>
                     </div>
                     
                     <br /><br />

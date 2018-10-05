@@ -35,15 +35,18 @@ ul.tab-menu li>a:hover {
 </style>
 </head>
 <body>
+
+
+
 	<div id="all">
 
 		<!-- Header -->
 		<%@ include file="/views/common/header.jsp"%>
 		<!-- // Header -->
 
-		<%@ include file="/views/common/adminHeader.jsp"%>
-
-
+		<!--myHeader-->
+		<%@ include file="/views/common/myHeader.jsp"%>
+		<!--// myHeader-->
 
 		<!-- 주석 영역 -->
 		<div class="contents">
@@ -246,22 +249,22 @@ ul.tab-menu li>a:hover {
 									
 								}
 								
-								%>
-								
+									%>
 								
 								<tr>
-									<%-- <td><input type="checkbox" name="msgNo" value=<%=m.getMsg_no() %>></td> --%>
 									<td class="num3"><%=m.getMsg_no() %></td>
 									<td><%=date %></td>
 									<td><%=m.getMsg_date() %></td>
 									<td><div style="float: left;">
-											&nbsp;&nbsp;<a onclick = "location.href='<%= request.getContextPath() %>/selectDetail.my?msg_no=<%=m.getMsg_no() %>'" id=""><%=m.getMsg_title() %></a>
+											&nbsp;&nbsp;<a onclick =
+												 "location.href='<%= request.getContextPath() %>/selectDetail.my?msg_no=<%=m.getMsg_no() %>'" id=""><%=m.getMsg_title() %></a>
 										</div></td>
 									<td><%=m.getDispatch_member_no()%></td>
 									<td><%=m.getReceive_member_no()%></td>
-									
 								</tr>
-							<% }} %>
+								
+									<% }
+								} %>
 
 							
 						</tbody>
@@ -273,11 +276,11 @@ ul.tab-menu li>a:hover {
 					<%if(num == 1){ %>
 						<!-- 페이징 처리 부분  normal -->
 					<div class="paginate">
-						<a onclick="location.href='<%=request.getContextPath()%>/selectList.my?currentPage=1&memberNo=<%=mem_id %>'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
+						<a onclick="location.href='<%=request.getContextPath()%>/selectMsgAll.my?currentPage=1&memberNo=<%=mem_id %>'" class="btn-first" title="처음"><em class="blind">목록에서 처음 페이지 이동</em></a> 
 						<% if(currentPage <=1){ %>
 							<a disabled class="btn-prev" title="이전"><em class="blind">목록에서 이전 페이지 이동</em></a> 
 						<%}else{ %>
-							<a onclick = "location.href='<%= request.getContextPath()%>/selectList.my?currentPage=<%=currentPage -1%>&memberNo=<%=mem_id %>'" class="btn-prev" title="이전">
+							<a onclick = "location.href='<%= request.getContextPath()%>/selectMsgAll.my?currentPage=<%=currentPage -1%>&memberNo=<%=mem_id %>'" class="btn-prev" title="이전">
 							<em class="blind">목록에서 이전 페이지 이동</em></a>
 						<%} %>
 						
@@ -287,7 +290,7 @@ ul.tab-menu li>a:hover {
 								if(p==currentPage){%>
 									<a disabled class="on"><%=p %><span class="blind">페이지로 이동</span></a>
 								<%}else{ %>
-									<a onclick= "location.href='<%= request.getContextPath()%>/selectList.my?currentPage=<%=p%>&memberNo=<%=mem_id %>'"><%= p %><span class="blind">페이지로 이동</span></a>
+									<a onclick= "location.href='<%= request.getContextPath()%>/selectMsgAll.my?currentPage=<%=p%>&memberNo=<%=mem_id %>'"><%= p %><span class="blind">페이지로 이동</span></a>
 								<%} %>
 							<%} %>
 						</span>
@@ -295,11 +298,11 @@ ul.tab-menu li>a:hover {
 						<% if(currentPage >= maxPage){ %>
 					<!-- <a disabled class="btn-next" title="다음"><span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a> -->
 						<%}else{ %>
-							<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.my?currentPage=<%=currentPage +1%>&memberNo=<%=mem_id %>'" class="btn-next" title="다음">
+							<a onclick = "location.href = '<%= request.getContextPath()%>/selectMsgAll.my?currentPage=<%=currentPage +1%>&memberNo=<%=mem_id %>'" class="btn-next" title="다음">
 							<span class="spr"><em class="blind">목록에서 다음 페이지 이동</em></span></a>
 						<%} %>
 							
-						<a onclick = "location.href = '<%= request.getContextPath()%>/selectList.my?currentPage=<%=maxPage%>&memberNo=<%=mem_id %>'" class="btn-last" title="끝">
+						<a onclick = "location.href = '<%= request.getContextPath()%>/selectMsgAll.my?currentPage=<%=maxPage%>&memberNo=<%=mem_id %>'" class="btn-last" title="끝">
 						<span class="spr"><em class="blind">목록에서 끝 페이지 이동</em></span></a>
 					</div>
 					</div>
@@ -363,20 +366,17 @@ ul.tab-menu li>a:hover {
 
 	</div>
 	
+	
+		<script>
+		$(function(){
+			$("#msg-menu").css({"background":"white", "color":"black"});
+			
+		});
+		
+		
+		</script>
 	<script>
 	//All select 자동 출력 구문
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	//All Select 자동 출력 구문 -ajax
 	/*
 	$(function(){

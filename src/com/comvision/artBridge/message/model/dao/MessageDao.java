@@ -63,7 +63,7 @@ public class MessageDao {
 		ArrayList<Message> list = null;
 		
 		String query = prop.getProperty("selectListTest");
-		System.out.println("dao실행1");
+		
 		try {
 			stmt = con.createStatement();
 			
@@ -430,10 +430,11 @@ public class MessageDao {
 	}
 	
 		public int sendMyMsg(Connection con, int mNo, String receiverNo, String title, String editor) {
+			
 		PreparedStatement pstmt = null;
+		
 		int result = 0;
 		
-//		INSERT INTO MESSAGE VALUES(SEQ_MESSAGE_NO, TITLE, EDITOR, SYSDATE, MNO, RECEIVERNO, NULL);
 		String query = prop.getProperty("insertMyMsgTo");
 		
 		try {
@@ -445,7 +446,7 @@ public class MessageDao {
 			pstmt.setString(4, receiverNo);
 			
 			result = pstmt.executeUpdate();
-			System.out.println("업데이트 결과야 : " + result);
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally{

@@ -34,7 +34,7 @@ public class SelectMSGDetailServlet extends HttpServlet {
 			request.setAttribute("m", m);
 		}else{
 			page = "/views/common/errorPage.jsp";
-			request.setAttribute("msg", "고객문의 답변 작성페이지 로드 실패!");
+			request.setAttribute("msg", " 답변 작성페이지 로드 실패!");
 		}
 		RequestDispatcher view = request.getRequestDispatcher(page);
 		view.forward(request, response);

@@ -48,14 +48,14 @@ div#editor {
 		
 		<%int mem_id = ((Member)(session.getAttribute("loginUser"))).getMember_no(); %>
 		
-		<%@ include file="/views/common/adminHeader.jsp"%>
+		<%@ include file="/views/common/myHeader.jsp"%>
 
 		<!-- 주석 영역 -->
 		<div class="contents">
 			<!-- contents 필수 사용 -->
 			<div class="container">
 				<!-- container 필수 사용 -->
-				<form onsubmit="return formCheck(this)" action="<%=request.getContextPath()%>/updateDetail.my" method="post" id="goForm">
+				<form onsubmit="return formCheck(this)" action="<%=request.getContextPath()%>/updateMsgDetail.my" method="post" id="goForm">
 				<div class="col-md-12">
 					<div class="heading">
 						<h2 id="qnaTitle">쪽지 답장 보내기</h2>
@@ -160,7 +160,7 @@ div#editor {
 					<button type="reset" id="backPageBtn" name="searchBtn"
 						class="btn btn-primary btn-lg"
 						style="padding: 2px 30px; background: gray; float: right; margin-right: 10px;"
-						onclick = 'location.href="/artBridge/selectList.my?memberNo=<%= loginUser.getMember_no() %>"'>이전</button>
+						onclick = 'location.href="/artBridge/selectMsgAll.my?memberNo=<%= loginUser.getMember_no() %>"'>이전</button>
 				
 					<br> <br>
 				</div>

@@ -63,7 +63,7 @@
 				<!-- container 필수 사용 -->
 				<div class="col-md-12">
 					<div class="heading">
-						<h2>메인 배너 관리</h2>
+						<h2 class="tit1">메인 배너 관리</h2>
 					</div>
 					<hr>
 					<h3 style="margin-left:25%;">판매글 목록</h3>
