@@ -13,23 +13,14 @@ import com.comvision.artBridge.member.model.vo.Member;
 import com.comvision.artBridge.transaction.model.service.TransactionService;
 
 
-/**
- * Servlet implementation class InsertConfirmRequest
- */
 @WebServlet("/selectThisOrderMsg.my")
 public class MySelectOrdersMsgList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public MySelectOrdersMsgList() {
         super();
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		/*System.out.println("컨펌 체크하려고 서블릿 왔엉");
 		

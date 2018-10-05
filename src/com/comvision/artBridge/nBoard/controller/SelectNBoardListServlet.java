@@ -25,23 +25,19 @@ public class SelectNBoardListServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 				int num = 1;
-		//페이징 처리
 				int currentPage;
 				int limit;		
 				int maxPage; 	
 				int startPage;	
 				int endPage; 	
 
-
 				currentPage = 1;
-
 
 				limit = 10;
 
 				if(request.getParameter("currentPage")!= null){
 					currentPage = Integer.parseInt(request.getParameter("currentPage"));
 				}
-
 
 				int listCount = new NBoardService().getListCount();
 

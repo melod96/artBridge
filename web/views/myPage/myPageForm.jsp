@@ -209,24 +209,9 @@
 
         <!-- 주석 영역 -->
         
-<!-- 	* 마이페이지 탭 메뉴 -->
-		<section class="tit-area bg-yellow">	<!-- 컬러변경시 bg-컬러명(gray,green,blue,yellow) 으로 바꿔주세요 -->
-		<div class="container">
-			<h2>마이 페이지</h2>
-			<ul class="tab-menu">
-<%-- 				<li><a href="<%= request.getContextPath() %>/selectTransList.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li> --%>
-				<li><a href="<%= request.getContextPath() %>/selectTransList.ts" onclick="anotherHidden(this.id);" id="order-menu">주문관리</a></li>
-				<li><a href="#" onclick="anotherHidden(this.id);" id="msg-menu">쪽지함</a></li>
-				<li><a href="<%= request.getContextPath() %>/selectFavList.fv" onclick="anotherHidden(this.id);" id="bookmark-menu">관심작가</a></li>
-				<li><a href="#" onclick="anotherHidden(this.id);" id="memberinfo-menu">회원정보수정</a></li>
-<%-- 				<% if(loginUser.getWriter_right() == 1){ "%>" --%>
-				<li><a href="#" onclick="anotherHidden(this.id);" id="mywork-menu"">내작품관리</a></li>
-<%-- 				<% } %> --%>
-				<li><a href="#" onclick="anotherHidden(this.id);" id="qna-menu">이용문의</a></li>
-			</ul>
-		</div>
-		</section>
-<!-- 	//마이페이지 탭 메뉴 -->
+		<!--myHeader-->
+		<%@ include file="/views/common/myHeader.jsp"%>
+		<!--// myHeader-->
 
 		<!-- 주석 영역 -->
 <!-- 	* 마이페이지 탭 영역 -->	
@@ -430,12 +415,7 @@
 <!-- 	   	* 마이페이지 탭 제목 -->
 			<div class="heading">
 				<h2 class="menuName tit1"></h2>
-				<!-- <h2 class="order-menu tit1">주문 관리</h2>
-				<h2 class="msg-menu tit1">쪽지함</h2>
-				<h2 class="bookmark-menu tit1">관심 작가</h2>
-				<h2 class="memberinfo-menu tit1">회원정보 수정</h2>
-				<h2 class="mywork-menu tit1" style="text-color:#FF7373;">내 작품 관리</h2>	***수정사항 : 작가 페이지
-				<h2 class="qna-menu tit1">이용 문의</h2> -->
+				
 			</div>	<hr>
 <!-- 	   	//마이페이지 탭 제목 -->
 					
@@ -646,8 +626,18 @@
 					</table>
 					
 					<div class="btn-center btn-outer-style">
-	                      <button onclick="showSendMsgForm();" class="btn btn-primary btn-lg btn-del btn-plus-design">쪽지 보내기</button>
+	                      <button onclick="send();" class="btn btn-primary btn-lg btn-del btn-plus-design">쪽지이 보내기</button>
 	                </div>
+	                    
+	                <script>
+	                function send(){
+				 		
+				 		location.href = "/artBridge/views/myPage/sendMessageForm.jsp";
+				 		
+				 	}
+	                
+	                </script>
+	                
 	                    
 				<br><br><br><br>	
 				</div>

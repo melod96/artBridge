@@ -57,7 +57,7 @@ ul.tab-menu li>a:hover {
 				<!-- container 필수 사용 -->
 				<div class="col-md-12">
 					<div class="heading">
-						<h2>거래내역 관리</h2>
+						<h2 class="tit1"; >거래내역 관리</h2>
 					</div>
 
 					<hr>

@@ -56,7 +56,6 @@ div#editor {
 					</div>
 
 					<hr>
-				
 
 					<br> <br>
 				<form  onsubmit="return formCheck(this)" action="/artBridge/insertSend.msg" method="post" id="goForm">
@@ -67,7 +66,6 @@ div#editor {
 								<col style="width: *;">
 							</colgroup>
 	
-
 							<tbody>
 								
 								<tr>

@@ -61,7 +61,7 @@
 								<li><a href="<%= request.getContextPath() %>/selectTransList.ts">주문관리</a></li>
 <%-- 								<li><a href="<%= request.getContextPath() %>/selectTransList.ts?pageName=order-menu">주문관리</a></li> --%>
 <!-- 								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=order-menu">주문관리</a></li> -->
-								<li><a href="<%= request.getContextPath() %>/selectMsgAll.my">쪽지함</a></li>
+								<li><a href="<%= request.getContextPath() %>/selectMsgAll.my?memberNo=<%=loginUser.getMember_no()%>">쪽지함</a></li>
 								<li><a href="<%= request.getContextPath() %>/selectFavList.fv">관심작가</a></li>
 								<li><a href="/artBridge/views/myPage/myPageForm.jsp?pageName=memberinfo-menu">회원정보 수정</a></li>
 								<% if(loginUser.getWriter_right() == 1){ %>

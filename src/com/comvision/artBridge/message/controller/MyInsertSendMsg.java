@@ -23,21 +23,24 @@ public class MyInsertSendMsg extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int mNo = ((Member)(request.getSession().getAttribute("loginUser"))).getMember_no();
+		
 		String receiverNo = request.getParameter("receiverNo");
 		String title = request.getParameter("title");
 		String editor = request.getParameter("editor");
-		System.out.println(request.getAttributeNames());
 		
-		System.out.println("mem_no :" + mNo + ", receive_no : " + receiverNo + ", title : " + title + ", editor : " + editor); 
 		
 		int result = new MessageService().sendMyMsg(mNo, receiverNo, title, editor);
 		
+		String page = "";
 		if(result > 0){
-			response.sendRedirect("/artBridge/views/myPage/myPageForm.jsp?pageName=msg-menu");
+			page = "/artBridge/successSendMSG.jsp" ;
 		}else{
-			request.setAttribute("msg", "메시지 전송 실패!");
-			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+			page = "views/common/errorPage.jsp";
+			request.setAttribute("msg", "에러러ㅓ러ㅓ러!");
 		}
+		
+		RequestDispatcher view = request.getRequestDispatcher(page);
+		view.forward(request, response);
 		
 	}
 		

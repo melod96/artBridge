@@ -536,7 +536,7 @@
    
 </head>
 <body>
-<img style="position: absolute; bottom : -1500px; left:auto; right:auto; width:1800px; height:350px; opacity: 0.08; z-index:-5" src='/artBridge/image/mainContent/mainBottom.png'>
+<img style="position: absolute; bottom : -1360px; left:auto; right:auto; width:2000px; height:350px; opacity: 0.08; z-index:-5" src='/artBridge/image/mainContent/mainBottom.png'>
 
 
 
@@ -705,7 +705,7 @@
 <img class = "blossom0" style="position: absolute; top : 1000px; left:750px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
 <img class = "blossom6" style="position: absolute; top : 1300px; left:900px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'>
 <img class = "blossom6" style="position: absolute; top : 1200px; left:1000px; width:16px; height:16px; " src='/artBridge/image/mainContent/blossom3.png'> 
--->
+ -->
 <br><br><br><br>
 <!--
    180929 sona 추가
@@ -903,14 +903,10 @@
                      <span class="ntDate"></span>
                   </li>
                      
-                     
-                     
                   <% }
-                               
-                     }}
+                        }
+                            }
                   %>
-
-                  
                   
                  </ul>
                   </div>
